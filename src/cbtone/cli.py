@@ -238,7 +238,7 @@ def sample_silver_cmd(
 
 SCORES_DIR = Path("results/scores")
 MARKETS = Path("data/raw/markets/daily.parquet")
-SCORE_CACHE = Path("data/cache/scores.sqlite")
+SCORE_CACHE = Path("data/cache/scores.sqlite")  # default; CBTONE_SCORE_CACHE overrides (D20)
 OLLAMA_URL = os.environ.get("CBTONE_OLLAMA_URL", "http://localhost:11434")
 SCORE_KEY = ["doc_id", "scorer_id", "variant"]
 
@@ -506,11 +506,12 @@ def _probe_ollama() -> dict[str, Any]:
 
 def _probe_storage() -> dict[str, Any]:
     out: dict[str, Any] = {"disk_free_gb": round(shutil.disk_usage(".").free / 2**30, 1)}
-    cache: dict[str, Any] = {"path": str(SCORE_CACHE)}
-    if SCORE_CACHE.exists():
-        cache["size_mb"] = round(SCORE_CACHE.stat().st_size / 2**20, 2)
+    score_cache = Path(os.environ.get("CBTONE_SCORE_CACHE", SCORE_CACHE))
+    cache: dict[str, Any] = {"path": str(score_cache)}
+    if score_cache.exists():
+        cache["size_mb"] = round(score_cache.stat().st_size / 2**20, 2)
         try:
-            db = sqlite3.connect(f"file:{SCORE_CACHE}?mode=ro", uri=True, timeout=2)
+            db = sqlite3.connect(f"file:{score_cache}?mode=ro", uri=True, timeout=2)
             try:
                 cache["rows"] = int(db.execute("SELECT COUNT(*) FROM scores").fetchone()[0])
             finally:

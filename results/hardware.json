@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T06:33:39+00:00",
+  "generated_at": "2026-10-14T10:04:36+00:00",
   "system": {
     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
     "machine": "arm64",
@@ -15,7 +15,7 @@
     },
     "cbtone": {
       "ok": true,
-      "version": "0.0.1"
+      "version": "0.1.0"
     },
     "polars": {
       "ok": true,
@@ -36,7 +36,7 @@
   },
   "ollama": {
     "ok": true,
-    "url": "http://localhost:11434",
+    "url": "http://192.168.1.174:11434",
     "models": [
       {
         "name": "qwen2.5:3b",
@@ -45,23 +45,15 @@
       {
         "name": "qwen3:4b",
         "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
-      },
-      {
-        "name": "qwen3.5:0.8b",
-        "digest": "f1e6f0684a22457e8eb5b09d26041e8171c248c6b252c267a0b35ac5afc24ed6"
-      },
-      {
-        "name": "qwen3.5:9b",
-        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
       }
     ]
   },
   "storage": {
     "disk_free_gb": 43.7,
     "score_cache": {
-      "path": "data/cache/scores.sqlite",
-      "size_mb": 0.06,
-      "rows": 84,
+      "path": "data/cache/scores-4070ti.sqlite",
+      "size_mb": 5.34,
+      "rows": 14711,
       "ok": true
     },
     "corpus": {
