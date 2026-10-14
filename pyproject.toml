@@ -49,6 +49,7 @@ dependencies = [
   "statsmodels>=0.14",
   "scipy>=1.13",
   "scikit-learn>=1.5",
+  "matplotlib>=3.9",
 ]
 
 [project.optional-dependencies]
