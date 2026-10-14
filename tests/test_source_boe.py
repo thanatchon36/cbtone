@@ -76,7 +76,31 @@ def test_statement_2015_br_separated_paragraphs(tmp_path: Path) -> None:
     )  # fmt: skip
     _check(doc, 100, min_sections=4)
     assert "voted to maintain Bank Rate at 0.5%" in doc.text
-    assert "published at 9.30 a.m. on Wednesday 22 July" in doc.text
+    assert "published at 9.30 a.m. on Wednesday 22 July" in doc.text  # inside a longer paragraph
+
+
+@pytest.mark.parametrize(
+    ("name", "iso", "decision"),
+    [
+        ("statement_2000_03.html", "2000-03-09", "repo rate at 6.0%"),
+        (
+            "statement_2010_03.html",
+            "2010-03-04",
+            "Bank Rate paid on commercial bank reserves at 0.5%",
+        ),
+    ],
+)
+def test_statement_lead_sentence_kept_in_old_press_releases(
+    tmp_path: Path, name: str, iso: str, decision: str
+) -> None:
+    raw = _raw(name, url=f"{BASE}/news/{iso[:4]}/x/mpc-x-{iso[:4]}")
+    (doc,) = _adapter(tmp_path).parse(
+        raw, {"doc_type": "statement", "date": iso, "published": iso, "language": "en"}
+    )
+    assert doc.text.startswith("The Bank of England's Monetary Policy Committee today voted")
+    assert decision in doc.text and len(doc.text) > 100
+    assert "will be published at 9.30" not in doc.text
+    assert doc.sections[0].text in doc.text
 
 
 def test_minutes_stub_html_when_no_pdf(tmp_path: Path) -> None:

@@ -99,6 +99,11 @@ _WS = re.compile(r"[ \t\r\f\v\xa0]+")
 _PAR_SPLIT = re.compile(r"\n\s*\n")
 _PDF_START = re.compile(r"^minutes of the monetary policy committee meeting", re.I)
 _PDF_NUMBERED = re.compile(r"^(\d{1,3})\s+(\S.*)$")
+_NOTICE = re.compile(
+    r"^(the minutes of the meeting will be published\b|the committee.s latest inflation and "
+    r"output projections will appear\b).{0,200}$",
+    re.I,
+)
 _PDF_FOOTER = re.compile(r"^(bank of england\s+minutes of|\d{1,3}$)", re.I)
 
 
@@ -139,6 +144,8 @@ class _Page:
             if _PDF_LINK.search(urlsplit(str(a["href"])).path)
         ]
         self.blocks = self._blocks()
+        hero = self.soup.select_one("div.page-description")
+        self.lead = _clean(hero.get_text(" ")) if hero else ""
 
     @property
     def placeholder(self) -> bool:
@@ -321,6 +328,12 @@ class BoEAdapter(SourceAdapter):
                 heading = text
                 continue
             buckets[kind].append(Section(heading=heading, text=text))
+        if want == "statement" and "/news/" in raw.url:
+            # 2000-2012 press releases keep the decision sentence in the page lead.
+            if page.lead and page.lead not in page.body_text():
+                buckets["statement"].insert(0, Section(heading=None, text=page.lead))
+            kept = [x for x in buckets["statement"] if not _NOTICE.match(x.text)]
+            buckets["statement"] = kept or buckets["statement"]
         d0 = date.fromisoformat(hints["date"])
         wanted = ("statement", "minutes") if want == "combined" else (want,)
         docs: list[Document] = []

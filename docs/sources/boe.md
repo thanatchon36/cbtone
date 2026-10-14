@@ -63,6 +63,14 @@ Adapter: `src/cbtone/sources/boe.py` (`BoEAdapter`, bank `boe`, English only).
 - `minutes` in the combined publication: 12:00 (with the summary).
 - Emergency/special meetings (March 2020): `None`.
 
+## Press-release lead (2000-2012)
+On the 2000-2012 `/news/` pages the decision sentence ("The Bank of England's Monetary Policy
+Committee today voted to maintain ...") is only in the page lead (`div.page-description`), not in
+`div.page-content`. The adapter prepends it as the first section when absent from the body, and
+drops standalone publication notices ("The minutes of the meeting will be published at 9.30am
+...", "The Committee's latest inflation and output projections will appear ...") unless nothing
+else remains. Many 2000-2006 releases are therefore just ~100 characters (the decision sentence).
+
 ## Known limits
 - Some recent minutes PDFs (seen: 2019) are AES-256 encrypted. `pypdf` needs the `cryptography`
   package for them; it is not a project dependency, so `parse` logs a warning and returns `[]` for

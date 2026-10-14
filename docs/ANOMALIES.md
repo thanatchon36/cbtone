@@ -39,3 +39,11 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
   JavaScript-only. BI therefore enters the corpus from 2016, which roughly matches the switch to the
   7-day reverse repo rate (Aug 2016) as the policy rate. RQ1/RQ2 sample-size tables state this.
 - BI pages that do not exist return HTTP 200 with a "404" body; `parse` returns `[]`.
+
+## A6 — BoE decision releases 2000–2006 are one sentence (2026-10-14)
+- Before about 2007, BoE releases on unchanged rates consist only of the decision sentence (~100 chars;
+  the page and its PDF carry nothing else). An earlier parse dropped that sentence because it sits in the page
+  lead (`div.page-description`); fixed, with regression fixtures for 2000 and 2010.
+- For tone scoring these documents carry almost no tone signal. BoE tone analysis uses the minutes
+  for 2000–2012, and statements from 2013 (when they become ~1,000+ chars). Pre-registered as such.
+- `cbtone snapshot` prints a QA line for documents under 200 chars, and these are expected there.
