@@ -89,3 +89,18 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Why:** MISSION §0 forbids getting around robots.txt; §7 prefers clean evidence on fewer banks.
   A zh leg built on unverified selectors would be uncheckable.
 - **Rejected:** fetching anyway, a Baiduspider User-Agent, third-party mirrors without the author's say-so.
+
+## D11 — MAS text from Internet Archive copies (2026-10-14)
+- **What:** the author approved Internet Archive (Wayback Machine) copies for MAS (D7 left this to
+  the author). `MasAdapter` lists archived Monetary Policy Statement URLs with the Wayback CDX API
+  and fetches the raw snapshot (`web.archive.org/web/<timestamp>id_/<mas url>`) through
+  `PoliteFetcher`, which applies robots.txt, rate limits, caching and block-page rejection. It never
+  requests mas.gov.sg itself. `Document.url` is the snapshot URL, and the original MAS URL is
+  recoverable from it. Hand-saved files in `data/raw/mas/manual/` still take precedence.
+- **Checks:** a snapshot is accepted only if it is a 200 capture of a statement page whose parsed date
+  matches the date in its slug. Captures that show the MAS "Maintenance" page are skipped, and the
+  next capture of that URL is tried instead.
+- **Licence:** unchanged. MAS terms require permission to redistribute, so MAS stays URL + SHA-256 only.
+- **Why:** MAS is the only headline SEA bank with an exchange-rate-based framework, and MISSION §0 lists public
+  mirrors as allowed. The author made the call on the bank's own access choice.
+- **Not extended to PBoC:** PBoC remains manual-only (D10) unless the author says otherwise.
