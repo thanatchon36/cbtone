@@ -73,7 +73,7 @@ def main() -> int:
         print("pandoc not found; wrote", OUT_MD)
         return 0
     engine = "typst" if shutil.which("typst") else None
-    cmd = ["pandoc", str(OUT_MD), "-o", str(OUT_PDF), "--resource-path", str(ROOT)]
+    cmd = ["pandoc", str(OUT_MD), "-o", str(OUT_PDF), "--resource-path", str(ROOT), "--citeproc"]
     if engine:
         cmd += ["--pdf-engine", engine]
     subprocess.run(cmd, check=True, cwd=ROOT)

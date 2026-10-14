@@ -56,7 +56,8 @@ def headline_numbers(s: dict[str, Any]) -> list[tuple[str, float, str]]:
 
 
 def main() -> int:
-    summary = {name: _load(name) for name in ("rq1", "rq2", "rq3", "rq4", "rq5")}
+    summary: dict[str, Any] = {name: _load(name) for name in ("rq1", "rq2", "rq3", "rq4", "rq5")}
+    summary["corpus_version"] = Path("data/corpus/VERSION").read_text().strip()
     summary["timing"] = (
         json.loads((RESULTS / "timing.json").read_text())
         if (RESULTS / "timing.json").exists()
