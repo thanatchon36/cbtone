@@ -1,0 +1,122 @@
+ 
+ 
+Monetary policy summary, August 2015 
+ 
+The Bank of England’s Monetary Policy Committee (MPC) sets monetary policy in order to meet the 2% inflation 
+target and in a way that helps to sustain growth and employment.  At its meeting ending on 5 August 2015, the 
+MPC voted by a majority of 8-1 to maintain Bank Rate at 0.5%.  The Committee voted unanimously to maintain 
+the stock of purchased assets financed by the issuance of central bank reserves at £375 billion, and so to 
+reinvest the £16.9 billion of cash flows associated with the redemption of the September 2015 gilt held in the 
+Asset Purchase Facility. 
+ 
+CPI inflation fell back to zero in June.  As set out in the Governor’s open letter to the Chancellor, around three 
+quarters of the deviation of inflation from the 2% target, or 1½ percentage points, reflects unusually low 
+contributions from energy, food, and other imported goods prices.  The remaining quarter of the deviation of 
+inflation from target, or ½ a percentage point, reflects the past weakness of domestic cost growth, and unit 
+labour costs in particular.  The combined weakness in domestic costs and imported goods prices is evident in 
+subdued core inflation, which on most measures is currently around 1%. 
+ 
+With some underutilised resources remaining in the economy and with inflation below the target, the Committee 
+intends to set monetary policy in order to ensure that growth is sufficient to absorb the remaining economic 
+slack so as to return inflation to the target within two years.  Conditional upon Bank Rate following the gently 
+rising path implied by market yields, the Committee judges that this is likely to be achieved.   
+ 
+In its latest economic projections, the Committee projects UK-weighted world demand to expand at a moderate 
+pace.  Growth in advanced economies is expected to be a touch faster, and growth in emerging economies a 
+little slower, than in the past few years.  The support to UK exports from steady global demand growth is 
+expected to be counterbalanced, however, by the effect of the past appreciation of sterling.   Risks to global 
+growth are judged to be skewed moderately to the downside reflecting, for example, risks to activity in the euro 
+area and China. 
+ 
+Private domestic demand growth in the United Kingdom is expected to remain robust.  Household spending has 
+been supported by the boost to real incomes from lower food and energy pric es.  Wage growth has picked up 
+as the labour market has tightened and productivity has strengthened.  Business and consumer confidence 
+remain high, while credit conditions have continued to improve, with historically low mortgage rates providing 
+support to activity in the housing market.  Business investment has made a substantial contribution to growth in 
+recent years.  Firms have invested to expand capacity, supported by accommodative financial conditions.  
+Despite weakening slightly, surveys suggest continued robust investment growth ahead.  This will support the 
+continuing increase of underlying productivity growth towards past average rates. 
+ 
+Robust private domestic demand is expected to produce sufficient momentum to eliminate the margin of spare 
+capacity over the next year or so, despite the continuing fiscal consolidation and modest global growth.   This is 
+judged likely to generate the rise in domestic costs expected to be necessary to return inflation to the target in 
+the medium term.  
+ 
+ 
+ 
+The near-term outlook for inflation is muted.  The falls in energy prices of the past few months will continue to 
+bear down on inflation at least until the middle of next year.  Nonetheless, a range of measures suggest that 
+medium-term inflation expectations remain well anchored.  There is little evidence in wage settlements or 
+spending patterns of any deflationary mindset among businesses and households.  
+ 
+Sterling has appreciated by 3½% since May and 20% since its trough in March 2013.  The drag on import prices 
+from this appreciation will continue to push down on inflation for some time to come, posing a downside risk to 
+its path in the near term.  Set against that, the degree of slack in the economy has diminished substantially over 
+the past two and a half years.  The unemployment rate has fallen by more than 2 percentage points since the 
+middle of 2013, and the ratio of job vacancies to unemployment has returned from well below to around its pre-
+crisis average.  The margin of spare capacity is currently judged to be around ½% of GDP, with a range of 
+views among MPC members around that central estimate.  A further modest tightening of the labour market is 
+expected, supporting a continued firming in the growth of wages and unit labour costs over the next three years, 
+counterbalancing the drag on inflation from sterling. 
+ 
+Were Bank Rate to follow the gently rising path implied by market yields, the Committee judges that demand 
+growth would be sufficient to return inflation to the target within two years.  In its projections, inflation then 
+moves slightly above the target in the third year of the forecast period as sustained growth leads to a degree of 
+excess demand.   
+ 
+Underlying those projections are significant judgements in a number of areas, as described in the August 
+Inflation Report.  In any one of these areas, developments might easily turn out differently than assumed with 
+implications for the outlook for growth and inflation, and therefore for the appropriate stance of monetary policy.  
+Reflecting that, there is a spread of views among MPC members about the balance of risks to inflation relative 
+to the best collective judgement presented in the August Report.  At the Committee’s meeting ending on 
+5 August, the majority of MPC members judged it appropriate to leave the stance of monetary policy unchanged 
+at present.  Ian McCafferty preferred to increase Bank Rate by 25 basis points, given his view that demand 
+growth and wage pressures were likely to be greater, and the margin of spare capacity smaller, th an embodied 
+in the Committee’s collective August projections. 
+ 
+All members agree that, given the likely persistence of the headwinds weighing on the economy, when Bank 
+Rate does begin to rise, it is expected to do so more gradually and to a lower level than in recent cycles.  This 
+guidance is an expectation, not a promise.  The actual path Bank Rate will follow over the next few years will 
+depend on the economic circumstances.  The Committee will continue to monitor closely the incoming data. 
+ 
+ 
+ 
+ 
+Bank of England  Minutes of the Monetary Policy Committee Meeting ending on 5 August 2015 1 
+ 
+Minutes of the Monetary Policy Committee meeting ending on 5 August 2015
+ 
+1 Before turning to its immediate policy decision, and against the backdrop of its latest projections for output 
+and inflation, the Committee discussed financial market developments;  the international economy;  money, 
+credit demand and output;  and supply costs and prices. 
+ 
+Financial markets 
+2 There had been a range of influences on international financial markets over the month, including:  
+reactions to news on the progress of negotiations between the Greek government and its creditors;  falls i n 
+global commodity prices;  and large moves in Chinese equity prices.  There had been some associated volatility 
+in UK equity markets within the month. 
+3 Another significant influence on financial markets had been a renewed focus on the timing and extent of 
+possible monetary policy tightening in both the United Kingdom and the United States  in reaction to data 
+outturns and communications by MPC and FOMC members.  In the light of these developments, the Committee 
+discussed what financial market prices implied now for expectations of the future path of monetary policy in 
+these countries, and whether this was connected with recent moves in exchange rates. 
+4 In the United Kingdom, there had been a slight steepening in the market implied path of short-term interest 
+rates and the date at which the OIS curve crossed 0.75% had moved forward to May 2016.  This was around 
+three months earlier than had been the case at the time of the July MPC meeting, although only one month 
+sooner than at the time of the May Inflation Report.  In addition, the implied pace of tightening had quickened 
+slightly, with forward OIS rates rising thereafter by around 10 basis points per quarter to reach 1.7% at the 
+three-year horizon.  These moves appeared consistent with an improvement in sentiment  as market participants 
+put less weight on the downside tail risks associated with the Greek debt crisis, as well as market reactions to 
+domestic data outturns and statements by MPC members about future increases in Bank Rate. 
+5 In the United States, there had been a small rise in short-term interest rates and there remained a broad 
+consensus in financial markets that monetary policy tightening would begin earlier there than in the United 
+Kingdom, with the first rate rise expected by market commentators in either September or December 2015.  
+Rates were expected thereafter to rise at a faster pace and to a slightly higher level than in the United Kingdom.  
+The difference in the future path of policy rates in the two countries expected by financial market participants 
+might be because of a perception that the headwinds to demand would ease more rapidly in the United States 
+than in the United Kingdom, which was in the process of a more significant fiscal consolidation, had stronger 
+trade and financial linkages to the euro area, and where levels of household indebtedness were higher.   
+6  The sterling effective exchange rate had not changed materially over the month, but remained well above 
+the range within which it had traded since its depreciation in 2008, having risen by 3½% since the fifteen-day 
+average starting point upon which the May Inflation Report had been conditioned, and by 20% since its trough in 
+2013.  The movements in sterling over the course of 2015 had been correlated with changes in the interest rate 

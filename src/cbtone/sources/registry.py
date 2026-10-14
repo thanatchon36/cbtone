@@ -16,6 +16,7 @@ REDISTRIBUTABLE: dict[str | tuple[str, str], bool] = {
     "fed": True,  # public domain (federalreserve.gov/disclaimer.htm)
     "ecb": True,
     ("ecb", "press_conference"): False,  # D8: authored documents need prior authorisation
+    "boe": False,  # bankofengland.co.uk/legal; permission on request
     "rba": True,  # CC BY 4.0 (rba.gov.au/copyright)
     "bi": False,  # no reuse licence stated; all rights reserved
     "bnm": False,  # bnm.gov.my/terms-of-use
