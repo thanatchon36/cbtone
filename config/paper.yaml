@@ -1,7 +1,7 @@
 # Headline configuration for the paper. See docs/DECISIONS.md.
 seed: 20261014
 include_bot: false          # Bank of Thailand is opt-in; excluded from headline results
-banks: [fed, ecb, boe, rba, mas, bi, bnm, pboc]
+banks: [fed, ecb, boe, rba, mas, bi, bnm]   # pboc cut (D10); mas needs manual files (D7)
 start_year: 2000
 end_year: 2026
 event_window: {pre: -1, post: 1}   # [t-1 close, t+1 close]

@@ -17,3 +17,6 @@ Filled in per bank from `docs/sources/<bank>.md` as each adapter lands.
 
 | Bank | Terms | Redistribute text? | Committed |
 |---|---|---|---|
+| ECB | ecb.europa.eu disclaimer: reproduction permitted with source acknowledged; prior authorisation for documents bearing authors' names | Press releases: yes. Press conferences: no (D8) | Statements: text. Press conferences: URL + SHA-256 |
+| MAS | mas.gov.sg terms of use: prior written permission for any reproduction | No | URL + SHA-256 (manual files, D7) |
+| PBoC | Not verified; robots.txt disallows all crawlers | No (assumed) | Nothing; out of headline (D10) |

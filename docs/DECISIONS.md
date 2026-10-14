@@ -77,3 +77,15 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   Event day `t` = the first close strictly after the release in the series' own timezone.
 - **Why:** MISSION §1.3; daily windows need daily data; FRED's non-US yields are monthly.
 - **Consequence for RQ2:** the yield leg is tested for Fed/ECB/BoE/RBA only; the SEA legs use FX. Pre-registered as such.
+
+## D10 — PBoC cut from the headline set; headline = 7 banks, 3 live languages (2026-10-14)
+- **What:** `pbc.gov.cn/robots.txt` disallows every crawler except Baiduspider, so PBoC cannot be
+  fetched. `cbtone.sources.pboc` runs in manual-file mode only (files listed in `docs/sources/NEEDED.md`);
+  its selectors are unverified against real pages (synthetic fixture). PBoC is removed from
+  `config/paper.yaml`. Headline banks: Fed, ECB, BoE, RBA, MAS, BI, BNM. MAS also depends on manual
+  files (D7): if they are not supplied before pre-registration (`prereg-v1`), MAS is dropped too and
+  the prereg says so. Languages: en (all), id (BI), ms (BNM); th (BoT) opt-in. The MISSION's
+  "~8 banks in 4 languages" framing becomes "7 banks (6 if MAS stays blocked), 3 languages + Thai opt-in".
+- **Why:** MISSION §0 forbids getting around robots.txt; §7 prefers clean evidence on fewer banks.
+  A zh leg built on unverified selectors would be uncheckable.
+- **Rejected:** fetching anyway, a Baiduspider User-Agent, third-party mirrors without the author's say-so.
