@@ -29,8 +29,8 @@ from cbtone.scorers.llm import LLMScorer
 
 OUT = Path("results/scores")
 SEED = 20261014
-CAP = 3000  # D18
-N_RQ4A_SENT = 250  # D18 ladder step 1
+CAP = 6000  # D20 (pre-registered default)
+N_RQ4A_SENT = 1000  # D20 (pre-registered default)
 N_RQ4A_DOCS = 120
 CONFIGS: dict[str, dict[str, object]] = {
     "P1": {"prompt": "P1"},

@@ -269,7 +269,7 @@ def score(
     prompt: Annotated[str, typer.Option(help="LLM prompt id.")] = "P1",
     model: Annotated[str, typer.Option(help="Ollama model tag (llm).")] = "qwen3:4b",
     temperature: Annotated[float, typer.Option(help="LLM temperature.")] = 0.0,
-    cap: Annotated[int, typer.Option(help="Policy-text character cap (D18).")] = 3000,
+    cap: Annotated[int, typer.Option(help="Policy-text character cap (D20).")] = 6000,
     evidence: Annotated[bool, typer.Option(help="LLM document mode: also ask for quotes.")] = False,
     quick: Annotated[bool, typer.Option(help="Score the deterministic quick sample.")] = False,
     model_dir: Annotated[Path | None, typer.Option(help="Fine-tuned model dir (ft).")] = None,

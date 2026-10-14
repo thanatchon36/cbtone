@@ -26,7 +26,7 @@ from cbtone.scorers.llm import LLMScorer
 
 MODEL_DIR = Path("data/models/ft-xlmr")
 SEED = 20261014
-CAP = 3000
+CAP = 6000
 
 
 def training_frame() -> pl.DataFrame:

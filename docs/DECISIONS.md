@@ -211,3 +211,20 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   "policy rate", "the Committee") are kept, because masking them would remove the information being scored.
 - **Timing:** reviewed and changed before the masked scoring job started. No masked score was produced with the old rules,
   apart from the discarded timing runs.
+
+## D20 — LLM scoring moved to the owner's GPU; budget ladder re-evaluated; D18 steps reverted (2026-10-14, timing only)
+- **What:** the author provided an Ollama server on an RTX 4070 Ti (12 GB) at `192.168.1.174:11434`
+  (`CBTONE_OLLAMA_URL`). It runs the same model tags with identical digests (`qwen3:4b` `359d7dd4bcda…`,
+  `qwen2.5:3b` `357c53fb659c…`, both Q4_K_M).
+- **Re-timing:** the pre-registered default settings were re-timed on the 60-document quick sample (throwaway cache, outputs discarded):
+  - documents at cap 6,000: 0.52 s/doc unmasked, 0.49 s masked;
+  - sentences: 0.41 s each;
+  - the full pre-registered workload is projected at about 1.8 h, inside the 2 h budget.
+- **Consequence:** **no budget-ladder step is needed.** D18's steps are reverted to the pre-registered design: input cap
+  6,000 characters, RQ4a sentence sample 1,000, masked variant for every LLM result (primary and native). Document-mode
+  evidence quotes stay off, because they would add about 2 h and are not part of any analysis.
+- **One backend:** every LLM score in the paper is regenerated on this GPU into a separate cache (`CBTONE_SCORE_CACHE=
+  data/cache/scores-4070ti.sqlite`). The ~700 documents scored on the M4 before the switch are not mixed in.
+- **Compute target:** MISSION §0 names a MacBook Air M4. The M4 timings (D17/D18: ~3.5 s/document at cap 3,000) are kept
+  as the "cost to run on a laptop" reference in the README and executive summary. The paper states that the headline run
+  used a desktop GPU, and that the laptop path gives the same model and settings, only slower.
