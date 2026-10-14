@@ -78,7 +78,7 @@ score = scorer.score_text(
     "The Committee decided to raise the target range and expects further tightening.",
     "en",
 )
-print(score.index, score.label)   # index = hawkish_p - dovish_p, in [-1, 1]
+print(score.index, score.label)  # index = hawkish_p - dovish_p, in [-1, 1]
 ```
 
 For a whole `Document`, call `scorer.score_document(doc)`, which scores the pre-registered policy
@@ -96,7 +96,7 @@ To score your own corpus, write `Document` objects and build a snapshot:
 ```python
 from cbtone.sources.snapshot import build_snapshot
 
-build_snapshot(my_documents, "my_corpus", {"fed": True})   # only mark banks you may redistribute
+build_snapshot(my_documents, "my_corpus", {"fed": True})  # only mark banks you may redistribute
 ```
 
 then `cbtone score --scorer dict fed --corpus my_corpus`. Documents of banks not in the
