@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>cbtone — paper</title>
+<meta name="description" content="cbtone — paper">
+<meta name="author" content="Thanatchon Chongmankhong">
+<style>
+/* One reading column (~46rem) with a results strip up top. System font stacks only: the page is a
+   single self-contained file with no third-party requests. Colour tokens on :root, redefined for dark. */
+:root {
+  --paper: #fbfbf9; --ink: #17191c; --ink-2: #4c5058; --rule: #dcdcd6;
+  --accent: #1f5fae; --accent-soft: #e6eef8;
+  --pos: #1d6b52; --pos-soft: #e3f1ea; --null: #6b6f78; --null-soft: #eeeeea;
+  --find: #8a5a12; --find-soft: #f6eedd; --plate: #ffffff; --quote: #f3f3ef;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #15171a; --ink: #e8e9ec; --ink-2: #a6abb4; --rule: #30343a;
+    --accent: #7fb0ec; --accent-soft: #1b2a3d; --pos: #7dcfac; --pos-soft: #16302a;
+    --null: #a6abb4; --null-soft: #23262b; --find: #e7bd73; --find-soft: #33291a;
+    --plate: #f4f4f2; --quote: #1d2024; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #15171a; --ink: #e8e9ec; --ink-2: #a6abb4; --rule: #30343a;
+  --accent: #7fb0ec; --accent-soft: #1b2a3d; --pos: #7dcfac; --pos-soft: #16302a;
+  --null: #a6abb4; --null-soft: #23262b; --find: #e7bd73; --find-soft: #33291a;
+  --plate: #f4f4f2; --quote: #1d2024; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.62 var(--font-body); }
+.page { max-width: 46rem; margin: 0 auto; padding-inline: 16px; padding-block: 48px 72px;
+  display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 650; text-wrap: balance; line-height: 1.2; }
+h1 { font-size: clamp(1.7rem, 4.2vw, 2.35rem); margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: 1.4rem; margin: 2.2em 0 0.5em; }
+h3 { font-size: 1.12rem; margin: 1.8em 0 0.4em; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+code { font: 500 0.84em var(--font-mono); overflow-wrap: anywhere; }
+pre { background: var(--quote); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px;
+  overflow-x: auto; font-size: 0.84rem; line-height: 1.5; }
+pre code { font-weight: 400; font-size: inherit; overflow-wrap: normal; }
+.masthead { display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
+.kicker { margin: 0; font: 500 0.78rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.09em; color: var(--accent); }
+.subtitle { margin: 0; font-style: italic; color: var(--ink-2); font-size: 1.05rem; }
+.byline { margin: 0; color: var(--ink-2); }
+.meta { margin: 0; font: 400 0.8rem/1.6 var(--font-mono); color: var(--ink-2); }
+.meta b { font-weight: 500; color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.actions a { display: inline-block; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px;
+  font: 500 0.78rem var(--font-mono); text-decoration: none; color: var(--ink); }
+.actions a:hover { border-color: var(--accent); color: var(--accent); }
+.abstract h2, .results h2, .toc h2 { margin: 0 0 10px; font-size: 0.82rem; font-family: var(--font-mono);
+  font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-2); }
+.abstract-body p { margin: 0 0 0.8em; font-size: 1.04rem; }
+.abstract-body p:last-child { margin-bottom: 0; }
+.results .note { margin: 0 0 14px; color: var(--ink-2); font-size: 0.95rem; }
+.result-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 8px; }
+.r { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "id tag" "text text"; gap: 2px 10px;
+  padding: 10px 12px; border-radius: 6px; border-left: 3px solid; font-size: 0.9rem; line-height: 1.4; }
+.r-pos { background: var(--pos-soft); border-color: var(--pos); }
+.r-ref { background: var(--find-soft); border-color: var(--find); }
+.r-null, .r-nf { background: var(--null-soft); border-color: var(--null); }
+.r-id { grid-area: id; font: 500 0.85rem var(--font-mono); }
+.r-tag { grid-area: tag; justify-self: end; font: 500 0.72rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+.r-pos .r-tag { color: var(--pos); } .r-ref .r-tag { color: var(--find); } .r-null .r-tag, .r-nf .r-tag { color: var(--null); }
+.r-text { grid-area: text; }
+.r-text small { display: block; color: var(--ink-2); font-size: 0.8rem; margin-top: 2px; }
+.toc ul { margin: 0; padding-left: 1.2em; columns: 2 14rem; column-gap: 32px; }
+.toc li { break-inside: avoid; }
+.toc ul ul { columns: 1; padding-left: 1em; font-size: 0.92em; color: var(--ink-2); }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.paper h1 { font-size: 1.55rem; margin: 2em 0 0.5em; padding-top: 0.6em; border-top: 1px solid var(--rule); }
+.paper p, .paper li { hyphens: auto; }
+.paper p { margin: 0 0 1em; }
+.paper .header-section-number { color: var(--accent); margin-right: 0.5em; font-family: var(--font-mono); font-size: 0.85em; font-weight: 500; }
+.paper blockquote { margin: 1.2em 0; padding: 10px 16px; border-left: 3px solid var(--rule); background: var(--quote);
+  border-radius: 0 6px 6px 0; font-size: 0.93rem; color: var(--ink-2); }
+figure { margin: 1.6em 0; display: flex; flex-direction: column; gap: 10px; }
+figure img { background: var(--plate); padding: 12px; border-radius: 6px; border: 1px solid var(--rule); max-width: 100%; height: auto; }
+figcaption, caption { font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
+.paper table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; margin: 1.4em 0;
+  font: 400 0.78rem/1.45 var(--font-mono); font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-weight: 500; color: var(--ink-2); border-bottom-color: var(--ink-2); }
+#refs { font-size: 0.88rem; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
+.csl-entry { display: grid; grid-template-columns: 2.6em 1fr; overflow-wrap: anywhere; }
+.csl-left-margin { color: var(--ink-2); font-family: var(--font-mono); font-size: 0.85em; }
+.colophon { border-top: 1px solid var(--rule); padding-top: 20px; color: var(--ink-2); font-size: 0.85rem; }
+.colophon p { margin: 0 0 0.7em; }
+@media (max-width: 480px) { body { font-size: 16px; } .page { padding-block: 28px 48px; gap: 28px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <p class="kicker">Research paper · cbtone</p>
+  <h1>Reading the Room: Do Local-LLM Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages</h1>
+  <p class="byline">Thanatchon Chongmankhong · October 2026 · <a href="https://github.com/thanatchon36/cbtone">github.com/thanatchon36/cbtone</a></p>
+  <p class="meta"><b>cbtone v0.1.1</b> · 7 central banks · English, Indonesian, Malay · <code>qwen3:4b</code> on a consumer GPU · pre-registered at tag <code>prereg-v1</code> · corpus 2026-10-14+ed5a49c2…</p>
+  <ul class="actions"><li><a href="paper.pdf">Download PDF</a></li><li><a href="https://github.com/thanatchon36/cbtone">Source code</a></li><li><a href="https://doi.org/10.5281/zenodo.23371641">DOI 10.5281/zenodo.23371641</a></li><li><a href="../">Documentation</a></li><li><a href="https://github.com/thanatchon36/cbtone/blob/main/docs/RESEARCH_QUESTIONS.md">Pre-registration</a></li><li><a href="https://huggingface.co/thanatchon36/cbtone-ft-xlmr">Model</a></li><li><a href="https://huggingface.co/datasets/thanatchon36/cbtone-silver-sentences">Dataset</a></li></ul>
+</header>
+<section class="abstract" aria-label="Abstract">
+  <h2>Abstract</h2>
+  <div class="abstract-body"><p>Hawkish/dovish tone indices distilled from central-bank text are now routinely produced with large language models (LLMs), yet it is rarely asked whether such indices carry information that a trivial forecast does not, whether they survive a change of prompt, or whether the model has already seen the outcomes it is asked to anticipate. We address these questions with a pre-registered study of seven central banks (the Federal Reserve, the European Central Bank, the Bank of England, the Reserve Bank of Australia, the Monetary Authority of Singapore, Bank Indonesia and Bank Negara Malaysia) in English, Indonesian and Malay, scored by a four-billion-parameter model (<code>qwen3:4b</code>) running on consumer hardware. Hypotheses, thresholds, samples and multiple-testing families were frozen in a public pre-registration before any scorer read the full corpus, and every LLM result is re-estimated on entity-masked text and on a post-training-cutoff window. <strong>Every testable hypothesis is refuted at its pre-registered threshold.</strong> Relative to a persistence forecast, LLM tone improves the out-of-sample log-loss of the next policy decision at none of the 4 adequately powered banks (the nearest miss is the ECB: ΔLL 0.058, Holm-adjusted <em>p</em> = 0.13). The tone surprise explains the announcement-window market move beyond a non-announcement placebo in 1 of 11 bank–market cells and never beats a cited dictionary after correction. Native-language and English versions of the same statement agree only moderately in intensity (Spearman ρ = 0.61 for Indonesian, 0.53 for Malay, against a pre-registered 0.70), while rarely disagreeing in direction. Scores move materially with the prompt wording (Krippendorff’s α = 0.65 across five paraphrases at document level) and still more with the model version. On the human-labelled FOMC test split the LLM reaches a macro-F1 of 0.48, above the dictionary (0.27) but below the pre-registered floor of 0.50. We release the corpus pipeline, the scorers and the evaluation harness as the open-source Python package <code>cbtone</code>, together with every number in this paper.</p></div>
+</section>
+<section class="results" aria-label="Results at a glance">
+  <h2>Results at a glance</h2>
+  <p class="note">Pre-registered hypotheses and their verdicts at the frozen thresholds, generated from <code>results/summary.json</code>.</p>
+  <ul class="result-list"><li class="r r-ref"><span class="r-id">H1</span><span class="r-text">LLM tone improves next-decision prediction over persistence.<small>0 of 4 powered banks; nearest: ECB ΔLL +0.058, Holm p 0.13</small></span><span class="r-tag">refuted</span></li>
+<li class="r r-ref"><span class="r-id">H2a</span><span class="r-text">The tone surprise explains FX / two-year-yield moves beyond a placebo.<small>1 of 11 bank–market cells</small></span><span class="r-tag">refuted</span></li>
+<li class="r r-ref"><span class="r-id">H2b</span><span class="r-text">The LLM beats the dictionary on announcement-window R².<small>0 of 11 cells after Holm correction</small></span><span class="r-tag">refuted</span></li>
+<li class="r r-ref"><span class="r-id">H3</span><span class="r-text">Native-language and English versions agree (Spearman ρ ≥ 0.70).<small>Indonesian ρ 0.61, Malay ρ 0.53</small></span><span class="r-tag">refuted</span></li>
+<li class="r r-ref"><span class="r-id">H4a</span><span class="r-text">Scores are stable across five prompt paraphrases (α ≥ 0.667).<small>α 0.65 (documents), 0.42 (sentences)</small></span><span class="r-tag">refuted</span></li>
+<li class="r r-ref"><span class="r-id">H4b</span><span class="r-text">FOMC macro-F1 ≥ 0.50 and above the dictionary.<small>LLM 0.48, fine-tuned 0.41, dictionary 0.27</small></span><span class="r-tag">refuted</span></li>
+<li class="r r-nf"><span class="r-id">H4c</span><span class="r-text">Findings survive entity masking and a post-cutoff split.<small>no finding survived to be checked</small></span><span class="r-tag">no finding</span></li>
+<li class="r r-null"><span class="r-id">H5</span><span class="r-text">Fed-calibrated scorers transfer poorly to MAS.<small>FOMC-RoBERTa gated; Southeast Asian English subsets below 50 sentences</small></span><span class="r-tag">untestable</span></li></ul>
+</section>
+<nav class="toc" aria-label="Contents"><h2>Contents</h2>
+<ul>
+<li><a href="#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#related-literature" id="toc-related-literature"><span class="toc-section-number">2</span> Related literature</a></li>
+<li><a href="#data" id="toc-data"><span class="toc-section-number">3</span> Data</a></li>
+<li><a href="#empirical-design" id="toc-empirical-design"><span class="toc-section-number">4</span> Empirical design</a></li>
+<li><a href="#results-policy-signal" id="toc-results-policy-signal"><span class="toc-section-number">5</span> Results: policy signal</a></li>
+<li><a href="#results-reliability-and-contamination" id="toc-results-reliability-and-contamination"><span class="toc-section-number">6</span> Results: reliability and contamination</a></li>
+<li><a href="#transfer-to-southeast-asia" id="toc-transfer-to-southeast-asia"><span class="toc-section-number">7</span> Transfer to Southeast Asia</a></li>
+<li><a href="#discussion" id="toc-discussion"><span class="toc-section-number">8</span> Discussion</a></li>
+<li><a href="#threats-to-validity" id="toc-threats-to-validity"><span class="toc-section-number">9</span> Threats to validity</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility"><span class="toc-section-number">10</span> Reproducibility</a></li>
+<li><a href="#conclusion" id="toc-conclusion"><span class="toc-section-number">11</span> Conclusion</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</nav>
+<article class="paper">
+<p><strong>Keywords:</strong> central-bank communication; monetary policy; large language models; text as data; pre-registration; training-data contamination; Southeast Asia. <strong>JEL:</strong> E52, E58, C45, C55, G14.</p>
+<blockquote>
+<p><strong>Disclaimer.</strong> This is an independent open-source project. It uses only documents published on central banks’ public websites (or public mirrors of them), represents the views of no institution, and is not investment advice. The author is employed by a central bank; nothing here draws on non-public information, and the text makes no comment on any bank’s policy choices, only on measurable properties of published text and on statistical results. The Bank of Thailand adapter is opt-in and excluded from all headline results.</p>
+</blockquote>
+<h1 data-number="1" id="introduction"><span class="header-section-number">1</span> Introduction</h1>
+<p>After every policy meeting a central bank publishes a decision statement and, in most cases, minutes and a press conference. Reducing that text to a scalar, a <em>tone</em> running from dovish to hawkish, has become a standard operation in academic research and in market practice. The first generation of measures counted words <span class="citation" data-cites="lucca2009measuring apel2014informative"><a href="#ref-lucca2009measuring" role="doc-biblioref">[1]</a>, <a href="#ref-apel2014informative" role="doc-biblioref">[2]</a></span>; the second trained supervised classifiers on hand-labelled sentences <span class="citation" data-cites="shah2023trillion"><a href="#ref-shah2023trillion" role="doc-biblioref">[3]</a></span>; the third, now spreading rapidly, simply asks a large language model (LLM) to read the document and report a stance <span class="citation" data-cites="hansen2023fedspeak silva2025text"><a href="#ref-hansen2023fedspeak" role="doc-biblioref">[4]</a>, <a href="#ref-silva2025text" role="doc-biblioref">[5]</a></span>. The third generation is attractive because it needs no labelled data, no lexicon and no language-specific engineering, and because models small enough to run on a desktop now read economic prose fluently. It also raises three questions that the literature, overwhelmingly concerned with the Federal Reserve and the ECB and almost entirely with English, has not answered together.</p>
+<p>The first question is whether the measurement carries <em>policy signal</em>: does knowing the tone of today’s statement improve a forecast of the next decision beyond what the last decision already implies, and does the unexpected component of tone explain the market’s reaction on the day? The second is whether the measurement is <em>stable</em>: a tone index is only a measurement if a harmless rephrasing of the prompt, or a point release of the model, leaves it substantially unchanged. The third is whether the measurement is <em>contaminated</em>: a model whose training data extend to 2025 has read commentary on the very decisions a historical test asks it to predict, so an apparently predictive score may be recall rather than reading <span class="citation" data-cites="lopezlira2025memorization sarkar2024lookahead"><a href="#ref-lopezlira2025memorization" role="doc-biblioref">[6]</a>, <a href="#ref-sarkar2024lookahead" role="doc-biblioref">[7]</a></span>.</p>
+<p>This paper answers all three for seven central banks in three languages, with a design that was fixed before the data were examined. The headline set comprises the Federal Reserve (Fed), the European Central Bank (ECB), the Bank of England (BoE), the Reserve Bank of Australia (RBA), the Monetary Authority of Singapore (MAS), Bank Indonesia (BI) and Bank Negara Malaysia (BNM). Three of the seven publish parallel native-language and English versions of their statements, which affords a direct test of cross-lingual consistency that, to our knowledge, has not been attempted for central-bank text. The scorer at the centre of the study is deliberately modest: <code>qwen3:4b</code>, a four-billion-parameter open-weight model served locally through Ollama, chosen because it is what an analyst at an institution without a cloud budget, or with a prohibition on sending documents to an external service, can actually run.</p>
+<p>We make three contributions. First, we release <code>cbtone</code>, an Apache-licensed Python library that fetches public central-bank communications politely, versions them as a content-hashed corpus, and scores them with four scorer families (a cited hawkish/dovish dictionary, a finance-tuned transformer, a local LLM and a small fine-tuned multilingual encoder) behind a single interface, so that the comparisons below can be repeated or extended to other banks in a few lines of configuration. Second, we report a pre-registered study (git tag <code>prereg-v1</code>) in which the five research questions, their hypotheses and thresholds, the minimum sample per cell, the multiple-testing families and the placebo designs were frozen before any scorer read the full corpus; a result that fails its threshold is reported as refuted, not re-specified. Third, we treat training-data contamination as a first-class threat: every LLM result is re-estimated on <em>masked</em> text, in which bank, committee and instrument names, countries, dates and rate levels are replaced by placeholders, and on a <em>post-cutoff</em> window of documents released after the model’s public release date, and a finding is called robust only if it survives both.</p>
+<p>The results are uniformly negative, and we think that is the paper’s value. LLM tone does not improve out-of-sample prediction of the next decision over a persistence baseline at any of the four adequately powered banks; the tone surprise explains the announcement-window move beyond its placebo in a single bank–market cell and never beats the dictionary after correction; native-language and English versions of the same statement correlate only moderately; and five paraphrases of the same prompt produce indices whose agreement falls short of the pre-registered reliability floor. The negative findings are sharpened rather than weakened by the contamination protocol, because masking leaves the point estimates almost unchanged: there is no memorised signal to remove. What the local LLM does do is read individual FOMC sentences better than a dictionary, which is consistent with the published literature and is precisely the kind of claim that does not generalise to policy signal without the tests reported here.</p>
+<p>The remainder of the paper is organised as follows. Section 2 situates the study in the literature on tone measurement, LLM annotation and announcement effects. Section 3 describes the corpus, the decision and market data, and the labels. Section 4 sets out the pre-registered design. Sections 5 to 7 report the results on policy signal, on reliability and contamination, and on transfer to Southeast Asia. Section 8 discusses the findings, Section 9 the threats to validity, and Section 10 the reproducibility of every number; Section 11 concludes.</p>
+<h1 data-number="2" id="related-literature"><span class="header-section-number">2</span> Related literature</h1>
+<h2 data-number="2.1" id="measuring-the-tone-of-central-bank-text"><span class="header-section-number">2.1</span> Measuring the tone of central-bank text</h2>
+<p>The measurement of central-bank tone has moved from counting words to classifying them, and so far almost exclusively for the Federal Reserve. Lucca and Trebbi <span class="citation" data-cites="lucca2009measuring"><a href="#ref-lucca2009measuring" role="doc-biblioref">[1]</a></span> and Apel and Blix Grimaldi <span class="citation" data-cites="apel2014informative"><a href="#ref-apel2014informative" role="doc-biblioref">[2]</a></span> count hawkish and dovish terms in FOMC statements and Riksbank minutes respectively; Loughran and McDonald <span class="citation" data-cites="loughran2011liability"><a href="#ref-loughran2011liability" role="doc-biblioref">[8]</a></span> show why generic sentiment lexicons mislead on financial text, and Picault and Renault <span class="citation" data-cites="picault2017words"><a href="#ref-picault2017words" role="doc-biblioref">[9]</a></span> build a field-specific lexicon for the ECB. Tone dictionaries have also been applied to speeches to study the home bias of European central bankers <span class="citation" data-cites="bennani2017home"><a href="#ref-bennani2017home" role="doc-biblioref">[10]</a></span>. Topic models exploit deliberation transcripts to separate information from forward guidance <span class="citation" data-cites="hansen2016shocking"><a href="#ref-hansen2016shocking" role="doc-biblioref">[11]</a></span> and to study how transparency changes what committee members say <span class="citation" data-cites="hansen2018transparency"><a href="#ref-hansen2018transparency" role="doc-biblioref">[12]</a></span>, while voice-tone measures extend the lens beyond the written record <span class="citation" data-cites="gorodnichenko2023voice"><a href="#ref-gorodnichenko2023voice" role="doc-biblioref">[13]</a></span>. Supervised transformers came next: FOMC-RoBERTa, trained on 2,480 hand-labelled FOMC sentences, reaches a weighted F1 of 0.72 on the held-out split against about 0.50 for a rule-based baseline and 0.59 for zero-shot ChatGPT-3.5 <span class="citation" data-cites="shah2023trillion"><a href="#ref-shah2023trillion" role="doc-biblioref">[3]</a></span>, and CentralBankRoBERTa classifies economic sentiment rather than policy stance <span class="citation" data-cites="pfeifer2023centralbankroberta"><a href="#ref-pfeifer2023centralbankroberta" role="doc-biblioref">[14]</a></span>. The Fed is also the only bank with a public human-labelled hawkish/dovish set, so outside the Fed no scorer has been checked against human judgement.</p>
+<h2 data-number="2.2" id="llms-as-annotators-and-the-contamination-problem"><span class="header-section-number">2.2</span> LLMs as annotators, and the contamination problem</h2>
+<p>Asking an LLM to annotate text works, but how well depends on the setting. LLM annotation can match or beat crowd workers on cost and agreement for political text <span class="citation" data-cites="gilardi2023chatgpt"><a href="#ref-gilardi2023chatgpt" role="doc-biblioref">[15]</a></span>; zero-shot reading of FOMC stance by an early GPT model is modest <span class="citation" data-cites="hansen2023fedspeak"><a href="#ref-hansen2023fedspeak" role="doc-biblioref">[4]</a></span>; and the one study spanning many banks and languages finds a fine-tuned multilingual encoder far ahead of GPT-4o on stance classification <span class="citation" data-cites="silva2025text"><a href="#ref-silva2025text" role="doc-biblioref">[5]</a></span>. Models can also be probed for the expectations they hold <span class="citation" data-cites="bybee2023surveying"><a href="#ref-bybee2023surveying" role="doc-biblioref">[16]</a></span> and used to forecast returns from headlines <span class="citation" data-cites="lopezlira2023chatgpt"><a href="#ref-lopezlira2023chatgpt" role="doc-biblioref">[17]</a></span>. Two reliability concerns follow directly. Prompt format alone can move accuracy by tens of points <span class="citation" data-cites="sclar2024quantifying"><a href="#ref-sclar2024quantifying" role="doc-biblioref">[18]</a></span>, and a recent application at the Reserve Bank of Australia stresses that “reasoning” about central-bank text must be made trustworthy before it is operationalised <span class="citation" data-cites="jones2025ornithologist"><a href="#ref-jones2025ornithologist" role="doc-biblioref">[19]</a></span>. Ludwig, Mullainathan and Rambachan <span class="citation" data-cites="ludwig2025llm"><a href="#ref-ludwig2025llm" role="doc-biblioref">[20]</a></span> give the econometric framing we adopt: an LLM output used as a regressor is a noisy, possibly non-classical measurement whose error structure must be characterised before downstream inference is interpreted.</p>
+<p>Contamination is both real and measurable. LLMs recall macroeconomic outcomes almost perfectly before their training cutoff and at near-chance rates after it <span class="citation" data-cites="lopezlira2025memorization"><a href="#ref-lopezlira2025memorization" role="doc-biblioref">[6]</a></span>; masking entity names changes GPT-based sentiment signals in-sample <span class="citation" data-cites="glasserman2024lookahead"><a href="#ref-glasserman2024lookahead" role="doc-biblioref">[21]</a></span>; and formal tests of look-ahead bias in pretrained models are available <span class="citation" data-cites="sarkar2024lookahead"><a href="#ref-sarkar2024lookahead" role="doc-biblioref">[7]</a></span>. We found no study that combines entity masking with a post-cutoff split on central-bank text, which is what our RQ4c does.</p>
+<h2 data-number="2.3" id="announcement-effects-and-the-southeast-asian-evidence"><span class="header-section-number">2.3</span> Announcement effects and the Southeast Asian evidence</h2>
+<p>The event-study template is well established. Kuttner <span class="citation" data-cites="kuttner2001monetary"><a href="#ref-kuttner2001monetary" role="doc-biblioref">[22]</a></span> identifies the policy surprise from federal funds futures; Gürkaynak, Sack and Swanson <span class="citation" data-cites="gurkaynak2005actions"><a href="#ref-gurkaynak2005actions" role="doc-biblioref">[23]</a></span> separate a target factor from a “path” factor that captures what the statement says; Bernanke and Kuttner <span class="citation" data-cites="bernanke2005explains"><a href="#ref-bernanke2005explains" role="doc-biblioref">[24]</a></span> quantify the equity response; and Blinder et al. <span class="citation" data-cites="blinder2008central"><a href="#ref-blinder2008central" role="doc-biblioref">[25]</a></span> survey why communication moves markets. Text-based surprise measures explain much less of daily moves than rate surprises do; changes in statement wording reach a pseudo-R² of at most 0.12 <span class="citation" data-cites="ehrmann2020starting"><a href="#ref-ehrmann2020starting" role="doc-biblioref">[26]</a></span>. We therefore pre-registered small R² values as the relevant benchmark rather than as a disappointment. A recent Federal Reserve note comparing LLM and lexicon tone across many banks reports only moderate agreement between the two <span class="citation" data-cites="xu2026assessing"><a href="#ref-xu2026assessing" role="doc-biblioref">[27]</a></span>, which anticipates our RQ4 results.</p>
+<p>Evidence for Southeast Asia is thin. For Malaysia there is a yield-curve event study of rate surprises <span class="citation" data-cites="ho2021effects"><a href="#ref-ho2021effects" role="doc-biblioref">[28]</a></span>; for the region there are transparency surveys <span class="citation" data-cites="filardo2008transparency"><a href="#ref-filardo2008transparency" role="doc-biblioref">[29]</a></span>; and the emerging-market communication literature more broadly covers Fed spillovers to emerging equity markets <span class="citation" data-cites="hayo2012federal"><a href="#ref-hayo2012federal" role="doc-biblioref">[30]</a></span>, the link between transparency and market expectations <span class="citation" data-cites="neuenkirch2013transparency"><a href="#ref-neuenkirch2013transparency" role="doc-biblioref">[31]</a></span>, and expectation formation in Brazil <span class="citation" data-cites="montes2016communication"><a href="#ref-montes2016communication" role="doc-biblioref">[32]</a></span>. Singapore’s exchange-rate-centred regime is described by Parrado <span class="citation" data-cites="parrado2004singapore"><a href="#ref-parrado2004singapore" role="doc-biblioref">[33]</a></span>, but we found no study linking MAS statement text to the Singapore dollar, and none comparing tone between native-language and English versions of the same central-bank document.</p>
+<h1 data-number="3" id="data"><span class="header-section-number">3</span> Data</h1>
+<h2 data-number="3.1" id="corpus"><span class="header-section-number">3.1</span> Corpus</h2>
+<p>Adapters fetch each bank’s public pages under its robots.txt, with a rate limit of at least two seconds per host and a descriptive User-Agent, caching every response with its SHA-256 digest. MAS serves a bot interstitial to automated clients and pbc.gov.cn disallows crawlers; with the author’s approval both are read from Internet Archive copies and never from the banks’ own sites. The snapshot used here (<code>2026-10-14+ed5a49c28f7b41acaf4f21bda0d43570bd23049b363717c08d5efb3b9177bb8b</code>) holds 2,935 documents. Each bank’s primary decision series was fixed in the pre-registration: FOMC statements; ECB monetary-policy decision press releases; BoE Monetary Policy Committee minutes (the Bank’s 2000–2006 decision releases are a single sentence and carry no tone); RBA statements from December 2007 (earlier releases exist only when the cash rate changed); MAS Monetary Policy Statements; and BI and BNM statements (English primary, with Indonesian and Malay twins used for RQ3). Text is committed to the repository only where the source’s terms permit redistribution (Fed, ECB decision releases, RBA); for the other banks the repository holds URLs and hashes, and <code>make fetch</code> rebuilds the text locally.</p>
+<h2 data-number="3.2" id="policy-decisions"><span class="header-section-number">3.2</span> Policy decisions</h2>
+<p>Rate decisions are taken from the BIS central-bank policy-rate series and matched to meeting dates from the corpus; a meeting at which the rate is unchanged is a hold. MAS sets a path for the trade-weighted exchange rate rather than an interest rate, so its decisions (tighten, maintain, ease) are taken from the Authority’s own published decision table; a rule-based extractor exists for statements not yet in that table, but its accuracy is development accuracy only and it is used for two 2026 statements that are excluded from every test.</p>
+<h2 data-number="3.3" id="market-data"><span class="header-section-number">3.3</span> Market data</h2>
+<p>Daily exchange-rate closes come from Yahoo Finance, with bad ticks removed by a rule fixed before any test was run, and two-year government-bond yields from a free official daily source where one exists (United States, euro area, United Kingdom, Australia). Moves are measured between the closes of <em>t</em> − 1 and <em>t</em> + 1 around the release; a document without a published release time is timed at 00:00 local time on its release date, so that the window always contains the event. Exchange rates for Singapore, Indonesia and Malaysia are USD crosses, signed so that a positive move is a domestic appreciation.</p>
+<h2 data-number="3.4" id="human-and-silver-labels"><span class="header-section-number">3.4</span> Human and silver labels</h2>
+<p>Human labels exist only for the Fed: the hawkish/dovish test split of Shah, Paturi and Chava <span class="citation" data-cites="shah2023trillion"><a href="#ref-shah2023trillion" role="doc-biblioref">[3]</a></span>, which is used for evaluation only under its non-commercial licence and never for training. For Southeast Asia, 200 sentences (MAS 60; BI 35 English and 35 Indonesian; BNM 35 English and 35 Malay) carry <em>silver</em> labels produced by two LLM passes with different prompts and a tie-break; they are reported as silver throughout and are never treated as ground truth. Table 1 summarises the sample behind every test.</p>
+<p><strong>Table 1.</strong> Sample behind each test. Decisions are meetings with a matched policy decision; OOS, hikes and cuts are the out-of-sample decisions predicted by the expanding-window model in RQ1 and the hikes and cuts among them (for MAS, tightenings and easings of the exchange-rate path). A bank is powered for RQ1 when it has at least 40 OOS decisions with at least 8 hikes and 8 cuts. FX and two-year-yield events are announcements with a usable market window; “—” marks series for which no free daily source exists.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 23%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Bank</th>
+<th style="text-align: left;">Primary document</th>
+<th style="text-align: right;">Decisions</th>
+<th style="text-align: right;">OOS</th>
+<th style="text-align: right;">Hikes</th>
+<th style="text-align: right;">Cuts</th>
+<th style="text-align: center;">Powered (RQ1)</th>
+<th style="text-align: right;">FX events</th>
+<th style="text-align: right;">2Y events</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fed</td>
+<td style="text-align: left;">FOMC statement</td>
+<td style="text-align: right;">225</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">218</td>
+</tr>
+<tr>
+<td style="text-align: left;">ECB</td>
+<td style="text-align: left;">Decision press release</td>
+<td style="text-align: right;">298</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">218</td>
+</tr>
+<tr>
+<td style="text-align: left;">BoE</td>
+<td style="text-align: left;">MPC minutes</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: right;">235</td>
+<td style="text-align: right;">275</td>
+</tr>
+<tr>
+<td style="text-align: left;">RBA</td>
+<td style="text-align: left;">Decision statement</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">137</td>
+</tr>
+<tr>
+<td style="text-align: left;">MAS</td>
+<td style="text-align: left;">Monetary Policy Statement</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">BI</td>
+<td style="text-align: left;">Decision statement</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">BNM</td>
+<td style="text-align: left;">Decision statement</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<h1 data-number="4" id="empirical-design"><span class="header-section-number">4</span> Empirical design</h1>
+<h2 data-number="4.1" id="scorers"><span class="header-section-number">4.1</span> Scorers</h2>
+<p>Every scorer returns a probability vector over {hawkish, dovish, neutral} and an index <span class="math inline"><em>τ</em> = <em>p</em><sub>hawkish</sub> − <em>p</em><sub>dovish</sub> ∈ [−1, 1]</span>, computed on the same input: the decision, forward-guidance, outlook and risk paragraphs of a document selected by a rule-based tagger and capped at 6,000 characters. The <em>dictionary</em> (<code>dict-v1</code>) applies a 167-term lexicon assembled from the cited hawkish/dovish word lists with negation handling; it reads English only. The <em>LLM</em> is <code>qwen3:4b</code> run locally through Ollama at temperature 0 with a registered prompt (P1) and schema-constrained JSON output; every call is cached by content hash, so a re-run repeats no inference. The <em>fine-tuned</em> scorer is XLM-R base trained for at most 30 minutes on the LLM’s own sentence labels for corpus sentences, never on the FOMC data, so that it measures how much of the LLM’s reading a small multilingual encoder can absorb. FOMC-RoBERTa, the in-distribution reference, is implemented but is a gated model whose access was pending at the time of the run; it is reported as not run wherever it appears.</p>
+<h2 data-number="4.2" id="pre-registration-and-hypotheses"><span class="header-section-number">4.2</span> Pre-registration and hypotheses</h2>
+<p>The pre-registration (<code>docs/RESEARCH_QUESTIONS.md</code> at tag <code>prereg-v1</code>) fixed the five research questions, the hypotheses in Table 2, the sample minimum for each (bank, question) cell, the Holm families and the placebo designs. Deviations made after the tag are logged with their rationale in <code>docs/DECISIONS.md</code> (D17–D20) and concern compute allocation and document selection, not thresholds or tests.</p>
+<p><strong>Table 2.</strong> Pre-registered hypotheses, their thresholds and the verdicts reported in Sections 5–7. Every verdict is read from <code>results/summary.json</code>.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 41%" />
+<col style="width: 30%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Hypothesis</th>
+<th style="text-align: left;">Statement</th>
+<th style="text-align: left;">Threshold</th>
+<th style="text-align: left;">Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">H1</td>
+<td style="text-align: left;">LLM tone improves out-of-sample next-decision log-loss over persistence at a majority of powered banks</td>
+<td style="text-align: left;">ΔLL &gt; 0, Holm-adjusted <em>p</em> &lt; 0.05, beats both placebos</td>
+<td style="text-align: left;">refuted (0 of 4)</td>
+</tr>
+<tr>
+<td style="text-align: left;">H2a</td>
+<td style="text-align: left;">The LLM tone surprise explains the announcement-window move beyond a non-announcement placebo</td>
+<td style="text-align: left;">R² above the placebo 95th percentile, Holm-adjusted <em>p</em>(β) &lt; 0.05</td>
+<td style="text-align: left;">refuted (1 of 11)</td>
+</tr>
+<tr>
+<td style="text-align: left;">H2b</td>
+<td style="text-align: left;">The LLM’s R² exceeds the dictionary’s</td>
+<td style="text-align: left;">ΔR² &gt; 0, Holm-adjusted <em>p</em> &lt; 0.05</td>
+<td style="text-align: left;">refuted (0 of 11)</td>
+</tr>
+<tr>
+<td style="text-align: left;">H3</td>
+<td style="text-align: left;">Native-language and English scores of the same statement agree</td>
+<td style="text-align: left;">Spearman ρ ≥ 0.70 and stance flips ≤ 10 %</td>
+<td style="text-align: left;">refuted</td>
+</tr>
+<tr>
+<td style="text-align: left;">H4a</td>
+<td style="text-align: left;">Scores are stable across prompt paraphrases, temperatures, model tags and aggregation</td>
+<td style="text-align: left;">α ≥ 0.667, ICC(2,1) ≥ 0.75, all aggregation ρ ≥ 0.70</td>
+<td style="text-align: left;">prompts pass: no</td>
+</tr>
+<tr>
+<td style="text-align: left;">H4b</td>
+<td style="text-align: left;">The LLM agrees with human FOMC labels better than the dictionary</td>
+<td style="text-align: left;">macro-F1 ≥ 0.50 and above the dictionary</td>
+<td style="text-align: left;">refuted</td>
+</tr>
+<tr>
+<td style="text-align: left;">H4c</td>
+<td style="text-align: left;">Any H1/H2 finding survives entity masking and a post-cutoff split</td>
+<td style="text-align: left;">both re-estimates keep sign and significance</td>
+<td style="text-align: left;">robust finding: no</td>
+</tr>
+<tr>
+<td style="text-align: left;">H5</td>
+<td style="text-align: left;">Fed-calibrated scorers transfer poorly to MAS</td>
+<td style="text-align: left;">silver macro-F1 drop ≥ 0.15 vs FOMC, with FOMC-RoBERTa as the reference</td>
+<td style="text-align: left;">untestable</td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="4.3" id="next-decision-prediction-rq1"><span class="header-section-number">4.3</span> Next-decision prediction (RQ1)</h2>
+<p>For each bank <span class="math inline"><em>b</em></span> with decisions <span class="math inline"><em>y</em><sub><em>t</em></sub> ∈ {cut, hold, hike}</span> at meetings <span class="math inline"><em>t</em> = 1, …, <em>T</em><sub><em>b</em></sub></span>, an ordered-logit model <span class="math display">Pr (<em>y</em><sub><em>t</em> + 1</sub> ≤ <em>k</em> ∣ <em>x</em><sub><em>t</em></sub>) = <em>Λ</em>(<em>κ</em><sub><em>k</em></sub> − <em>x</em><sub><em>t</em><sup>′</sup></sub><em>β</em>),   <em>x</em><sub><em>t</em></sub> = (<em>τ</em><sub><em>t</em></sub>, <em>Δ</em><em>τ</em><sub><em>t</em></sub>, <em>d</em><sub><em>t</em></sub>),</span> is refitted at every decision on an expanding window (initial 40 % of the sample, at least 30 decisions) and used to predict the next decision, where <span class="math inline"><em>τ</em><sub><em>t</em></sub></span> is the tone of the document released at <span class="math inline"><em>t</em></span>, <span class="math inline"><em>Δ</em><em>τ</em><sub><em>t</em></sub></span> its change from the previous document and <span class="math inline"><em>d</em><sub><em>t</em></sub></span> the direction of the last decision. The baseline is persistence, a smoothed estimate of <span class="math inline">Pr (<em>y</em><sub><em>t</em> + 1</sub> ∣ <em>y</em><sub><em>t</em></sub>)</span> from the same window. Performance is the multiclass log-loss per decision, and the quantity of interest is the gain <span class="math display"><em>Δ</em>LL<sub><em>b</em></sub> = LL<sub><em>b</em></sub><sup>reference</sup> − LL<sub><em>b</em></sub><sup>model</sup>,</span> positive when the tone model is better. Its sampling distribution is obtained by a moving-block bootstrap over out-of-sample decisions (block length 4); Holm’s correction is applied across the adequately powered banks; and a success additionally requires the real gain to exceed the 95th percentile of two placebo distributions, obtained by shuffling the dates of the tone series and by permuting the decision labels (1,000 permutations each). The same procedure is run with the dictionary as the reference, so that the LLM is compared both with a trivial forecast and with a simple text measure.</p>
+<h2 data-number="4.4" id="announcement-window-regressions-rq2"><span class="header-section-number">4.4</span> Announcement-window regressions (RQ2)</h2>
+<p>The tone surprise <span class="math inline"><em>s</em><sub><em>t</em></sub> = <em>τ</em><sub><em>t</em></sub> − <em>τ̂</em><sub><em>t</em> ∣ <em>t</em> − 1</sub></span> is the residual from an AR(1) fitted to the tone series of that bank using documents released before <span class="math inline"><em>t</em></span> only. For each bank and market series the two-day move <span class="math inline"><em>r</em><sub><em>t</em></sub></span> around the release is regressed on the surprise, <span class="math display"><em>r</em><sub><em>t</em></sub> = <em>α</em> + <em>β</em><em>s</em><sub><em>t</em></sub> + <em>ε</em><sub><em>t</em></sub>,</span> with Newey–West (HAC) standard errors. H2a requires the R² to exceed the 95th percentile of the same regression run on non-announcement days and a Holm-adjusted one-sided test on <span class="math inline"><em>β</em></span> in the hypothesised direction (a hawkish surprise appreciates the currency and raises the two-year yield); H2b compares the LLM’s R² with the dictionary’s by paired block bootstrap. Cells with fewer than 30 events are reported but excluded from the Holm family.</p>
+<h2 data-number="4.5" id="cross-lingual-consistency-rq3"><span class="header-section-number">4.5</span> Cross-lingual consistency (RQ3)</h2>
+<p>For BI and BNM every statement is published in the national language and in English. The LLM scores both versions independently, and consistency is measured by the Spearman correlation of the two indices over parallel pairs and by the <em>stance-flip rate</em>, the share of pairs whose argmax labels are hawkish in one language and dovish in the other. H3 requires ρ ≥ 0.70 and a flip rate of at most 10 %. PBoC, which publishes Chinese and English, is exploratory because it has too few parallel pairs.</p>
+<h2 data-number="4.6" id="reliability-rq4a-rq4b"><span class="header-section-number">4.6</span> Reliability (RQ4a, RQ4b)</h2>
+<p>Stability is measured with Krippendorff’s α (interval) and ICC(2,1) across five registered paraphrases of the prompt, two temperatures (0 and 0.7), two model tags (<code>qwen3:4b</code> and <code>qwen2.5:3b</code>) and three strategies for aggregating sentence scores into a document score (mean, decision-weighted, maximum absolute index), each compared with the direct document score, on 120 documents and 1,000 sentences. Agreement with human labels is the three-class macro-F1 on the 496-sentence FOMC test split, with a bootstrap interval over sentences and a paired comparison with the dictionary.</p>
+<h2 data-number="4.7" id="contamination-rq4c"><span class="header-section-number">4.7</span> Contamination (RQ4c)</h2>
+<p>Every LLM score is recomputed on <em>masked</em> text, in which a deterministic rule replaces the names of banks, committees, instruments and countries, all dates and all rate levels with typed placeholders, and every RQ1 and RQ2 estimate is recomputed on the <em>post-cutoff</em> window of documents released after the model’s public release date (2025-04-29). A finding from RQ1 or RQ2 is <em>robust</em> only if it keeps its sign and significance under both re-estimations. Because the model cannot have read commentary on post-cutoff decisions, and because masking removes the handles through which a memorised outcome could be retrieved, a signal that survives both is unlikely to be recall.</p>
+<h2 data-number="4.8" id="transfer-to-southeast-asia-rq5"><span class="header-section-number">4.8</span> Transfer to Southeast Asia (RQ5)</h2>
+<p>Each Fed-calibrated scorer’s macro-F1 on the FOMC test split is compared with its macro-F1 on the silver sets per bank and language; H5 predicts a drop of at least 0.15 for MAS, whose exchange-rate framing is furthest from the Fed’s. The test was pre-registered with FOMC-RoBERTa as the reference scorer and a minimum of 50 sentences per cell. As a descriptive complement, we report the mean cosine distance between each bank’s sentences and Fed sentences in a multilingual sentence-embedding space (<code>sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2</code>).</p>
+<h2 data-number="4.9" id="power-multiplicity-and-compute"><span class="header-section-number">4.9</span> Power, multiplicity and compute</h2>
+<p>Each (bank, question) cell has a pre-set minimum sample; underpowered cells are reported with their estimates but excluded from the Holm families and from majority counts, and a majority verdict requires at least three powered banks. All LLM scores come from one backend, the same <code>qwen3:4b</code> weights (digest <code>359d7dd4</code>) served by Ollama on a desktop RTX 4070 Ti, on which the full pre-registered workload fits the two-hour LLM budget without invoking the pre-registered compute ladder: scoring the primary documents took 4 minutes, the masked re-scoring 3 minutes and the stability perturbations 71 minutes. The fine-tuned encoder trained in 6 minutes on an Apple M4 laptop. On that laptop the LLM processes about 220 prompt tokens per second, roughly 3.5 seconds per document at a 3,000-character cap, so a laptop-only replication requires the ladder described in Section 10.</p>
+<h1 data-number="5" id="results-policy-signal"><span class="header-section-number">5</span> Results: policy signal</h1>
+<h2 data-number="5.1" id="the-tone-series"><span class="header-section-number">5.1</span> The tone series</h2>
+<p>Figure 1 plots the LLM index of each bank’s primary document over the sample. The series are visibly plausible: the 2022–2023 tightening cycle appears as a sustained hawkish plateau at every bank that publishes a full statement, the 2008–2009 and 2020 easings as dovish troughs, and the exchange-rate-framed MAS statements as a smoother and more muted series. Two features matter for what follows. First, the ECB’s decision press releases before 2016 are short and formulaic, so the index alternates between neutral and the extremes rather than evolving gradually; second, for BI the series begins only in 2016, because the bank’s own index lists nothing older. Plausibility of this kind is the weakest test a tone index can pass, and the sections that follow ask whether anything more is true.</p>
+<figure>
+<img src="figures/fig_tone_timeseries.svg" style="width:100.0%" alt="Figure 1. LLM tone index of each bank’s primary decision document, qwen3:4b at temperature 0 with the registered prompt. Dotted line: the model’s public release date, after which no document can have been in its training data." />
+<figcaption aria-hidden="true">Figure 1. LLM tone index of each bank’s primary decision document, <code>qwen3:4b</code> at temperature 0 with the registered prompt. Dotted line: the model’s public release date, after which no document can have been in its training data.</figcaption>
+</figure>
+<h2 data-number="5.2" id="does-tone-predict-the-next-decision-rq1"><span class="header-section-number">5.2</span> Does tone predict the next decision? (RQ1)</h2>
+<p><strong>H1 is refuted.</strong> 4 banks meet the pre-registered power rule (Fed, ECB, RBA and BI). The LLM succeeds at none of them (Table 3, Figure 2).</p>
+<p><strong>Table 3.</strong> Next-decision prediction with LLM tone at the adequately powered banks. ΔLL = LL(reference) − LL(model) in multiclass log-loss per decision; positive favours the LLM. Intervals from a moving-block bootstrap; Holm correction across the four banks.</p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 26%" />
+<col style="width: 12%" />
+<col style="width: 26%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Bank</th>
+<th style="text-align: right;">OOS <em>n</em></th>
+<th style="text-align: right;">ΔLL vs persistence [95 % CI]</th>
+<th style="text-align: right;">Holm <em>p</em></th>
+<th style="text-align: right;">ΔLL vs dictionary [95 % CI]</th>
+<th style="text-align: center;">Beats both placebos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fed</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">-0.005 [-0.059, 0.039]</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.011 [-0.041, 0.063]</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">ECB</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">0.058 [0.007, 0.112]</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">0.052 [-0.000, 0.108]</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">RBA</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.020 [-0.010, 0.050]</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">-0.023 [-0.058, 0.014]</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">BI</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">0.016 [-0.041, 0.083]</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">-0.016 [-0.103, 0.095]</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<p>The ECB is the only bank at which the LLM’s gain over persistence has a bootstrap interval that excludes zero and exceeds both placebo distributions (95th percentiles 0.014 for shuffled tone and 0.010 for permuted labels); the unadjusted <em>p</em>-value is 0.032 and the Holm-adjusted value 0.13, so the finding does not survive the pre-registered correction. The masked LLM gives an almost identical ECB estimate (0.059 [0.008, 0.111]), which is consistent with the gain being a property of the text rather than of memorised outcomes, but does not rescue it. At the RBA it is the dictionary, not the LLM, whose interval lies above zero (ΔLL 0.043 [0.002, 0.087]); the dictionary was not a registered hypothesis and we report it only as a reminder that the ranking of scorers is bank-specific. The BoE (only 5 out-of-sample hikes), MAS (29 predictions) and BNM (7 hikes) are underpowered and appear in Figure 2 with hollow markers.</p>
+<p>Two further observations qualify the headline. Ranking metrics are high for every scorer, including the persistence baseline (Fed persistence AUROC 0.77, ECB 0.85), because most of the information about the next move is already in the last one: policy rates move in runs, and a model that knows the direction of the last decision ranks the next correctly most of the time. The LLM raises the ECB AUROC to 0.91, which is the same near-miss seen in log-loss. Second, BI’s masked-text AUROC of exactly 1.00 rests on 11 hikes and 9 cuts and is a small-sample artefact discussed in <code>ANOMALIES.md</code> (A9), not evidence of perfect ranking.</p>
+<figure>
+<img src="figures/fig_rq1_dll.svg" style="width:100.0%" alt="Figure 2. Gain in next-decision log-loss over persistence by bank and scorer. Positive values favour the text model. Hollow markers: banks below the pre-registered power minimum, reported but outside the Holm family." />
+<figcaption aria-hidden="true">Figure 2. Gain in next-decision log-loss over persistence by bank and scorer. Positive values favour the text model. Hollow markers: banks below the pre-registered power minimum, reported but outside the Holm family.</figcaption>
+</figure>
+<h2 data-number="5.3" id="does-the-tone-surprise-explain-the-market-reaction-rq2"><span class="header-section-number">5.3</span> Does the tone surprise explain the market reaction? (RQ2)</h2>
+<p><strong>H2a and H2b are refuted.</strong> Of 11 adequately powered bank–market cells, the LLM tone surprise explains the release-window move beyond its placebo in 1 (Table 4, Figure 3), and its R² exceeds the dictionary’s, after Holm correction, in 0.</p>
+<p><strong>Table 4.</strong> Announcement-window regressions of the market move on the LLM tone surprise, all powered cells. FX β is the signed two-day log move (positive = domestic appreciation) per unit surprise; yield β is in basis points per unit surprise. Newey–West standard errors; Holm correction across the eleven cells.</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 13%" />
+<col style="width: 11%" />
+<col style="width: 13%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Bank</th>
+<th style="text-align: left;">Series</th>
+<th style="text-align: right;"><em>n</em></th>
+<th style="text-align: right;">β</th>
+<th style="text-align: right;">R²</th>
+<th style="text-align: right;">Placebo R² (p95)</th>
+<th style="text-align: right;">Holm <em>p</em> (β)</th>
+<th style="text-align: right;">ΔR² vs dict.</th>
+<th style="text-align: center;">Exceeds placebo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fed</td>
+<td style="text-align: left;">USD index</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">0.0016</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fed</td>
+<td style="text-align: left;">US 2Y</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">3.25</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">ECB</td>
+<td style="text-align: left;">EUR/USD</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">-0.0007</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">ECB</td>
+<td style="text-align: left;">EA 2Y</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">BoE</td>
+<td style="text-align: left;">GBP/USD</td>
+<td style="text-align: right;">235</td>
+<td style="text-align: right;">0.0005</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">BoE</td>
+<td style="text-align: left;">UK 2Y</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">RBA</td>
+<td style="text-align: left;">AUD/USD</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">0.0041</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">RBA</td>
+<td style="text-align: left;">AU 2Y</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">9.04</td>
+<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.088</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">MAS</td>
+<td style="text-align: left;">USD/SGD</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">0.0022</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">BI</td>
+<td style="text-align: left;">USD/IDR</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">-0.0039</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.046</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">BNM</td>
+<td style="text-align: left;">USD/MYR</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">0.0043</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<p>The single success is the Australian two-year yield: a one-unit hawkish surprise is associated with a 9.0 basis-point rise (R² 0.10 against a placebo 95th percentile of 0.029). Its R² gain over the dictionary has a bootstrap interval above zero ([0.001, 0.225]) but a Holm-adjusted <em>p</em> of 0.43, so H2b fails even there. The magnitude is economically sensible: the R² is of the order reported for wording-based surprises in the literature <span class="citation" data-cites="ehrmann2020starting"><a href="#ref-ehrmann2020starting" role="doc-biblioref">[26]</a></span>, and far below what rate surprises achieve <span class="citation" data-cites="gurkaynak2005actions"><a href="#ref-gurkaynak2005actions" role="doc-biblioref">[23]</a></span>. For BI the LLM coefficient is statistically distinguishable from zero but carries the sign opposite to the hypothesis (β -0.0039, unadjusted <em>p</em> 0.007): more hawkish surprises coincide with rupiah depreciation over the day-level window. The pre-registered one-sided test does not count this as a success, and because BI publishes no release time the design cannot distinguish a reaction from the statement from a statement that responds to the day’s market move (<code>ANOMALIES.md</code>, A10). Pooled across banks with bank fixed effects, the FX coefficient is 0.0005 [-0.0010, 0.0020] (<em>n</em> = 1,179), indistinguishable from zero.</p>
+<figure>
+<img src="figures/fig_rq2_beta.svg" style="width:100.0%" alt="Figure 3. Response of the exchange rate (a) and the two-year government yield (b) to the tone surprise, by bank and scorer, with Newey–West 95 % intervals. The Australian two-year yield is the only cell in which the LLM’s R² exceeds its non-announcement placebo." />
+<figcaption aria-hidden="true">Figure 3. Response of the exchange rate (a) and the two-year government yield (b) to the tone surprise, by bank and scorer, with Newey–West 95 % intervals. The Australian two-year yield is the only cell in which the LLM’s R² exceeds its non-announcement placebo.</figcaption>
+</figure>
+<h2 data-number="5.4" id="do-native-language-and-english-versions-agree-rq3"><span class="header-section-number">5.4</span> Do native-language and English versions agree? (RQ3)</h2>
+<p><strong>H3 is refuted.</strong> On parallel statements the LLM’s native-language and English indices have a Spearman correlation of 0.61 for BI (Indonesian, <em>n</em> = 128) and 0.53 for BNM (Malay, <em>n</em> = 139), both below the pre-registered 0.70. The disagreement concerns intensity rather than direction: the stance flips between hawkish and dovish in only 2.3% and 2.2% of pairs, well within the 10 % ceiling, whereas the mean absolute gap between the two indices is 0.28 and 0.18 on a [−1, 1] scale (Figure 4). The fine-tuned multilingual encoder is no more consistent (ρ 0.44 and 0.54), which suggests that the inconsistency is not peculiar to generative decoding. The dictionary is English-only and therefore not applicable, and PBoC, with 9 parallel pairs, is exploratory. Figure 4 makes the structure of the disagreement visible: both languages place most statements in a mildly dovish band, but the Indonesian versions are read as more dovish than the English ones in the lower-left quadrant, and the Malay versions cluster more tightly around neutral.</p>
+<figure>
+<img src="figures/fig_rq3_crosslingual.svg" style="width:100.0%" alt="Figure 4. LLM tone of the native-language version against the English version of the same statement, for Bank Indonesia (a) and Bank Negara Malaysia (b). Marker area is proportional to the number of statements at each pair of values; the diagonal is perfect agreement." />
+<figcaption aria-hidden="true">Figure 4. LLM tone of the native-language version against the English version of the same statement, for Bank Indonesia (a) and Bank Negara Malaysia (b). Marker area is proportional to the number of statements at each pair of values; the diagonal is perfect agreement.</figcaption>
+</figure>
+<h1 data-number="6" id="results-reliability-and-contamination"><span class="header-section-number">6</span> Results: reliability and contamination</h1>
+<h2 data-number="6.1" id="stability-across-prompts-temperatures-model-versions-and-aggregation-h4a"><span class="header-section-number">6.1</span> Stability across prompts, temperatures, model versions and aggregation (H4a)</h2>
+<p><strong>H4a is refuted.</strong> Table 5 and Figure 5 report Krippendorff’s α and ICC(2,1) for each perturbation. Across the five registered prompt paraphrases, document scores reach α = 0.65 and ICC(2,1) = 0.66 on 120 documents, short of the pre-registered 0.667 and 0.75; on 1,000 sentences α falls to 0.42. Temperature matters much less (α = 0.92 for documents and 0.81 for sentences at 0 against 0.7), which indicates that the instability is not sampling noise but a genuine dependence of the reading on the wording of the instruction. Replacing the model tag with <code>qwen2.5:3b</code> changes scores most of all: α = 0.46 for documents and -0.03 for sentences, the latter no better than chance agreement. Aggregating sentence scores into a document score yields indices that correlate with the direct document score at ρ between 0.62 and 0.72, so not every pair of strategies clears 0.70; the mean and decision-weighted aggregates are near-identical to each other (ρ = 0.98), as they must be by construction (<code>ANOMALIES.md</code>, A11).</p>
+<p><strong>Table 5.</strong> Agreement between scores of the same text under each perturbation, on 120 documents and 1,000 sentences; α is Krippendorff’s interval α and ICC is ICC(2,1). Pre-registered floors: α ≥ 0.667 and ICC(2,1) ≥ 0.75. 982 of the 1,000 sentences have a complete set of prompt scores; the remainder returned malformed JSON in at least one paraphrase and are treated as missing.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Perturbation</th>
+<th style="text-align: right;">α (documents)</th>
+<th style="text-align: right;">ICC (documents)</th>
+<th style="text-align: right;">α (sentences)</th>
+<th style="text-align: right;">ICC (sentences)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Five prompt paraphrases</td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0.43</td>
+</tr>
+<tr>
+<td style="text-align: left;">Temperature 0 vs 0.7</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">0.81</td>
+</tr>
+<tr>
+<td style="text-align: left;">Model tag, <code>qwen3:4b</code> vs <code>qwen2.5:3b</code></td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">-0.03</td>
+<td style="text-align: right;">0.21</td>
+</tr>
+</tbody>
+</table>
+<p>The practical reading is that a tone index from a small local model is, in part, a property of the prompt and of the model version. Two analysts using different but equally reasonable instructions will obtain series that agree only moderately, and a series computed before and after a model upgrade is not the same measurement. The low agreement between LLM and lexicon tone reported across many banks by Xu and Vilán <span class="citation" data-cites="xu2026assessing"><a href="#ref-xu2026assessing" role="doc-biblioref">[27]</a></span> is of the same order as our prompt-paraphrase α, which suggests that the choice of prompt is as consequential as the choice between an LLM and a dictionary.</p>
+<figure>
+<img src="figures/fig_rq4a_stability.svg" style="width:100.0%" alt="Figure 5. Stability of the LLM index. (a) Krippendorff’s α between scores of the same text under each perturbation, at document and sentence level. (b) Spearman correlation between the three sentence-aggregation strategies and the direct document score." />
+<figcaption aria-hidden="true">Figure 5. Stability of the LLM index. (a) Krippendorff’s α between scores of the same text under each perturbation, at document and sentence level. (b) Spearman correlation between the three sentence-aggregation strategies and the direct document score.</figcaption>
+</figure>
+<h2 data-number="6.2" id="agreement-with-human-labels-h4b"><span class="header-section-number">6.2</span> Agreement with human labels (H4b)</h2>
+<p><strong>H4b is refuted.</strong> On the 496-sentence FOMC test split the LLM’s three-class macro-F1 is 0.48 [0.43, 0.53] (Table 6, Figure 6). It exceeds the dictionary’s by 0.21 [0.16, 0.26], a difference whose interval lies well away from zero, but it misses the pre-registered floor of 0.50, so the hypothesis fails on its first clause. The fine-tuned XLM-R, trained only on the LLM’s labels for corpus sentences and never on FOMC data, reaches 0.41 [0.36, 0.45], which shows that a 270-million-parameter encoder can absorb most of the LLM’s reading at a fraction of the inference cost.</p>
+<p><strong>Table 6.</strong> Three-class macro-F1 on the FOMC test split (496 sentences), with bootstrap intervals over sentences. Pre-registered floor 0.50.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Scorer</th>
+<th style="text-align: right;">Macro-F1 [95 % CI]</th>
+<th style="text-align: right;">Δ vs dictionary [95 % CI]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Dictionary (<code>dict-v1</code>)</td>
+<td style="text-align: right;">0.27 [0.24, 0.30]</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local LLM (<code>qwen3:4b</code>)</td>
+<td style="text-align: right;">0.48 [0.43, 0.53]</td>
+<td style="text-align: right;">0.21 [0.16, 0.26]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fine-tuned XLM-R</td>
+<td style="text-align: right;">0.41 [0.36, 0.45]</td>
+<td style="text-align: right;">0.14 [0.09, 0.19]</td>
+</tr>
+<tr>
+<td style="text-align: left;">FOMC-RoBERTa</td>
+<td style="text-align: right;">not run (gated model)</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>Our dictionary scores 0.27, well below the roughly 0.50 reported for a rule-based baseline by Shah, Paturi and Chava <span class="citation" data-cites="shah2023trillion"><a href="#ref-shah2023trillion" role="doc-biblioref">[3]</a></span>. The two rule sets differ, and ours returns neutral whenever hawkish and dovish matches balance or neither appears, which is the case for almost every FOMC test sentence; the dictionary is therefore a floor rather than a competitive baseline on sentence-level data, even though it is competitive on document-level prediction (Section 5.2). The LLM also over-predicts the neutral class relative to the human labels, which depresses its macro-F1 relative to its accuracy. FOMC-RoBERTa, the in-distribution reference at about 0.72, could not be run.</p>
+<figure>
+<img src="figures/fig_rq4b_fomc_f1.svg" style="width:100.0%" alt="Figure 6. Agreement with human labels on the FOMC test split: three-class macro-F1 with 95 % bootstrap intervals. Shaded region: below the pre-registered floor. Dotted lines: weighted F1 values published for the same split, shown for orientation." />
+<figcaption aria-hidden="true">Figure 6. Agreement with human labels on the FOMC test split: three-class macro-F1 with 95 % bootstrap intervals. Shaded region: below the pre-registered floor. Dotted lines: weighted F1 values published for the same split, shown for orientation.</figcaption>
+</figure>
+<h2 data-number="6.3" id="contamination-h4c"><span class="header-section-number">6.3</span> Contamination (H4c)</h2>
+<p>No RQ1 or RQ2 finding is robust, for the simple reason that none is established in the first place. Table 7 reports the pooled estimates on original text, on masked text and on the post-cutoff window. Pooled across the powered banks, the LLM’s log-loss gain over the dictionary is 0.007 [-0.016, 0.031] on original text and 0.004 [-0.017, 0.028] on masked text: there is no effect to preserve, so the masked check cannot pass. The post-cutoff window (after 2025-04-29) holds 58 decisions and 78 FX events; its estimates overlap the full-sample intervals but are too wide to be informative on their own.</p>
+<p><strong>Table 7.</strong> Contamination protocol. The same pooled quantities re-estimated on entity-masked text and on documents released after the model’s public release date; <em>n</em> is given for the original, masked and post-cutoff estimates in turn.</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: right;">Original text</th>
+<th style="text-align: right;">Masked text</th>
+<th style="text-align: right;">Post-cutoff window</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RQ1: pooled ΔLL, LLM vs dictionary [95 % CI] (<em>n</em> = 728 / 728 / 58)</td>
+<td style="text-align: right;">0.007 [-0.016, 0.031]</td>
+<td style="text-align: right;">0.004 [-0.017, 0.028]</td>
+<td style="text-align: right;">0.055 [-0.038, 0.185]</td>
+</tr>
+<tr>
+<td style="text-align: left;">RQ2: pooled FX β with bank fixed effects [95 % CI] (<em>n</em> = 1,179 / 1,179 / 78)</td>
+<td style="text-align: right;">0.0005 [-0.0010, 0.0020]</td>
+<td style="text-align: right;">0.0002 [-0.0012, 0.0016]</td>
+<td style="text-align: right;">0.0003 [-0.0037, 0.0042]</td>
+</tr>
+</tbody>
+</table>
+<p>The informative part of the exercise is what masking does to the point estimates: almost nothing. The ECB gain is 0.058 on original and 0.059 on masked text, and the pooled FX coefficient moves from 0.0005 to 0.0002. Had the LLM been retrieving memorised outcomes through the names and dates in the text, removing them would have degraded the original-text estimates; it does not. This is consistent with, though it does not prove, the absence of outcome memorisation in a four-billion-parameter model reading statements of this kind, and it implies that the negative results above are not an artefact of contamination either.</p>
+<h1 data-number="7" id="transfer-to-southeast-asia"><span class="header-section-number">7</span> Transfer to Southeast Asia</h1>
+<p><strong>H5 is untestable as pre-registered.</strong> The hypothesis requires FOMC-RoBERTa, which could not be run, and the BI-English and BNM-English silver subsets have 35 sentences each, below the pre-registered minimum of 50. Table 8 reports the descriptive comparison for completeness. On the 60 MAS silver sentences the dictionary’s macro-F1 is 0.36 against 0.27 on FOMC sentences, so it does not lose performance on MAS (drop -0.09). The LLM and the fine-tuned encoder score <em>higher</em> on the silver sets than on the human FOMC labels (0.64 and 0.67 on MAS), but the silver labels were produced by the same model family, so these numbers measure self-agreement rather than accuracy and support no claim about transfer. The two silver passes agree on 71% of sentences, and the silver distribution is skewed towards dovish and neutral (80 dovish, 17 hawkish, 103 neutral of 200).</p>
+<p><strong>Table 8.</strong> Descriptive transfer comparison. Silver macro-F1 is against LLM-produced silver labels and, for the LLM and the fine-tuned encoder, measures self-agreement rather than accuracy. Drop = FOMC macro-F1 − silver macro-F1; the pre-registered hypothesis predicts a drop of at least 0.15 for MAS.</p>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 10%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Scorer</th>
+<th style="text-align: left;">Set</th>
+<th style="text-align: right;"><em>n</em></th>
+<th style="text-align: right;">Silver macro-F1</th>
+<th style="text-align: right;">FOMC macro-F1</th>
+<th style="text-align: right;">Drop</th>
+<th style="text-align: center;">Powered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Dictionary</td>
+<td style="text-align: left;">MAS, English</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">-0.09</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dictionary</td>
+<td style="text-align: left;">BI, English</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">-0.01</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dictionary</td>
+<td style="text-align: left;">BNM, English</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local LLM</td>
+<td style="text-align: left;">MAS, English</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local LLM</td>
+<td style="text-align: left;">BI, English</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.63</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">-0.15</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local LLM</td>
+<td style="text-align: left;">BI, Indonesian</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local LLM</td>
+<td style="text-align: left;">BNM, English</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">-0.21</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local LLM</td>
+<td style="text-align: left;">BNM, Malay</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.63</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">-0.15</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fine-tuned XLM-R</td>
+<td style="text-align: left;">MAS, English</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">-0.27</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fine-tuned XLM-R</td>
+<td style="text-align: left;">BI, Indonesian</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fine-tuned XLM-R</td>
+<td style="text-align: left;">BNM, Malay</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">-0.08</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;">FOMC-RoBERTa</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">not run (gated model)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<p>In the multilingual sentence-embedding space, MAS sentences are the farthest from Fed sentences (mean cosine distance 0.58, against 0.54 for the ECB and 0.43 within the Fed’s own sentences), consistent with the distinct vocabulary of an exchange-rate-centred regime <span class="citation" data-cites="parrado2004singapore"><a href="#ref-parrado2004singapore" role="doc-biblioref">[33]</a></span>. Whether that distance translates into a loss of accuracy for a Fed-calibrated scorer remains, on this evidence, an open question that the pending reference model and a larger human-labelled set would settle.</p>
+<h1 data-number="8" id="discussion"><span class="header-section-number">8</span> Discussion</h1>
+<p>Four findings deserve interpretation beyond the verdicts.</p>
+<p><em>Persistence is the baseline to beat, and it is a strong one.</em> Most of what can be predicted about the next decision is in the last decision, because policy rates move in runs. The ordered-logit model with tone, its change and the last direction never beats a smoothed persistence forecast after correction, and the one near-miss, the ECB, has an unadjusted <em>p</em> of 0.032 across 178 out-of-sample decisions. This is not a statement that statements are uninformative; it is a statement that the information a small LLM extracts from them, compressed to a scalar, adds little to a trivial forecast of the <em>direction</em> of the next move. Text may well inform the size and timing of moves, or the probability of a change at all, none of which the pre-registered test measures.</p>
+<p><em>The announcement-window result is of the expected order.</em> The Australian two-year yield responds to the tone surprise by about 9 basis points per unit of surprise, with an R² near 0.10. That is the magnitude the wording-based literature leads one to expect <span class="citation" data-cites="ehrmann2020starting"><a href="#ref-ehrmann2020starting" role="doc-biblioref">[26]</a></span>, an order of magnitude below the explanatory power of rate surprises <span class="citation" data-cites="gurkaynak2005actions"><a href="#ref-gurkaynak2005actions" role="doc-biblioref">[23]</a></span>. The pre-registration anticipated small R² values and set the bar at beating a placebo rather than at a size; one cell in eleven cleared it, which after correction for eleven tests is what chance would deliver. We do not think the Australian result is spurious, but we also cannot claim it.</p>
+<p><em>Cross-lingual disagreement is about intensity, not sign.</em> The LLM reads the Indonesian and Malay versions of a statement as pointing the same way as the English version in roughly 98 % of cases, but assigns different strengths. For an analyst who needs a categorical stance this is reassuring; for one who needs an index it means that the native-language and English series are not interchangeable, and that the choice of language is a modelling decision to be reported. The fine-tuned encoder shows the same pattern, so the disagreement is not an artefact of generative decoding; it is more plausibly a property of how a small multilingual model represents evaluative language in the two tongues.</p>
+<p><em>Prompt dependence is the binding reliability constraint.</em> The agreement between five paraphrases of the same instruction (α = 0.65 at document level) is lower than the agreement between temperatures and comparable to the agreement between an LLM and a lexicon reported elsewhere <span class="citation" data-cites="xu2026assessing"><a href="#ref-xu2026assessing" role="doc-biblioref">[27]</a></span>. In the framework of Ludwig, Mullainathan and Rambachan <span class="citation" data-cites="ludwig2025llm"><a href="#ref-ludwig2025llm" role="doc-biblioref">[20]</a></span>, the LLM index is a measurement with substantial and possibly non-classical error, and the magnitude of that error depends on a design choice that is rarely reported. The implication for practice is direct: a tone series is a measurement only when the prompt and the model digest are frozen and logged, and a change in either is a change of instrument.</p>
+<p>What, then, is a local LLM good for? It reads individual sentences better than a dictionary, with a macro-F1 that is close to the pre-registered floor and above the rule-based figure in the published literature; it produces series that track the broad policy cycle; and it does so in seconds per document, on hardware that costs less than a year of a commercial data subscription, with no text leaving the machine. These are the properties of a monitoring aid. They are not, on this evidence, the properties of a forecasting or trading signal, and the contamination protocol shows that the absence of signal is not because the model has been prevented from cheating.</p>
+<h1 data-number="9" id="threats-to-validity"><span class="header-section-number">9</span> Threats to validity</h1>
+<ul>
+<li><strong>Small samples for Southeast Asian banks.</strong> BI’s text begins in April 2016 because the bank’s own index lists nothing older; BNM changes its rate rarely; MAS met only twice a year until 2024. Several cells therefore fall below the pre-registered minimum and are reported as underpowered rather than tested, and the study is correspondingly less informative about the region than about the four large banks.</li>
+<li><strong>Silver labels.</strong> The Southeast Asian evaluation set is labelled by the same model family as the LLM scorer. The LLM’s own silver score is reported but is used for no hypothesis, and the fine-tuned encoder’s silver score inherits the same circularity.</li>
+<li><strong>A short post-cutoff window.</strong> The model’s public release date is late in the sample, so the post-cutoff check is wide and often inconclusive; an inconclusive check means a finding is <em>not established as robust</em>, which is the conservative reading.</li>
+<li><strong>Document selection.</strong> One primary series per bank; the BoE uses minutes because its early decision releases carry no text; the RBA series starts in December 2007. A different choice of document could give different tone series, which the library makes easy to test but this paper does not.</li>
+<li><strong>Timing.</strong> MAS and BI publish no release time, so their event windows span the whole release day and cannot separate the market’s reaction to the statement from the statement’s reaction to the market.</li>
+<li><strong>MAS decisions.</strong> Taken from the Authority’s own table; the rule-based extractor’s accuracy is development accuracy only and affects two 2026 statements that are excluded from every test.</li>
+<li><strong>Gated reference model.</strong> FOMC-RoBERTa could not be run, which makes H5 untestable as pre-registered and leaves the in-distribution reference for H4b to the published literature.</li>
+<li><strong>Compute and model scale.</strong> The four-billion-parameter model is far smaller than hosted frontier models. The results speak to what an analyst can run on local hardware, not to the capabilities of the largest models; a frontier model might pass tests this one fails, and might also be more contaminated.</li>
+</ul>
+<h1 data-number="10" id="reproducibility"><span class="header-section-number">10</span> Reproducibility</h1>
+<p>All code is released under the Apache-2.0 licence at <a href="https://github.com/thanatchon36/cbtone" class="uri">https://github.com/thanatchon36/cbtone</a> and on PyPI as <code>cbtone</code>. <code>make reproduce</code> rebuilds every table and figure from the committed corpus snapshot; LLM scores are cached by content hash, so a re-run repeats only the few calls that failed the first time, while the fine-tuned encoder is retrained, which on Apple MPS is not bit-for-bit deterministic (<code>ANOMALIES.md</code>, A13). The pre-registration is the git tag <code>prereg-v1</code>; every later deviation is listed in <code>docs/DECISIONS.md</code> (D17–D20) and every data anomaly in <code>docs/ANOMALIES.md</code>. LLM scores were computed on a desktop RTX 4070 Ti (D20); the fine-tuned encoder was trained on an Apple M4 laptop (16 GB, MPS). Per-stage wall time is in <code>results/timing.json</code> and the hardware and software manifest in <code>results/hardware.json</code>. Every number in this paper, including those in the abstract, is injected from <code>results/summary.json</code> at build time (<code>paper/build.py</code>); none is typed by hand. A fresh-clone reproduction on 14 October 2026 completed in 23 minutes with no change to any verdict.</p>
+<h1 data-number="11" id="conclusion"><span class="header-section-number">11</span> Conclusion</h1>
+<p>A small open-weight language model running on a consumer graphics card produces hawkish/dovish tone indices for seven central banks in three languages that look plausible over time and agree with human FOMC labels better than a dictionary. On every pre-registered test of <em>policy signal</em>, next-decision prediction, announcement-window reaction, cross-lingual consistency and prompt stability, the evidence is negative or underpowered, and the entity-masking and post-cutoff checks show that the negative result is not an artefact of contamination. Three lessons follow for practitioners. First, persistence is a strong baseline for decision prediction, and gains from text are small and bank-specific. Second, LLM tone depends on the prompt and on the model version, so a single-prompt index should not be treated as a measurement without a stability check, and the prompt and model digest should be reported as part of the measurement. Third, for Southeast Asian banks the binding constraint is sample size, which no improvement in the scorer can relax. The library, the masked and post-cutoff checks, and every number in this paper can be regenerated with a single command; we hope that the design, rather than the particular model, is what is reused.</p>
+<h1 class="unnumbered" id="references">References</h1>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-lucca2009measuring" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. O. Lucca and F. Trebbi, <span>“Measuring central bank communication: An automated approach with application to <span>FOMC</span> statements,”</span> National Bureau of Economic Research, Working Paper 15367, 2009. doi: <a href="https://doi.org/10.3386/w15367">10.3386/w15367</a>.</div>
+</div>
+<div id="ref-apel2014informative" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">M. Apel and M. Blix Grimaldi, <span>“How informative are central bank minutes?”</span> <em>Review of Economics</em>, vol. 65, no. 1, pp. 53–76, 2014, doi: <a href="https://doi.org/10.1515/roe-2014-0104">10.1515/roe-2014-0104</a>.</div>
+</div>
+<div id="ref-shah2023trillion" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">A. Shah, S. Paturi, and S. Chava, <span>“Trillion dollar words: A new financial dataset, task &amp; market analysis,”</span> in <em>Proceedings of the 61st <span class="nocase">Annual Meeting of the Association for Computational Linguistics</span> (<span>Volume 1: Long Papers</span>)</em>, Toronto, Canada: Association for Computational Linguistics, 2023, pp. 6664–6679. doi: <a href="https://doi.org/10.18653/v1/2023.acl-long.368">10.18653/v1/2023.acl-long.368</a>.</div>
+</div>
+<div id="ref-hansen2023fedspeak" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">A. L. Hansen and S. Kazinnik, <span>“Can <span>ChatGPT</span> decipher <span>Fedspeak</span>?”</span> Federal Reserve Bank of Richmond (SSRN working paper), 2023. Available: <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4399406">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4399406</a></div>
+</div>
+<div id="ref-silva2025text" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">T. C. Silva, K. Moriya, and R. M. Veyrune, <span>“From text to quantified insights: A large-scale <span>LLM</span> analysis of central bank communication,”</span> International Monetary Fund, IMF Working Paper WP/2025/109, 2025. doi: <a href="https://doi.org/10.5089/9798229013802.001">10.5089/9798229013802.001</a>.</div>
+</div>
+<div id="ref-lopezlira2025memorization" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">A. Lopez-Lira, Y. Tang, and M. Zhu, <span>“The memorization problem: Can we trust <span>LLMs</span>’ economic forecasts?”</span> <em>arXiv:2504.14765</em>, 2025, Available: <a href="https://arxiv.org/abs/2504.14765">https://arxiv.org/abs/2504.14765</a></div>
+</div>
+<div id="ref-sarkar2024lookahead" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">S. K. Sarkar and K. Vafa, <span>“Lookahead bias in pretrained language models,”</span> 2024. Available: <a href="https://conference.nber.org/conf_papers/f205530/f205530.pdf">https://conference.nber.org/conf_papers/f205530/f205530.pdf</a></div>
+</div>
+<div id="ref-loughran2011liability" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">T. Loughran and B. McDonald, <span>“When is a liability not a liability? Textual analysis, dictionaries, and 10-ks,”</span> <em>The Journal of Finance</em>, vol. 66, no. 1, pp. 35–65, 2011, doi: <a href="https://doi.org/10.1111/j.1540-6261.2010.01625.x">10.1111/j.1540-6261.2010.01625.x</a>.</div>
+</div>
+<div id="ref-picault2017words" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">M. Picault and T. Renault, <span>“Words are not all created equal: A new measure of <span>ECB</span> communication,”</span> <em>Journal of International Money and Finance</em>, vol. 79, pp. 136–156, 2017, doi: <a href="https://doi.org/10.1016/j.jimonfin.2017.09.005">10.1016/j.jimonfin.2017.09.005</a>.</div>
+</div>
+<div id="ref-bennani2017home" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">H. Bennani and M. Neuenkirch, <span>“The (home) bias of <span>European</span> central bankers: New evidence based on speeches,”</span> <em>Applied Economics</em>, vol. 49, no. 11, pp. 1114–1131, 2017, doi: <a href="https://doi.org/10.1080/00036846.2016.1210782">10.1080/00036846.2016.1210782</a>.</div>
+</div>
+<div id="ref-hansen2016shocking" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">S. Hansen and M. McMahon, <span>“Shocking language: Understanding the macroeconomic effects of central bank communication,”</span> <em>Journal of International Economics</em>, vol. 99, pp. S114–S133, 2016, doi: <a href="https://doi.org/10.1016/j.jinteco.2015.12.008">10.1016/j.jinteco.2015.12.008</a>.</div>
+</div>
+<div id="ref-hansen2018transparency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">S. Hansen, M. McMahon, and A. Prat, <span>“Transparency and deliberation within the <span>FOMC</span>: A computational linguistics approach,”</span> <em>The Quarterly Journal of Economics</em>, vol. 133, no. 2, pp. 801–870, 2018, doi: <a href="https://doi.org/10.1093/qje/qjx045">10.1093/qje/qjx045</a>.</div>
+</div>
+<div id="ref-gorodnichenko2023voice" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">Y. Gorodnichenko, T. Pham, and O. Talavera, <span>“The voice of monetary policy,”</span> <em>American Economic Review</em>, vol. 113, no. 2, pp. 548–584, 2023, doi: <a href="https://doi.org/10.1257/aer.20220129">10.1257/aer.20220129</a>.</div>
+</div>
+<div id="ref-pfeifer2023centralbankroberta" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">M. Pfeifer and V. P. Marohl, <span>“<span>CentralBankRoBERTa</span>: A fine-tuned large language model for central bank communications,”</span> <em>The Journal of Finance and Data Science</em>, vol. 9, p. 100114, 2023, doi: <a href="https://doi.org/10.1016/j.jfds.2023.100114">10.1016/j.jfds.2023.100114</a>.</div>
+</div>
+<div id="ref-gilardi2023chatgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">F. Gilardi, M. Alizadeh, and M. Kubli, <span>“<span>ChatGPT</span> outperforms crowd workers for text-annotation tasks,”</span> <em>Proceedings of the National Academy of Sciences</em>, vol. 120, no. 30, p. e2305016120, 2023, doi: <a href="https://doi.org/10.1073/pnas.2305016120">10.1073/pnas.2305016120</a>.</div>
+</div>
+<div id="ref-bybee2023surveying" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">L. Bybee, <span>“Surveying generative <span>AI</span>’s economic expectations,”</span> <em>arXiv:2305.02823</em>, 2023, Available: <a href="https://arxiv.org/abs/2305.02823">https://arxiv.org/abs/2305.02823</a></div>
+</div>
+<div id="ref-lopezlira2023chatgpt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[17] </div><div class="csl-right-inline">A. Lopez-Lira and Y. Tang, <span>“Can <span>ChatGPT</span> forecast stock price movements? Return predictability and large language models,”</span> <em>arXiv:2304.07619</em>, 2023, Available: <a href="https://arxiv.org/abs/2304.07619">https://arxiv.org/abs/2304.07619</a></div>
+</div>
+<div id="ref-sclar2024quantifying" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[18] </div><div class="csl-right-inline">M. Sclar, Y. Choi, Y. Tsvetkov, and A. Suhr, <span>“Quantifying language models’ sensitivity to spurious features in prompt design or: How i learned to start worrying about prompt formatting,”</span> in <em><span class="nocase">International Conference on Learning Representations</span> (<span>ICLR</span>)</em>, 2024. Available: <a href="https://arxiv.org/abs/2310.11324">https://arxiv.org/abs/2310.11324</a></div>
+</div>
+<div id="ref-jones2025ornithologist" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[19] </div><div class="csl-right-inline">D. Z. E. Jones, <span>“Ornithologist: Towards trustworthy <span>‘reasoning’</span> about central bank communications,”</span> <em>arXiv:2505.09083</em>, 2025, Available: <a href="https://arxiv.org/abs/2505.09083">https://arxiv.org/abs/2505.09083</a></div>
+</div>
+<div id="ref-ludwig2025llm" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[20] </div><div class="csl-right-inline">J. Ludwig, S. Mullainathan, and A. Rambachan, <span>“Large language models: An applied econometric framework,”</span> National Bureau of Economic Research, Working Paper 33344, 2025. Available: <a href="https://www.nber.org/papers/w33344">https://www.nber.org/papers/w33344</a></div>
+</div>
+<div id="ref-glasserman2024lookahead" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[21] </div><div class="csl-right-inline">P. Glasserman and C. Lin, <span>“Assessing look-ahead bias in stock return predictions generated by <span>GPT</span> sentiment analysis,”</span> <em>The Journal of Financial Data Science</em>, 2024, Available: <a href="https://arxiv.org/abs/2309.17322">https://arxiv.org/abs/2309.17322</a></div>
+</div>
+<div id="ref-kuttner2001monetary" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[22] </div><div class="csl-right-inline">K. N. Kuttner, <span>“Monetary policy surprises and interest rates: Evidence from the <span>Fed</span> funds futures market,”</span> <em>Journal of Monetary Economics</em>, vol. 47, no. 3, pp. 523–544, 2001, doi: <a href="https://doi.org/10.1016/S0304-3932(01)00055-1">10.1016/S0304-3932(01)00055-1</a>.</div>
+</div>
+<div id="ref-gurkaynak2005actions" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[23] </div><div class="csl-right-inline">R. S. Gürkaynak, B. Sack, and E. T. Swanson, <span>“Do actions speak louder than words? The response of asset prices to monetary policy actions and statements,”</span> <em>International Journal of Central Banking</em>, vol. 1, no. 1, pp. 55–93, 2005, Available: <a href="https://mpra.ub.uni-muenchen.de/820/">https://mpra.ub.uni-muenchen.de/820/</a></div>
+</div>
+<div id="ref-bernanke2005explains" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[24] </div><div class="csl-right-inline">B. S. Bernanke and K. N. Kuttner, <span>“What explains the stock market’s reaction to <span>Federal Reserve</span> policy?”</span> <em>Journal of Finance</em>, vol. 60, no. 3, pp. 1221–1257, 2005, doi: <a href="https://doi.org/10.1111/j.1540-6261.2005.00760.x">10.1111/j.1540-6261.2005.00760.x</a>.</div>
+</div>
+<div id="ref-blinder2008central" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[25] </div><div class="csl-right-inline">A. S. Blinder, M. Ehrmann, M. Fratzscher, J. De Haan, and D.-J. Jansen, <span>“Central bank communication and monetary policy: A survey of theory and evidence,”</span> <em>Journal of Economic Literature</em>, vol. 46, no. 4, pp. 910–945, 2008, Available: <a href="https://econpapers.repec.org/RePEc:pri:cepsud:161">https://econpapers.repec.org/RePEc:pri:cepsud:161</a></div>
+</div>
+<div id="ref-ehrmann2020starting" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[26] </div><div class="csl-right-inline">M. Ehrmann and J. Talmi, <span>“Starting from a blank page? Semantic similarity in central bank communication and market volatility,”</span> <em>Journal of Monetary Economics</em>, vol. 111, pp. 48–62, 2020, doi: <a href="https://doi.org/10.1016/j.jmoneco.2019.01.028">10.1016/j.jmoneco.2019.01.028</a>.</div>
+</div>
+<div id="ref-xu2026assessing" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[27] </div><div class="csl-right-inline">W. Xu and D. Vilán, <span>“Assessing monetary policy globally: Evidence from <span>LLMs</span> and semi-structural models.”</span> FEDS Notes, Board of Governors of the Federal Reserve System, Oct. 2026. Available: <a href="https://www.federalreserve.gov/econres/notes/feds-notes/assessing-monetary-policy-globally-evidence-from-llms-and-semi-structural-models-20261009.html">https://www.federalreserve.gov/econres/notes/feds-notes/assessing-monetary-policy-globally-evidence-from-llms-and-semi-structural-models-20261009.html</a></div>
+</div>
+<div id="ref-ho2021effects" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[28] </div><div class="csl-right-inline">S.-J. Ho and Ö. Karagedikli, <span>“Effects of monetary policy communication in emerging market economies: Evidence from <span>Malaysia</span>,”</span> SEACEN Centre; CAMA, Australian National University, SEACEN Working Paper WP2/2021; CAMA Working Paper 67/2021, 2021. Available: <a href="https://www.seacen.org/working-papers/wp2-2021-effects-of-monetary-policy-communication-in-emerging-market-economies-evidence-from-malaysia/">https://www.seacen.org/working-papers/wp2-2021-effects-of-monetary-policy-communication-in-emerging-market-economies-evidence-from-malaysia/</a></div>
+</div>
+<div id="ref-filardo2008transparency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[29] </div><div class="csl-right-inline">A. Filardo and D. Guinigundo, <span>“Transparency and communication in monetary policy: A survey of <span>Asian</span> central banks,”</span> in <em><span class="nocase">BSP-BIS Research Conference on Transparency and Communication in Monetary Policy</span>, <span>Manila</span>, 1 <span>February</span> 2008</em>, Bank for International Settlements, 2008. Available: <a href="https://www.bis.org/repofficepubl/arpresearch200801.3.pdf">https://www.bis.org/repofficepubl/arpresearch200801.3.pdf</a></div>
+</div>
+<div id="ref-hayo2012federal" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[30] </div><div class="csl-right-inline">B. Hayo, A. M. Kutan, and M. Neuenkirch, <span>“Federal reserve communications and emerging equity markets,”</span> <em>Southern Economic Journal</em>, vol. 78, no. 3, pp. 1041–1056, 2012, doi: <a href="https://doi.org/10.4284/0038-4038-78.3.1041">10.4284/0038-4038-78.3.1041</a>.</div>
+</div>
+<div id="ref-neuenkirch2013transparency" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[31] </div><div class="csl-right-inline">M. Neuenkirch, <span>“Central bank transparency and financial market expectations: The case of emerging markets,”</span> <em>Economic Systems</em>, vol. 37, no. 4, pp. 598–609, 2013, Available: <a href="https://econpapers.repec.org/paper/marmagkse/201136.htm">https://econpapers.repec.org/paper/marmagkse/201136.htm</a></div>
+</div>
+<div id="ref-montes2016communication" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[32] </div><div class="csl-right-inline">G. C. Montes and R. T. da F. Nicolay, <span>“Central bank communication, inflation expectations and self-fulfilling prophecy: Evidences for <span>Brazil</span>,”</span> <em>An<span class="nocase">á</span>lise Econ<span class="nocase">ô</span>mica</em>, vol. 34, no. 66, 2016, Available: <a href="https://seer.ufrgs.br/index.php/AnaliseEconomica/article/view/43537">https://seer.ufrgs.br/index.php/AnaliseEconomica/article/view/43537</a></div>
+</div>
+<div id="ref-parrado2004singapore" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[33] </div><div class="csl-right-inline">E. Parrado, <span>“Singapore’s unique monetary policy: How does it work?”</span> International Monetary Fund, IMF Working Paper WP/04/10, 2004. Available: <a href="https://www.imf.org/en/publications/wp/issues/2016/12/30/singapore-s-unique-monetary-policy-how-does-it-work-17061">https://www.imf.org/en/publications/wp/issues/2016/12/30/singapore-s-unique-monetary-policy-how-does-it-work-17061</a></div>
+</div>
+</div>
+</article>
+<footer class="colophon"><p>Library, experiments and manuscript draft by Claude (Anthropic) under the author's specification; the author is responsible for the content. Independent project: public documents only, represents the views of no institution, not investment advice.</p><p>Rendered from <code>paper/paper.md</code> by <code>make paper</code>. Every number is injected from <code>results/summary.json</code>; <code>make reproduce</code> regenerates it from the committed corpus snapshot.</p></footer>
+</div>
+</body>
+</html>

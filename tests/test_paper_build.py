@@ -55,9 +55,10 @@ def test_front_matter_and_caption_numbering():
     assert ": A caption" not in out
 
 
-def test_heading_numbering_skips_abstract_and_references():
-    md = "## Abstract\n\n## Intro\n\n### Sub\n\n### Sub2\n\n## Data\n\n### Sub\n\n## References\n"
-    out = build.number_headings(md)
-    assert "## Abstract" in out and "## References" in out
-    assert "## 1 Intro" in out and "### 1.1 Sub" in out and "### 1.2 Sub2" in out
-    assert "## 2 Data" in out and "### 2.1 Sub" in out
+def test_results_strip_reads_every_verdict_from_summary():
+    import json
+
+    data = json.loads(Path("results/summary.json").read_text())
+    rows = build.results(data)
+    assert [r[0] for r in rows] == ["H1", "H2a", "H2b", "H3", "H4a", "H4b", "H4c", "H5"]
+    assert all(k in build.TAGS for _, k, _, _ in rows)

@@ -3,9 +3,10 @@
 Outputs:
   paper/paper.filled.md   placeholders resolved (git-ignored; what pandoc reads)
   paper/paper.pdf         pandoc → typst, numeric citations (paper/csl/ieee.csl)
-  docs/site/paper.md      web version for the documentation site: the same text with numbered
-                          sections and captions, citations resolved to [n] links and the reference
-                          list appended; the SVG figures are copied to docs/site/figures/
+  docs/site/paper/        web reader (index.html), a standalone page built by pandoc with
+                          paper/reader.html: masthead, results strip from summary.json, contents,
+                          numbered sections and captions, [n] citations linked to the references;
+                          the SVG figures and the PDF are copied next to it
 
 Placeholders: ``{{dotted.path}}`` or ``{{dotted.path|fmt}}``. ``fmt`` is a Python format spec
 (e.g. ``.2f``, ``d``, ``,``), ``pct`` / ``pct1`` for a percentage, ``yn`` for yes/no, or ``min`` for
@@ -17,6 +18,7 @@ is typed by hand (MISSION §5).
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import shutil
@@ -31,19 +33,20 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "paper" / "paper.md"
 OUT_MD = ROOT / "paper" / "paper.filled.md"
 OUT_PDF = ROOT / "paper" / "paper.pdf"
-OUT_WEB = ROOT / "docs" / "site" / "paper.md"
-WEB_FIGURES = ROOT / "docs" / "site" / "figures"
+READER_DIR = ROOT / "docs" / "site" / "paper"
+READER = ROOT / "paper" / "reader.html"
 FIGURES = ROOT / "results" / "figures"
 TEMPLATE = ROOT / "paper" / "templates" / "default.typst"
-REPO = "https://github.com/thanatchon36/cbtone/blob/main"
+REPO_URL = "https://github.com/thanatchon36/cbtone"
+REPO = f"{REPO_URL}/blob/main"
+ZENODO_DOI = "10.5281/zenodo.23371641"
+TAGS = {"ref": "refuted", "null": "untestable", "nf": "no finding", "pos": "supported"}
 
 TOKEN = re.compile(r"\{\{\s*([^}|]+?)\s*(?:\|\s*([^}]+?)\s*)?\}\}")
 STEP = re.compile(r"([^.\[]+)(?:\[([^\]]+)\])?")
 FRONT = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 IMAGE = re.compile(r"^(!\[)(.*?)(\]\(.*?\)(?:\{[^}]*\})?)[ \t]*$", re.MULTILINE)
 TABLE = re.compile(r"((?:^\|.*\n)+)\n(: (?:.+\n)+)", re.MULTILINE)
-HEADING = re.compile(r"^(#{2,3}) (.+?)\s*$", re.MULTILINE)
-UNNUMBERED = {"abstract", "references"}
 
 
 def lookup(data: Any, path: str) -> Any:
@@ -120,61 +123,159 @@ def number_captions(body: str) -> str:
     return TABLE.sub(table, body)
 
 
-def number_headings(md: str) -> str:
-    """Number ``##`` / ``###`` headings 1, 1.1, ... (web page; the PDF is numbered by typst)."""
-    counters = [0, 0]
-
-    def sub(m: re.Match[str]) -> str:
-        hashes, title = m.groups()
-        if title.strip().lower() in UNNUMBERED:
-            return m.group(0)
-        level = len(hashes) - 2
-        counters[level] += 1
-        if level == 0:
-            counters[1] = 0
-        label = ".".join(str(c) for c in counters[: level + 1])
-        return f"{hashes} {label} {title}"
-
-    return HEADING.sub(sub, md)
-
-
 def pandoc(args: list[str], stdin: str | None = None) -> str:
     return subprocess.run(
         ["pandoc", *args], input=stdin, text=True, check=True, capture_output=True, cwd=ROOT
     ).stdout
 
 
-def web_page(filled: str) -> str:
-    meta, body = front_matter(filled)
-    body = number_captions(body).replace("results/figures/", "figures/")
-    cite_meta = {k: meta[k] for k in ("bibliography", "csl", "link-citations") if k in meta}
-    html_md = pandoc(
+def results(d: dict[str, Any]) -> list[tuple[str, str, str, str]]:
+    """(id, kind, statement, detail) per pre-registered hypothesis, all from summary.json."""
+
+    def row(path: str) -> dict[str, Any]:
+        out: dict[str, Any] = lookup(d, path)
+        return out
+
+    def kind(verdict: str) -> str:
+        return {"refuted": "ref", "supported": "pos"}.get(verdict, "null")
+
+    ecb = row("rq1.rows[bank=ecb,scorer=llm]")
+    bi, bnm = row("rq3.rows[bank=bi,scorer=llm]"), row("rq3.rows[bank=bnm,scorer=llm]")
+    a = d["rq4"]["rq4a"]
+    f1 = {r["scorer"]: r["macro_f1"] for r in d["rq4"]["rq4b"]["rows"]}
+    h2a, h2b = d["rq2"]["verdict"]["h2a"], d["rq2"]["verdict"]["h2b"]
+    v1 = d["rq1"]["verdict"]
+    return [
+        (
+            "H1",
+            kind(v1["verdict"]),
+            "LLM tone improves next-decision prediction over persistence.",
+            f"{v1['n_success']} of {v1['n_powered']} powered banks; nearest: ECB ΔLL "
+            f"{ecb['dll_vs_pers']:+.3f}, Holm p {ecb['p_vs_pers_holm']:.2f}",
+        ),
+        (
+            "H2a",
+            kind(h2a["verdict"]),
+            "The tone surprise explains FX / two-year-yield moves beyond a placebo.",
+            f"{h2a['n_success']} of {h2a['n_powered']} bank–market cells",
+        ),
+        (
+            "H2b",
+            kind(h2b["verdict"]),
+            "The LLM beats the dictionary on announcement-window R².",
+            f"{h2b['n_success']} of {h2b['n_powered']} cells after Holm correction",
+        ),
+        (
+            "H3",
+            kind(d["rq3"]["verdict"]),
+            "Native-language and English versions agree (Spearman ρ ≥ 0.70).",
+            f"Indonesian ρ {bi['spearman']:.2f}, Malay ρ {bnm['spearman']:.2f}",
+        ),
+        (
+            "H4a",
+            "ref" if not a["docs"]["h4a_prompts_pass"] else "pos",
+            "Scores are stable across five prompt paraphrases (α ≥ 0.667).",
+            f"α {a['docs']['prompts']['alpha']:.2f} (documents), "
+            f"{a['sentences']['prompts']['alpha']:.2f} (sentences)",
+        ),
+        (
+            "H4b",
+            kind(d["rq4"]["rq4b"]["verdict"]),
+            "FOMC macro-F1 ≥ 0.50 and above the dictionary.",
+            f"LLM {f1['llm']:.2f}, fine-tuned {f1['ft']:.2f}, dictionary {f1['dict']:.2f}",
+        ),
+        (
+            "H4c",
+            "nf",
+            "Findings survive entity masking and a post-cutoff split.",
+            "no finding survived to be checked",
+        ),
+        (
+            "H5",
+            kind(d["rq5"]["verdict"]),
+            "Fed-calibrated scorers transfer poorly to MAS.",
+            "FOMC-RoBERTa gated; Southeast Asian English subsets below 50 sentences",
+        ),
+    ]
+
+
+def build_reader(filled: str, data: dict[str, Any]) -> Path:
+    """Standalone web reader docs/site/paper/index.html (same text as the PDF)."""
+    m = FRONT.match(filled)
+    head, body = (filled[: m.end()], filled[m.end() :]) if m else ("", filled)
+    version = re.search(
+        r'^__version__ = "([^"]+)"', (ROOT / "src" / "cbtone" / "__init__.py").read_text(), re.M
+    )
+    assert version is not None
+    READER_DIR.mkdir(parents=True, exist_ok=True)
+    out = READER_DIR / "index.html"
+    pandoc(
         [
-            "--from",
-            "markdown",
-            "--to",
-            "gfm",
+            "--from=markdown+smart",
+            "--to=html5",
+            f"--template={READER}",
+            "--standalone",
             "--citeproc",
+            "--number-sections",
+            "--toc",
+            "--toc-depth=1",
             "--wrap=none",
-            "--shift-heading-level-by=1",
-            "--resource-path",
-            str(ROOT),
+            "--metadata=pagetitle:cbtone — paper",
+            "-o",
+            str(out),
         ],
-        stdin=f"---\n{yaml.safe_dump(cite_meta)}---\n{body}",
+        stdin=head + number_captions(body),
     )
-    head = (
-        f"# {meta.get('title', 'Paper')}\n\n"
-        f"*{meta.get('author', '')}* · {meta.get('date', '')} · "
-        f"[PDF]({REPO}/paper/paper.pdf) · [Markdown source]({REPO}/paper/paper.md) · "
-        f"[`results/summary.json`]({REPO}/results/summary.json)\n\n"
-        '!!! info "About this page"\n'
-        "    Generated by `make paper` from `paper/paper.md`. Every number is injected from\n"
-        "    `results/summary.json`; citations are numbered in order of first appearance\n"
-        "    (IEEE style) and link to the reference list at the end. The typeset version is\n"
-        "    the PDF.\n\n"
-        f"## Abstract\n\n{str(meta.get('abstract', '')).strip()}\n\n"
+    meta = (
+        f"<b>cbtone v{version.group(1)}</b> · 7 central banks · English, Indonesian, Malay · "
+        f"<code>qwen3:4b</code> on a consumer GPU · pre-registered at tag "
+        f"<code>prereg-v1</code> · corpus {data['corpus_version'][:19]}…"
     )
-    return head + number_headings(html_md)
+    actions = (
+        '<li><a href="paper.pdf">Download PDF</a></li>'
+        f'<li><a href="{REPO_URL}">Source code</a></li>'
+        f'<li><a href="https://doi.org/{ZENODO_DOI}">DOI {ZENODO_DOI}</a></li>'
+        '<li><a href="../">Documentation</a></li>'
+        f'<li><a href="{REPO}/docs/RESEARCH_QUESTIONS.md">Pre-registration</a></li>'
+        '<li><a href="https://huggingface.co/thanatchon36/cbtone-ft-xlmr">Model</a></li>'
+        '<li><a href="https://huggingface.co/datasets/thanatchon36/cbtone-silver-sentences">'
+        "Dataset</a></li>"
+    )
+    note = (
+        "Pre-registered hypotheses and their verdicts at the frozen thresholds, generated from "
+        "<code>results/summary.json</code>."
+    )
+    items = "\n".join(
+        f'<li class="r r-{k}"><span class="r-id">{html.escape(i)}</span>'
+        f'<span class="r-text">{html.escape(t)}<small>{html.escape(x)}</small></span>'
+        f'<span class="r-tag">{TAGS[k]}</span></li>'
+        for i, k, t, x in results(data)
+    )
+    colophon = (
+        "<p>Library, experiments and manuscript draft by Claude (Anthropic) under the author's "
+        "specification; the author is responsible for the content. Independent project: public "
+        "documents only, represents the views of no institution, not investment advice.</p>"
+        "<p>Rendered from <code>paper/paper.md</code> by <code>make paper</code>. Every number is "
+        "injected from <code>results/summary.json</code>; <code>make reproduce</code> regenerates "
+        "it from the committed corpus snapshot.</p>"
+    )
+    page = out.read_text(encoding="utf-8").replace('src="results/figures/', 'src="figures/')
+    for marker, value in (
+        ("<!--META-->", meta),
+        ("<!--ACTIONS-->", actions),
+        ("<!--RESULTS-NOTE-->", note),
+        ("<!--RESULTS-->", items),
+        ("<!--COLOPHON-->", colophon),
+    ):
+        assert marker in page, marker
+        page = page.replace(marker, value)
+    out.write_text(page, encoding="utf-8")
+    shutil.copyfile(OUT_PDF, READER_DIR / "paper.pdf")
+    figures = READER_DIR / "figures"
+    figures.mkdir(exist_ok=True)
+    for name in sorted(set(re.findall(r'src="figures/([\w.-]+)"', page))):
+        shutil.copyfile(FIGURES / name, figures / name)
+    return out
 
 
 def main() -> int:
@@ -190,11 +291,7 @@ def main() -> int:
         cmd += ["--pdf-engine", "typst", "--template", str(TEMPLATE)]
     pandoc(cmd)
     print("wrote", OUT_PDF)
-    WEB_FIGURES.mkdir(parents=True, exist_ok=True)
-    for svg in sorted(FIGURES.glob("*.svg")):
-        shutil.copyfile(svg, WEB_FIGURES / svg.name)
-    OUT_WEB.write_text(web_page(filled))
-    print("wrote", OUT_WEB)
+    print("wrote", build_reader(filled, data).relative_to(ROOT))
     return 0
 
 
