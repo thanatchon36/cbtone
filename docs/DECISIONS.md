@@ -118,3 +118,12 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   yields ≥ 80 % of MPC communiqués from 2010 onward *and* the selectors validate on real archived pages.
   Otherwise it stays an optional extension. This is decided and recorded before `prereg-v1`.
 - **Licence:** terms unverified, so treated as not redistributable (URL + SHA-256 only).
+
+## D13 — MAS stance gold labels come from MAS's published decision table (2026-10-14)
+- **What:** the 20-row gold set for the MAS stance extractor takes `label_direction` and
+  `label_parameters` from MAS's "past monetary policy decisions" table (archived copies, D11),
+  not from hand labelling. Paragraphs are verbatim from the archived statements. #20 (27 Jul 2026,
+  no usable capture) is replaced by 12 Oct 2018.
+- **Why:** no human labeller is available, and an LLM reading the paragraph would not be
+  "hand labels". The bank's own record of each decision is authoritative and independent of the extractor.
+- **Rejected:** labels made by the session model (would be silver, not gold, and correlated with the extractor's design).
