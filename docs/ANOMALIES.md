@@ -16,3 +16,10 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
 - `/ms/` 404s and `?languageId=` is ignored. `BNMAdapter` fetches through
   `/c/portal/update_language?...&languageId=en_US|ms_MY`, and those URLs become `Document.url`.
   The language is read from `<html lang>`, not trusted from the hint.
+
+## A3 — BoE release times partly assumed (2026-10-14)
+- 12:00 London for decision statements is documented from 2013 and *assumed* for 2000–2012.
+  Stand-alone minutes before 6 Aug 2015 are 09:30, as cited in 2001/2013/2015 releases. The special
+  March 2020 meetings have `published_at_utc=None`.
+- Minutes with no meeting date on the page fall back to publication date − 1 (e.g. 2019-07-31).
+- Robustness: re-run the BoE event study on 2013→ only.
