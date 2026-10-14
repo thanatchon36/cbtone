@@ -16,10 +16,12 @@ def test_gradient_matches_finite_differences():
     x, y = _data(80)
     params = np.array([0.3, -0.2, -0.5, np.log(1.5)])
     g = ordinal._grad(params, x, y)
-    num = np.array([
-        (ordinal.neg_loglik(params + e, x, y) - ordinal.neg_loglik(params - e, x, y)) / 2e-6
-        for e in np.eye(4) * 1e-6
-    ])
+    num = np.array(
+        [
+            (ordinal.neg_loglik(params + e, x, y) - ordinal.neg_loglik(params - e, x, y)) / 2e-6
+            for e in np.eye(4) * 1e-6
+        ]
+    )
     assert g == pytest.approx(num, rel=1e-4, abs=1e-4)
 
 
