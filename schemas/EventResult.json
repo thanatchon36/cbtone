@@ -1,0 +1,49 @@
+{
+  "description": "One (bank, series, scorer) event regression; mirrors ``schemas/EventResult.json``.",
+  "properties": {
+    "beta": {
+      "title": "Beta",
+      "type": "number"
+    },
+    "n": {
+      "title": "N",
+      "type": "integer"
+    },
+    "p_value": {
+      "title": "P Value",
+      "type": "number"
+    },
+    "r2": {
+      "title": "R2",
+      "type": "number"
+    },
+    "se_hac": {
+      "title": "Se Hac",
+      "type": "number"
+    },
+    "sign_agreement": {
+      "title": "Sign Agreement",
+      "type": "number"
+    },
+    "sign_p_value": {
+      "title": "Sign P Value",
+      "type": "number"
+    },
+    "t_stat": {
+      "title": "T Stat",
+      "type": "number"
+    }
+  },
+  "required": [
+    "n",
+    "beta",
+    "se_hac",
+    "t_stat",
+    "p_value",
+    "r2",
+    "sign_agreement",
+    "sign_p_value"
+  ],
+  "title": "EventResult",
+  "type": "object"
+}

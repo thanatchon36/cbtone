@@ -1,0 +1,122 @@
+{
+  "description": "One policy decision (or scheduled meeting outcome) of one central bank.\n\n``date`` is the announcement/meeting date when the decision could be matched to a meeting,\notherwise the date the rate changed (``unscheduled=True``). ``effective_date`` is the date\nthe BIS series shows the new rate (can lag the announcement, e.g. ECB main refinancing rate).",
+  "properties": {
+    "bank": {
+      "enum": [
+        "fed",
+        "ecb",
+        "boe",
+        "rba",
+        "mas",
+        "bi",
+        "bnm",
+        "pboc",
+        "bot"
+      ],
+      "title": "Bank",
+      "type": "string"
+    },
+    "date": {
+      "format": "date",
+      "title": "Date",
+      "type": "string"
+    },
+    "direction": {
+      "enum": [
+        "hike",
+        "hold",
+        "cut"
+      ],
+      "title": "Direction",
+      "type": "string"
+    },
+    "effective_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effective Date"
+    },
+    "magnitude_bp": {
+      "title": "Magnitude Bp",
+      "type": "number"
+    },
+    "next_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Next Date"
+    },
+    "next_direction": {
+      "anyOf": [
+        {
+          "enum": [
+            "hike",
+            "hold",
+            "cut"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Next Direction"
+    },
+    "policy_instrument": {
+      "title": "Policy Instrument",
+      "type": "string"
+    },
+    "rate_after": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rate After"
+    },
+    "source": {
+      "enum": [
+        "bis",
+        "bank",
+        "mas_table",
+        "mas_text"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "unscheduled": {
+      "default": false,
+      "title": "Unscheduled",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "bank",
+    "date",
+    "direction",
+    "magnitude_bp",
+    "source",
+    "policy_instrument"
+  ],
+  "title": "Decision",
+  "type": "object"
+}

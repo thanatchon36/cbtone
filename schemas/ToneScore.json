@@ -1,0 +1,73 @@
+{
+  "description": "Tone of one text unit (sentence or document).",
+  "properties": {
+    "dovish_p": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Dovish P",
+      "type": "number"
+    },
+    "evidence_spans": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Spans",
+      "type": "array"
+    },
+    "hawkish_p": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Hawkish P",
+      "type": "number"
+    },
+    "index": {
+      "maximum": 1.0,
+      "minimum": -1.0,
+      "title": "Index",
+      "type": "number"
+    },
+    "model_digest": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Digest"
+    },
+    "neutral_p": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Neutral P",
+      "type": "number"
+    },
+    "prompt_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Prompt Id"
+    },
+    "scorer_id": {
+      "title": "Scorer Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "hawkish_p",
+    "dovish_p",
+    "neutral_p",
+    "index",
+    "scorer_id"
+  ],
+  "title": "ToneScore",
+  "type": "object"
+}

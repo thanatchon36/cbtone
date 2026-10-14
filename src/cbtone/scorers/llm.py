@@ -125,6 +125,7 @@ class LLMScorer(Scorer):
         *,
         temperature: float = 0.0,
         masked: bool = False,
+        evidence: bool = True,
         cache: ScoreCache | None = None,
         base_url: str = DEFAULT_URL,
         timeout: float = 120.0,
@@ -135,6 +136,7 @@ class LLMScorer(Scorer):
         self.model = model
         self.temperature = temperature
         self.masked = masked
+        self.evidence = evidence  # document mode: also ask for quotes (slower; D18)
         self.seed = seed
         self.retry_wait = retry_wait
         self.cache = cache if cache is not None else ScoreCache()
@@ -227,7 +229,8 @@ class LLMScorer(Scorer):
     # -- scoring -------------------------------------------------------------------------------
 
     def _variant(self, mode: Mode) -> str:
-        return f"{mode}|masked={int(self.masked)}|T={self.temperature:g}|seed={self.seed}"
+        v = f"{mode}|masked={int(self.masked)}|T={self.temperature:g}|seed={self.seed}"
+        return v + "|ev=0" if mode == "document" and not self.evidence else v
 
     def _score(self, text: str, lang: Language, mode: Mode) -> ToneScore:
         if not text.strip():
@@ -247,8 +250,10 @@ class LLMScorer(Scorer):
         if cached is not None:
             self.cache_hits += 1
             return cached
-        system = self._system + (_DOC_SUFFIX if mode == "document" else "")
-        h, d, n, evidence = self._chat(system, f"Text:\n{text}", mode)
+        with_evidence = mode == "document" and self.evidence
+        system = self._system + (_DOC_SUFFIX if with_evidence else "")
+        call_mode: Mode = "document" if with_evidence else "sentence"
+        h, d, n, evidence = self._chat(system, f"Text:\n{text}", call_mode)
         score = ToneScore.from_probs(
             h,
             d,

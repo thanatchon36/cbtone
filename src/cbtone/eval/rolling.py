@@ -9,7 +9,6 @@ Metrics: multiclass log-loss (primary) and AUROC hike-vs-cut (secondary).
 from __future__ import annotations
 
 import math
-import warnings
 from collections.abc import Sequence
 
 import numpy as np
@@ -40,28 +39,28 @@ def _design(df: pl.DataFrame, features: Sequence[str]) -> np.ndarray:
 
 
 def _ordered_logit_predict(
-    x_train: np.ndarray, y_train: np.ndarray, x_test: np.ndarray
-) -> np.ndarray | None:
-    """P(cut, hold, hike) for one test row, or None if the fit is impossible/degenerate."""
-    from statsmodels.miscmodels.ordinal_model import OrderedModel
+    x_train: np.ndarray,
+    y_train: np.ndarray,
+    x_test: np.ndarray,
+    init: np.ndarray | None = None,
+) -> tuple[np.ndarray | None, np.ndarray | None]:
+    """(P(cut, hold, hike) for one test row, fitted params), or (None, None) if impossible.
 
-    present = set(y_train.tolist())
-    if present != {0, 1, 2}:
-        return None
-    keep = x_train.std(axis=0) > 0  # drop constant columns (e.g. no 'cut' history yet)
+    Needs all three classes in the training window; constant columns are dropped.
+    """
+    from cbtone.eval import ordinal
+
+    if set(y_train.tolist()) != {0, 1, 2}:
+        return None, None
+    keep = x_train.std(axis=0) > 0
     if not keep.any():
-        return None
-    try:
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            model = OrderedModel(y_train, x_train[:, keep], distr="logit")
-            res = model.fit(method="bfgs", disp=False, maxiter=200)
-            probs = np.asarray(res.model.predict(res.params, exog=x_test[:, keep]))[0]
-    except Exception:  # singular / non-convergent fits fall back to persistence
-        return None
+        return None, None
+    start = init if init is not None and len(init) == int(keep.sum()) + 2 else None
+    params = ordinal.fit(x_train[:, keep], y_train, init=start)
+    probs = ordinal.predict_proba(x_test[:, keep], params)[0]
     if not np.all(np.isfinite(probs)):
-        return None
-    return np.asarray(probs, dtype=float)
+        return None, None
+    return np.asarray(probs, dtype=float), params
 
 
 def rolling_origin(
@@ -97,10 +96,12 @@ def rolling_origin(
     nxt_all = df["next_direction"].to_list()
     x_all = _design(df, features) if features else None
     rows = []
+    warm: np.ndarray | None = None
     for t in range(k0, n):
         probs = None
         if x_all is not None:
-            probs = _ordered_logit_predict(x_all[:t], y_all[:t], x_all[t : t + 1])
+            probs, fitted = _ordered_logit_predict(x_all[:t], y_all[:t], x_all[t : t + 1], warm)
+            warm = fitted if fitted is not None else warm
         fallback = x_all is not None and probs is None
         if probs is None:
             probs = _persistence(last_all[:t], nxt_all[:t], last_all[t])

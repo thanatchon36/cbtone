@@ -435,3 +435,52 @@ def test_live_ollama_smoke(cache: ScoreCache) -> None:
         pytest.skip("no local Ollama with qwen3:4b")
     r = s.score_text("The Committee decided to raise the policy rate by 25 basis points.")
     assert 0.0 <= r.hawkish_p <= 1.0 and r.model_digest
+
+
+def test_document_mode_without_evidence_uses_plain_call():
+    import json as _json
+    from datetime import UTC, date, datetime
+
+    import httpx
+
+    from cbtone.schema import Document
+    from cbtone.scorers.base import ScoreCache
+    from cbtone.scorers.llm import LLMScorer
+
+    seen: list[dict] = []
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        if req.url.path == "/api/tags":
+            return httpx.Response(200, json={"models": [{"name": "qwen3:4b", "digest": "abc"}]})
+        body = _json.loads(req.content)
+        seen.append(body)
+        return httpx.Response(
+            200, json={"message": {"content": '{"hawkish": 0.6, "dovish": 0.1, "neutral": 0.3}'}}
+        )
+
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        s = LLMScorer(
+            cache=ScoreCache(f"{tmp}/c.sqlite"),
+            evidence=False,
+            transport=httpx.MockTransport(handler),
+            retry_wait=0,
+        )
+        doc = Document(
+            bank="fed",
+            date=date(2020, 1, 1),
+            doc_type="statement",
+            language="en",
+            title="t",
+            text="The Committee decided to raise the policy rate.",
+            url="https://x",
+            sha256="0" * 64,
+            fetched_at=datetime(2020, 1, 1, tzinfo=UTC),
+        )
+        score = s.score_document(doc)
+    assert score.index == pytest.approx(0.5)
+    body = seen[0]
+    assert "evidence" not in body["format"]["properties"]
+    assert body["options"]["num_predict"] == 64
+    assert "verbatim" not in body["messages"][0]["content"]

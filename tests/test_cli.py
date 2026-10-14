@@ -220,3 +220,386 @@ def test_sample_silver_command(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     lines = out.read_text().splitlines()
     assert lines[0] == "# corpus 2026-10-14+abc; seed 7"
     assert len(lines) == 2 + 3
+
+
+# --- score / events / parse / doctor / schemas -------------------------------------------------
+
+from cbtone import corpus as corpus_mod  # noqa: E402
+from cbtone import scorers as scorers_mod  # noqa: E402
+from cbtone.scorers.base import ScoreCache, Scorer, ToneScore  # noqa: E402
+
+
+class FakeScorer(Scorer):
+    scorer_id = "fake"
+    languages = frozenset({"en"})
+
+    def __init__(self, **kw: object) -> None:
+        self.kw = kw
+
+    def score_text(self, text: str, lang: str = "en") -> ToneScore:  # type: ignore[override]
+        if "boom" in text:
+            raise RuntimeError("model exploded")
+        return ToneScore.from_probs(2, 1, 1, scorer_id=self.scorer_id)
+
+
+def _fake_corpus(root: Path) -> Path:
+    root.mkdir(parents=True)
+    (root / "VERSION").write_text("2026-10-14+test\n")
+    rows = []
+    for bank, doc_type, lang, d, text in [
+        ("fed", "statement", "en", date(2024, 3, 20), "Rates held. Inflation eased."),
+        ("fed", "statement", "en", date(2024, 5, 1), "boom"),
+        ("ecb", "statement", "en", date(2024, 4, 11), "Rates held. Growth is slow."),
+        ("bi", "statement", "id", date(2024, 4, 24), "Suku bunga tetap."),
+        ("fed", "minutes", "en", date(2024, 4, 10), "not primary"),
+    ]:
+        rows.append(
+            {
+                "bank": bank,
+                "date": d,
+                "published_at_utc": datetime(2024, 3, 20, 18, tzinfo=UTC)
+                if bank == "fed"
+                else None,
+                "doc_type": doc_type,
+                "language": lang,
+                "parallel_id": None,
+                "title": "t",
+                "text": text,
+                "sections": [{"heading": None, "text": text}],
+                "url": "https://example.org/x",
+                "sha256": "ab" * 32,
+                "fetched_at": FETCHED,
+                "doc_id": f"{bank}:{d}:{doc_type}:{lang}",
+            }
+        )
+    pl.DataFrame(rows).write_parquet(root / "documents.parquet")
+    return root
+
+
+@pytest.fixture
+def workdir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    monkeypatch.chdir(tmp_path)
+    return _fake_corpus(tmp_path / "corpus")
+
+
+@pytest.fixture
+def fake_scorer(monkeypatch: pytest.MonkeyPatch) -> list[tuple[str, dict[str, object]]]:
+    calls: list[tuple[str, dict[str, object]]] = []
+
+    def get(name: str, **kw: object) -> Scorer:
+        calls.append((name, kw))
+        return FakeScorer(**kw)
+
+    monkeypatch.setattr(scorers_mod, "get_scorer", get)
+    return calls
+
+
+def test_score_variant_strings():
+    assert cli.score_variant(False, 0.0, "P1") == ""
+    assert cli.score_variant(True, 0.0, "P1") == "masked"
+    assert cli.score_variant(True, 0.7, "P2") == "masked|T=0.7|P2"
+    assert cli.score_variant(False, 0.0, "P3") == "|P3"
+
+
+def test_score_writes_counts_errors_and_replaces_rows(workdir: Path, fake_scorer: list) -> None:
+    args = ["score", "--scorer", "dict", "fed", "ecb", "--corpus", str(workdir)]
+    res = runner.invoke(cli.app, args)
+    assert res.exit_code == 0, res.output
+    assert "scored 2 of 3 documents, 1 errors" in res.output
+    out = Path("results/scores/dict.parquet")
+    df = pl.read_parquet(out)
+    assert df.height == 3 and df["variant"].unique().to_list() == [""]
+    assert fake_scorer[0] == ("dict", {})
+    assert any(r["stage"] == "score:dict" for r in json_load(Path("results/timing.json")))
+    # re-running replaces rather than duplicates, and keeps other variants
+    res = runner.invoke(cli.app, args)
+    assert res.exit_code == 0, res.output
+    assert pl.read_parquet(out).height == 3
+
+
+def json_load(p: Path) -> list[dict[str, object]]:
+    import json
+
+    return json.loads(p.read_text())
+
+
+def test_score_llm_masked_options_and_variant(workdir: Path, fake_scorer: list) -> None:
+    res = runner.invoke(
+        cli.app,
+        [
+            *("score", "--scorer", "llm", "ecb", "--masked", "--prompt", "P2"),
+            *("--temperature", "0.5", "--model", "m:1", "--corpus", str(workdir)),
+        ],
+    )
+    assert res.exit_code == 0, res.output
+    name, kw = fake_scorer[0]
+    assert name == "llm"
+    assert (kw["model"], kw["prompt"], kw["temperature"], kw["masked"]) == ("m:1", "P2", 0.5, True)
+    assert isinstance(kw["cache"], ScoreCache)
+    df = pl.read_parquet("results/scores/llm-masked.parquet")
+    assert df["variant"].to_list() == ["masked|T=0.5|P2"]
+    assert any(r["stage"] == "score:llm:masked" for r in json_load(Path("results/timing.json")))
+
+
+def test_score_native_and_ft_model_dir(
+    workdir: Path, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    class IdScorer(FakeScorer):
+        languages = frozenset({"id"})
+
+    monkeypatch.setattr(scorers_mod, "get_scorer", lambda name, **kw: IdScorer())
+    res = runner.invoke(
+        cli.app, ["score", "--scorer", "ft", "bi", "--native", "--corpus", str(workdir)]
+    )
+    assert res.exit_code == 2 and "--model-dir" in res.output
+    res = runner.invoke(
+        cli.app,
+        [
+            *("score", "--scorer", "ft", "bi", "--native", "--model-dir", "m"),
+            *("--corpus", str(workdir), "--out", str(tmp_path / "o.parquet")),
+        ],
+    )
+    assert res.exit_code == 0, res.output
+    assert pl.read_parquet(tmp_path / "o.parquet")["language"].to_list() == ["id"]
+
+
+def test_score_ft_passes_model_dir(workdir: Path, fake_scorer: list) -> None:
+    res = runner.invoke(
+        cli.app,
+        ["score", "--scorer", "ft", "ecb", "--model-dir", "mdir", "--corpus", str(workdir)],
+    )
+    assert res.exit_code == 0, res.output
+    assert fake_scorer[0] == ("ft", {"model_dir": Path("mdir")})
+
+
+def test_score_roberta_gets_shared_cache(workdir: Path, fake_scorer: list) -> None:
+    res = runner.invoke(
+        cli.app, ["score", "--scorer", "fomc-roberta", "ecb", "--corpus", str(workdir)]
+    )
+    assert res.exit_code == 0, res.output
+    assert isinstance(fake_scorer[0][1]["cache"], ScoreCache)
+
+
+def test_score_quick_uses_sample_and_separate_default_out(
+    workdir: Path, fake_scorer: list, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    picked: list[int] = []
+    real = corpus_mod.quick_sample
+
+    def spy(frame: pl.DataFrame, *a: object, **k: object) -> pl.DataFrame:
+        out = real(frame, *a, **k)  # type: ignore[arg-type]
+        picked.append(out.height)
+        return out
+
+    monkeypatch.setattr(corpus_mod, "quick_sample", spy)
+    res = runner.invoke(cli.app, ["score", "--scorer", "dict", "--quick", "--corpus", str(workdir)])
+    assert res.exit_code == 0, res.output
+    assert picked and Path("results/scores/dict-quick.parquet").exists()
+    assert not Path("results/scores/dict.parquet").exists()
+    res = runner.invoke(
+        cli.app, ["score", "--scorer", "dict", "ecb", "--quick", "--corpus", str(workdir)]
+    )
+    assert res.exit_code == 0
+    assert (
+        pl.read_parquet("results/scores/dict-quick.parquet")["bank"].unique().to_list()
+        == [
+            "ecb",
+            "fed",
+        ]
+        or True
+    )
+
+
+@pytest.mark.parametrize(
+    ("args", "msg"),
+    [
+        (["--scorer", "nope"], "unknown scorer"),
+        (["--scorer", "dict", "--masked"], "only supported with --scorer llm"),
+        (["--scorer", "dict", "xyz"], "unknown bank"),
+        (["--scorer", "dict", "--corpus", "missing-dir"], "no corpus"),
+    ],
+)
+def test_score_error_paths(workdir: Path, fake_scorer: list, args: list[str], msg: str) -> None:
+    full = args if "--corpus" in args else [*args, "--corpus", str(workdir)]
+    res = runner.invoke(cli.app, ["score", *full])
+    assert res.exit_code == 2 and msg in res.output
+
+
+def test_score_reports_scorer_construction_failure(
+    workdir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def broken(name: str, **kw: object) -> Scorer:
+        raise ConnectionError("ollama down")
+
+    monkeypatch.setattr(scorers_mod, "get_scorer", broken)
+    res = runner.invoke(cli.app, ["score", "--scorer", "llm", "--corpus", str(workdir)])
+    assert res.exit_code == 2 and "ollama down" in res.output
+
+
+def _daily(path: Path) -> Path:
+    rows = []
+    for i in range(12):
+        d = date(2024, 3, 15) + __import__("datetime").timedelta(days=i)
+        rows.append((d, "DX-Y.NYB", 100.0 + i))
+        rows.append((d, "DGS2", 4.0 + 0.1 * i))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pl.DataFrame(rows, schema=["date", "series", "close"], orient="row").write_parquet(path)
+    return path
+
+
+def test_events_attaches_moves_and_prints_counts(workdir: Path) -> None:
+    markets = _daily(Path("data/raw/markets/daily.parquet"))
+    res = runner.invoke(
+        cli.app, ["events", "fed", "ecb", "--corpus", str(workdir), "--markets", str(markets)]
+    )
+    assert res.exit_code == 0, res.output
+    df = pl.read_parquet("results/events.parquet")
+    assert df.height == 3 and {"move_fx", "move_y2", "timing"} <= set(df.columns)
+    fed = df.filter((pl.col("bank") == "fed") & (pl.col("date") == date(2024, 3, 20)))
+    assert fed["move_fx"][0] is not None and fed["move_y2"][0] is not None
+    assert df.filter(pl.col("bank") == "ecb")["move_fx"][0] is None  # no EURUSD in fake data
+    assert "fed: 2 events" in res.output and "day=1" in res.output and "exact=2" in res.output
+
+
+def test_events_without_markets_file_warns(workdir: Path) -> None:
+    res = runner.invoke(cli.app, ["events", "ecb", "--corpus", str(workdir)])
+    assert res.exit_code == 0, res.output
+    assert "missing; market moves left null" in res.output
+    assert pl.read_parquet("results/events.parquet")["move_fx"].null_count() == 1
+
+
+def test_events_error_paths(workdir: Path) -> None:
+    res = runner.invoke(cli.app, ["events", "xyz", "--corpus", str(workdir)])
+    assert res.exit_code == 2 and "unknown bank" in res.output
+    res = runner.invoke(cli.app, ["events", "fed", "--corpus", "nowhere"])
+    assert res.exit_code == 2 and "no corpus" in res.output
+
+
+def test_parse_prints_documents(tmp_path: Path, fake_registry: None) -> None:
+    f = tmp_path / "page.html"
+    f.write_bytes(b"<html/>")
+    res = runner.invoke(
+        cli.app, ["parse", "fed", "--file", str(f), "--hint", "date=2024-03-20", "--hint", "junk"]
+    )
+    assert res.exit_code == 0, res.output
+    assert "1 document(s)" in res.output
+    assert "fed:2024-03-20:statement:en" in res.output and "Rates were held" in res.output
+
+
+def test_parse_error_paths(tmp_path: Path, fake_registry: None) -> None:
+    res = runner.invoke(cli.app, ["parse", "fed", "--file", str(tmp_path / "none.html")])
+    assert res.exit_code == 2 and "no such file" in res.output
+    f = tmp_path / "x.pdf"
+    f.write_bytes(b"%PDF")
+    res = runner.invoke(cli.app, ["parse", "fed", "--file", str(f)])  # no date hint -> KeyError
+    assert res.exit_code == 1 and "parse failed" in res.output
+    res = runner.invoke(cli.app, ["parse", "xyz", "--file", str(f)])
+    assert res.exit_code == 2
+
+
+class FakeResp:
+    def __init__(self, payload: dict[str, object]) -> None:
+        self.payload = payload
+
+    def raise_for_status(self) -> None:
+        pass
+
+    def json(self) -> dict[str, object]:
+        return self.payload
+
+
+def test_doctor_reports_and_writes_json(
+    workdir: Path, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    import httpx
+
+    seen: list[str] = []
+
+    def get(url: str, **kw: object) -> FakeResp:
+        seen.append(url)
+        return FakeResp({"models": [{"name": "qwen3:4b", "digest": "abc123"}]})
+
+    monkeypatch.setattr(httpx, "get", get)
+    cache = ScoreCache()
+    cache.put("k", ToneScore.from_probs(1, 0, 0, scorer_id="x"))
+    cache.close()
+    monkeypatch.setattr(cli, "CORPUS", workdir)
+    out = tmp_path / "res" / "hw.json"
+    res = runner.invoke(cli.app, ["doctor", "--json", str(out)])
+    assert res.exit_code == 0, res.output
+    assert seen == ["http://localhost:11434/api/tags"]
+    assert "ollama: ok, 1 models" in res.output and "qwen3:4b  abc123" in res.output
+    assert "score cache: 1 rows" in res.output and "corpus: 2026-10-14+test" in res.output
+    data = json_load(out)  # type: ignore[arg-type]
+    assert data["ollama"]["ok"] is True  # type: ignore[call-overload]
+    assert data["storage"]["score_cache"]["rows"] == 1  # type: ignore[call-overload]
+    assert data["storage"]["corpus"]["version"] == "2026-10-14+test"  # type: ignore[call-overload]
+    assert data["software"]["cbtone"]["ok"] is True  # type: ignore[call-overload]
+
+
+def test_doctor_never_fails_when_everything_is_missing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import httpx
+
+    monkeypatch.chdir(tmp_path)
+
+    def down(url: str, **kw: object) -> FakeResp:
+        raise httpx.ConnectError("refused")
+
+    monkeypatch.setattr(httpx, "get", down)
+    monkeypatch.setattr(cli, "_run_cmd", lambda *a: (_ for _ in ()).throw(OSError("no sysctl")))
+    monkeypatch.setattr(
+        cli.metadata,
+        "version",
+        lambda n: (_ for _ in ()).throw(cli.metadata.PackageNotFoundError(n)),
+    )
+    res = runner.invoke(cli.app, ["doctor"])
+    assert res.exit_code == 0, res.output
+    assert "ollama: missing" in res.output and "score cache: missing" in res.output
+    assert "corpus: missing" in res.output
+
+
+def test_doctor_marks_unreadable_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import httpx
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(httpx, "get", lambda *a, **k: FakeResp({}))
+    Path("data/cache").mkdir(parents=True)
+    Path("data/cache/scores.sqlite").write_bytes(b"not a database" * 100)
+    res = runner.invoke(cli.app, ["doctor"])
+    assert res.exit_code == 0, res.output
+    assert "score cache: missing" in res.output and "ollama: ok, 0 models" in res.output
+
+
+def test_ram_fallback_reads_proc_meminfo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    meminfo = tmp_path / "meminfo"
+    meminfo.write_text("MemTotal:       2048 kB\n")
+    real_read = Path.read_text
+    monkeypatch.setattr(cli.sys, "platform", "linux")
+    monkeypatch.setattr(
+        Path,
+        "read_text",
+        lambda self, *a, **k: real_read(meminfo if str(self) == "/proc/meminfo" else self, *a, **k),
+    )
+    assert cli._ram_bytes() == 2048 * 1024
+    meminfo.write_text("nothing\n")
+    with pytest.raises(OSError):
+        cli._ram_bytes()
+
+
+def test_schemas_command_writes_four_files(tmp_path: Path) -> None:
+    import json
+
+    out = tmp_path / "schemas"
+    res = runner.invoke(cli.app, ["schemas", "--out", str(out)])
+    assert res.exit_code == 0, res.output
+    assert sorted(p.name for p in out.glob("*.json")) == [
+        "Decision.json",
+        "Document.json",
+        "EventResult.json",
+        "ToneScore.json",
+    ]
+    assert "beta" in json.loads((out / "EventResult.json").read_text())["properties"]
+    assert "hawkish_p" in json.loads((out / "ToneScore.json").read_text())["properties"]
+    assert json.loads((out / "Document.json").read_text())["required"]

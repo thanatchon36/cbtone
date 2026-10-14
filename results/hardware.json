@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-10-14T06:33:39+00:00",
+  "system": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "macos": "26.6.2",
+    "cpu": "Apple M4",
+    "ram_gb": 16.0,
+    "ok": true
+  },
+  "software": {
+    "python": {
+      "ok": true,
+      "version": "3.13.9"
+    },
+    "cbtone": {
+      "ok": true,
+      "version": "0.0.1"
+    },
+    "polars": {
+      "ok": true,
+      "version": "1.44.2"
+    },
+    "torch": {
+      "ok": true,
+      "version": "2.14.1"
+    },
+    "transformers": {
+      "ok": true,
+      "version": "5.19.0"
+    },
+    "mps": {
+      "ok": true,
+      "available": true
+    }
+  },
+  "ollama": {
+    "ok": true,
+    "url": "http://localhost:11434",
+    "models": [
+      {
+        "name": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+      },
+      {
+        "name": "qwen3:4b",
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+      },
+      {
+        "name": "qwen3.5:0.8b",
+        "digest": "f1e6f0684a22457e8eb5b09d26041e8171c248c6b252c267a0b35ac5afc24ed6"
+      },
+      {
+        "name": "qwen3.5:9b",
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
+      }
+    ]
+  },
+  "storage": {
+    "disk_free_gb": 43.7,
+    "score_cache": {
+      "path": "data/cache/scores.sqlite",
+      "size_mb": 0.06,
+      "rows": 84,
+      "ok": true
+    },
+    "corpus": {
+      "ok": true,
+      "version": "2026-10-14+ed5a49c28f7b41acaf4f21bda0d43570bd23049b363717c08d5efb3b9177bb8b"
+    }
+  }
+}

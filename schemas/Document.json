@@ -1,0 +1,142 @@
+{
+  "$defs": {
+    "Section": {
+      "description": "A paragraph-level block of a document, in reading order.",
+      "properties": {
+        "heading": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Heading"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "Section",
+      "type": "object"
+    }
+  },
+  "description": "One central-bank communication in one language.",
+  "properties": {
+    "bank": {
+      "enum": [
+        "fed",
+        "ecb",
+        "boe",
+        "rba",
+        "mas",
+        "bi",
+        "bnm",
+        "pboc",
+        "bot"
+      ],
+      "title": "Bank",
+      "type": "string"
+    },
+    "date": {
+      "format": "date",
+      "title": "Date",
+      "type": "string"
+    },
+    "doc_type": {
+      "enum": [
+        "statement",
+        "minutes",
+        "press_conference",
+        "mps",
+        "communique",
+        "other"
+      ],
+      "title": "Doc Type",
+      "type": "string"
+    },
+    "fetched_at": {
+      "format": "date-time",
+      "title": "Fetched At",
+      "type": "string"
+    },
+    "language": {
+      "enum": [
+        "en",
+        "id",
+        "ms",
+        "zh",
+        "th"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "parallel_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parallel Id"
+    },
+    "published_at_utc": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Published At Utc"
+    },
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/Section"
+      },
+      "title": "Sections",
+      "type": "array"
+    },
+    "sha256": {
+      "title": "Sha256",
+      "type": "string"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "url": {
+      "title": "Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "bank",
+    "date",
+    "doc_type",
+    "language",
+    "title",
+    "text",
+    "url",
+    "sha256",
+    "fetched_at"
+  ],
+  "title": "Document",
+  "type": "object"
+}
