@@ -85,14 +85,28 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] `docs/posts/`: launch + 9 single-finding drafts (706–1,030 chars each, ≤ 1,300)
 - [x] README results table + headline chart; docs site results/FAQ/reproducibility updated (`mkdocs build --strict` ok)
 
+## Phase 6 — release (2026-10-14)
+- [x] Fresh-clone `make reproduce` (commit fefdb16): exit 0, 23 min on the M4 with the score cache; no verdict
+      changed (A13: ft retrain not bit-identical on MPS; 7 previously failed RQ4a calls succeeded on retry)
+- [x] `uv build`: wheel + sdist; wheel installs and `cbtone --help` runs in a clean venv; sdist holds no withheld text
+- [x] CITATION.cff date-released 2026-10-14; `cbtone doctor` honours CBTONE_SCORE_CACHE; hardware.json regenerated
+- [x] Pushed by the owner: main @ fefdb16 and tag prereg-v1 are on GitHub
+- [x] Tag v0.1.0 (local; push with `git push origin main --tags`)
+- [ ] PyPI: no token / trusted publisher configured. `release.yml` is ready (trusted publishing, environment `pypi`);
+      until the owner sets it up on pypi.org, the publish job fails on a `v*` tag push (harmless). Name `cbtone` is free.
+- [ ] FOMC-RoBERTa: HF login done (user thanatchon36); access requested 2026-10-14, pending approval. When granted:
+      score FOMC test + silver, rerun rq4/rq5, refresh paper → v0.1.1
+
 ## Waiting on owner
-- **git push is blocked:** `~/.claude/settings.json` has `"deny": ["Bash(git push *)"]`, and a deny overrides
-  allow rules. All work is committed locally. To publish, remove that deny rule (or run `! git push origin main --tags`).
-  Commits since `0132cf6` and the tag `prereg-v1` are local only.
-- **FOMC-RoBERTa is gated on Hugging Face:** request access to `gtfintechlab/FOMC-RoBERTa` on huggingface.co,
-  then run `hf auth login` on this machine. Until then RQ4b/RQ5 report it as "not run (gated)". The scorer is built,
+- **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
+  `! git push origin main --tags`; last push: main @ fefdb16 + prereg-v1. Later commits and the tag v0.1.0 are local.
+- **FOMC-RoBERTa is gated on Hugging Face:** logged in and access requested on 2026-10-14; waiting for the model
+  owner's approval. The token used was pasted in a chat session, so revoke it and create a new one. Until then RQ4b/RQ5 report it as "not run (gated)". The scorer is built,
   pinned to revision `aa3bc428…`, and checks its label map at load time.
 
 Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.
+- PyPI: configure a trusted publisher for `cbtone` (owner thanatchon36, repo cbtone, workflow release.yml,
+  environment `pypi`) and create the `pypi` environment on GitHub; then re-run the release workflow for v0.1.0.
+- Zenodo: enable the GitHub integration to archive v0.1.0 and add the DOI to CITATION.cff.
 - The BoE ~100-char decision releases for 2000–2006 are complete, not truncated (A6).

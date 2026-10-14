@@ -310,8 +310,9 @@ for the ECB), consistent with MAS's exchange-rate framing.
 # 9. Reproducibility statement
 
 All code is Apache-2.0 at <https://github.com/thanatchon36/cbtone>. `make reproduce` rebuilds every table
-and figure from the committed corpus snapshot (scores are cached by content hash, so a re-run makes no new
-LLM calls). The pre-registration is the git tag `prereg-v1`; every later deviation is listed in
+and figure from the committed corpus snapshot (scores are cached by content hash, so a re-run repeats only the few LLM
+calls that failed the first time; the fine-tuned model is retrained, which on Apple MPS is not bit-for-bit
+deterministic; `ANOMALIES.md` A13). The pre-registration is the git tag `prereg-v1`; every later deviation is listed in
 `docs/DECISIONS.md` (D17–D20) and every data anomaly in `docs/ANOMALIES.md`. LLM scores were computed on a desktop RTX 4070 Ti
 (D20); the fine-tuned model was trained on an Apple M4 laptop (16 GB, MPS) in 6 minutes (`results/hardware.json`,
 `results/ft_train_report.json`); per-stage wall time is in `results/timing.json`.

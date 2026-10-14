@@ -30,4 +30,7 @@
 All headline numbers are in [`results/summary.json`](https://github.com/thanatchon36/cbtone/blob/main/results/summary.json); figures and their CSV table
 views are in `results/figures/`. The sanity gate's report is `results/SANITY.md`.
 
-<!-- REPRODUCE-RUN: date, commit and wall time of the fresh-clone `make reproduce` run (Phase 6). -->
+**Fresh-clone check (2026-10-14):** `make reproduce` on a fresh clone of commit `fefdb16`, with the withheld text,
+raw market data and the score cache copied in, finished with exit 0 in 23 minutes on an Apple M4 (LLM backend: the
+same cache). No verdict changed; the fine-tuned model's numbers and seven RQ4a cells differ slightly (see
+`docs/ANOMALIES.md`, A13).

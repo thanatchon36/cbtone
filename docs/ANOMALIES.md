@@ -94,3 +94,14 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
 - `test.csv` has 496 rows but only 424 distinct `index` values (and 494 distinct sentences), so `sentence_id`
   collided and the RQ4b pivot failed. Fixed in code: `sentence_id = split:row:index`. Scores were unchanged (cached by
   text); only the join key changed. No threshold or pre-registered rule was touched.
+
+## A13 — Fresh-clone `make reproduce`: fine-tuned numbers and 7 RQ4a cells differ (2026-10-14)
+- Run: fresh clone of `fefdb16`, local inputs = withheld text, raw markets and the score cache
+  (`scores-4070ti.sqlite`); exit 0 in 1,382 s. No pre-registered verdict changed.
+- 344 of 350 differing values in `summary.json` belong to the fine-tuned XLM-R (`scorer = ft`): retraining on Apple MPS
+  is not bit-for-bit deterministic even with a fixed seed (validation macro-F1 0.608 → 0.599). The ft scorer enters
+  no pre-registered hypothesis test except descriptively (RQ3, RQ5), so its numbers are reported as one training run.
+- The other 6 are RQ4a sentence stability cells: LLM failures (invalid JSON) are never cached, so a re-run retries them.
+  On retry 7 of the 21 failed sentence calls succeeded (prompts: 982 → 987 complete units; temperature: 998 → 1,000);
+  α moved by < 0.001 (prompts 0.4155 → 0.4158). The committed numbers are those of the original run.
+- Consequence: "a re-run makes no new LLM calls" holds for every *successful* score; failed calls are retried.

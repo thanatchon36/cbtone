@@ -10,10 +10,8 @@ authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
 version: 0.1.0
-# TODO: set date-released (YYYY-MM-DD) when v0.1.0 is tagged.
-# date-released: "TODO"
-# TODO: add the Zenodo DOI after the first archived release.
-# doi: "TODO"
+date-released: "2026-10-14"
+# DOI: add once the owner enables the Zenodo GitHub integration and v0.1.0 is archived.
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/cbtone"
 url: "https://github.com/thanatchon36/cbtone"

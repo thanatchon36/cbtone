@@ -6,7 +6,7 @@ Everything used a 4-billion-parameter open model through Ollama. No API, no per-
 - MacBook Air M4 (16 GB): about 3.5 s per statement with text capped at 3,000 characters.
 - Fine-tuning a small multilingual model on the laptop: 6 minutes.
 
-Scores are cached by content hash, so re-running the whole analysis makes no new model calls.
+Scores are cached by content hash, so re-running the whole analysis only repeats the handful of calls that failed the first time.
 
 Cheap enough to monitor every new statement. Given the other findings, treat the output as a descriptive series, not a forecast.
 
