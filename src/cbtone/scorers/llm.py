@@ -19,6 +19,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import time
 from collections.abc import Sequence
 from importlib import resources
@@ -41,7 +42,7 @@ STRATEGIES: tuple[str, ...] = ("mean", "decision_weighted", "max_abs")
 Mode = Literal["sentence", "document"]
 
 DEFAULT_MODEL = "qwen3:4b"
-DEFAULT_URL = "http://localhost:11434"
+DEFAULT_URL = os.environ.get("CBTONE_OLLAMA_URL", "http://localhost:11434")  # D20
 SEED = 20261014
 NUM_CTX = 8192
 NUM_PREDICT: dict[str, int] = {"sentence": 64, "document": 160}

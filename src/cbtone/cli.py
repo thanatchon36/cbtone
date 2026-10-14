@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import platform
 import shutil
 import sqlite3
@@ -238,7 +239,7 @@ def sample_silver_cmd(
 SCORES_DIR = Path("results/scores")
 MARKETS = Path("data/raw/markets/daily.parquet")
 SCORE_CACHE = Path("data/cache/scores.sqlite")
-OLLAMA_URL = "http://localhost:11434"
+OLLAMA_URL = os.environ.get("CBTONE_OLLAMA_URL", "http://localhost:11434")
 SCORE_KEY = ["doc_id", "scorer_id", "variant"]
 
 

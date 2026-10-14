@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import sqlite3
 import threading
 from abc import ABC, abstractmethod
@@ -117,8 +118,9 @@ class ScoreCache:
     e.g. masked from unmasked input or temperature settings.
     """
 
-    def __init__(self, path: Path | str = Path("data/cache/scores.sqlite")) -> None:
-        self.path = Path(path)
+    def __init__(self, path: Path | str | None = None) -> None:
+        default = os.environ.get("CBTONE_SCORE_CACHE", "data/cache/scores.sqlite")
+        self.path = Path(path if path is not None else default)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = threading.Lock()
         self._db = sqlite3.connect(self.path, check_same_thread=False)
