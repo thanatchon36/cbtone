@@ -28,3 +28,11 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **What:** `data/raw/**/*.bin` ignored; `.json` sidecars (URL + hash) committed.
 - **Why:** MISSION §0, "commit only URLs + hashes" when the terms forbid redistribution; the sidecars are
   enough to verify a re-fetch. The text goes into `data/corpus/` only where the terms allow it.
+
+## D5 — Non-commercial anchor data are evaluation-only (2026-10-14)
+- **What:** the FOMC hawkish/dovish set and FOMC-RoBERTa are CC-BY-NC-4.0. cbtone downloads them at run
+  time, uses them for evaluation and as a scorer, and never redistributes them or trains released
+  weights on them.
+- **Why:** MISSION §1.4; Apache-2.0 users may be commercial.
+- **Rejected:** vendoring the CSVs in `tests/fixtures` (that would be redistribution). Tests use a 5-row synthetic
+  stand-in with the same schema.

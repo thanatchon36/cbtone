@@ -35,6 +35,7 @@ finetune = ["transformers>=4.44", "torch>=2.4", "peft>=0.12"]
 docs = ["mkdocs-material>=9.5"]
 thai = [
     "pythainlp>=5.4.0",
+    "python-crfsuite>=0.9.12",
 ]
 
 [project.scripts]
