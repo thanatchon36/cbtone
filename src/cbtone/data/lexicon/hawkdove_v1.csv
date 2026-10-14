@@ -1,0 +1,168 @@
+term,polarity,weight,source_key,note
+higher inflation,hawkish,1.0,apel2014informative,modifier+noun: inflation
+rising inflation,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation rise,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation rose,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation increase,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation accelerate,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation pressure,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflationary pressure,hawkish,1.0,apel2014informative,modifier+noun: inflation
+high inflation,hawkish,1.0,apel2014informative,modifier+noun: inflation
+elevated inflation,hawkish,1.0,apel2014informative,modifier+noun: inflation
+persistent inflation,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation persist,hawkish,1.0,apel2014informative,modifier+noun: inflation
+inflation above target,hawkish,1.0,apel2014informative,modifier+noun: inflation
+upside risks to inflation,hawkish,1.0,apel2014informative,modifier+noun: inflation
+strong growth,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+stronger growth,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+robust growth,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+solid growth,hawkish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+growth strengthen,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+growth accelerate,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+growth pick up,hawkish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+strong demand,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+stronger demand,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+higher demand,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+rising demand,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+demand increase,hawkish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+strong economy,hawkish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+stronger economy,hawkish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+economy overheat,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+overheating,hawkish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+tight labour market,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+tight labor market,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+labour market tighten,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+labor market tighten,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+lower unemployment,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+falling unemployment,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+unemployment fall,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+unemployment decline,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher wage,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+rising wage,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+wage pressure,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher resource utilisation,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher resource utilization,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher capacity utilisation,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher capacity utilization,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher price,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+rising price,hawkish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+price pressure,hawkish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+raise rate,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+increase rate,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+higher rate,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+rate increase,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+rate rise,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+rate hike,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+hike rate,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+hike,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+tighten,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+tighten policy,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+tighten monetary policy,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+policy tightening,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+further tightening,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+further rate increase,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+hawkish,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+restrictive,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+sufficiently restrictive,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+remove accommodation,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+withdraw accommodation,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+reduce accommodation,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+withdraw stimulus,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+quantitative tightening,hawkish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+balance sheet reduction,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+reduce asset purchase,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+taper,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+normalise policy,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+normalize policy,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+firming,hawkish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+increase the target range,hawkish,1.0,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+raise the target range,hawkish,1.0,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+raise the federal funds rate,hawkish,1.0,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+reduce the size of the balance sheet,hawkish,0.5,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+balance sheet runoff,hawkish,0.5,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+inflation expectations rise,hawkish,1.0,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+inflation expectations increase,hawkish,1.0,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+inflation expectations rose,hawkish,1.0,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+elevated inflation expectations,hawkish,1.0,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+higher inflation expectations,hawkish,1.0,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+upward revision to inflation,hawkish,1.0,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+upward revision to growth,hawkish,0.5,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+stronger growth outlook,hawkish,0.5,bennani2017home,expectations raise hawkishness (inflation and growth expectations)
+lower inflation,dovish,1.0,apel2014informative,modifier+noun: inflation
+falling inflation,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation fall,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation decline,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation ease,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation moderate,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation subside,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation slow,dovish,1.0,apel2014informative,modifier+noun: inflation
+low inflation,dovish,1.0,apel2014informative,modifier+noun: inflation
+subdued inflation,dovish,1.0,apel2014informative,modifier+noun: inflation
+disinflation,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation undershoot,dovish,1.0,apel2014informative,modifier+noun: inflation
+inflation below target,dovish,1.0,apel2014informative,modifier+noun: inflation
+downside risks to inflation,dovish,1.0,apel2014informative,modifier+noun: inflation
+weak growth,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+weaker growth,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+slow growth,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+slower growth,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+growth weaken,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+growth slow,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+growth moderate,dovish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+weak demand,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+weaker demand,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+subdued demand,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+demand weaken,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+demand soften,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+soft demand,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+slowdown,dovish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+economic slowdown,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+weak economy,dovish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+recession,dovish,0.5,apel2014informative,"modifier+noun: growth, demand, activity"
+downside risks to growth,dovish,1.0,apel2014informative,"modifier+noun: growth, demand, activity"
+rising unemployment,dovish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+higher unemployment,dovish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+unemployment rise,dovish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+unemployment increase,dovish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+spare capacity,dovish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+slack,dovish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+economic slack,dovish,1.0,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+lower wage,dovish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+subdued wage,dovish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+wage moderate,dovish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+lower price,dovish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+falling price,dovish,0.5,apel2014informative,"modifier+noun: labour market, wages, prices, resource use"
+lower rate,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+reduce rate,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+cut rate,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+rate cut,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+rate reduction,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+decrease rate,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+lower the policy rate,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+cut,dovish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+ease policy,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+ease monetary policy,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+easing,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+further easing,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+loosen,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+loosen policy,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+accommodative,dovish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+additional accommodation,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+further accommodation,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+dovish,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+stimulus,dovish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+stimulate,dovish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+expand asset purchase,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+increase asset purchase,dovish,1.0,picault2017words,policy action / forward guidance (n-gram style)
+remain patient,dovish,0.5,picault2017words,policy action / forward guidance (n-gram style)
+decrease the target range,dovish,1.0,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+lower the target range,dovish,1.0,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+lower the federal funds rate,dovish,1.0,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+increase the size of the balance sheet,dovish,0.5,shah2023trillion,FOMC annotation concepts: target range / balance sheet
+inflation expectations fall,dovish,1.0,bennani2017home,expectations lower hawkishness (inflation and growth expectations)
+inflation expectations decline,dovish,1.0,bennani2017home,expectations lower hawkishness (inflation and growth expectations)
+inflation expectations fell,dovish,1.0,bennani2017home,expectations lower hawkishness (inflation and growth expectations)
+lower inflation expectations,dovish,1.0,bennani2017home,expectations lower hawkishness (inflation and growth expectations)
+downward revision to inflation,dovish,1.0,bennani2017home,expectations lower hawkishness (inflation and growth expectations)
+downward revision to growth,dovish,0.5,bennani2017home,expectations lower hawkishness (inflation and growth expectations)
+weaker growth outlook,dovish,0.5,bennani2017home,expectations lower hawkishness (inflation and growth expectations)

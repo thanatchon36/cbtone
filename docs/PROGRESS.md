@@ -55,6 +55,9 @@ Cut / known gaps:
 - **git push is blocked:** `~/.claude/settings.json` has `"deny": ["Bash(git push *)"]`, and a deny overrides
   allow rules. All work is committed locally. To publish, remove that deny rule (or run `! git push origin main --tags`).
   Commits since `0132cf6` and the tag `prereg-v1` are local only.
+- **FOMC-RoBERTa is gated on Hugging Face:** request access to `gtfintechlab/FOMC-RoBERTa` on huggingface.co,
+  then run `hf auth login` on this machine. Until then RQ4b/RQ5 report it as "not run (gated)". The scorer is built,
+  pinned to revision `aa3bc428…`, and checks its label map at load time.
 
 Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.

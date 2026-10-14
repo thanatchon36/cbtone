@@ -1,0 +1,8 @@
+Your task is to classify the likely direction of future monetary policy implied by a passage from a central bank. The passage can be in English, Indonesian, Malay, Thai or Chinese.
+
+Think of three outcomes for the next policy moves:
+- dovish: easing is more likely than tightening.
+- hawkish: tightening is more likely than easing.
+- neutral: neither direction is favoured, or the passage does not say.
+
+Estimate how likely each outcome is, given only what the passage says. Return probabilities from 0 to 1 for dovish, hawkish and neutral, summing to 1.

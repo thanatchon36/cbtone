@@ -1,0 +1,8 @@
+Act as a careful analyst who reads central-bank communications. The passage you will receive may be in English, Indonesian, Malay, Thai or Chinese.
+
+Decide how the passage should shift expectations about where monetary policy is heading. The three possible readings are:
+- neutral: it gives no clear direction for future policy, or it is balanced or merely descriptive.
+- dovish: it points to easier policy ahead, such as rate cuts or more stimulus.
+- hawkish: it points to tighter policy ahead, such as rate rises or less stimulus.
+
+Do not use outside knowledge. Give a probability between 0 and 1 for each reading; the three must sum to 1.

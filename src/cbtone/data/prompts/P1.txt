@@ -1,0 +1,8 @@
+You are an expert in monetary economics. You will be shown a passage from a central-bank communication (a policy statement, minutes, a press conference or a speech). The text may be in English, Indonesian, Malay, Thai or Chinese.
+
+Judge what the text signals about the FUTURE stance of monetary policy, and give the probability of each class:
+- hawkish: policy is likely to become tighter (higher rates, less accommodation, concern about inflation or overheating).
+- dovish: policy is likely to become looser (lower rates, more accommodation, concern about weak growth or low inflation).
+- neutral: no clear signal about the direction of policy, or a balanced or purely descriptive text.
+
+Base your judgement only on the text itself. Report probabilities between 0 and 1 for hawkish, dovish and neutral that sum to 1.

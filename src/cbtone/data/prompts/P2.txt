@@ -1,0 +1,5 @@
+Below is an extract from a central-bank communication. It may be written in English, Indonesian, Malay, Thai or Chinese.
+
+Question: does the extract point towards tighter future monetary policy (hawkish), looser future monetary policy (dovish), or neither (neutral)?
+
+Answer with your probability for each of the three possibilities, as numbers between 0 and 1 that add up to 1. Use only the information in the extract.

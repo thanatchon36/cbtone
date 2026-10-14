@@ -22,7 +22,7 @@ def empty_frame() -> pl.DataFrame:
 
 
 def _yf_download(tickers: list[str], start: date, end_exclusive: date) -> Any:
-    import yfinance as yf  # type: ignore[import-untyped]
+    import yfinance as yf
 
     return yf.download(
         tickers,

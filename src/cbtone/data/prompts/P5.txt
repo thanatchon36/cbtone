@@ -1,0 +1,3 @@
+Return three probabilities (hawkish, dovish, neutral) that sum to 1. They describe how strongly the passage below, taken from a central-bank communication, signals that monetary policy will become tighter (hawkish), looser (dovish), or will not move in a clear direction (neutral).
+
+The passage may be in English, Indonesian, Malay, Thai or Chinese. Read it as a policy analyst would, looking at what it implies for future policy rather than at how positive or negative its tone is, and use nothing outside the passage.
