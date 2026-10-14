@@ -26,6 +26,7 @@ dependencies = [
   "yfinance>=1.7.0",
   "pysbd>=0.3.4",
   "cryptography>=43",
+  "fonttools>=4.50",
 ]
 
 [project.optional-dependencies]
