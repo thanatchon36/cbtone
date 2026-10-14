@@ -9,7 +9,7 @@ type: software
 authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
-version: 0.1.1
+version: 0.1.2
 date-released: "2026-10-14"
 doi: "10.5281/zenodo.23371641"  # concept DOI (all versions); v0.1.1 is 10.5281/zenodo.23371642
 license: Apache-2.0

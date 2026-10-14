@@ -1,0 +1,19 @@
+{
+  "title": "cbtone",
+  "upload_type": "software",
+  "description": "Hawkish/dovish tone signals from public central-bank communication (dictionary, transformer, local-LLM and fine-tuned scorers), with contamination-aware evaluation and event-study tools. Companion software to the paper \"Reading the Room: Do Local-LLM Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages\" (https://thanatchon36.github.io/cbtone/paper/).",
+  "creators": [
+    {
+      "name": "Chongmankhong, Thanatchon"
+    }
+  ],
+  "license": "apache-2.0",
+  "keywords": ["central banks", "monetary policy", "NLP", "LLM", "event study", "finance"],
+  "related_identifiers": [
+    {
+      "identifier": "https://thanatchon36.github.io/cbtone/paper/",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-preprint"
+    }
+  ]
+}

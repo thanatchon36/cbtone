@@ -15,7 +15,7 @@ whether those signals carry information about later policy decisions and market 
 🤗 **[Model](https://huggingface.co/thanatchon36/cbtone-ft-xlmr)** ·
 🤗 **[Dataset](https://huggingface.co/datasets/thanatchon36/cbtone-silver-sentences)**
 
-> **Status: 0.1.1.** The pre-registered study is complete; every testable hypothesis was refuted
+> **Status: 0.1.2.** The pre-registered study is complete; every testable hypothesis was refuted
 > (see [Results](#results)). One-page summary: [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
 
 ## Why this exists
@@ -162,7 +162,7 @@ Please cite the paper; if you use the `cbtone` library, also cite the software.
   author  = {Chongmankhong, Thanatchon},
   title   = {cbtone},
   year    = {2026},
-  version = {0.1.1},
+  version = {0.1.2},
   url     = {https://github.com/thanatchon36/cbtone},
   doi     = {10.5281/zenodo.23371641}
 }
