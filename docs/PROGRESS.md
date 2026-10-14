@@ -126,6 +126,13 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
       DOI minted: concept 10.5281/zenodo.23371641 (v0.1.1: 10.5281/zenodo.23371642), added to CITATION.cff
       and README.
 
+- [x] Hugging Face (2026-10-14): model `thanatchon36/cbtone-ft-xlmr` (the paper's checkpoint, sha256
+      f16943a3…; re-downloaded and re-scored: FOMC macro-F1 0.41, as reported) and dataset
+      `thanatchon36/cbtone-silver-sentences` (config `public`: 1,187 sentences with text from Fed, RBA and ECB
+      press releases; config `ids_only`: 2,568 sentences as ids + hashes + labels, no text, for BoE, MAS, BI,
+      BNM and ECB press conferences; 33 sentences not traceable to one document omitted). Built by
+      `experiments/export_hf.py`; cards in `experiments/hf_cards/`.
+
 ## Waiting on owner
 - **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
   `! git push origin main --tags`.

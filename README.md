@@ -11,7 +11,9 @@ whether those signals carry information about later policy decisions and market 
 
 📄 **[Read the paper on the web](https://thanatchon36.github.io/cbtone/paper/)** ·
 ⬇️ **[Download the PDF](https://github.com/thanatchon36/cbtone/raw/main/paper/paper.pdf)** ·
-📚 **[Documentation](https://thanatchon36.github.io/cbtone/)**
+📚 **[Documentation](https://thanatchon36.github.io/cbtone/)** ·
+🤗 **[Model](https://huggingface.co/thanatchon36/cbtone-ft-xlmr)** ·
+🤗 **[Dataset](https://huggingface.co/datasets/thanatchon36/cbtone-silver-sentences)**
 
 > **Status: 0.1.1.** The pre-registered study is complete; every testable hypothesis was refuted
 > (see [Results](#results)). One-page summary: [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
