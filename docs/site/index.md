@@ -42,6 +42,31 @@ Details: [paper](paper/index.html) (read online; [PDF](https://github.com/thanat
 | run an event study | [Cookbook: run an event study](cookbook.md#run-an-event-study) |
 | rebuild the paper's numbers | [Reproducibility](reproducibility.md) |
 
+## How to cite
+
+Please cite the paper; if you use the `cbtone` library, also cite the software.
+
+```bibtex
+@misc{chongmankhong2026reading,
+  author = {Chongmankhong, Thanatchon},
+  title  = {Reading the Room: Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
+  year   = {2026},
+  note   = {Preprint},
+  url    = {https://thanatchon36.github.io/cbtone/paper/}
+}
+```
+
+```bibtex
+@software{chongmankhong_cbtone,
+  author  = {Chongmankhong, Thanatchon},
+  title   = {cbtone},
+  year    = {2026},
+  version = {0.1.1},
+  url     = {https://github.com/thanatchon36/cbtone},
+  doi     = {10.5281/zenodo.23371641}
+}
+```
+
 ## Disclaimer
 
 Independent open-source project; public documents only; represents no institution's view; not

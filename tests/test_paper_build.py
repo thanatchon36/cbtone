@@ -70,7 +70,12 @@ def test_citations_match_the_paper_everywhere():
     title = yaml.safe_load(build.FRONT.match(Path("paper/paper.md").read_text()).group(1))["title"]
     version = yaml.safe_load(Path("CITATION.cff").read_text())["version"]
     paper_bib, software_bib = build.citations(title, version)
-    for f in ["README.md", "experiments/hf_cards/model.md", "experiments/hf_cards/dataset.md"]:
+    for f in [
+        "README.md",
+        "docs/site/index.md",
+        "experiments/hf_cards/model.md",
+        "experiments/hf_cards/dataset.md",
+    ]:
         text = Path(f).read_text()
         assert paper_bib in text, f
         assert software_bib in text, f

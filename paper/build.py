@@ -201,8 +201,8 @@ def results(d: dict[str, Any]) -> list[tuple[str, str, str, str]]:
 
 
 def citations(title: str, version: str) -> tuple[str, str]:
-    """BibTeX for the paper and for the software. README, CITATION.cff and the Hugging Face cards
-    carry the same entries (tests/test_paper_build.py checks they stay in sync)."""
+    """BibTeX for the paper and for the software. README, the docs home page, CITATION.cff and the
+    Hugging Face cards carry the same entries (tests/test_paper_build.py keeps them in sync)."""
     protected = re.sub(r"\b([A-Z]{2,})\b", r"{\1}", title)
     paper = (
         "@misc{chongmankhong2026reading,\n"
