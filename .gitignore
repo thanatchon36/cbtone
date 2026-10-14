@@ -17,3 +17,4 @@ data/raw/**/*.parquet
 data/raw/**/*.zip
 data/raw/**/*.xlsx
 data/models/
+paper/paper.filled.md
