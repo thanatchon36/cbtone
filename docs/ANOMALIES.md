@@ -32,3 +32,10 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
 - Minutes paragraphs are inferred from line lengths, and PDF extraction leaves spaces inside Thai
   words. The text module's cleaning must handle this before any Thai sentence scoring.
 - 14:00 Bangkok release is documented for current practice only and is applied to 2021→.
+
+## A5 — BI text covers April 2016 onward only (2026-10-14)
+- The BI-Rate indicator table, paged by POST, starts at 2016-04-21 (128 decisions to 2026-09). There is no
+  index for the BI Rate era (Jul 2005 – Mar 2016; about 130 meetings), and the date filter is
+  JavaScript-only. BI therefore enters the corpus from 2016, which roughly matches the switch to the
+  7-day reverse repo rate (Aug 2016) as the policy rate. RQ1/RQ2 sample-size tables state this.
+- BI pages that do not exist return HTTP 200 with a "404" body; `parse` returns `[]`.

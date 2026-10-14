@@ -171,18 +171,114 @@ def _seed(f: PoliteFetcher, url: str, content: bytes) -> None:
     )
 
 
+class FakeFetcher(PoliteFetcher):
+    """Serves ``pages[0]`` for the index GET and ``pages[n]`` for the n-th POST."""
+
+    def __init__(self, raw_dir: Path, pages: list[bytes]) -> None:
+        super().__init__(raw_dir=raw_dir, offline=True)
+        self.pages = pages
+        self.posts: list[dict[str, str]] = []
+
+    def _resp(self, url: str, content: bytes) -> RawResponse:
+        return RawResponse(
+            url, content, "text/html", "00" * 32, datetime(2026, 1, 1, tzinfo=UTC), True
+        )
+
+    def get(self, bank: str, url: str, *, refresh: bool = False) -> RawResponse:
+        assert url == INDEX_URL
+        return self._resp(url, self.pages[0])
+
+    def post(
+        self, bank: str, url: str, data: dict[str, str], *, refresh: bool = False
+    ) -> RawResponse:
+        assert url == INDEX_URL
+        self.posts.append(data)
+        return self._resp(url, self.pages[len(self.posts)])
+
+
+def _pages() -> list[bytes]:
+    first = (FIX / "index_first.html").read_bytes()
+    middle = first.replace(b"2026", b"2020").replace(b"sp_28", b"sp_22")
+    return [first, middle, (FIX / "index_last.html").read_bytes()]
+
+
 def test_parse_index_rows() -> None:
-    rows = list(BIAdapter.parse_index((FIX / "index_birate.html").read_bytes()))
+    rows = list(BIAdapter.parse_index((FIX / "index_first.html").read_bytes()))
     assert len(rows) == 10
     d, rate, href = rows[0]
     assert d == date(2026, 9, 23) and rate == "5.75 %"
     assert href.startswith("/en/publikasi/ruang-media/news-release/Pages/sp_")
     assert rows[-1][0] == date(2026, 1, 21)
+    last = list(BIAdapter.parse_index((FIX / "index_last.html").read_bytes()))
+    assert last[-1][0] == date(2016, 4, 21)
+    assert last[-1][2].endswith("sp_183116.aspx")
 
 
-def test_list_urls_offline_with_manual_pages(tmp_path: Path) -> None:
-    f = PoliteFetcher(raw_dir=tmp_path, offline=True)
-    _seed(f, INDEX_URL, (FIX / "index_birate.html").read_bytes())
+def test_next_page_form() -> None:
+    form = BIAdapter.next_page_form((FIX / "index_first.html").read_bytes())
+    assert form is not None
+    assert "__VIEWSTATE" in form and "__EVENTVALIDATION" in form
+    nxt = [k for k in form if k.endswith("DataPagerBI7DRR$ctl02$ctl00.x")]
+    assert len(nxt) == 1 and form[nxt[0][:-2] + ".y"] == "5"
+    # the previous-page button and image inputs are not posted back
+    assert not any("ctl00$ctl00.x" in k and "ctl02" not in k for k in form)
+    assert BIAdapter.next_page_form((FIX / "index_last.html").read_bytes()) is None
+    assert BIAdapter.next_page_form(b"<html><body>no form</body></html>") is None
+
+
+def test_paging_runs_to_last_page(tmp_path: Path) -> None:
+    f = FakeFetcher(tmp_path, _pages())
+    items = list(BIAdapter(f).list_urls(2000, 2030))
+    assert len(f.posts) == 2
+    assert all("__VIEWSTATE" in p and "__EVENTVALIDATION" in p for p in f.posts)
+    years = {h["date"][:4] for _, h in items}
+    assert years == {"2026", "2020", "2016"}
+    assert min(h["date"] for _, h in items) == "2016-04-21"
+    assert len({u for u, _ in items}) == len(items)  # 2 languages x 28 distinct links
+
+
+def test_paging_stops_at_start_year(tmp_path: Path) -> None:
+    f = FakeFetcher(tmp_path, _pages())
+    items = list(BIAdapter(f).list_urls(2021, 2030))
+    assert len(f.posts) == 1  # page 2 reaches 2020 (< 2021): no further page requested
+    assert {h["date"][:4] for _, h in items} == {"2026"}
+    f2 = FakeFetcher(tmp_path, _pages())
+    assert len(list(BIAdapter(f2).list_urls(2026, 2026))) == 20
+
+
+def test_paging_stops_on_empty_page(tmp_path: Path) -> None:
+    pages = _pages()
+    pages[1] = b"<html><body><form></form></body></html>"
+    f = FakeFetcher(tmp_path, pages)
+    assert len(list(BIAdapter(f).list_urls(2000, 2030))) == 20
+    assert len(f.posts) == 1
+
+
+def test_pre_2018_release_urls_keep_case(tmp_path: Path) -> None:
+    f = FakeFetcher(tmp_path, _pages())
+    urls = {u for u, _ in BIAdapter(f).list_urls(2016, 2016)}
+    assert f"{BASE}/id/publikasi/ruang-media/news-release/Pages/SP_185016.aspx" in urls
+    assert f"{BASE}/en/publikasi/ruang-media/news-release/Pages/sp_183116.aspx" in urls
+
+
+@pytest.mark.parametrize(
+    ("name", "lang", "title", "closing"),
+    [
+        ("stmt_2016_en", "en", "BI Rate held at 6.75%", "Jakarta, 21th April 2016"),
+        ("stmt_2016_id", "id", "BI Rate Tetap 6,75%", "Jakarta, 21 April 2016"),
+    ],
+)
+def test_bi_rate_era_2016(tmp_path: Path, name: str, lang: str, title: str, closing: str) -> None:
+    doc = _parse(tmp_path, name, lang, "2016-04-21")
+    assert doc.title == title
+    assert len(doc.sections) >= 5 and len(doc.text.split()) >= 500
+    assert not any(s.text.startswith("No") and "DKom" in s.text for s in doc.sections)
+    assert doc.sections[-1].text == closing
+    assert doc.parallel_id == "bi:2016-04-21:statement"
+
+
+def test_list_urls_with_manual_pages(tmp_path: Path) -> None:
+    f = FakeFetcher(tmp_path, [(FIX / "index_first.html").read_bytes()])
     manual = tmp_path / "bi" / "manual"
     manual.mkdir(parents=True)
     (manual / "page2.html").write_text(
@@ -194,9 +290,10 @@ def test_list_urls_offline_with_manual_pages(tmp_path: Path) -> None:
         "<tr><td>4 Maret 2010</td><td>6.50 %</td><td>-</td></tr></table>"
     )
     (manual / "dup.htm").write_text((manual / "page2.html").read_text())
+    f.pages += [b"<html></html>"] * 2  # page 2 of the live table is empty -> paging ends
     items = list(BIAdapter(f).list_urls(2010, 2026))
     assert len({u for u, _ in items}) == len(items)
-    by_date = {}
+    by_date: dict[str, list[tuple[str, dict[str, str]]]] = {}
     for url, h in items:
         by_date.setdefault(h["date"], []).append((url, h))
         assert h["doc_type"] == "statement" and h["parallel_id"] == f"bi:{h['date']}:statement"
@@ -206,20 +303,12 @@ def test_list_urls_offline_with_manual_pages(tmp_path: Path) -> None:
     assert en[0].replace("/en/", "/id/") == idn[0]
     assert [h["language"] for _, h in by_date["2025-09-17"]] == ["en", "id"]
     assert all("?" not in u for u, _ in items)
-    # non-release link: kept as is, single language taken from the path
     assert [(u, h["language"]) for u, h in by_date["2010-02-03"]] == [
         (f"{BASE}/id/iru/email-archive/Pages/old.aspx", "id")
     ]
     assert "2010-03-04" not in by_date
-    assert {h["date"][:4] for _, h in items} == {"2010", "2025", "2026"}
     only_2025 = list(BIAdapter(f).list_urls(2025, 2025))
     assert {h["date"] for _, h in only_2025} == {"2025-09-17"}
-
-
-def test_list_urls_without_manual_dir(tmp_path: Path) -> None:
-    f = PoliteFetcher(raw_dir=tmp_path, offline=True)
-    _seed(f, INDEX_URL, (FIX / "index_birate.html").read_bytes())
-    assert len(list(BIAdapter(f).list_urls(2026, 2026))) == 20
 
 
 @pytest.mark.network

@@ -13,18 +13,19 @@ language is paired by swapping ``/en/`` and ``/id/``. Both get
 the site as an HTTP 200 "404" page without a release body; ``parse`` returns ``[]`` for it.
 
 URL patterns
-    * Index: ``https://www.bi.go.id/en/statistik/indikator/BI-Rate.aspx`` - table of every
-      RDG decision (period, BI-Rate, press-release link). It shows 10 rows and pages through an
-      ASP.NET postback (POST), which ``PoliteFetcher`` (GET only) cannot follow. Page 1 is
-      fetched live; older pages must be saved by hand into ``data/raw/bi/manual/*.html``
-      (see ``docs/sources/NEEDED_bi.md``) and are read by ``list_urls``.
+    * Index: ``https://www.bi.go.id/en/statistik/indikator/BI-Rate.aspx`` - table of every RDG
+      decision since April 2016 (period, rate, press-release link), 10 rows per page, newest
+      first. It pages through an ASP.NET postback: ``list_urls`` GETs page 1, then POSTs the
+      form back (``__VIEWSTATE``, ``__EVENTVALIDATION``, ... plus the "Next" image button) via
+      ``PoliteFetcher.post`` until the last page or ``start_year``. 13 pages, 128 rows.
+      Hand-saved pages in ``data/raw/bi/manual/*.html`` are read as a fallback.
     * Release: ``/{en,id}/publikasi/ruang-media/news-release/Pages/sp_<slug>.aspx``; the
       slug is ``<year-1998><ordinal in year><YY>`` since 2024, and ``<ordinal><YY>`` before.
       The generic listing ``.../news-release/default.aspx`` mixes every kind of release and is
       postback-paged as well, so it is not used.
 
-Date range: releases are confirmed for 2018-2026 (BI-Rate table: July 2005 onward; the pre-2018
-link style is unverified).
+Date range: decisions from 2016-04-21 (the index table starts there; the BI Rate era before
+that, 2005-2016-04, is not listed on the current site). Releases verified for 2016-2026.
 
 Dates and times
     ``date`` is the announcement date of the decision from the index table (the last day of the
@@ -56,6 +57,7 @@ from cbtone.sources.base import RawResponse, SourceAdapter
 BASE = "https://www.bi.go.id"
 INDEX_URL = f"{BASE}/en/statistik/indikator/BI-Rate.aspx"
 MANUAL_SUBDIR = "manual"
+MAX_PAGES = 100  # safety cap; the table has about 25 pages
 
 _MONTHS = {
     "january": 1,
@@ -85,8 +87,8 @@ _MONTHS = {
 _DATE = re.compile(r"(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})")
 _PAGE_DATE = re.compile(r"(\d{1,2})/(\d{1,2})/(\d{4})\s+\d{1,2}:\d{2}")
 _WS = re.compile(r"\s+")
-_NUMBER = re.compile(r"^No\.?:?\s*\d+/\d+/\w+", re.I)
-_DEPT = re.compile(r"\s*(communication department|departemen komunikasi)\s*$", re.I)
+_NUMBER = re.compile(r"^No\.?:?\s*\d+\s*/\s*\d+\s*/\s*\w+", re.I)
+_DEPT = re.compile(r"\s*(communication departe?ment|departemen komunikasi)\s*$", re.I)
 _RELEASE_PATH = re.compile(r"^/(en|id)(/publikasi/ruang-media/news-release/Pages/.+)$")
 
 
@@ -125,10 +127,39 @@ class BIAdapter(SourceAdapter):
             href = str(a["href"]).split("?")[0].split("#")[0]
             yield d, _clean(cells[1].get_text(" ")), href
 
-    def _index_rows(self) -> list[tuple[date, str, str]]:
-        rows = list(
-            self.parse_index(self.fetcher.get(self.bank, INDEX_URL).content),
-        )
+    @staticmethod
+    def next_page_form(html: str | bytes) -> dict[str, str] | None:
+        """POST body that clicks "Next" on an indicator page, or ``None`` on the last page.
+
+        Carries every hidden/text field (``__VIEWSTATE``, ``__EVENTVALIDATION``, ...).
+        """
+        soup = BeautifulSoup(html, "lxml")
+        form = soup.find("form")
+        nxt = soup.select_one("span.pagination input.next")
+        if not isinstance(form, Tag) or not isinstance(nxt, Tag) or nxt.get("disabled"):
+            return None
+        data: dict[str, str] = {}
+        for inp in form.find_all("input"):
+            name = inp.get("name")
+            if name and inp.get("type") in ("hidden", "text"):
+                data[str(name)] = str(inp.get("value") or "")
+        base = str(nxt["name"])
+        data[base + ".x"] = "5"
+        data[base + ".y"] = "5"
+        return data
+
+    def _index_rows(self, start_year: int = 0) -> list[tuple[date, str, str]]:
+        """Rows from the live paged table (newest first, paged backwards to ``start_year``),
+        plus any hand-saved pages in ``data/raw/bi/manual/``."""
+        raw = self.fetcher.get(self.bank, INDEX_URL)
+        rows: list[tuple[date, str, str]] = []
+        for _ in range(MAX_PAGES):
+            page = list(self.parse_index(raw.content))
+            rows.extend(page)
+            form = self.next_page_form(raw.content)
+            if not page or form is None or min(r[0] for r in page).year < start_year:
+                break
+            raw = self.fetcher.post(self.bank, INDEX_URL, form)
         manual = Path(self.fetcher.raw_dir) / self.bank / MANUAL_SUBDIR
         if manual.is_dir():
             for f in sorted(manual.glob("*.htm*")):
@@ -137,7 +168,7 @@ class BIAdapter(SourceAdapter):
 
     def list_urls(self, start_year: int, end_year: int) -> Iterator[tuple[str, dict[str, str]]]:
         seen: set[str] = set()
-        for d, rate, href in sorted(self._index_rows(), key=lambda r: r[0]):
+        for d, rate, href in sorted(self._index_rows(start_year), key=lambda r: r[0]):
             if not start_year <= d.year <= end_year:
                 continue
             path = urljoin(BASE, href)[len(BASE) :]
