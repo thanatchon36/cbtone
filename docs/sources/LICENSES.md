@@ -19,5 +19,7 @@ Filled in per bank from `docs/sources/<bank>.md` as each adapter lands.
 |---|---|---|---|
 | Fed | federalreserve.gov/disclaimer.htm: public domain unless otherwise indicated; cite the Board | Yes | Text |
 | ECB | ecb.europa.eu disclaimer: reproduction permitted with source acknowledged; prior authorisation for documents bearing authors' names | Press releases: yes. Press conferences: no (D8) | Statements: text. Press conferences: URL + SHA-256 |
+| RBA | rba.gov.au/copyright: CC BY 4.0 with attribution (excludes logo, banknotes, third-party material, data, multimedia) | Yes (transcripts, not AV) | Text |
+| BNM | bnm.gov.my/terms-of-use: no reproduction or redistribution without written permission | No | URL + SHA-256 |
 | MAS | mas.gov.sg terms of use: prior written permission for any reproduction | No | URL + SHA-256 (manual files, D7) |
 | PBoC | Not verified; robots.txt disallows all crawlers | No (assumed) | Nothing; out of headline (D10) |
