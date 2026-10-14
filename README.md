@@ -1,12 +1,19 @@
 # cbtone
 
-Hawkish/dovish tone signals from **public** central-bank communication, with the evaluation
-machinery to test whether those signals carry information about later policy decisions and market
-reactions.
+**Hawkish/dovish tone signals from public central-bank communication, with the evaluation machinery to test
+whether those signals carry information about later policy decisions and market reactions.**
+
+[![CI](https://github.com/thanatchon36/cbtone/actions/workflows/ci.yml/badge.svg)](https://github.com/thanatchon36/cbtone/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/cbtone.svg)](https://pypi.org/project/cbtone/)
+[![Python](https://img.shields.io/pypi/pyversions/cbtone.svg)](https://pypi.org/project/cbtone/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/thanatchon36/cbtone/blob/main/LICENSE)
+
+📄 **[Read the paper on the web](https://thanatchon36.github.io/cbtone/paper/)** ·
+⬇️ **[Download the PDF](https://github.com/thanatchon36/cbtone/raw/main/paper/paper.pdf)** ·
+📚 **[Documentation](https://thanatchon36.github.io/cbtone/)**
 
 > **Status: 0.1.1.** The pre-registered study is complete; every testable hypothesis was refuted
-> (see [Results](#results)). Paper: [`paper/paper.pdf`](paper/paper.pdf); one-page summary:
-> [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
+> (see [Results](#results)). One-page summary: [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
 
 ## Why this exists
 
