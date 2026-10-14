@@ -60,3 +60,20 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Rejected:** retrying with a browser User-Agent or a headless browser (that gets around the block); using
   the Internet Archive's copies of MAS pages without the author's say-so (an allowed "public mirror"
   under §0, but it would get around the bank's own access choice, so it's left to the author).
+
+## D8 — Redistribution per document type; ECB press conferences committed as URLs + hashes (2026-10-14)
+- **What:** `redistributable` is decided per (bank, doc_type). ECB decision press releases ("Reproduction
+  is permitted provided that the source is acknowledged") are committed with their text; ECB press
+  conferences are committed as URL + SHA-256 only, because the ECB disclaimer requires prior
+  authorisation for "documents bearing the names of their authors" and the introductory statement is
+  delivered by the named President. `make fetch` rebuilds the full text locally.
+- **Why:** when the terms are unclear, choose the reading that can't be a licence breach.
+- **Rejected:** committing everything with attribution only.
+
+## D9 — Market coverage: yields only where a free daily official source exists (2026-10-14)
+- **What:** 2y/10y yields: US (FRED H.15), EA (ECB AAA curve, 2004-09→), UK (BoE spot-curve archive),
+  AU (RBA F2, 2013→). SEA banks: FX only (no login-free daily yield files found). FX from Yahoo via
+  `yfinance`, modelled as 17:00 New York closes; the raw FX parquet is not committed (Yahoo terms).
+  Event day `t` = the first close strictly after the release in the series' own timezone.
+- **Why:** MISSION §1.3; daily windows need daily data; FRED's non-US yields are monthly.
+- **Consequence for RQ2:** the yield leg is tested for Fed/ECB/BoE/RBA only; the SEA legs use FX. Pre-registered as such.

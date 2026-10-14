@@ -68,3 +68,10 @@ def test_block_page_with_200_is_blocked_and_not_cached(tmp_path: Path) -> None:
     with pytest.raises(BlockedError):
         f.get("mas", "https://example.org/mps")
     assert f.cached("mas", "https://example.org/mps") is None
+
+
+def test_crawl_delay_is_honoured(tmp_path: Path) -> None:
+    client, _ = _client("User-agent: *\nCrawl-delay: 5\nAllow: /\n")
+    f = PoliteFetcher(raw_dir=tmp_path, min_interval_s=0, client=client)
+    assert f.allowed("https://example.org/a")
+    assert f._host_interval["example.org"] == 5.0

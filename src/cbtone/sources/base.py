@@ -90,6 +90,7 @@ class PoliteFetcher:
             headers={"User-Agent": USER_AGENT}, follow_redirects=True, timeout=60.0
         )
         self._last_hit: dict[str, float] = {}
+        self._host_interval: dict[str, float] = {}  # from robots.txt Crawl-delay
         self._robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
 
     # -- cache ---------------------------------------------------------------
@@ -114,11 +115,12 @@ class PoliteFetcher:
 
     # -- politeness ----------------------------------------------------------
     def _wait(self, host: str) -> None:
+        interval = max(self.min_interval_s, self._host_interval.get(host, 0.0))
         last = self._last_hit.get(host)
         if last is not None:
             delta = time.monotonic() - last
-            if delta < self.min_interval_s:
-                time.sleep(self.min_interval_s - delta)
+            if delta < interval:
+                time.sleep(interval - delta)
         self._last_hit[host] = time.monotonic()
 
     def allowed(self, url: str) -> bool:
@@ -137,6 +139,10 @@ class PoliteFetcher:
             except httpx.HTTPError:
                 rp = None
             self._robots[host] = rp
+            if rp is not None:
+                delay = rp.crawl_delay(USER_AGENT) or rp.crawl_delay("*")
+                if delay:
+                    self._host_interval[parts.netloc] = float(delay)
         rp = self._robots[host]
         return True if rp is None else rp.can_fetch(USER_AGENT, url)
 
