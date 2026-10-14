@@ -62,3 +62,19 @@ def test_results_strip_reads_every_verdict_from_summary():
     rows = build.results(data)
     assert [r[0] for r in rows] == ["H1", "H2a", "H2b", "H3", "H4a", "H4b", "H4c", "H5"]
     assert all(k in build.TAGS for _, k, _, _ in rows)
+
+
+def test_citations_match_the_paper_everywhere():
+    import yaml
+
+    title = yaml.safe_load(build.FRONT.match(Path("paper/paper.md").read_text()).group(1))["title"]
+    version = yaml.safe_load(Path("CITATION.cff").read_text())["version"]
+    paper_bib, software_bib = build.citations(title, version)
+    for f in ["README.md", "experiments/hf_cards/model.md", "experiments/hf_cards/dataset.md"]:
+        text = Path(f).read_text()
+        assert paper_bib in text, f
+        assert software_bib in text, f
+    cff = yaml.safe_load(Path("CITATION.cff").read_text())
+    assert cff["preferred-citation"]["title"] == title
+    assert cff["preferred-citation"]["url"] == build.PAPER_URL
+    assert cff["doi"] == build.ZENODO_DOI

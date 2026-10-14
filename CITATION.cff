@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use cbtone in your work, please cite it as below."
+message: "Please cite the paper (preferred-citation); if you use the cbtone library, also cite the software."
 title: "cbtone"
 abstract: >-
   Hawkish/dovish tone signals from public central-bank communication
@@ -22,3 +22,12 @@ keywords:
   - LLM
   - event study
   - finance
+preferred-citation:
+  type: generic
+  title: "Reading the Room: Do Local-LLM Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages"
+  authors:
+    - family-names: Chongmankhong
+      given-names: Thanatchon
+  year: 2026
+  notes: Preprint
+  url: "https://thanatchon36.github.io/cbtone/paper/"

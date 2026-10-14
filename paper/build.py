@@ -40,6 +40,7 @@ TEMPLATE = ROOT / "paper" / "templates" / "default.typst"
 REPO_URL = "https://github.com/thanatchon36/cbtone"
 REPO = f"{REPO_URL}/blob/main"
 ZENODO_DOI = "10.5281/zenodo.23371641"
+PAPER_URL = "https://thanatchon36.github.io/cbtone/paper/"
 TAGS = {"ref": "refuted", "null": "untestable", "nf": "no finding", "pos": "supported"}
 
 TOKEN = re.compile(r"\{\{\s*([^}|]+?)\s*(?:\|\s*([^}]+?)\s*)?\}\}")
@@ -199,6 +200,32 @@ def results(d: dict[str, Any]) -> list[tuple[str, str, str, str]]:
     ]
 
 
+def citations(title: str, version: str) -> tuple[str, str]:
+    """BibTeX for the paper and for the software. README, CITATION.cff and the Hugging Face cards
+    carry the same entries (tests/test_paper_build.py checks they stay in sync)."""
+    protected = re.sub(r"\b([A-Z]{2,})\b", r"{\1}", title)
+    paper = (
+        "@misc{chongmankhong2026reading,\n"
+        "  author = {Chongmankhong, Thanatchon},\n"
+        f"  title  = {{{protected}}},\n"
+        "  year   = {2026},\n"
+        "  note   = {Preprint},\n"
+        f"  url    = {{{PAPER_URL}}}\n"
+        "}"
+    )
+    software = (
+        "@software{chongmankhong_cbtone,\n"
+        "  author  = {Chongmankhong, Thanatchon},\n"
+        "  title   = {cbtone},\n"
+        "  year    = {2026},\n"
+        f"  version = {{{version}}},\n"
+        f"  url     = {{{REPO_URL}}},\n"
+        f"  doi     = {{{ZENODO_DOI}}}\n"
+        "}"
+    )
+    return paper, software
+
+
 def build_reader(filled: str, data: dict[str, Any]) -> Path:
     """Standalone web reader docs/site/paper/index.html (same text as the PDF)."""
     m = FRONT.match(filled)
@@ -251,6 +278,15 @@ def build_reader(filled: str, data: dict[str, Any]) -> Path:
         f'<span class="r-tag">{TAGS[k]}</span></li>'
         for i, k, t, x in results(data)
     )
+    title = yaml.safe_load(m.group(1))["title"] if m else ""
+    paper_bib, software_bib = citations(title, version.group(1))
+    cite = (
+        "<h2>How to cite</h2>"
+        "<p>The paper:</p>"
+        f"<pre><code>{html.escape(paper_bib)}</code></pre>"
+        f"<p>The software (<code>cbtone</code>, archived on Zenodo, DOI {ZENODO_DOI}):</p>"
+        f"<pre><code>{html.escape(software_bib)}</code></pre>"
+    )
     colophon = (
         "<p>Library, experiments and manuscript draft by Claude (Anthropic) under the author's "
         "specification; the author is responsible for the content. Independent project: public "
@@ -265,6 +301,7 @@ def build_reader(filled: str, data: dict[str, Any]) -> Path:
         ("<!--ACTIONS-->", actions),
         ("<!--RESULTS-NOTE-->", note),
         ("<!--RESULTS-->", items),
+        ("<!--CITE-->", cite),
         ("<!--COLOPHON-->", colophon),
     ):
         assert marker in page, marker
