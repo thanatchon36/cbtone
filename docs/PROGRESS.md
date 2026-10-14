@@ -116,6 +116,9 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
       rule returns `none`), which silently removed citations, DOIs and URLs from the PDF. A patched copy is
       vendored in `paper/templates/` and used by `make paper`.
 
+- [x] GitHub Pages enabled 2026-10-14 (source: GitHub Actions); `.github/workflows/docs.yml` deploys the site on
+      every push to main. Paper online at https://thanatchon36.github.io/cbtone/paper/
+
 ## Waiting on owner
 - **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
   `! git push origin main --tags`.
@@ -127,8 +130,5 @@ Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.
 - Zenodo: GitHub integration enabled 2026-10-14; a GitHub Release (not just a tag) is needed to mint the DOI,
   then add the DOI to CITATION.cff and README.
-- GitHub Pages: `.github/workflows/docs.yml` builds and deploys the mkdocs site (with the online paper) on
-  every push to main, but Pages must be enabled once (Settings → Pages → Source: GitHub Actions, or
-  `gh api -X POST repos/thanatchon36/cbtone/pages -f build_type=workflow`). Until then
-  https://thanatchon36.github.io/cbtone/ does not resolve.
+
 - The BoE ~100-char decision releases for 2000–2006 are complete, not truncated (A6).
