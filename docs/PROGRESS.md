@@ -122,6 +122,10 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] v0.1.1 (2026-10-14): rewritten paper, publication figures, online paper; no change to any result or
       verdict. Tagged locally; the release workflow publishes to PyPI when the tag is pushed.
 
+- [x] v0.1.1 pushed; PyPI 0.1.1 published and installed in a fresh venv; GitHub Release v0.1.1 created; Zenodo
+      DOI minted: concept 10.5281/zenodo.23371641 (v0.1.1: 10.5281/zenodo.23371642), added to CITATION.cff
+      and README.
+
 ## Waiting on owner
 - **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
   `! git push origin main --tags`.
@@ -131,7 +135,5 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 
 Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.
-- Zenodo: GitHub integration enabled 2026-10-14; a GitHub Release (not just a tag) is needed to mint the DOI,
-  then add the DOI to CITATION.cff and README.
 
 - The BoE ~100-char decision releases for 2000–2006 are complete, not truncated (A6).

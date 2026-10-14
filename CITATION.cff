@@ -11,7 +11,7 @@ authors:
     given-names: Thanatchon
 version: 0.1.1
 date-released: "2026-10-14"
-# DOI: add once the owner enables the Zenodo GitHub integration and a release is archived.
+doi: "10.5281/zenodo.23371641"  # concept DOI (all versions); v0.1.1 is 10.5281/zenodo.23371642
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/cbtone"
 url: "https://github.com/thanatchon36/cbtone"
