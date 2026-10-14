@@ -124,7 +124,7 @@ _MONTH = rf"(?:(?:{_MONTHS_NO_MAY})\b|May(?=\s+\d)|(?<=\d\s)May\b|(?<=\d)May\b)"
 _DAY = r"\d{1,2}(?:st|nd|rd|th)?"
 _YEAR = r"(?:19|20)\d{2}"
 
-_NUM = r"(?:\d+(?:[.,]\d+)?(?:\s?[¼½¾⅛-⅞]|\s\d\s?[/⁄]\s?\d)?|[¼½¾⅛-⅞]|\d\s?[/⁄]\s?\d)"
+_NUM = r"(?:\d+-\d\s?[/⁄]\s?\d|\d+(?:[.,]\d+)?(?:\s?[¼½¾⅛-⅞]|\s\d\s?[/⁄]\s?\d)?|[¼½¾⅛-⅞]|\d\s?[/⁄]\s?\d)"
 _NUM_RANGE = rf"{_NUM}(?:\s?(?:-|–|to|and|hingga|sampai|sehingga|至|到)\s?{_NUM})?"
 _PCT_UNIT = (
     r"(?:\s?%|\s?％|\s?(?:percentage\s+points?|per\s?cent|percent|persen|peratus)\b"
@@ -139,9 +139,52 @@ _FRACTION_WORDS = (
     r"(?:percentage\s+)?point\b"
 )
 
+# Named policy instruments and decision bodies identify the bank as surely as its name does
+# (review, 2026-10-14, before any masked scoring). Generic framework words that carry the policy
+# meaning itself ("policy band", "slope", "the Committee", "policy rate") are kept.
+_INSTRUMENTS = _alt(
+    [
+        "federal funds rate",
+        "fed funds rate",
+        "Overnight Policy Rate",
+        "BI 7-Day Reverse Repo Rate",
+        "BI 7-Day Repo Rate",
+        "BI-Rate",
+        "BI Rate",
+        "BI7DRR",
+        "cash rate target",
+        "cash rate",
+        "deposit facility rate",
+        "main refinancing operations rate",
+        "main refinancing rate",
+        "marginal lending facility rate",
+        "Kadar Dasar Semalaman",
+        "Loan Prime Rate",
+        "贷款市场报价利率",
+    ]
+)
+_COMMITTEES = _alt(
+    [
+        "Governing Council",
+        "Monetary Policy Committee",
+        "Reserve Bank Board",
+        "Monetary Policy Board",
+        "Board of Governors",
+        "Rapat Dewan Gubernur",
+        "Dewan Gubernur",
+        "Jawatankuasa Dasar Monetari",
+        "货币政策委员会",
+        "คณะกรรมการนโยบายการเงิน",
+    ]
+)
+
 # (pattern, replacement), applied in order. Placeholders are upper-case in brackets, which no
 # pattern below matches, so masking is idempotent.
 _RULES: list[tuple[re.Pattern[str], str]] = [
+    (re.compile(rf"(?:{_INSTRUMENTS})", _FLAGS), "[POLICY_RATE]"),
+    (re.compile(r"\bBank Rate\b|\bOPR\b|\bLPR\b"), "[POLICY_RATE]"),
+    (re.compile(rf"(?:{_COMMITTEES})", _FLAGS), "[COMMITTEE]"),
+    (re.compile(r"\bMPC\b|กนง\."), "[COMMITTEE]"),
     (re.compile(r"\bFed\b"), "[BANK]"),
     (re.compile(rf"(?:{_BANKS})", _FLAGS), "[BANK]"),
     (re.compile(rf"\b(?:{_BANK_ACRONYMS})\b"), "[BANK]"),
@@ -181,7 +224,8 @@ _RULES: list[tuple[re.Pattern[str], str]] = [
 def mask_entities(text: str, lang: Language = "en") -> str:
     """Replace bank, country, currency, date and rate-level mentions with placeholders.
 
-    Placeholders: ``[BANK]``, ``[COUNTRY]``, ``[CURRENCY]``, ``[DATE]``, ``[RATE]``, ``[BP]``.
+    Placeholders: ``[BANK]``, ``[COMMITTEE]``, ``[POLICY_RATE]``, ``[COUNTRY]``, ``[CURRENCY]``,
+    ``[DATE]``, ``[RATE]``, ``[BP]``.
     All language patterns (en/id/ms/zh/th) are applied regardless of ``lang``, because
     documents routinely mix scripts; ``lang`` is accepted for API stability.
     """
