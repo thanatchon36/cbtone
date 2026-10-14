@@ -11,10 +11,15 @@ Document types
 
 URL patterns (English only; ``language="en"``)
     * Index (static HTML fragments, one per year; the visible list pages fill themselves
-      with JavaScript from these includes):
-      ``https://www.ecb.europa.eu/press/pressconf/YYYY/html/index_include.en.html`` and
-      ``https://www.ecb.europa.eu/press/pr/date/YYYY/html/index_include.en.html``
-      (``<dt isoDate="YYYY-MM-DD">`` + ``<dd>`` pairs).
+      with JavaScript from these includes; ``<dt isoDate="YYYY-MM-DD">`` + ``<dd>`` pairs):
+      1999-2024: ``https://www.ecb.europa.eu/press/pressconf/YYYY/html/index_include.en.html``
+      and ``https://www.ecb.europa.eu/press/pr/date/YYYY/html/index_include.en.html``
+      (these 404 from 2025). 2025 onward (the ``data-snippets`` of
+      ``/press/govcdec/mopo/html/index.en.html`` and of
+      ``/press/press_conference/monetary-policy-statement/html/index.en.html``):
+      ``/press/press_conference/monetary-policy-statement/YYYY/html/index_include.en.html``
+      and ``/press/govcdec/mopo/YYYY/html/index_include.en.html``. Both are read and merged.
+      A year whose index is 404 is skipped with a warning.
     * Press release: ``/press/pr/date/YYYY/html/prYYMMDD.en.html`` (1999-2021) or
       ``/press/pr/date/YYYY/html/ecb.mpYYMMDD~<hash>.en.html`` (2022 onward).
     * Press conference: ``/press/press_conference/monetary-policy-statement/YYYY/html/
@@ -49,6 +54,7 @@ Terms of use (https://www.ecb.europa.eu/services/disclaimer/html/index.en.html)
 
 from __future__ import annotations
 
+import logging
 import re
 from collections.abc import Iterator
 from datetime import UTC, date, datetime
@@ -56,6 +62,7 @@ from datetime import time as dtime
 from typing import Any, cast
 from zoneinfo import ZoneInfo
 
+import httpx
 from bs4 import BeautifulSoup, Tag
 
 from cbtone.schema import DocType, Document, Section
@@ -65,7 +72,10 @@ BASE = "https://www.ecb.europa.eu"
 FRANKFURT = ZoneInfo("Europe/Berlin")  # IANA has no Europe/Frankfurt; same rules as CET/CEST
 FIRST_YEAR = 1999
 CRAWL_DELAY_S = 5.0  # robots.txt: Crawl-delay: 5
+NEW_INDEX_YEAR = 2025  # per-year pressconf/ and pr/date/ includes 404 from this year
 TIME_CHANGE = date(2022, 7, 21)  # first decision published at 14:15 / conference 14:45
+
+log = logging.getLogger(__name__)
 
 _STATEMENT_TITLE = re.compile(
     r"^(monetary policy decisions|decisions on ecb interest rates)\b", re.I
@@ -116,16 +126,33 @@ class EcbAdapter(SourceAdapter):
                 continue
             yield iso, href.split("?")[0], _clean(a.get_text(" "))
 
+    @staticmethod
+    def index_urls(year: int) -> tuple[str, str]:
+        """The two per-year index fragments (press conferences, decisions) for ``year``."""
+        if year >= NEW_INDEX_YEAR:
+            return (
+                f"{BASE}/press/press_conference/monetary-policy-statement/{year}/html/"
+                "index_include.en.html",
+                f"{BASE}/press/govcdec/mopo/{year}/html/index_include.en.html",
+            )
+        return (
+            f"{BASE}/press/pressconf/{year}/html/index_include.en.html",
+            f"{BASE}/press/pr/date/{year}/html/index_include.en.html",
+        )
+
     def list_urls(self, start_year: int, end_year: int) -> Iterator[tuple[str, dict[str, str]]]:
         for year in range(max(start_year, FIRST_YEAR), end_year + 1):
             seen_pc: set[str] = set()
             seen_url: set[str] = set()
             found: list[tuple[str, dict[str, str]]] = []
-            for idx in (
-                f"{BASE}/press/pressconf/{year}/html/index_include.en.html",
-                f"{BASE}/press/pr/date/{year}/html/index_include.en.html",
-            ):
-                raw = self.fetcher.get(self.bank, idx)
+            for idx in self.index_urls(year):
+                try:
+                    raw = self.fetcher.get(self.bank, idx)
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code != 404:
+                        raise
+                    log.warning("ECB index missing (404), skipping: %s", idx)
+                    continue
                 for iso, href, title in self.parse_index(raw.content.decode("utf-8", "replace")):
                     if not iso.startswith(str(year)) or not href.endswith(".en.html"):
                         continue

@@ -3,12 +3,23 @@
 Adapter: `src/cbtone/sources/ecb.py` (`EcbAdapter`, bank `ecb`, English only).
 
 ## URL patterns
-- Index fragments (static; the visible list pages load them with JS), one per year:
-  - `https://www.ecb.europa.eu/press/pressconf/YYYY/html/index_include.en.html`
-  - `https://www.ecb.europa.eu/press/pr/date/YYYY/html/index_include.en.html`
-  - Entries are `<dt isoDate="YYYY-MM-DD">` + `<dd>` pairs. From about 2022 the press-conference
-    include also lists the decision press release; the pr/date include lists the conference under
-    an alias path (`/press/pressconf/YYYY/html/...`), which the adapter de-duplicates.
+- Index fragments (static; the visible list pages load them with JS via `data-snippets`), one per year,
+  entries are `<dt isoDate="YYYY-MM-DD">` + `<dd>` pairs:
+  - 1999-2024:
+    - `https://www.ecb.europa.eu/press/pressconf/YYYY/html/index_include.en.html`
+    - `https://www.ecb.europa.eu/press/pr/date/YYYY/html/index_include.en.html`
+    - From about 2022 the press-conference include also lists the decision press release; the pr/date
+      include lists the conference under an alias path (`/press/pressconf/YYYY/html/...`), which the
+      adapter de-duplicates.
+  - 2025 onward (the old two return 404; discovered from `data-snippets` on
+    `/press/govcdec/mopo/html/index.en.html` and
+    `/press/press_conference/monetary-policy-statement/html/index.en.html`):
+    - `https://www.ecb.europa.eu/press/press_conference/monetary-policy-statement/YYYY/html/index_include.en.html`
+    - `https://www.ecb.europa.eu/press/govcdec/mopo/YYYY/html/index_include.en.html`
+    - Neither is complete alone (the mopo include misses some HTML conferences, the statement include
+      misses some decisions), so both are read and merged. They also list combined PDFs and
+      "Meeting of ..." accounts (ignored), and the 2025 includes carry early-2026 items (filtered by year).
+  - A year whose index returns 404 is skipped with a logged warning; other HTTP errors still raise.
 - `statement`: `/press/pr/date/YYYY/html/prYYMMDD.en.html` (1999-2021),
   `ecb.mpYYMMDD~<hash>.en.html` (2022+). Title "Monetary policy decisions"
   ("Decisions on ECB interest rates" in Jan-Feb 1999).
@@ -43,7 +54,7 @@ Statements are timestamped only when the release announces a press conference.
 
 ## Politeness
 robots.txt has `Crawl-delay: 5`; the adapter raises the fetcher interval to 5 s. A full fetch is
-about 54 index + 600 document requests (about 1 hour).
+about 54 index (2 per year) + 600 document requests (about 1 hour).
 
 ## Terms of use
 https://www.ecb.europa.eu/services/disclaimer/html/index.en.html: "Subject to the exception below,

@@ -4,6 +4,7 @@ import json
 from datetime import UTC, date, datetime
 from pathlib import Path
 
+import httpx
 import pytest
 
 from cbtone.schema import Document
@@ -179,6 +180,61 @@ def test_list_urls_offline(tmp_path: Path) -> None:
     assert "/ecb.mp231214~" in urls23["statement2023-12-14"]
     # the dated list is sorted and nothing but the two doc types leaks through (no PDFs/podcasts)
     assert [h["date"] for _, h in by_year["2023"]] == sorted(h["date"] for _, h in by_year["2023"])
+
+
+def test_list_urls_2025_onward(tmp_path: Path) -> None:
+    f = PoliteFetcher(raw_dir=tmp_path, offline=True)
+    for year in (2025, 2026):
+        pc_idx, pr_idx = EcbAdapter.index_urls(year)
+        assert "/monetary-policy-statement/" in pc_idx and "/govcdec/mopo/" in pr_idx
+        _seed(f, pc_idx, f"mps_include_{year}.html")
+        _seed(f, pr_idx, f"mopo_include_{year}.html")
+    items = list(EcbAdapter(f).list_urls(2025, 2026))
+    got: dict[tuple[str, str], list[str]] = {}
+    for _, h in items:
+        got.setdefault((h["date"][:4], h["doc_type"]), []).append(h["date"])
+    assert got[("2025", "statement")] == got[("2025", "press_conference")]
+    assert len(got[("2025", "statement")]) == 8
+    assert got[("2026", "statement")] == got[("2026", "press_conference")]
+    assert len(got[("2026", "statement")]) == 6
+    urls = [u for u, _ in items]
+    assert len(set(urls)) == len(urls)  # merged indexes do not duplicate
+    for u, h in items:
+        assert u.endswith(".en.html") and "?" not in u
+        if h["doc_type"] == "press_conference":
+            assert f"/monetary-policy-statement/{h['date'][:4]}/html/ecb.is" in u
+        else:
+            assert f"/press/pr/date/{h['date'][:4]}/html/ecb.mp" in u
+
+
+def _failing_get(f: PoliteFetcher, bad: str, status: int) -> None:
+    def get(bank: str, url: str, *, refresh: bool = False) -> RawResponse:
+        if url == bad:
+            req = httpx.Request("GET", url)
+            raise httpx.HTTPStatusError(str(status), request=req, response=httpx.Response(status))
+        cached = f.cached(bank, url)
+        assert cached is not None
+        return cached
+
+    f.get = get  # type: ignore[method-assign]
+
+
+def test_list_urls_skips_404_index(tmp_path: Path, caplog: pytest.LogCaptureFixture) -> None:
+    f = PoliteFetcher(raw_dir=tmp_path, offline=True)
+    pc_idx, pr_idx = EcbAdapter.index_urls(2026)
+    _seed(f, pr_idx, "mopo_include_2026.html")
+    _failing_get(f, pc_idx, 404)
+    with caplog.at_level("WARNING"):
+        items = list(EcbAdapter(f).list_urls(2026, 2026))
+    assert {h["doc_type"] for _, h in items} == {"statement"} and len(items) == 6
+    assert any("404" in r.message and pc_idx in r.message for r in caplog.records)
+
+
+def test_list_urls_non_404_raises(tmp_path: Path) -> None:
+    f = PoliteFetcher(raw_dir=tmp_path, offline=True)
+    _failing_get(f, EcbAdapter.index_urls(2024)[0], 500)
+    with pytest.raises(httpx.HTTPStatusError):
+        list(EcbAdapter(f).list_urls(2024, 2024))
 
 
 def test_crawl_delay_applied(tmp_path: Path) -> None:
