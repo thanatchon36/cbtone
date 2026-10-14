@@ -193,3 +193,30 @@ def test_collect_keeps_documents_when_listing_fails():
     docs, errors = cli.collect(BrokenListing(FakeFetcher()), 2000, 2001)
     assert len(docs) == 1
     assert errors == ["listing aborted: FileNotFoundError: index 404"]
+
+
+def test_sample_silver_command(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    from cbtone.eval import silver
+
+    corpus = tmp_path / "corpus"
+    (corpus / "private").mkdir(parents=True)
+    (corpus / "VERSION").write_text("2026-10-14+abc\n")
+    rows = [
+        (f"mas:2020-01-01:mps:en:{i}", 0, 0, "the policy band will be kept unchanged now", "en")
+        for i in range(5)
+    ]
+    pl.DataFrame(
+        rows, schema=["doc_id", "para_idx", "sent_idx", "text", "lang"], orient="row"
+    ).write_parquet(corpus / "private" / "sentences.parquet")
+    monkeypatch.setattr(silver, "DEFAULT_QUOTAS", {("mas", "en"): 3})
+    cfg = tmp_path / "c.yaml"
+    cfg.write_text("seed: 7\n")
+    out = tmp_path / "s.csv"
+    res = runner.invoke(
+        cli.app,
+        ["sample-silver", "--corpus", str(corpus), "--config", str(cfg), "--out", str(out)],
+    )
+    assert res.exit_code == 0, res.output
+    lines = out.read_text().splitlines()
+    assert lines[0] == "# corpus 2026-10-14+abc; seed 7"
+    assert len(lines) == 2 + 3

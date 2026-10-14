@@ -203,5 +203,29 @@ def markets(
     typer.echo(f"markets: {df.height} rows, {df['series'].n_unique()} series -> {out}")
 
 
+@app.command("sample-silver")
+def sample_silver_cmd(
+    corpus: Annotated[Path, typer.Option(help="Snapshot directory.")] = CORPUS,
+    config: ConfigOpt = CONFIG,
+    out: Annotated[Path, typer.Option(help="Output CSV (identifiers only).")] = Path(
+        "data/labels/sea_silver_sample.csv"
+    ),
+) -> None:
+    """Draw the 200-sentence SEA silver sample (identifiers only; labels come in Phase 3)."""
+    import polars as pl
+
+    from cbtone.eval.silver import DEFAULT_QUOTAS, sample_silver
+
+    private = corpus / "private" / "sentences.parquet"
+    sents = pl.read_parquet(private if private.exists() else corpus / "sentences.parquet")
+    sents = sents.filter(pl.col("text").is_not_null())
+    seed = int(_config(config).get("seed", 0))
+    df = sample_silver(sents, DEFAULT_QUOTAS, seed)
+    version = (corpus / "VERSION").read_text().strip()
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(f"# corpus {version}; seed {seed}\n" + df.write_csv())
+    typer.echo(f"silver sample: {df.height} sentences -> {out}")
+
+
 if __name__ == "__main__":
     app()
