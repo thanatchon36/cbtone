@@ -1,0 +1,1 @@
+{"url": "https://web.archive.org/cdx/search/cdx?output=json&fl=timestamp,original,statuscode,mimetype&filter=statuscode:200&collapse=urlkey&matchType=prefix&url=www.mas.gov.sg/news/monetary-policy-statements/2003", "content_type": "application/json", "sha256": "9b80e2941ff409bdaf319b736dbbec242c41ce9901cd7d593edaaae68a16770b", "fetched_at": "2026-10-14T04:40:29.154855+00:00"}

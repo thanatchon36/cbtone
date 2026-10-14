@@ -1,0 +1,1 @@
+{"url": "https://web.archive.org/cdx/search/cdx?output=json&fl=timestamp,original,statuscode,mimetype&filter=statuscode:200&collapse=urlkey&matchType=prefix&url=www.mas.gov.sg/news/monetary-policy-statements/2002", "content_type": "application/json", "sha256": "7608a43baf65746d16135b7b90c458ba8dd232391d9c3fc46ed95a36c8233929", "fetched_at": "2026-10-14T04:40:31.638600+00:00"}
