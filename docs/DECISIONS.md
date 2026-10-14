@@ -104,3 +104,17 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Why:** MAS is the only headline SEA bank with an exchange-rate-based framework, and MISSION §0 lists public
   mirrors as allowed. The author made the call on the bank's own access choice.
 - **Not extended to PBoC:** PBoC remains manual-only (D10) unless the author says otherwise.
+
+## D12 — PBoC text from Internet Archive copies (author-approved, 2026-10-14)
+- **What:** the author approved Wayback Machine copies for PBoC as well. `PbocAdapter` gets the same
+  archive mode as MAS (D11): it lists captures with CDX and fetches `id_` raw snapshots via
+  `PoliteFetcher`, never pbc.gov.cn. `Document.url` is the snapshot URL, and hand-saved files take
+  precedence. Captures are accepted only when the parsed meeting date matches, and block or empty
+  pages are skipped.
+- **Note:** unlike MAS (a bot page; robots.txt allowed crawling), pbc.gov.cn's robots.txt disallows
+  crawlers. The archive's copies are a public mirror (MISSION §0), and the author made the call on the bank's
+  stated crawler policy. cbtone itself still never crawls pbc.gov.cn.
+- **Headline:** amends D10. PBoC rejoins the headline set (8 banks, 4 languages) only if the archive
+  yields ≥ 80 % of MPC communiqués from 2010 onward *and* the selectors validate on real archived pages.
+  Otherwise it stays an optional extension. This is decided and recorded before `prereg-v1`.
+- **Licence:** terms unverified, so treated as not redistributable (URL + SHA-256 only).
