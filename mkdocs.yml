@@ -28,6 +28,7 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Paper: paper.md
   - Concepts: concepts.md
   - Adapters: adapters.md
   - Scorers: scorers.md

@@ -1,0 +1,13 @@
+panel,pair,level,alpha,icc_2_1,n,spearman
+a,prompts,documents,0.649988636173697,0.6568265564334564,120,
+a,prompts,sentences,0.41554147712158784,0.43264986312994896,1000,
+a,temperature,documents,0.9168331035062527,0.9173628613612397,120,
+a,temperature,sentences,0.8060317852259615,0.8068723555546387,1000,
+a,model_tag,documents,0.45557565195483785,0.5194079161716627,120,
+a,model_tag,sentences,-0.026194320446244035,0.20683783845926046,1000,
+b,agg_mean~agg_decision_weighted,documents,,,120,0.9816193594583135
+b,agg_decision_weighted~agg_max_abs,documents,,,120,0.8302717463968405
+b,agg_mean~agg_max_abs,documents,,,120,0.8163935586566669
+b,agg_decision_weighted~document,documents,,,120,0.7217981915203785
+b,agg_mean~document,documents,,,120,0.6994591381795768
+b,agg_max_abs~document,documents,,,120,0.616413317887494

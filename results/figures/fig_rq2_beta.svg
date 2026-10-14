@@ -1,0 +1,3574 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="398.771967pt" height="290.4784pt" viewBox="0 0 398.771967 290.4784" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 290.4784 
+L 398.771967 290.4784 
+L 398.771967 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 22.94 204.255 
+L 181.897217 204.255 
+L 181.897217 15.759 
+L 22.94 15.759 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 22.94 15.759 
+L 181.897217 15.759 
+L 181.897217 42.687 
+L 22.94 42.687 
+z
+" clip-path="url(#p8eb3e2307e)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 22.94 69.615 
+L 181.897217 69.615 
+L 181.897217 96.543 
+L 22.94 96.543 
+z
+" clip-path="url(#p8eb3e2307e)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 22.94 123.471 
+L 181.897217 123.471 
+L 181.897217 150.399 
+L 22.94 150.399 
+z
+" clip-path="url(#p8eb3e2307e)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 22.94 177.327 
+L 181.897217 177.327 
+L 181.897217 204.255 
+L 22.94 204.255 
+z
+" clip-path="url(#p8eb3e2307e)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 49.395173 204.255 
+L 49.395173 15.759 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m661b0c22f3" d="M 0 0 
+L 0 2.5 
+" style="stroke: #dcdcdc; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#m661b0c22f3" x="49.395173" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <!-- −0.02 -->
+      <g style="fill: #4f4f4f" transform="translate(41.276423 216.96) scale(0.075 -0.075)">
+       <defs>
+        <path id="LibertinusSerif-Regular-7bf" d="M 2963 1446 
+C 3046 1446 3136 1594 3136 1658 
+C 3136 1709 3110 1766 3046 1766 
+L 544 1766 
+C 467 1766 384 1645 384 1549 
+C 384 1498 422 1446 480 1446 
+L 2963 1446 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-11" d="M 1459 -64 
+C 1952 -64 2701 435 2701 1939 
+C 2701 2573 2547 3117 2266 3488 
+C 2099 3712 1830 3904 1485 3904 
+C 851 3904 250 3149 250 1882 
+C 250 1197 461 557 813 205 
+C 992 26 1210 -64 1459 -64 
+z
+M 1485 3680 
+C 1594 3680 1696 3642 1773 3571 
+C 1971 3405 2144 2918 2144 2061 
+C 2144 1472 2125 1069 2035 742 
+C 1894 218 1581 160 1466 160 
+C 870 160 806 1254 806 1811 
+C 806 3386 1197 3680 1485 3680 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-f" d="M 365 275 
+C 365 90 518 -64 704 -64 
+C 890 -64 1043 90 1043 275 
+C 1043 461 890 614 704 614 
+C 518 614 365 461 365 275 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-13" d="M 390 2995 
+C 390 2861 512 2746 646 2746 
+C 755 2746 947 2861 947 3002 
+C 947 3053 934 3091 922 3136 
+C 909 3181 870 3238 870 3290 
+C 870 3450 1037 3680 1504 3680 
+C 1734 3680 2061 3520 2061 2906 
+C 2061 2496 1914 2163 1536 1779 
+L 1062 1312 
+C 435 672 333 365 333 -13 
+C 333 -13 659 0 864 0 
+L 1984 0 
+C 2189 0 2483 -13 2483 -13 
+C 2566 326 2630 806 2637 998 
+C 2598 1030 2515 1043 2451 1030 
+C 2342 576 2234 416 2003 416 
+L 864 416 
+C 864 723 1306 1158 1338 1190 
+L 1984 1811 
+C 2349 2163 2624 2445 2624 2931 
+C 2624 3622 2061 3904 1542 3904 
+C 832 3904 390 3379 390 2995 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-7bf"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(55 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(101.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(123.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(170 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 77.664774 204.255 
+L 77.664774 15.759 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m661b0c22f3" x="77.664774" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <!-- −0.01 -->
+      <g style="fill: #4f4f4f" transform="translate(69.546024 216.96) scale(0.075 -0.075)">
+       <defs>
+        <path id="LibertinusSerif-Regular-12" d="M 1843 781 
+L 1843 3002 
+C 1843 3386 1850 3776 1862 3859 
+C 1862 3891 1850 3891 1824 3891 
+C 1472 3674 1133 3514 570 3251 
+C 582 3181 608 3117 666 3078 
+C 960 3200 1101 3238 1222 3238 
+C 1331 3238 1350 3085 1350 2867 
+L 1350 781 
+C 1350 250 1178 218 730 198 
+C 691 160 691 26 730 -13 
+C 1043 -6 1274 0 1619 0 
+C 1926 0 2080 -6 2400 -13 
+C 2438 26 2438 160 2400 198 
+C 1952 218 1843 250 1843 781 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-7bf"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(55 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(101.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(123.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(170 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 105.934376 204.255 
+L 105.934376 15.759 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m661b0c22f3" x="105.934376" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <!-- 0.00 -->
+      <g style="fill: #4f4f4f" transform="translate(99.878126 216.96) scale(0.075 -0.075)">
+       <use xlink:href="#LibertinusSerif-Regular-11"/>
+       <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(46.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(68.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(115 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 134.203977 204.255 
+L 134.203977 15.759 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m661b0c22f3" x="134.203977" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <!-- 0.01 -->
+      <g style="fill: #4f4f4f" transform="translate(128.147727 216.96) scale(0.075 -0.075)">
+       <use xlink:href="#LibertinusSerif-Regular-11"/>
+       <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(46.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(68.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(115 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 162.473578 204.255 
+L 162.473578 15.759 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m661b0c22f3" x="162.473578" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <!-- 0.02 -->
+      <g style="fill: #4f4f4f" transform="translate(156.417328 216.96) scale(0.075 -0.075)">
+       <use xlink:href="#LibertinusSerif-Regular-11"/>
+       <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(46.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(68.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(115 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_6">
+     <!-- β: two-day log move per unit surprise -->
+     <g style="fill: #4f4f4f" transform="translate(40.753609 229.957) scale(0.08 -0.08)">
+      <defs>
+       <path id="LibertinusSerif-Regular-35c" d="M 973 -390 
+L 973 134 
+C 1165 -6 1414 -64 1766 -64 
+C 2496 -64 3034 582 3034 1306 
+C 3034 2221 2330 2464 2029 2566 
+L 2029 2579 
+C 2464 2726 2739 3091 2739 3558 
+C 2739 4160 2253 4467 1702 4467 
+C 845 4467 467 3840 467 2874 
+L 467 -64 
+C 467 -858 397 -1190 314 -1408 
+L 390 -1523 
+L 915 -1325 
+C 966 -1069 973 -768 973 -390 
+z
+M 973 480 
+L 973 3136 
+C 973 4102 1389 4256 1638 4256 
+C 1984 4256 2240 3949 2240 3494 
+C 2240 3226 2093 2771 1837 2675 
+C 1658 2739 1549 2739 1453 2739 
+C 1357 2739 1267 2688 1267 2579 
+C 1267 2432 1389 2368 1510 2368 
+C 1619 2368 1690 2387 1818 2451 
+C 2285 2317 2483 1754 2483 1280 
+C 2483 858 2227 122 1728 122 
+C 1338 122 1094 301 973 480 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-1b" d="M 448 384 
+C 448 198 602 45 787 45 
+C 973 45 1126 198 1126 384 
+C 1126 570 973 723 787 723 
+C 602 723 448 570 448 384 
+z
+M 448 2291 
+C 448 2106 602 1952 787 1952 
+C 973 1952 1126 2106 1126 2291 
+C 1126 2477 973 2630 787 2630 
+C 602 2630 448 2477 448 2291 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-1" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-55" d="M 275 2746 
+C 186 2746 160 2669 160 2618 
+L 160 2534 
+C 160 2502 166 2496 192 2496 
+L 570 2496 
+L 570 570 
+C 570 115 768 -64 1062 -64 
+C 1357 -64 1677 77 1926 358 
+C 1914 422 1875 461 1811 467 
+C 1645 339 1453 288 1286 288 
+C 1114 288 1075 480 1075 877 
+L 1075 2496 
+L 1741 2496 
+C 1805 2496 1894 2522 1894 2579 
+L 1894 2707 
+C 1894 2733 1875 2746 1843 2746 
+L 1075 2746 
+L 1075 2995 
+C 1075 3411 1101 3667 1101 3667 
+C 1101 3706 1082 3725 1050 3725 
+C 1024 3725 966 3699 909 3667 
+C 838 3629 774 3597 691 3578 
+C 614 3552 550 3533 550 3488 
+C 550 3411 570 3456 570 2746 
+L 275 2746 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-58" d="M 1299 2547 
+C 1338 2586 1338 2720 1299 2758 
+C 1107 2752 883 2746 653 2746 
+C 410 2746 237 2752 70 2758 
+C 32 2720 32 2586 70 2547 
+C 371 2515 442 2451 576 2118 
+L 1414 51 
+C 1453 -38 1504 -77 1568 -77 
+C 1626 -77 1677 -38 1722 64 
+L 2368 1638 
+L 3027 51 
+C 3066 -38 3117 -77 3181 -77 
+C 3238 -77 3290 -38 3328 58 
+L 4166 2086 
+C 4269 2349 4378 2528 4704 2547 
+C 4742 2586 4742 2720 4704 2758 
+C 4576 2752 4435 2746 4243 2746 
+C 4051 2746 3782 2752 3590 2758 
+C 3552 2720 3552 2586 3590 2547 
+C 4070 2522 4006 2336 3917 2112 
+L 3379 781 
+C 3315 621 3290 621 3238 755 
+L 2688 2157 
+C 2566 2458 2579 2522 2918 2547 
+C 2957 2586 2957 2720 2918 2758 
+C 2726 2752 2470 2746 2278 2746 
+C 2118 2746 1907 2752 1715 2758 
+C 1677 2720 1677 2586 1715 2547 
+C 2016 2522 2093 2336 2208 2048 
+L 2246 1946 
+L 1798 813 
+C 1715 602 1702 595 1619 800 
+L 1107 2118 
+C 986 2426 992 2528 1299 2547 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-50" d="M 262 1312 
+C 262 659 698 -64 1606 -64 
+C 2016 -64 2330 83 2547 294 
+C 2835 576 2963 979 2963 1370 
+C 2963 2035 2598 2810 1619 2810 
+C 1197 2810 851 2637 614 2362 
+C 384 2086 262 1715 262 1312 
+z
+M 1523 2586 
+C 2074 2586 2413 2086 2413 1165 
+C 2413 358 1997 160 1696 160 
+C 1030 160 813 966 813 1459 
+C 813 2016 947 2586 1523 2586 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-e" d="M 1734 1427 
+C 1818 1427 1907 1606 1907 1683 
+C 1907 1747 1882 1811 1818 1811 
+L 416 1811 
+C 339 1811 256 1664 256 1549 
+C 256 1485 294 1427 352 1427 
+L 1734 1427 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-45" d="M 2138 320 
+C 2170 346 2227 358 2234 314 
+C 2253 160 2304 -64 2304 -64 
+C 2355 -83 2387 -77 2426 -64 
+C 2566 51 2790 147 3181 192 
+C 3219 230 3219 326 3181 365 
+C 2771 397 2714 518 2714 832 
+L 2714 3731 
+C 2714 4147 2739 4403 2739 4403 
+C 2739 4448 2714 4467 2656 4467 
+C 2496 4403 2016 4314 1760 4294 
+C 1747 4243 1760 4141 1798 4102 
+C 1818 4102 1837 4102 1856 4102 
+C 2138 4083 2208 4083 2208 3578 
+L 2208 2758 
+C 2208 2714 2195 2701 2150 2701 
+C 2125 2701 1862 2810 1651 2810 
+C 1229 2810 947 2669 691 2426 
+C 416 2150 250 1773 250 1299 
+C 250 512 646 -64 1338 -64 
+C 1587 -64 1824 64 2138 320 
+z
+M 2208 794 
+C 2208 672 2195 621 2106 544 
+C 1869 339 1664 237 1504 237 
+C 1158 237 800 614 800 1414 
+C 800 1875 890 2131 986 2266 
+C 1184 2566 1453 2586 1581 2586 
+C 1811 2586 1971 2502 2099 2355 
+C 2189 2253 2208 2208 2208 2010 
+L 2208 794 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-42" d="M 1875 307 
+C 1914 109 1984 -64 2304 -64 
+C 2547 -64 2778 45 2912 173 
+C 2899 250 2874 307 2803 346 
+C 2758 307 2650 243 2566 243 
+C 2381 243 2374 493 2374 787 
+L 2374 1728 
+C 2374 2637 1875 2810 1408 2810 
+C 883 2810 352 2464 352 2099 
+C 352 1946 429 1869 576 1869 
+C 762 1869 877 2003 877 2086 
+C 877 2131 870 2176 858 2202 
+C 851 2221 845 2259 845 2330 
+C 845 2528 1114 2598 1357 2598 
+C 1574 2598 1875 2490 1875 1766 
+C 1875 1722 1856 1696 1837 1690 
+L 1286 1555 
+C 672 1402 230 1062 230 627 
+C 230 102 589 -64 1037 -64 
+C 1261 -64 1453 -13 1734 205 
+L 1862 307 
+L 1875 307 
+z
+M 1875 1491 
+L 1875 646 
+C 1875 563 1837 518 1786 480 
+C 1619 346 1402 198 1222 198 
+C 902 198 762 454 762 653 
+C 762 941 896 1235 1370 1357 
+L 1875 1491 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-5a" d="M 1306 -1024 
+C 1408 -845 1491 -666 1568 -474 
+C 2080 762 2368 1421 2701 2138 
+C 2829 2406 2918 2509 3219 2547 
+C 3258 2586 3258 2720 3219 2758 
+C 3091 2752 2944 2746 2765 2746 
+C 2573 2746 2374 2752 2182 2758 
+C 2144 2720 2144 2586 2182 2547 
+C 2387 2528 2592 2490 2490 2259 
+L 1856 794 
+C 1811 691 1754 672 1702 800 
+L 1133 2131 
+C 1018 2400 986 2522 1344 2547 
+C 1382 2586 1382 2720 1344 2758 
+C 1107 2752 851 2746 621 2746 
+C 403 2746 230 2752 102 2758 
+C 64 2720 64 2586 102 2547 
+C 358 2515 442 2458 608 2067 
+L 1331 384 
+C 1389 256 1485 -38 1421 -218 
+C 1344 -429 1267 -608 1171 -806 
+C 1101 -934 1011 -992 851 -992 
+C 762 -992 736 -973 666 -973 
+C 480 -973 384 -1165 384 -1248 
+C 384 -1382 512 -1485 685 -1485 
+C 819 -1485 1075 -1434 1306 -1024 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-4d" d="M 608 781 
+C 608 250 538 218 147 198 
+C 109 160 109 26 147 -13 
+C 371 -6 608 0 864 0 
+C 1120 0 1363 -6 1574 -13 
+C 1613 26 1613 160 1574 198 
+C 1184 218 1114 250 1114 781 
+L 1114 3731 
+C 1114 4147 1139 4403 1139 4403 
+C 1139 4448 1114 4467 1056 4467 
+C 896 4403 416 4314 160 4294 
+C 147 4243 160 4141 198 4102 
+C 570 4077 608 4058 608 3578 
+L 608 781 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-48" d="M 2842 2477 
+C 2963 2477 3078 2592 3078 2720 
+C 3078 2854 2957 2957 2784 2957 
+C 2618 2957 2310 2848 2144 2630 
+C 2067 2682 1856 2810 1478 2810 
+C 909 2810 384 2426 384 1837 
+C 384 1491 538 1293 717 1120 
+C 538 966 435 691 435 474 
+C 435 243 563 64 730 -19 
+C 384 -224 205 -518 205 -794 
+C 205 -1350 730 -1523 1222 -1523 
+C 2086 -1523 3021 -1107 3021 -416 
+C 3021 -211 2925 -51 2739 102 
+C 2490 307 2042 314 1805 314 
+C 1690 314 1530 301 1376 282 
+C 1280 275 1216 269 1184 269 
+C 998 269 774 358 774 634 
+C 774 762 813 896 890 1005 
+C 1043 915 1222 870 1472 870 
+C 2035 870 2554 1222 2554 1850 
+C 2554 2150 2464 2323 2278 2515 
+C 2323 2579 2451 2669 2534 2669 
+C 2579 2669 2624 2650 2662 2592 
+C 2688 2541 2771 2477 2842 2477 
+z
+M 845 -64 
+C 915 -83 1018 -96 1101 -96 
+C 1299 -96 1478 -77 1568 -77 
+C 1888 -77 2157 -83 2342 -186 
+C 2592 -326 2669 -416 2669 -582 
+C 2669 -1043 1990 -1286 1414 -1286 
+C 1184 -1286 646 -1101 646 -666 
+C 646 -448 659 -288 845 -64 
+z
+M 2042 1786 
+C 2042 1190 1741 1069 1504 1069 
+C 966 1069 909 1523 909 1933 
+C 909 2381 1069 2611 1421 2611 
+C 1824 2611 2042 2317 2042 1786 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-4e" d="M 1088 2291 
+C 1082 2483 1069 2714 1037 2778 
+C 1024 2810 1011 2829 960 2829 
+C 781 2758 614 2701 173 2643 
+C 160 2605 173 2502 186 2464 
+C 531 2432 602 2400 602 2029 
+L 602 781 
+C 602 256 518 224 166 198 
+C 128 160 128 26 166 -13 
+C 358 -6 602 0 858 0 
+C 1114 0 1312 -6 1504 -13 
+C 1542 26 1542 160 1504 198 
+C 1178 230 1107 256 1107 781 
+L 1107 1830 
+C 1107 1965 1165 2042 1216 2099 
+C 1472 2349 1709 2477 1907 2477 
+C 2150 2477 2330 2323 2330 1894 
+L 2330 781 
+C 2330 256 2278 224 1933 198 
+C 1901 160 1901 26 1933 -13 
+C 2093 -6 2330 0 2586 0 
+C 2842 0 3053 -6 3213 -13 
+C 3245 26 3245 160 3213 198 
+C 2893 224 2835 256 2835 781 
+L 2835 1798 
+C 2835 1888 2835 1978 2829 2054 
+C 3136 2394 3424 2477 3674 2477 
+C 3917 2477 4058 2336 4058 1907 
+L 4058 781 
+C 4058 256 3994 224 3661 198 
+C 3629 160 3629 26 3661 -13 
+C 3821 -6 4058 0 4314 0 
+C 4570 0 4794 -6 4973 -13 
+C 5005 26 5005 160 4973 198 
+C 4621 224 4563 256 4563 781 
+L 4563 1792 
+C 4563 2362 4467 2810 3904 2810 
+C 3578 2810 3181 2688 2848 2336 
+C 2829 2317 2790 2285 2778 2342 
+C 2720 2605 2470 2810 2138 2810 
+C 1766 2810 1434 2592 1165 2291 
+C 1133 2259 1094 2214 1088 2291 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-57" d="M 2080 2547 
+C 2426 2522 2464 2445 2330 2118 
+L 1811 864 
+C 1709 614 1677 614 1574 883 
+L 1114 2118 
+C 998 2426 973 2502 1312 2547 
+C 1350 2586 1350 2720 1312 2758 
+C 1101 2752 877 2746 666 2746 
+C 454 2746 262 2752 70 2758 
+C 32 2720 32 2586 70 2547 
+C 410 2509 454 2406 582 2080 
+L 1402 58 
+C 1440 -38 1478 -77 1562 -77 
+C 1626 -77 1670 -38 1715 70 
+L 2566 2074 
+C 2688 2355 2758 2515 3117 2547 
+C 3155 2586 3155 2720 3117 2758 
+C 2989 2752 2835 2746 2669 2746 
+C 2458 2746 2240 2752 2080 2758 
+C 2042 2720 2042 2586 2080 2547 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-46" d="M 2470 595 
+C 2234 352 2048 250 1677 250 
+C 1446 250 1178 384 979 710 
+C 851 922 774 1216 774 1587 
+L 2477 1574 
+C 2554 1574 2598 1613 2598 1683 
+C 2598 2221 2406 2797 1517 2797 
+C 960 2797 237 2266 237 1293 
+C 237 934 326 589 538 346 
+C 755 90 1056 -64 1517 -64 
+C 2003 -64 2349 160 2605 493 
+C 2586 557 2547 589 2470 595 
+z
+M 794 1805 
+C 915 2528 1363 2586 1517 2586 
+C 1760 2586 2048 2451 2048 1914 
+C 2048 1856 2022 1824 1952 1824 
+L 794 1805 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-51" d="M 998 2355 
+C 992 2547 979 2714 947 2778 
+C 934 2810 922 2829 870 2829 
+C 691 2758 525 2701 83 2643 
+C 70 2605 83 2502 96 2464 
+C 442 2432 512 2400 512 2029 
+L 512 -704 
+C 512 -1235 442 -1267 51 -1286 
+C 13 -1325 13 -1459 51 -1498 
+C 275 -1491 512 -1485 768 -1485 
+C 1024 -1485 1331 -1491 1542 -1498 
+C 1581 -1459 1581 -1325 1542 -1286 
+C 1088 -1261 1018 -1235 1018 -704 
+L 1018 -13 
+C 1018 70 1043 64 1107 38 
+C 1267 -26 1459 -64 1664 -64 
+C 2022 -64 2342 45 2605 294 
+C 2906 589 3078 986 3078 1504 
+C 3078 2182 2598 2810 1946 2810 
+C 1651 2810 1325 2618 1069 2330 
+C 1030 2291 1005 2291 998 2355 
+z
+M 1120 2118 
+C 1286 2323 1581 2515 1766 2515 
+C 2176 2515 2528 2054 2528 1331 
+C 2528 806 2342 154 1626 154 
+C 1510 154 1286 186 1171 288 
+C 1043 403 1018 442 1018 672 
+L 1018 1837 
+C 1018 1971 1043 2029 1120 2118 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-53" d="M 1126 2291 
+C 1114 2547 1107 2714 1075 2778 
+C 1062 2810 1050 2829 998 2829 
+C 819 2758 653 2701 211 2643 
+C 198 2605 211 2502 224 2464 
+C 570 2432 640 2400 640 2029 
+L 640 781 
+C 640 250 563 224 166 198 
+C 128 160 128 26 166 -13 
+C 390 -6 640 0 896 0 
+C 1152 0 1446 -6 1670 -13 
+C 1709 26 1709 160 1670 198 
+C 1222 230 1146 250 1146 781 
+L 1146 1670 
+C 1146 1837 1222 1984 1299 2099 
+C 1370 2202 1517 2413 1594 2413 
+C 1651 2413 1709 2400 1760 2330 
+C 1805 2266 1882 2182 1990 2182 
+C 2144 2182 2291 2342 2291 2502 
+C 2291 2624 2176 2810 1907 2810 
+C 1606 2810 1344 2528 1197 2278 
+C 1158 2208 1126 2259 1126 2291 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-56" d="M 1389 -64 
+C 1638 -64 1939 64 2253 320 
+C 2285 346 2342 358 2349 314 
+C 2368 154 2419 -64 2419 -64 
+C 2470 -83 2502 -77 2541 -64 
+C 2682 51 2906 147 3296 192 
+C 3334 230 3334 326 3296 365 
+C 2886 397 2829 518 2829 832 
+L 2829 2061 
+C 2829 2253 2854 2720 2854 2720 
+C 2854 2739 2835 2758 2803 2758 
+C 2771 2752 2675 2746 2579 2746 
+C 2374 2746 2144 2752 1926 2758 
+C 1888 2720 1888 2586 1926 2547 
+C 2240 2528 2323 2451 2323 2029 
+L 2323 794 
+C 2323 672 2310 621 2221 544 
+C 1984 339 1741 237 1581 237 
+C 1389 237 1069 326 1069 896 
+L 1069 2061 
+C 1069 2253 1094 2720 1094 2720 
+C 1094 2739 1075 2758 1043 2758 
+C 1011 2752 915 2746 819 2746 
+C 614 2746 384 2752 166 2758 
+C 128 2720 128 2586 166 2547 
+C 474 2522 563 2451 563 2035 
+L 563 806 
+C 563 365 755 -64 1389 -64 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-4f" d="M 1178 2291 
+C 1139 2246 1101 2234 1101 2291 
+C 1094 2464 1082 2714 1050 2778 
+C 1037 2810 1024 2829 973 2829 
+C 794 2758 627 2701 186 2643 
+C 173 2605 186 2502 198 2464 
+C 544 2432 614 2400 614 2029 
+L 614 781 
+C 614 256 550 230 166 198 
+C 128 160 128 26 166 -13 
+C 358 -6 614 0 870 0 
+C 1126 0 1318 -6 1510 -13 
+C 1549 26 1549 160 1510 198 
+C 1184 230 1120 256 1120 781 
+L 1120 1830 
+C 1120 1965 1178 2042 1229 2099 
+C 1472 2336 1760 2477 2010 2477 
+C 2138 2477 2272 2394 2349 2246 
+C 2413 2118 2426 1946 2426 1754 
+L 2426 781 
+C 2426 256 2362 230 2029 198 
+C 1997 160 1997 26 2029 -13 
+C 2221 -6 2426 0 2682 0 
+C 2938 0 3168 -6 3360 -13 
+C 3392 26 3392 160 3360 198 
+C 3002 230 2931 256 2931 781 
+L 2931 1734 
+C 2931 2086 2906 2394 2758 2592 
+C 2650 2733 2451 2810 2227 2810 
+C 1914 2810 1555 2726 1178 2291 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-4a" d="M 1158 781 
+L 1158 2054 
+C 1158 2374 1184 2784 1184 2784 
+C 1184 2810 1152 2829 1101 2829 
+C 922 2758 666 2701 224 2643 
+C 211 2605 224 2502 237 2464 
+C 589 2432 653 2394 653 2029 
+L 653 781 
+C 653 250 582 230 192 198 
+C 154 160 154 26 192 -13 
+C 403 -6 653 0 909 0 
+C 1165 0 1408 -6 1619 -13 
+C 1658 26 1658 160 1619 198 
+C 1229 224 1158 250 1158 781 
+z
+M 576 3834 
+C 576 3667 730 3501 883 3501 
+C 1062 3501 1216 3674 1216 3808 
+C 1216 3962 1082 4141 909 4141 
+C 755 4141 576 3987 576 3834 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-54" d="M 307 883 
+C 333 570 352 269 352 0 
+C 416 13 480 19 512 19 
+C 557 19 595 19 640 6 
+C 813 -38 986 -64 1222 -64 
+C 1581 -64 2240 109 2240 742 
+C 2240 1178 1926 1434 1491 1594 
+C 1107 1741 851 1837 851 2189 
+C 851 2451 1082 2598 1299 2598 
+C 1440 2598 1811 2547 1894 2003 
+C 1933 1965 2061 1971 2099 2010 
+C 2118 2240 2131 2477 2138 2688 
+C 1939 2720 1632 2810 1299 2810 
+C 826 2810 397 2502 397 2093 
+C 397 1626 608 1427 1101 1222 
+C 1632 1005 1754 870 1754 595 
+C 1754 282 1446 147 1210 147 
+C 960 147 819 230 755 301 
+C 614 448 544 730 506 890 
+C 467 928 346 922 307 883 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#LibertinusSerif-Regular-35c"/>
+      <use xlink:href="#LibertinusSerif-Regular-1b" transform="translate(51.703125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(75.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(100.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-58" transform="translate(131.890625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(205.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-e" transform="translate(256.203125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(290 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(340.59375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-5a" transform="translate(386.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(437.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(462.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(489.203125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-48" transform="translate(539.609375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(589.609375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(614.609375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(693.609375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-57" transform="translate(743.3125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(792.21875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(836.921875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(861.921875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(914.53125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(959.234375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(996.4375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-56" transform="translate(1021.4375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(1074.53125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(1128.734375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(1155.828125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1187.421875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(1212.421875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-56" transform="translate(1251.421875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1304.515625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(1341.71875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1393.625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(1430.828125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(1457.921875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1496.921875 0)"/>
+     </g>
+     <!-- (+ = domestic appreciation) -->
+     <g style="fill: #4f4f4f" transform="translate(57.766734 239.077) scale(0.08 -0.08)">
+      <defs>
+       <path id="LibertinusSerif-Regular-9" d="M 282 1613 
+C 282 1325 307 -154 1638 -1306 
+C 1702 -1293 1754 -1248 1773 -1197 
+C 1562 -954 813 -70 813 1613 
+C 813 3296 1568 4179 1773 4410 
+C 1754 4474 1709 4518 1638 4525 
+C 877 3872 282 2803 282 1613 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-c" d="M 1600 2784 
+L 1600 1766 
+L 544 1766 
+C 467 1766 384 1645 384 1549 
+C 384 1498 422 1446 480 1446 
+L 1600 1446 
+L 1600 358 
+C 1600 301 1651 262 1702 262 
+C 1798 262 1920 346 1920 422 
+L 1920 1446 
+L 2963 1446 
+C 3046 1446 3136 1594 3136 1658 
+C 3136 1709 3110 1766 3046 1766 
+L 1920 1766 
+L 1920 2867 
+C 1920 2931 1862 2957 1811 2957 
+C 1747 2957 1600 2867 1600 2784 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-1e" d="M 2970 1978 
+C 3053 1978 3142 2125 3142 2189 
+C 3142 2240 3117 2298 3053 2298 
+L 544 2298 
+C 467 2298 384 2176 384 2080 
+C 384 2029 422 1978 480 1978 
+L 2970 1978 
+z
+M 2970 915 
+C 3053 915 3142 1062 3142 1126 
+C 3142 1178 3117 1235 3053 1235 
+L 544 1235 
+C 467 1235 384 1114 384 1018 
+C 384 966 422 915 480 915 
+L 2970 915 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-44" d="M 2547 582 
+C 2522 640 2470 666 2413 672 
+C 2195 390 1920 250 1645 250 
+C 1178 250 787 723 787 1472 
+C 787 2176 1094 2598 1517 2598 
+C 1894 2598 1946 2374 1971 2150 
+C 1990 1978 2080 1920 2214 1920 
+C 2349 1920 2528 2003 2528 2202 
+C 2528 2554 2163 2810 1549 2810 
+C 915 2810 237 2240 237 1331 
+C 237 506 698 -64 1504 -64 
+C 1888 -64 2227 58 2547 582 
+z
+" transform="scale(0.015625)"/>
+       <path id="LibertinusSerif-Regular-a" d="M 1626 1613 
+C 1626 1901 1600 3379 269 4531 
+C 205 4518 154 4474 134 4422 
+C 346 4179 1094 3296 1094 1613 
+C 1094 -70 339 -954 134 -1184 
+C 154 -1248 198 -1293 269 -1299 
+C 1030 -646 1626 422 1626 1613 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#LibertinusSerif-Regular-9"/>
+      <use xlink:href="#LibertinusSerif-Regular-c" transform="translate(26.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(81.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(106.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(161.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(186.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(236.6875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(287.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(366.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(410.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(449.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(481.390625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(508.484375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(551.28125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(576.28125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(621.984375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(673.890625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(725.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(762.203125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(807.609375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(850.40625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(877.5 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(923.203125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(954.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(981.890625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(1032.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-a" transform="translate(1086.5 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11"/>
+     <g id="text_7">
+      <!-- Fed -->
+      <g style="fill: #141414" transform="translate(7.88 32.799) scale(0.08 -0.08)">
+       <defs>
+        <path id="LibertinusSerif-Regular-27" d="M 1811 2067 
+C 2355 2067 2374 1920 2394 1632 
+C 2432 1594 2566 1594 2605 1632 
+C 2598 1792 2592 1978 2592 2195 
+C 2592 2413 2598 2579 2605 2746 
+C 2566 2784 2432 2784 2394 2746 
+C 2374 2394 2355 2310 1811 2310 
+L 1216 2310 
+L 1216 3462 
+C 1216 3808 1293 3872 1574 3872 
+L 1862 3872 
+C 2541 3872 2701 3616 2842 3174 
+C 2918 3174 2989 3187 3040 3206 
+C 3008 3469 2912 4083 2899 4134 
+C 2899 4147 2893 4154 2874 4154 
+C 2765 4134 2733 4128 2573 4128 
+L 941 4128 
+C 736 4128 371 4134 115 4141 
+C 77 4102 77 3968 115 3930 
+C 563 3910 672 3878 672 3347 
+L 672 781 
+C 672 250 563 218 115 198 
+C 77 160 77 26 115 -13 
+C 339 -6 659 0 947 0 
+C 1235 0 1549 -6 1773 -13 
+C 1811 26 1811 160 1773 198 
+C 1325 218 1216 250 1216 781 
+L 1216 2067 
+L 1811 2067 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-27"/>
+       <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(48.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(93.90625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12"/>
+     <g id="text_8">
+      <!-- ECB -->
+      <g style="fill: #141414" transform="translate(5.1125 59.727) scale(0.08 -0.08)">
+       <defs>
+        <path id="LibertinusSerif-Regular-26" d="M 1798 2310 
+L 1216 2310 
+L 1216 3462 
+C 1216 3744 1293 3872 1638 3872 
+L 2118 3872 
+C 2598 3872 2701 3616 2842 3174 
+C 2918 3162 2989 3174 3053 3206 
+C 3021 3469 2925 4083 2912 4134 
+C 2912 4147 2906 4154 2886 4154 
+C 2778 4134 2726 4128 2573 4128 
+L 941 4128 
+C 749 4128 371 4134 115 4141 
+C 77 4102 77 3968 115 3930 
+C 563 3910 672 3878 672 3347 
+L 672 781 
+C 672 250 563 218 115 198 
+C 77 160 77 26 115 -13 
+C 352 -6 736 0 947 0 
+L 2323 0 
+C 2630 0 3142 -13 3142 -13 
+C 3232 307 3328 730 3379 1056 
+C 3315 1094 3238 1107 3155 1088 
+C 3027 627 2803 250 2317 250 
+L 1574 250 
+C 1306 250 1216 352 1216 653 
+L 1216 2067 
+L 1798 2067 
+C 2342 2067 2362 1920 2381 1632 
+C 2419 1594 2554 1594 2592 1632 
+C 2586 1798 2579 1978 2579 2195 
+C 2579 2374 2586 2592 2592 2746 
+C 2554 2784 2419 2784 2381 2746 
+C 2362 2394 2342 2310 1798 2310 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-24" d="M 2285 -64 
+C 2906 -64 3475 230 3910 800 
+C 3878 858 3834 896 3763 896 
+C 3309 397 2874 198 2278 198 
+C 1414 198 819 1171 819 2106 
+C 819 2656 966 3117 1197 3405 
+C 1517 3795 1888 3974 2221 3974 
+C 3104 3974 3456 3450 3622 2899 
+C 3699 2874 3763 2893 3834 2931 
+C 3802 3264 3757 3571 3693 3923 
+C 3366 3955 3078 4211 2291 4211 
+C 1747 4211 1293 4013 915 3667 
+C 493 3277 237 2650 237 1984 
+C 237 870 909 -64 2285 -64 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-23" d="M 947 4128 
+C 717 4128 371 4134 122 4141 
+C 83 4102 83 3968 122 3930 
+C 570 3910 678 3878 678 3347 
+L 678 781 
+C 678 250 570 218 122 198 
+C 83 160 83 26 122 -13 
+C 371 -6 717 0 954 0 
+C 1184 0 1350 -13 1888 -13 
+C 3162 -13 3501 627 3501 1178 
+C 3501 1792 3072 2144 2515 2304 
+L 2515 2317 
+C 2835 2477 3123 2810 3123 3155 
+C 3123 3584 2938 4141 1747 4141 
+C 1523 4141 1178 4128 947 4128 
+z
+M 1222 2125 
+L 1664 2125 
+C 2541 2125 2906 1632 2906 1056 
+C 2906 589 2726 198 1754 198 
+C 1306 198 1222 365 1222 755 
+L 1222 2125 
+z
+M 1222 3520 
+C 1222 3859 1222 3923 1779 3923 
+C 2138 3923 2605 3731 2605 3078 
+C 2605 2534 2227 2342 1696 2342 
+L 1222 2342 
+L 1222 3520 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-26"/>
+       <use xlink:href="#LibertinusSerif-Regular-24" transform="translate(55.703125 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-23" transform="translate(120.296875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13"/>
+     <g id="text_9">
+      <!-- BoE -->
+      <g style="fill: #141414" transform="translate(6.2475 86.655) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-23"/>
+       <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(58.796875 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-26" transform="translate(109.203125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_14"/>
+     <g id="text_10">
+      <!-- RBA -->
+      <g style="fill: #141414" transform="translate(4.48 113.583) scale(0.08 -0.08)">
+       <defs>
+        <path id="LibertinusSerif-Regular-33" d="M 1210 781 
+L 1210 1862 
+C 1747 1862 1869 1766 1958 1619 
+L 2643 506 
+C 2829 205 3104 -64 3488 -64 
+C 3584 -64 3693 -51 3757 -19 
+C 3782 26 3776 83 3750 134 
+C 3462 134 3302 352 3136 627 
+L 2330 1971 
+C 2605 2061 3181 2394 3181 3066 
+C 3181 3386 3072 3648 2842 3866 
+C 2534 4154 2138 4173 1734 4173 
+C 1434 4173 1165 4128 934 4128 
+C 710 4128 410 4134 109 4141 
+C 70 4102 70 3968 109 3930 
+C 557 3910 666 3878 666 3347 
+L 666 781 
+C 666 250 557 218 109 198 
+C 70 160 70 26 109 -13 
+C 397 -6 698 0 941 0 
+C 1184 0 1485 -6 1766 -13 
+C 1805 26 1805 160 1766 198 
+C 1318 218 1210 250 1210 781 
+z
+M 1741 3955 
+C 2131 3955 2592 3814 2592 3059 
+C 2592 2259 2138 2080 1517 2080 
+L 1210 2080 
+L 1210 3546 
+C 1210 3731 1286 3955 1741 3955 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-22" d="M 992 506 
+L 1344 1434 
+C 1376 1517 1414 1542 1568 1542 
+L 2918 1542 
+L 3290 461 
+C 3366 243 3123 218 2816 198 
+C 2778 160 2778 26 2816 -13 
+C 3053 -6 3405 0 3654 0 
+C 3917 0 4160 -6 4384 -13 
+C 4422 26 4422 160 4384 198 
+C 4134 224 3917 243 3808 550 
+L 2490 4211 
+C 2394 4154 2221 4083 2138 4083 
+L 685 653 
+C 518 256 326 218 45 198 
+C 6 160 6 26 45 -13 
+C 211 -6 422 0 614 0 
+C 877 0 1197 -6 1434 -13 
+C 1472 26 1472 160 1434 198 
+C 1190 218 890 243 992 506 
+z
+M 1683 1811 
+C 1542 1811 1498 1830 1523 1894 
+L 2176 3552 
+L 2214 3552 
+L 2816 1811 
+L 1683 1811 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-33"/>
+       <use xlink:href="#LibertinusSerif-Regular-23" transform="translate(58.703125 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-22" transform="translate(117.5 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15"/>
+     <g id="text_11">
+      <!-- MAS -->
+      <g style="fill: #141414" transform="translate(3.2875 140.511) scale(0.08 -0.08)">
+       <defs>
+        <path id="LibertinusSerif-Regular-2e" d="M 4243 742 
+C 4275 224 4250 218 3834 198 
+C 3795 160 3795 26 3834 -13 
+C 4070 -6 4326 0 4518 0 
+C 4710 0 5005 -6 5216 -13 
+C 5254 26 5254 160 5216 198 
+C 4781 218 4762 243 4723 774 
+L 4531 3469 
+C 4506 3814 4538 3904 4973 3930 
+C 5011 3968 5011 4102 4973 4141 
+L 4134 4128 
+L 2778 883 
+C 2752 819 2733 794 2720 794 
+C 2707 794 2688 826 2669 877 
+L 1357 4128 
+L 429 4141 
+C 390 4102 390 3968 429 3930 
+C 870 3904 909 3891 864 3411 
+L 608 774 
+C 570 390 493 230 128 198 
+C 90 160 90 26 128 -13 
+C 320 -6 525 0 678 0 
+C 832 0 1088 -6 1280 -13 
+C 1318 26 1318 160 1280 198 
+C 858 230 826 429 858 787 
+L 1101 3354 
+L 1114 3354 
+L 2438 32 
+C 2458 -13 2496 -64 2534 -64 
+C 2573 -64 2598 -19 2624 32 
+L 4064 3418 
+L 4077 3418 
+L 4243 742 
+z
+" transform="scale(0.015625)"/>
+        <path id="LibertinusSerif-Regular-34" d="M 2528 4038 
+C 2157 4090 2170 4211 1542 4211 
+C 896 4211 326 3782 326 3104 
+C 326 2432 883 2125 1446 1907 
+C 1830 1760 2304 1581 2304 954 
+C 2304 435 2016 166 1504 166 
+C 909 166 525 442 384 1075 
+C 301 1101 237 1088 173 1056 
+C 198 563 224 397 301 83 
+C 704 83 883 -64 1453 -64 
+C 1741 -64 2016 6 2240 147 
+C 2611 378 2842 768 2842 1178 
+C 2842 1856 2330 2157 1805 2355 
+C 1421 2496 781 2739 781 3277 
+C 781 3635 1107 3994 1485 3994 
+C 2106 3994 2304 3597 2432 3174 
+C 2502 3162 2586 3168 2643 3213 
+C 2618 3520 2592 3699 2528 4038 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-2e"/>
+       <use xlink:href="#LibertinusSerif-Regular-22" transform="translate(83.90625 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-34" transform="translate(153.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_16"/>
+     <g id="text_12">
+      <!-- BI -->
+      <g style="fill: #141414" transform="translate(12.36 167.439) scale(0.08 -0.08)">
+       <defs>
+        <path id="LibertinusSerif-Regular-2a" d="M 1222 781 
+L 1222 3347 
+C 1222 3878 1331 3910 1779 3930 
+C 1818 3968 1818 4102 1779 4141 
+C 1498 4134 1197 4128 947 4128 
+C 736 4128 422 4134 122 4141 
+C 83 4102 83 3968 122 3930 
+C 570 3910 678 3878 678 3347 
+L 678 781 
+C 678 250 570 218 122 198 
+C 83 160 83 26 122 -13 
+C 410 -6 723 0 954 0 
+C 1184 0 1491 -6 1779 -13 
+C 1818 26 1818 160 1779 198 
+C 1331 218 1222 250 1222 781 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-23"/>
+       <use xlink:href="#LibertinusSerif-Regular-2a" transform="translate(58.796875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_17"/>
+     <g id="text_13">
+      <!-- BNM -->
+      <g style="fill: #141414" transform="translate(2.43125 194.367) scale(0.08 -0.08)">
+       <defs>
+        <path id="LibertinusSerif-Regular-2f" d="M 3558 3277 
+L 3558 1184 
+C 3558 1062 3558 992 3514 992 
+C 3488 992 3392 1107 3206 1344 
+L 1011 4128 
+L 147 4141 
+C 109 4102 109 3968 147 3930 
+C 422 3910 614 3686 653 3520 
+L 653 851 
+C 653 282 544 243 96 198 
+C 58 160 58 26 96 -13 
+C 371 -6 659 0 813 0 
+C 960 0 1254 -6 1523 -13 
+C 1562 26 1562 160 1523 198 
+C 1075 243 966 269 966 851 
+L 966 2810 
+C 966 3027 966 3123 1018 3123 
+C 1056 3123 1126 3053 1235 2912 
+L 3469 90 
+C 3539 -6 3622 -64 3725 -64 
+C 3814 -64 3872 13 3872 134 
+L 3872 3277 
+C 3872 3846 3981 3885 4429 3930 
+C 4467 3968 4467 4102 4429 4141 
+C 4166 4134 3866 4128 3712 4128 
+C 3578 4128 3283 4134 3002 4141 
+C 2963 4102 2963 3968 3002 3930 
+C 3450 3885 3558 3859 3558 3277 
+z
+" transform="scale(0.015625)"/>
+       </defs>
+       <use xlink:href="#LibertinusSerif-Regular-23"/>
+       <use xlink:href="#LibertinusSerif-Regular-2f" transform="translate(58.796875 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-2e" transform="translate(128.703125 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_18">
+    <path d="M 105.934376 204.255 
+L 105.934376 15.759 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #8c8c8c; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_19">
+    <path d="M 73.256643 25.45308 
+L 146.737142 25.45308 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_20">
+    <path d="M 100.320314 32.99292 
+L 120.542721 32.99292 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_21">
+    <path d="M 30.165328 52.38108 
+L 134.499025 52.38108 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_22">
+    <path d="M 95.725019 59.92092 
+L 112.453777 59.92092 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_23">
+    <path d="M 73.472573 79.30908 
+L 136.042731 79.30908 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_24">
+    <path d="M 98.354687 86.84892 
+L 116.197781 86.84892 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_25">
+    <path d="M 31.094468 106.23708 
+L 174.671889 106.23708 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_26">
+    <path d="M 99.563409 113.77692 
+L 135.368226 113.77692 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_27">
+    <path d="M 96.467411 133.16508 
+L 153.150232 133.16508 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_28">
+    <path d="M 101.312868 140.70492 
+L 122.806951 140.70492 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_29">
+    <path d="M 53.315118 160.09308 
+L 110.815132 160.09308 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_30">
+    <path d="M 86.837201 167.63292 
+L 102.908151 167.63292 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_31">
+    <path d="M 60.537559 187.02108 
+L 133.408215 187.02108 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_32">
+    <path d="M 108.170644 194.56092 
+L 127.851205 194.56092 
+" clip-path="url(#p8eb3e2307e)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 22.94 204.255 
+L 181.897217 204.255 
+" style="fill: none; stroke: #dcdcdc; stroke-width: 0.6; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_33">
+    <defs>
+     <path id="mb9939dcdaa" d="M 0 2.3 
+C 0.609967 2.3 1.195034 2.057657 1.626346 1.626346 
+C 2.057657 1.195034 2.3 0.609967 2.3 0 
+C 2.3 -0.609967 2.057657 -1.195034 1.626346 -1.626346 
+C 1.195034 -2.057657 0.609967 -2.3 0 -2.3 
+C -0.609967 -2.3 -1.195034 -2.057657 -1.626346 -1.626346 
+C -2.057657 -1.195034 -2.3 -0.609967 -2.3 0 
+C -2.3 0.609967 -2.057657 1.195034 -1.626346 1.626346 
+C -1.195034 2.057657 -0.609967 2.3 0 2.3 
+z
+" style="stroke: #2a78d6; stroke-width: 1.1"/>
+    </defs>
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="109.996892" y="25.45308" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_34">
+    <defs>
+     <path id="m019c2bc18e" d="M 0 2.3 
+C 0.609967 2.3 1.195034 2.057657 1.626346 1.626346 
+C 2.057657 1.195034 2.3 0.609967 2.3 0 
+C 2.3 -0.609967 2.057657 -1.195034 1.626346 -1.626346 
+C 1.195034 -2.057657 0.609967 -2.3 0 -2.3 
+C -0.609967 -2.3 -1.195034 -2.057657 -1.626346 -1.626346 
+C -2.057657 -1.195034 -2.3 -0.609967 -2.3 0 
+C -2.3 0.609967 -2.057657 1.195034 -1.626346 1.626346 
+C -1.195034 2.057657 -0.609967 2.3 0 2.3 
+z
+" style="stroke: #eb6834; stroke-width: 1.1"/>
+    </defs>
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="110.431518" y="32.99292" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_14">
+    <!-- n = 218 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 31.491) scale(0.07 -0.07)">
+     <defs>
+      <path id="LibertinusSerif-Regular-19" d="M 2515 3104 
+C 2515 3565 2157 3904 1530 3904 
+C 877 3904 454 3514 454 3021 
+C 454 2662 627 2400 1018 2157 
+L 1184 2054 
+C 998 1958 826 1843 666 1702 
+C 403 1472 294 1184 294 934 
+C 294 282 755 -64 1434 -64 
+C 2272 -64 2682 550 2682 1037 
+C 2682 1408 2522 1734 2182 1939 
+L 1728 2214 
+C 2029 2362 2515 2694 2515 3104 
+z
+M 1446 160 
+C 1158 160 723 358 723 934 
+C 723 1126 806 1574 1357 1939 
+L 1658 1760 
+C 2054 1517 2214 1216 2214 909 
+C 2214 269 1734 160 1446 160 
+z
+M 1498 3680 
+C 1914 3680 2067 3405 2067 3110 
+C 2067 2765 1728 2477 1555 2349 
+L 1357 2470 
+C 954 2733 909 2944 909 3142 
+C 909 3437 1114 3680 1498 3680 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-19" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_35">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="82.332176" y="52.38108" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_36">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="104.089398" y="59.92092" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_15">
+    <!-- n = 228 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 58.419) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-19" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_37">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="104.757652" y="79.30908" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_38">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="107.276234" y="86.84892" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_16">
+    <!-- n = 235 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 85.347) scale(0.07 -0.07)">
+     <defs>
+      <path id="LibertinusSerif-Regular-14" d="M 1376 3680 
+C 1651 3680 1907 3514 1907 3104 
+C 1907 2784 1536 2291 902 2202 
+L 934 1997 
+C 1043 2010 1158 2010 1242 2010 
+C 1606 2010 2080 1907 2080 1184 
+C 2080 333 1510 160 1286 160 
+C 960 160 902 307 826 422 
+C 762 512 678 589 550 589 
+C 416 589 282 467 282 365 
+C 282 109 819 -64 1203 -64 
+C 1965 -64 2643 429 2643 1274 
+C 2643 1971 2118 2221 1741 2285 
+L 1734 2298 
+C 2259 2547 2406 2810 2406 3149 
+C 2406 3341 2362 3494 2208 3654 
+C 2067 3795 1843 3904 1510 3904 
+C 570 3904 301 3290 301 3078 
+C 301 2989 365 2861 518 2861 
+C 742 2861 768 3072 768 3194 
+C 768 3603 1210 3680 1376 3680 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Regular-16" d="M 2042 1210 
+C 2042 602 1722 154 1338 154 
+C 1094 154 1011 314 915 442 
+C 832 550 723 646 589 646 
+C 467 646 346 538 346 410 
+C 346 147 890 -70 1254 -70 
+C 2048 -70 2611 518 2611 1325 
+C 2611 1946 2182 2502 1466 2502 
+C 1190 2502 954 2445 838 2400 
+L 966 3469 
+C 1203 3443 1408 3411 1715 3411 
+C 1907 3411 2125 3424 2387 3450 
+L 2490 3885 
+L 2445 3910 
+C 2080 3872 1734 3840 1395 3840 
+C 1158 3840 928 3853 704 3872 
+L 486 2029 
+C 826 2157 1069 2182 1299 2182 
+C 1715 2182 2042 1907 2042 1210 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-16" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_39">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="102.883179" y="106.23708" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_40">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="117.465818" y="113.77692" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_17">
+    <!-- n = 192 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 112.275) scale(0.07 -0.07)">
+     <defs>
+      <path id="LibertinusSerif-Regular-1a" d="M 2093 1638 
+C 1920 1056 1510 410 659 90 
+C 659 13 685 -45 736 -77 
+C 1382 115 1779 384 2138 800 
+C 2534 1261 2733 1843 2733 2349 
+C 2733 3648 1997 3904 1504 3904 
+C 666 3904 320 3091 320 2541 
+C 320 1990 614 1498 1485 1498 
+C 1651 1498 1901 1549 2093 1638 
+z
+M 2150 1869 
+C 1939 1728 1728 1722 1619 1722 
+C 992 1722 851 2336 851 2656 
+C 851 3360 1120 3680 1434 3680 
+C 1837 3680 2202 3462 2202 2368 
+C 2202 2227 2189 2054 2150 1869 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1a" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_41">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="124.808822" y="133.16508" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_42">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="112.059909" y="140.70492" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_18">
+    <!-- n = 53 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 139.203) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-16" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(205.703125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_43">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="82.065125" y="160.09308" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_44">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="94.872676" y="167.63292" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_19">
+    <!-- n = 120 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 166.131) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_45">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#mb9939dcdaa" x="96.972887" y="187.02108" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_46">
+    <g clip-path="url(#p8eb3e2307e)">
+     <use xlink:href="#m019c2bc18e" x="118.010924" y="194.56092" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_20">
+    <!-- n = 133 -->
+    <g style="fill: #8c8c8c" transform="translate(183.48679 193.059) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="text_21">
+    <!-- (a) Exchange rate -->
+    <g style="fill: #141414" transform="translate(22.94 9.759) scale(0.085 -0.085)">
+     <defs>
+      <path id="LibertinusSerif-Regular-59" d="M 1165 2291 
+C 1018 2509 1062 2515 1350 2547 
+C 1389 2586 1389 2720 1350 2758 
+C 1178 2752 896 2746 704 2746 
+C 512 2746 320 2752 154 2758 
+C 115 2720 115 2586 154 2547 
+C 371 2528 550 2419 730 2157 
+L 1286 1344 
+C 1318 1299 1318 1280 1293 1248 
+L 755 557 
+C 499 230 358 211 134 198 
+C 96 160 96 26 134 -13 
+C 262 -6 403 0 595 0 
+C 787 0 966 -6 1133 -13 
+C 1171 26 1171 160 1133 198 
+C 902 224 851 250 992 454 
+L 1395 1037 
+C 1446 1114 1472 1107 1510 1050 
+L 1882 538 
+C 2106 230 2003 218 1798 198 
+C 1760 160 1760 26 1798 -13 
+C 1990 -6 2202 0 2432 0 
+C 2675 0 2848 -6 3002 -13 
+C 3040 26 3040 160 3002 198 
+C 2714 218 2618 237 2362 602 
+L 1786 1414 
+C 1760 1453 1754 1472 1786 1510 
+L 2323 2195 
+C 2560 2496 2714 2528 2944 2547 
+C 2982 2586 2982 2720 2944 2758 
+C 2816 2752 2669 2746 2477 2746 
+C 2285 2746 2106 2752 1939 2758 
+C 1901 2720 1901 2586 1939 2547 
+C 2176 2522 2246 2502 2093 2285 
+L 1677 1702 
+C 1632 1638 1606 1645 1555 1715 
+L 1165 2291 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Regular-49" d="M 1069 1830 
+C 1069 1965 1126 2042 1178 2099 
+C 1421 2336 1747 2477 1997 2477 
+C 2125 2477 2259 2394 2336 2246 
+C 2400 2118 2413 1946 2413 1754 
+L 2413 781 
+C 2413 256 2349 230 2016 198 
+C 1984 160 1984 26 2016 -13 
+C 2195 -6 2413 0 2669 0 
+C 2925 0 3136 -6 3347 -13 
+C 3379 26 3379 160 3347 198 
+C 2989 230 2918 256 2918 781 
+L 2918 1734 
+C 2918 2086 2893 2400 2746 2592 
+C 2637 2733 2438 2810 2214 2810 
+C 1901 2810 1517 2726 1126 2291 
+C 1126 2285 1120 2285 1114 2278 
+C 1094 2253 1062 2214 1062 2291 
+L 1069 3731 
+C 1069 4147 1094 4403 1094 4403 
+C 1094 4448 1069 4467 1011 4467 
+C 851 4403 371 4314 115 4294 
+C 102 4243 115 4141 154 4102 
+C 173 4102 192 4102 211 4102 
+C 493 4083 563 4083 563 3578 
+L 563 781 
+C 563 250 486 224 115 198 
+C 77 160 77 26 115 -13 
+C 326 -6 563 0 819 0 
+C 1062 0 1274 -6 1453 -13 
+C 1491 26 1491 160 1453 198 
+C 1126 224 1069 250 1069 781 
+L 1069 1830 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-9"/>
+     <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(28.59375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-a" transform="translate(74.296875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(104.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-26" transform="translate(129.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-59" transform="translate(184.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(233.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-49" transform="translate(276.59375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(330.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(376.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-48" transform="translate(430.296875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(480.296875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(525 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(550 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(587.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(632.90625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(664.5 0)"/>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_8">
+    <path d="M 252.205217 204.255 
+L 374.48 204.255 
+L 374.48 15.759 
+L 252.205217 15.759 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 252.205217 15.759 
+L 374.48 15.759 
+L 374.48 42.687 
+L 252.205217 42.687 
+z
+" clip-path="url(#p39aee44a03)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 252.205217 69.615 
+L 374.48 69.615 
+L 374.48 96.543 
+L 252.205217 96.543 
+z
+" clip-path="url(#p39aee44a03)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 252.205217 123.471 
+L 374.48 123.471 
+L 374.48 150.399 
+L 252.205217 150.399 
+z
+" clip-path="url(#p39aee44a03)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 252.205217 177.327 
+L 374.48 177.327 
+L 374.48 204.255 
+L 252.205217 204.255 
+z
+" clip-path="url(#p39aee44a03)" style="fill: #f4f4f2"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_6">
+     <g id="line2d_47">
+      <path d="M 293.240477 204.255 
+L 293.240477 15.759 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_48">
+      <g>
+       <use xlink:href="#m661b0c22f3" x="293.240477" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <!-- 0 -->
+      <g style="fill: #4f4f4f" transform="translate(291.496727 216.96) scale(0.075 -0.075)">
+       <use xlink:href="#LibertinusSerif-Regular-11"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_49">
+      <path d="M 341.263081 204.255 
+L 341.263081 15.759 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #dcdcdc; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_50">
+      <g>
+       <use xlink:href="#m661b0c22f3" x="341.263081" y="204.255" style="fill: #dcdcdc; stroke: #dcdcdc; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <!-- 20 -->
+      <g style="fill: #4f4f4f" transform="translate(337.775581 216.96) scale(0.075 -0.075)">
+       <use xlink:href="#LibertinusSerif-Regular-13"/>
+       <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(46.5 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_24">
+     <!-- β: basis points per unit surprise -->
+     <g style="fill: #4f4f4f" transform="translate(261.942609 229.957) scale(0.08 -0.08)">
+      <defs>
+       <path id="LibertinusSerif-Regular-43" d="M 1069 2522 
+C 1030 2483 1005 2496 1005 2554 
+L 1005 3731 
+C 1005 4147 1030 4403 1030 4403 
+C 1030 4448 1005 4467 947 4467 
+C 787 4403 307 4314 51 4294 
+C 38 4243 51 4141 90 4102 
+C 109 4102 128 4102 147 4102 
+C 429 4083 499 4083 499 3578 
+L 499 454 
+C 499 205 493 90 474 0 
+C 506 -51 538 -77 614 -77 
+C 653 -38 717 19 768 77 
+C 832 154 870 154 941 96 
+C 1088 -26 1280 -64 1504 -64 
+C 2157 -64 2918 531 2918 1549 
+C 2918 2330 2342 2810 1786 2810 
+C 1510 2810 1267 2701 1069 2522 
+z
+M 1114 2323 
+C 1280 2470 1472 2528 1658 2528 
+C 2048 2528 2368 2054 2368 1434 
+C 2368 704 2074 154 1466 154 
+C 1267 154 1133 294 1005 454 
+L 1005 2054 
+C 1005 2189 1030 2253 1114 2323 
+z
+" transform="scale(0.015625)"/>
+      </defs>
+      <use xlink:href="#LibertinusSerif-Regular-35c"/>
+      <use xlink:href="#LibertinusSerif-Regular-1b" transform="translate(51.703125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(75.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-43" transform="translate(100.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(149.59375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(195.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(234.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(261.390625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(300.390625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(325.390625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(378 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(428.40625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(455.5 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(509.703125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(541.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(580.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(605.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(657.90625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(702.609375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(739.8125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-56" transform="translate(764.8125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(817.90625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(872.109375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(899.203125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(930.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(955.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-56" transform="translate(994.796875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1047.890625 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(1085.09375 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1137 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(1174.203125 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(1201.296875 0)"/>
+      <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1240.296875 0)"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_8">
+     <g id="line2d_51"/>
+     <g id="text_25">
+      <!-- Fed -->
+      <g style="fill: #141414" transform="translate(237.145217 32.799) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-27"/>
+       <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(48.5 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(93.90625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_52"/>
+     <g id="text_26">
+      <!-- ECB -->
+      <g style="fill: #141414" transform="translate(234.377717 59.727) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-26"/>
+       <use xlink:href="#LibertinusSerif-Regular-24" transform="translate(55.703125 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-23" transform="translate(120.296875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_53"/>
+     <g id="text_27">
+      <!-- BoE -->
+      <g style="fill: #141414" transform="translate(235.512717 86.655) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-23"/>
+       <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(58.796875 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-26" transform="translate(109.203125 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_54"/>
+     <g id="text_28">
+      <!-- RBA -->
+      <g style="fill: #141414" transform="translate(233.745217 113.583) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-33"/>
+       <use xlink:href="#LibertinusSerif-Regular-23" transform="translate(58.703125 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-22" transform="translate(117.5 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_55"/>
+     <g id="text_29">
+      <!-- MAS -->
+      <g style="fill: #141414" transform="translate(232.552717 140.511) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-2e"/>
+       <use xlink:href="#LibertinusSerif-Regular-22" transform="translate(83.90625 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-34" transform="translate(153.40625 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_56"/>
+     <g id="text_30">
+      <!-- BI -->
+      <g style="fill: #141414" transform="translate(241.625217 167.439) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-23"/>
+       <use xlink:href="#LibertinusSerif-Regular-2a" transform="translate(58.796875 0)"/>
+      </g>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_57"/>
+     <g id="text_31">
+      <!-- BNM -->
+      <g style="fill: #141414" transform="translate(231.696467 194.367) scale(0.08 -0.08)">
+       <use xlink:href="#LibertinusSerif-Regular-23"/>
+       <use xlink:href="#LibertinusSerif-Regular-2f" transform="translate(58.796875 0)"/>
+       <use xlink:href="#LibertinusSerif-Regular-2e" transform="translate(128.703125 0)"/>
+      </g>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_58">
+    <path d="M 293.240477 204.255 
+L 293.240477 15.759 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #8c8c8c; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_59">
+    <path d="M 281.488952 25.45308 
+L 330.192806 25.45308 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_60">
+    <path d="M 292.033899 32.99292 
+L 310.040248 32.99292 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_61">
+    <path d="M 257.763162 52.38108 
+L 334.841182 52.38108 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_62">
+    <path d="M 288.244347 59.92092 
+L 300.670621 59.92092 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_63">
+    <path d="M 260.710418 79.30908 
+L 316.092393 79.30908 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_64">
+    <path d="M 287.71694 86.84892 
+L 303.561233 86.84892 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_65">
+    <path d="M 265.096763 106.23708 
+L 368.922055 106.23708 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #2a78d6; stroke-width: 1.3"/>
+   </g>
+   <g id="line2d_66">
+    <path d="M 298.99143 113.77692 
+L 330.895548 113.77692 
+" clip-path="url(#p39aee44a03)" style="fill: none; stroke: #eb6834; stroke-width: 1.3"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 252.205217 204.255 
+L 374.48 204.255 
+" style="fill: none; stroke: #dcdcdc; stroke-width: 0.6; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_67">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#mb9939dcdaa" x="305.840879" y="25.45308" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_68">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#m019c2bc18e" x="301.037074" y="32.99292" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_32">
+    <!-- n = 218 -->
+    <g style="fill: #8c8c8c" transform="translate(375.702748 31.491) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-19" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_69">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#mb9939dcdaa" x="296.302172" y="52.38108" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_70">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#m019c2bc18e" x="294.457484" y="59.92092" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_33">
+    <!-- n = 218 -->
+    <g style="fill: #8c8c8c" transform="translate(375.702748 58.419) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-19" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_71">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#mb9939dcdaa" x="288.401405" y="79.30908" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_72">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#m019c2bc18e" x="295.639086" y="86.84892" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_34">
+    <!-- n = 275 -->
+    <g style="fill: #8c8c8c" transform="translate(375.702748 85.347) scale(0.07 -0.07)">
+     <defs>
+      <path id="LibertinusSerif-Regular-18" d="M 1088 3424 
+L 2234 3424 
+C 1734 2182 1229 934 794 -38 
+L 845 -83 
+L 1280 -64 
+C 1645 1024 1997 2086 2714 3834 
+L 2611 3910 
+C 2502 3878 2362 3840 2118 3840 
+L 800 3840 
+C 582 3840 595 3904 480 3930 
+C 461 3930 454 3930 454 3910 
+C 448 3603 378 3219 326 2886 
+C 397 2867 461 2861 531 2867 
+C 672 3379 883 3424 1088 3424 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-13" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-18" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-16" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="line2d_73">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#mb9939dcdaa" x="317.009409" y="106.23708" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="line2d_74">
+    <g clip-path="url(#p39aee44a03)">
+     <use xlink:href="#m019c2bc18e" x="314.943489" y="113.77692" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1"/>
+    </g>
+   </g>
+   <g id="text_35">
+    <!-- exceeds placebo R² -->
+    <g style="fill: #4f4f4f" transform="translate(291.038598 125.06292) scale(0.066 -0.066)">
+     <defs>
+      <path id="LibertinusSerif-Italic-46" d="M 1069 1274 
+C 2714 1594 2714 2080 2714 2323 
+C 2714 2330 2714 2330 2714 2336 
+C 2714 2496 2566 2810 2106 2810 
+C 992 2810 531 1722 531 909 
+C 531 365 787 -64 1318 -64 
+C 1747 -64 2138 160 2515 646 
+C 2483 717 2445 749 2368 749 
+C 2003 378 1856 320 1549 320 
+C 1261 320 1062 474 1062 1056 
+C 1062 1088 1062 1222 1069 1274 
+z
+M 2272 2368 
+C 2272 1792 1600 1581 1114 1517 
+C 1338 2426 1690 2611 1958 2611 
+C 2189 2611 2272 2554 2272 2368 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-59" d="M 1376 1978 
+L 1606 1350 
+L 1005 467 
+C 941 371 870 346 826 346 
+C 774 346 704 358 653 384 
+C 595 410 531 422 467 422 
+C 326 422 224 320 224 179 
+C 224 13 448 -64 595 -64 
+C 813 -64 966 32 1248 435 
+L 1696 1075 
+L 1939 294 
+C 2022 38 2086 -64 2304 -64 
+C 2528 -64 2810 58 3008 390 
+C 2982 448 2925 499 2854 512 
+C 2688 301 2605 250 2534 250 
+C 2477 250 2432 333 2381 486 
+L 2035 1517 
+L 2522 2234 
+C 2624 2381 2778 2406 2822 2406 
+C 2874 2406 2957 2387 3014 2342 
+C 3059 2304 3162 2278 3226 2278 
+C 3315 2278 3430 2406 3430 2554 
+C 3430 2714 3258 2810 3110 2810 
+C 2790 2810 2579 2701 2266 2246 
+L 1946 1786 
+L 1766 2349 
+C 1658 2682 1587 2810 1427 2810 
+C 1280 2810 806 2547 582 2381 
+C 589 2310 614 2234 666 2182 
+C 742 2221 954 2323 1088 2323 
+C 1171 2323 1235 2304 1267 2246 
+C 1293 2195 1338 2093 1376 1978 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-44" d="M 1338 -64 
+C 1798 -64 2214 269 2522 698 
+C 2502 762 2438 806 2381 806 
+C 2131 525 1875 314 1536 314 
+C 1427 314 1306 339 1216 461 
+C 1120 582 1056 710 1056 1094 
+C 1056 2048 1504 2611 1997 2611 
+C 2086 2611 2266 2579 2266 2368 
+C 2266 2330 2253 2278 2234 2246 
+C 2214 2221 2202 2150 2202 2112 
+C 2202 2010 2266 1907 2374 1907 
+C 2547 1907 2707 2035 2707 2195 
+C 2707 2445 2688 2810 1990 2810 
+C 1734 2810 1325 2643 1056 2362 
+C 742 2022 531 1530 531 954 
+C 531 742 576 454 723 243 
+C 858 58 1075 -64 1338 -64 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-45" d="M 2208 742 
+L 2163 576 
+C 2125 422 2099 301 2099 224 
+C 2099 102 2144 -64 2362 -64 
+C 2758 -64 3014 192 3181 557 
+C 3149 614 3117 659 3034 659 
+C 2861 422 2739 320 2675 320 
+C 2656 320 2598 333 2598 410 
+C 2598 467 2637 646 2662 768 
+L 3341 3731 
+C 3437 4147 3501 4403 3501 4403 
+C 3501 4448 3482 4467 3424 4467 
+C 3251 4403 2790 4320 2528 4301 
+L 2509 4147 
+C 2509 4128 2515 4115 2541 4115 
+L 2739 4102 
+C 2822 4102 2874 4064 2874 3923 
+C 2874 3853 2861 3744 2829 3603 
+L 2592 2458 
+L 2586 2458 
+C 2509 2650 2323 2810 2080 2810 
+C 1395 2810 518 1862 518 858 
+C 518 506 608 -64 1171 -64 
+C 1504 -64 1805 192 2189 755 
+L 2208 742 
+z
+M 2208 1242 
+C 1894 666 1530 230 1280 230 
+C 1075 230 1030 602 1030 960 
+C 1030 1638 1510 2579 2099 2579 
+C 2342 2579 2502 2246 2502 2022 
+C 2502 1875 2394 1581 2208 1242 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-54" d="M 1114 -64 
+L 1210 -64 
+C 1837 -64 2214 282 2214 755 
+C 2214 1056 2042 1350 1453 1741 
+C 1261 1869 1197 1984 1197 2144 
+C 1197 2368 1325 2598 1600 2598 
+C 1760 2598 1869 2547 1888 2413 
+C 1907 2259 2016 2080 2182 2080 
+C 2362 2080 2413 2195 2413 2298 
+C 2413 2528 2080 2810 1683 2810 
+C 1126 2810 787 2400 787 2010 
+C 787 1754 928 1478 1344 1197 
+C 1683 966 1734 755 1734 621 
+C 1734 269 1478 147 1190 147 
+C 1024 147 934 179 915 320 
+C 896 467 806 659 614 659 
+C 429 659 378 506 378 435 
+C 378 198 672 -38 1114 -64 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-1" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-51" d="M 1702 2586 
+C 1728 2701 1786 2893 1786 2970 
+C 1786 3078 1722 3142 1517 3142 
+C 1274 3142 1274 2861 1222 2618 
+L 1139 2240 
+C 819 2010 582 1818 403 1594 
+C 429 1504 486 1459 602 1459 
+C 742 1645 883 1760 1062 1907 
+L 403 -1030 
+C 365 -1210 269 -1286 64 -1318 
+L -58 -1338 
+C -90 -1344 -122 -1350 -122 -1389 
+L -122 -1510 
+L -109 -1523 
+C -109 -1523 326 -1491 557 -1491 
+C 806 -1491 1242 -1504 1242 -1504 
+L 1254 -1491 
+L 1254 -1363 
+C 1254 -1331 1242 -1318 1216 -1312 
+L 1094 -1293 
+C 998 -1280 832 -1248 883 -1030 
+L 1165 147 
+C 1261 45 1446 -64 1632 -64 
+C 2086 -64 2458 192 2739 531 
+C 3085 954 3258 1389 3258 1850 
+C 3258 2387 3078 2810 2438 2810 
+C 2112 2810 1875 2688 1702 2586 
+z
+M 2733 1747 
+C 2733 1440 2605 992 2362 621 
+C 2195 352 1939 160 1696 160 
+C 1530 160 1357 243 1222 429 
+L 1645 2298 
+C 1805 2400 1990 2515 2234 2515 
+C 2669 2515 2733 2061 2733 1747 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-4d" d="M 1830 3731 
+C 1926 4147 1990 4403 1990 4403 
+C 1990 4448 1971 4467 1914 4467 
+C 1741 4403 1280 4320 1018 4301 
+L 998 4147 
+C 998 4128 1005 4115 1030 4115 
+L 1229 4102 
+C 1312 4102 1363 4064 1363 3923 
+C 1363 3853 1350 3744 1318 3603 
+L 685 762 
+C 640 557 595 339 595 218 
+C 595 96 627 -64 864 -64 
+C 1152 -64 1504 102 1792 582 
+C 1766 646 1734 691 1651 691 
+C 1459 461 1254 320 1178 320 
+C 1126 320 1101 358 1101 410 
+C 1101 461 1120 557 1178 813 
+L 1830 3731 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-42" d="M 2624 2771 
+C 2451 2790 2368 2810 2112 2810 
+C 1427 2810 499 1805 499 800 
+C 499 442 582 -64 1120 -64 
+C 1459 -64 1818 288 2202 858 
+L 2214 845 
+L 2131 576 
+C 2086 429 2067 301 2067 224 
+C 2067 102 2112 -64 2330 -64 
+C 2726 -64 2982 192 3149 557 
+C 3117 614 3085 659 3002 659 
+C 2829 422 2707 320 2643 320 
+C 2624 320 2566 333 2566 410 
+C 2566 467 2605 646 2630 768 
+L 3072 2758 
+C 3027 2758 2989 2758 2944 2758 
+C 2829 2752 2720 2746 2624 2771 
+z
+M 2304 1402 
+C 1990 826 1498 288 1293 288 
+C 1075 288 1011 544 1011 902 
+C 1011 1581 1542 2611 2131 2611 
+C 2266 2611 2406 2566 2528 2490 
+C 2528 2490 2464 1811 2304 1402 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-43" d="M 1824 3731 
+C 1920 4147 1984 4403 1984 4403 
+C 1984 4448 1965 4467 1907 4467 
+C 1734 4403 1274 4320 1011 4301 
+L 992 4147 
+C 992 4128 998 4115 1024 4115 
+L 1222 4102 
+C 1306 4102 1357 4064 1357 3923 
+C 1357 3853 1344 3744 1312 3603 
+L 653 678 
+C 563 282 730 -64 1306 -64 
+C 1504 -64 1754 19 1978 173 
+C 2560 576 3149 1395 3149 2048 
+C 3149 2483 3059 2810 2477 2810 
+C 2035 2810 1709 2406 1485 2144 
+L 1472 2150 
+L 1824 3731 
+z
+M 2624 1926 
+C 2624 998 1824 160 1338 160 
+C 1107 160 1069 410 1171 845 
+L 1389 1766 
+C 1690 2118 1978 2509 2285 2509 
+C 2477 2509 2624 2362 2624 1926 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-50" d="M 499 1037 
+C 499 698 582 -64 1395 -64 
+C 1600 -64 1798 -38 1984 58 
+C 2541 339 2976 1018 2976 1773 
+C 2976 2234 2861 2810 2074 2810 
+C 1005 2810 499 1805 499 1037 
+z
+M 1030 1088 
+C 1030 1664 1280 2598 1958 2598 
+C 2150 2598 2253 2496 2349 2317 
+C 2426 2157 2445 1920 2445 1728 
+C 2445 1472 2406 922 2170 563 
+C 1990 288 1734 173 1491 173 
+C 1306 173 1030 416 1030 1088 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-33" d="M 2477 4186 
+C 2323 4186 1939 4128 1696 4128 
+C 1453 4128 1210 4134 922 4141 
+L 902 4128 
+L 877 3994 
+C 870 3968 883 3955 909 3955 
+L 1146 3942 
+C 1235 3936 1370 3891 1370 3738 
+C 1370 3718 1370 3693 1363 3674 
+L 736 461 
+C 704 282 608 205 346 186 
+L 186 173 
+C 154 173 134 154 128 122 
+L 102 0 
+L 115 -13 
+C 403 -6 653 0 896 0 
+C 1139 0 1389 -6 1677 -13 
+L 1696 0 
+L 1715 122 
+C 1722 154 1702 173 1677 173 
+L 1517 186 
+C 1312 205 1229 250 1229 378 
+C 1229 403 1229 429 1235 461 
+L 1510 1862 
+C 2022 1862 2131 1766 2195 1619 
+L 2630 506 
+C 2752 205 2963 -64 3334 -64 
+C 3424 -64 3533 -51 3603 -19 
+L 3622 134 
+C 3347 134 3238 352 3130 627 
+L 2618 1971 
+C 2899 2061 3514 2394 3648 3066 
+C 3667 3149 3674 3232 3674 3309 
+C 3674 3520 3610 3706 3475 3866 
+C 3238 4154 2861 4186 2477 4186 
+z
+M 2438 3968 
+C 2765 3968 3136 3853 3136 3334 
+C 3136 3258 3123 3162 3104 3059 
+C 2950 2259 2451 2080 1856 2080 
+L 1549 2080 
+L 1862 3674 
+C 1894 3859 2003 3968 2438 3968 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-72" d="M 1203 3757 
+C 1261 3757 1382 3808 1402 3910 
+C 1408 3936 1408 3962 1408 3987 
+C 1402 4006 1402 4032 1408 4064 
+C 1421 4147 1510 4250 1786 4250 
+C 1888 4250 2061 4186 2061 3962 
+C 2061 3930 2054 3898 2048 3866 
+C 1984 3520 1818 3373 1478 3142 
+C 1133 2906 800 2637 742 2330 
+L 2061 2330 
+C 2118 2515 2202 2739 2291 2931 
+L 2144 2963 
+C 2048 2784 1894 2534 1696 2534 
+L 1178 2534 
+C 1216 2733 1402 2918 1709 3110 
+C 2118 3366 2374 3578 2426 3872 
+C 2438 3917 2438 3949 2438 3987 
+C 2438 4301 2131 4403 1843 4403 
+C 1338 4403 1094 4077 1062 3910 
+C 1056 3904 1056 3891 1056 3885 
+C 1056 3814 1126 3757 1203 3757 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Italic-46"/>
+     <use xlink:href="#LibertinusSerif-Italic-59" transform="translate(39.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-44" transform="translate(86.890625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(125.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(166.59375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-45" transform="translate(207.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(256.296875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(291.59375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-51" transform="translate(316.59375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4d" transform="translate(365.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(392.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-44" transform="translate(440.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(479.59375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-43" transform="translate(519.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-50" transform="translate(568.484375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(613.1875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-33" transform="translate(638.1875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-72" transform="translate(693.6875 0)"/>
+    </g>
+   </g>
+   <g id="text_36">
+    <!-- n = 137 -->
+    <g style="fill: #8c8c8c" transform="translate(375.702748 112.275) scale(0.07 -0.07)">
+     <use xlink:href="#LibertinusSerif-Regular-4f"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(54.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(79.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(134.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(159.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(205.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-18" transform="translate(252.203125 0)"/>
+    </g>
+   </g>
+   <g id="text_37">
+    <!-- no free daily 2-year series -->
+    <g style="fill: #8c8c8c" transform="translate(278.95639 139.1382) scale(0.068 -0.068)">
+     <defs>
+      <path id="LibertinusSerif-Italic-4f" d="M 2771 794 
+L 3014 1811 
+C 3066 2035 3098 2182 3098 2298 
+C 3098 2682 2925 2810 2675 2810 
+C 2342 2810 2067 2675 1478 1984 
+L 1472 1990 
+L 1491 2048 
+C 1574 2285 1632 2560 1632 2656 
+C 1632 2746 1581 2790 1498 2790 
+C 1293 2790 992 2752 691 2707 
+C 646 2656 659 2586 698 2528 
+L 954 2509 
+C 1030 2502 1069 2445 1069 2381 
+C 1069 2330 1050 2234 1011 2054 
+L 653 461 
+C 621 333 570 173 570 109 
+C 570 6 640 -64 845 -64 
+C 1088 -64 1082 218 1139 461 
+L 1382 1523 
+C 1786 2048 2138 2426 2368 2426 
+C 2502 2426 2592 2394 2592 2195 
+C 2592 2118 2554 1939 2509 1760 
+L 2266 736 
+C 2214 531 2157 269 2157 147 
+C 2157 26 2227 -64 2419 -64 
+C 2726 -64 3034 154 3328 531 
+C 3309 589 3270 640 3181 640 
+C 3014 448 2829 320 2765 320 
+C 2720 320 2701 352 2701 429 
+C 2701 486 2733 627 2771 794 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-47" d="M 1203 2496 
+C 1075 1766 1005 1382 941 902 
+C 858 275 736 -755 506 -1120 
+C 435 -1229 307 -1312 211 -1312 
+C 122 -1312 96 -1267 58 -1203 
+C 0 -1120 -122 -998 -262 -998 
+C -442 -998 -499 -1120 -499 -1229 
+C -499 -1370 -346 -1523 90 -1523 
+C 352 -1523 634 -1395 832 -1120 
+C 1011 -870 1152 -384 1402 832 
+C 1504 1331 1606 1850 1702 2387 
+L 1722 2496 
+L 2317 2496 
+C 2374 2496 2470 2522 2483 2573 
+C 2483 2573 2515 2707 2515 2714 
+C 2515 2733 2502 2746 2470 2746 
+L 1766 2746 
+L 1837 3110 
+C 1882 3354 1952 3571 2029 3744 
+C 2189 4141 2451 4256 2560 4256 
+C 2707 4256 2778 4224 2810 4090 
+C 2835 3949 2886 3776 3104 3776 
+C 3302 3776 3347 3930 3347 3994 
+C 3347 4250 3066 4467 2611 4467 
+C 2432 4467 2042 4371 1773 4058 
+C 1549 3795 1382 3302 1267 2746 
+L 845 2726 
+C 723 2720 678 2669 666 2618 
+C 659 2598 640 2522 640 2509 
+C 640 2496 659 2496 678 2496 
+L 1203 2496 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-53" d="M 1414 1824 
+L 1466 2048 
+C 1523 2298 1581 2522 1581 2630 
+C 1581 2726 1523 2790 1440 2790 
+C 1235 2790 973 2746 672 2707 
+C 627 2656 640 2586 678 2528 
+L 934 2509 
+C 1011 2502 1050 2445 1050 2381 
+C 1050 2323 1050 2234 1005 2054 
+L 653 461 
+C 621 326 570 211 570 109 
+C 570 6 627 -64 813 -64 
+C 1037 -64 1043 211 1107 461 
+L 1293 1210 
+C 1600 1766 1958 2362 2106 2362 
+C 2170 2362 2202 2330 2240 2285 
+C 2285 2234 2368 2150 2458 2150 
+C 2630 2150 2746 2336 2746 2509 
+C 2746 2643 2650 2810 2413 2810 
+C 2093 2810 1722 2413 1440 1818 
+L 1414 1824 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-4a" d="M 1568 2048 
+C 1626 2298 1702 2547 1702 2656 
+C 1702 2746 1651 2790 1568 2790 
+C 1363 2790 1075 2746 774 2707 
+C 730 2656 742 2586 781 2528 
+L 1037 2509 
+C 1114 2502 1152 2445 1152 2381 
+C 1152 2323 1139 2234 1094 2054 
+L 794 736 
+C 749 531 685 269 685 147 
+C 685 26 755 -64 947 -64 
+C 1254 -64 1542 154 1837 531 
+C 1818 589 1779 640 1690 640 
+C 1523 448 1338 320 1274 320 
+C 1229 320 1210 352 1210 429 
+C 1210 486 1242 627 1280 794 
+L 1568 2048 
+z
+M 1286 3648 
+C 1286 3482 1427 3341 1594 3341 
+C 1760 3341 1901 3482 1901 3648 
+C 1901 3814 1760 3955 1594 3955 
+C 1427 3955 1286 3814 1286 3648 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-5a" d="M 2259 0 
+C 2381 205 3162 1402 3341 1824 
+C 3437 2048 3514 2278 3514 2509 
+C 3514 2688 3430 2810 3181 2810 
+C 2995 2810 2886 2726 2886 2573 
+C 2886 2534 2899 2470 2918 2445 
+C 3014 2298 3053 2163 3053 2061 
+C 3053 1779 2790 1299 2573 954 
+C 2573 954 2240 416 2080 179 
+L 2035 198 
+C 1997 941 1952 1542 1760 2336 
+C 1670 2675 1587 2810 1427 2810 
+C 1280 2810 806 2547 582 2381 
+C 589 2310 614 2234 666 2182 
+C 742 2221 954 2323 1088 2323 
+C 1171 2323 1235 2304 1267 2246 
+C 1293 2195 1331 2093 1363 1978 
+C 1562 1325 1754 -230 1677 -397 
+C 1414 -826 1146 -1107 1056 -1107 
+C 992 -1107 870 -1024 832 -992 
+C 787 -954 659 -902 608 -902 
+C 474 -902 314 -1030 314 -1229 
+C 314 -1440 595 -1498 704 -1498 
+C 1043 -1498 1555 -1082 1965 -448 
+L 2259 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-13" d="M 1562 3757 
+C 1197 3578 954 3245 954 3008 
+C 954 2906 1056 2778 1178 2778 
+C 1286 2778 1382 2861 1427 2950 
+C 1453 2995 1453 3053 1453 3104 
+C 1453 3149 1434 3226 1434 3264 
+C 1434 3418 1613 3706 2125 3706 
+C 2310 3706 2605 3520 2605 3098 
+C 2605 2547 2227 2112 1837 1766 
+L 1293 1293 
+C 781 845 557 563 442 301 
+C 397 198 371 96 352 -6 
+C 352 -6 653 0 845 0 
+L 1914 0 
+C 2106 0 2381 -6 2381 -6 
+C 2528 320 2675 845 2675 845 
+C 2630 877 2573 896 2509 896 
+C 2342 512 2214 384 1997 384 
+L 922 384 
+C 986 698 1491 1126 1530 1158 
+L 2259 1786 
+C 2579 2061 3104 2598 3104 3149 
+C 3104 3725 2605 3904 2195 3904 
+C 1952 3904 1741 3846 1562 3757 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Italic-e" d="M 2010 1427 
+C 2106 1427 2234 1638 2234 1734 
+C 2234 1779 2214 1811 2163 1811 
+L 698 1811 
+C 634 1811 493 1645 493 1536 
+C 493 1485 512 1427 557 1427 
+L 2010 1427 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Italic-4f"/>
+     <use xlink:href="#LibertinusSerif-Italic-50" transform="translate(51.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(96.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-47" transform="translate(121.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(152.90625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(187.8125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(228.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(268.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-45" transform="translate(293.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(342.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4a" transform="translate(391.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4d" transform="translate(418.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-5a" transform="translate(445.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(495.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-13" transform="translate(520.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-e" transform="translate(565.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-5a" transform="translate(598.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(647.890625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(687.984375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(736.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(772.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(797.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(832.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(872.671875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4a" transform="translate(908.375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(935.96875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(976.0625 0)"/>
+    </g>
+   </g>
+   <g id="text_38">
+    <!-- no free daily 2-year series -->
+    <g style="fill: #8c8c8c" transform="translate(278.95639 166.0662) scale(0.068 -0.068)">
+     <use xlink:href="#LibertinusSerif-Italic-4f"/>
+     <use xlink:href="#LibertinusSerif-Italic-50" transform="translate(51.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(96.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-47" transform="translate(121.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(152.90625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(187.8125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(228.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(268.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-45" transform="translate(293.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(342.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4a" transform="translate(391.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4d" transform="translate(418.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-5a" transform="translate(445.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(495.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-13" transform="translate(520.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-e" transform="translate(565.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-5a" transform="translate(598.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(647.890625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(687.984375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(736.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(772.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(797.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(832.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(872.671875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4a" transform="translate(908.375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(935.96875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(976.0625 0)"/>
+    </g>
+   </g>
+   <g id="text_39">
+    <!-- no free daily 2-year series -->
+    <g style="fill: #8c8c8c" transform="translate(278.95639 192.9942) scale(0.068 -0.068)">
+     <use xlink:href="#LibertinusSerif-Italic-4f"/>
+     <use xlink:href="#LibertinusSerif-Italic-50" transform="translate(51.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(96.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-47" transform="translate(121.5 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(152.90625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(187.8125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(228.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(268.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-45" transform="translate(293.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(342.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4a" transform="translate(391.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4d" transform="translate(418.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-5a" transform="translate(445.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(495.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-13" transform="translate(520.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-e" transform="translate(565.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-5a" transform="translate(598.390625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(647.890625 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-42" transform="translate(687.984375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(736.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-1" transform="translate(772.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(797.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(832.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-53" transform="translate(872.671875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-4a" transform="translate(908.375 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-46" transform="translate(935.96875 0)"/>
+     <use xlink:href="#LibertinusSerif-Italic-54" transform="translate(976.0625 0)"/>
+    </g>
+   </g>
+   <g id="text_40">
+    <!-- (b) Two-year government yield -->
+    <g style="fill: #141414" transform="translate(252.205217 9.759) scale(0.085 -0.085)">
+     <defs>
+      <path id="LibertinusSerif-Regular-35" d="M 2240 781 
+L 2240 3226 
+C 2240 3635 2304 3878 2534 3878 
+L 2675 3878 
+C 3155 3878 3456 3712 3565 3219 
+C 3635 3219 3725 3226 3782 3251 
+C 3738 3546 3706 3872 3699 4160 
+C 3699 4166 3686 4179 3680 4179 
+C 3462 4160 2752 4128 2246 4128 
+L 1696 4128 
+C 1203 4128 448 4160 205 4179 
+C 192 4179 179 4166 179 4160 
+C 154 3872 90 3539 19 3232 
+C 83 3206 160 3200 237 3200 
+C 365 3712 659 3878 1082 3878 
+L 1395 3878 
+C 1632 3878 1696 3635 1696 3245 
+L 1696 781 
+C 1696 250 1587 218 1075 198 
+C 1037 160 1037 26 1075 -13 
+C 1389 -6 1715 0 1971 0 
+C 2214 0 2541 -6 2861 -13 
+C 2899 26 2899 160 2861 198 
+C 2349 218 2240 250 2240 781 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-9"/>
+     <use xlink:href="#LibertinusSerif-Regular-43" transform="translate(31 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-a" transform="translate(80.296875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(110.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-35" transform="translate(135.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-58" transform="translate(189.890625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(263.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-e" transform="translate(314.203125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-5a" transform="translate(348 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(398.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(443.40625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(489.109375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(526.3125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-48" transform="translate(551.3125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(601.3125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-57" transform="translate(651.015625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(699.921875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(744.625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(781.828125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(836.03125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(915.03125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(959.734375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(1013.9375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1045.53125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-5a" transform="translate(1070.53125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(1122.03125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1149.125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(1193.828125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(1220.234375 0)"/>
+    </g>
+   </g>
+  </g>
+  <g id="text_41">
+   <!-- Intervals: ±1.96 Newey–West (HAC) standard errors. Hollow markers and *: below the pre-registered minimum of 30 events. n = -->
+   <g style="fill: #4f4f4f" transform="translate(2.16 274.2186) scale(0.068 -0.068)">
+    <defs>
+     <path id="LibertinusSerif-Regular-71" d="M 1600 3328 
+L 1600 2310 
+L 544 2310 
+C 467 2310 384 2189 384 2093 
+C 384 2042 422 1990 480 1990 
+L 1600 1990 
+L 1600 902 
+C 1600 845 1651 806 1702 806 
+C 1798 806 1920 890 1920 966 
+L 1920 1990 
+L 2963 1990 
+C 3046 1990 3136 2138 3136 2202 
+C 3136 2253 3110 2310 3046 2310 
+L 1920 2310 
+L 1920 3411 
+C 1920 3475 1862 3501 1811 3501 
+C 1747 3501 1600 3411 1600 3328 
+z
+M 2963 237 
+C 3046 237 3136 384 3136 448 
+C 3136 499 3110 557 3046 557 
+L 544 557 
+C 467 557 384 435 384 339 
+C 384 288 422 237 480 237 
+L 2963 237 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-17" d="M 922 2195 
+C 1094 2778 1504 3424 2355 3744 
+C 2355 3821 2330 3878 2278 3910 
+C 1632 3718 1235 3450 877 3034 
+C 480 2573 282 1990 282 1485 
+C 282 186 1018 -70 1510 -70 
+C 2349 -70 2694 742 2694 1293 
+C 2694 1843 2400 2336 1530 2336 
+C 1363 2336 1114 2285 922 2195 
+z
+M 864 1965 
+C 1075 2106 1286 2112 1395 2112 
+C 2022 2112 2163 1498 2163 1178 
+C 2163 474 1894 154 1581 154 
+C 1178 154 813 371 813 1466 
+C 813 1613 826 1779 864 1965 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-6d9" d="M 422 1523 
+L 3008 1523 
+C 3091 1523 3174 1651 3174 1728 
+C 3174 1786 3155 1837 3085 1837 
+L 499 1837 
+C 422 1837 333 1709 333 1632 
+C 333 1581 352 1523 422 1523 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-38" d="M 5184 3616 
+L 4186 838 
+L 4166 845 
+L 3283 3546 
+C 3174 3891 3398 3910 3616 3930 
+C 3654 3968 3654 4102 3616 4141 
+C 3354 4134 3072 4128 2816 4128 
+C 2605 4128 2381 4134 2176 4141 
+C 2138 4102 2138 3968 2176 3930 
+C 2515 3910 2656 3712 2714 3546 
+L 2861 3123 
+C 2886 3046 2906 2982 2906 2925 
+C 2906 2861 2899 2810 2848 2701 
+L 2022 826 
+L 1990 832 
+L 1056 3661 
+C 979 3885 1152 3917 1376 3930 
+C 1414 3968 1414 4102 1376 4141 
+C 1165 4134 883 4128 634 4128 
+C 410 4128 224 4134 38 4141 
+C 0 4102 0 3968 38 3930 
+C 326 3910 371 3904 493 3558 
+L 1696 96 
+C 1728 -6 1766 -77 1837 -77 
+C 1920 -77 1958 -13 2003 96 
+L 2957 2240 
+C 3014 2368 3034 2400 3066 2400 
+C 3091 2400 3117 2330 3155 2221 
+L 3891 96 
+C 3930 -13 3962 -77 4038 -77 
+C 4109 -77 4154 -6 4186 90 
+L 5472 3539 
+C 5555 3763 5670 3910 6022 3930 
+C 6061 3968 6061 4102 6022 4141 
+C 5837 4134 5632 4128 5466 4128 
+C 5299 4128 5018 4134 4762 4141 
+C 4723 4102 4723 3968 4762 3930 
+C 5024 3910 5280 3891 5184 3616 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-29" d="M 3955 781 
+L 3955 3347 
+C 3955 3878 4064 3910 4512 3930 
+C 4550 3968 4550 4102 4512 4141 
+C 4250 4134 3923 4128 3680 4128 
+C 3443 4128 3136 4134 2854 4141 
+C 2816 4102 2816 3968 2854 3930 
+C 3302 3910 3411 3878 3411 3347 
+L 3411 2323 
+L 1222 2323 
+L 1222 3347 
+C 1222 3878 1331 3910 1779 3930 
+C 1818 3968 1818 4102 1779 4141 
+C 1536 4134 1274 4128 947 4128 
+C 627 4128 365 4134 122 4141 
+C 83 4102 83 3968 122 3930 
+C 570 3910 678 3878 678 3347 
+L 678 781 
+C 678 250 570 218 122 198 
+C 83 160 83 26 122 -13 
+C 403 -6 710 0 954 0 
+C 1184 0 1498 -6 1779 -13 
+C 1818 26 1818 160 1779 198 
+C 1331 218 1222 250 1222 781 
+L 1222 2054 
+L 3411 2054 
+L 3411 781 
+C 3411 250 3302 218 2854 198 
+C 2816 160 2816 26 2854 -13 
+C 3142 -6 3450 0 3686 0 
+C 3923 0 4230 -6 4512 -13 
+C 4550 26 4550 160 4512 198 
+C 4064 218 3955 250 3955 781 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-4c" d="M 550 781 
+C 550 250 480 224 122 198 
+C 83 160 83 26 122 -13 
+C 333 -6 550 0 806 0 
+C 1030 0 1242 -6 1389 -13 
+C 1427 26 1427 160 1389 198 
+C 1126 224 1056 250 1056 781 
+L 1056 1338 
+C 1178 1331 1267 1325 1331 1306 
+C 1402 1254 1459 1197 1536 1094 
+L 2003 467 
+C 2189 218 2266 96 2272 19 
+C 2272 0 2278 -13 2298 -13 
+C 2426 -6 2566 0 2694 0 
+C 2893 0 3091 -6 3219 -13 
+C 3258 26 3258 160 3219 198 
+C 3002 224 2842 250 2669 467 
+L 1824 1530 
+C 1798 1562 1779 1587 1779 1619 
+C 1779 1645 1779 1658 1805 1683 
+L 2368 2266 
+C 2560 2470 2784 2522 3040 2547 
+C 3078 2586 3078 2720 3040 2758 
+C 2893 2752 2714 2746 2483 2746 
+C 2240 2746 2003 2752 1856 2758 
+C 1818 2720 1818 2586 1856 2547 
+C 2214 2522 2061 2298 2003 2221 
+C 1856 2035 1658 1818 1491 1696 
+C 1350 1594 1178 1517 1056 1498 
+L 1056 3731 
+C 1056 4147 1082 4403 1082 4403 
+C 1082 4448 1056 4467 998 4467 
+C 838 4403 358 4314 102 4294 
+C 90 4243 102 4141 141 4102 
+C 160 4102 179 4102 198 4102 
+C 480 4083 550 4083 550 3578 
+L 550 781 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-b" d="M 1075 3501 
+C 864 3264 538 3213 538 2938 
+C 538 2842 614 2758 723 2758 
+C 966 2758 1011 3136 1171 3424 
+C 1331 3174 1376 2758 1626 2758 
+C 1715 2758 1811 2829 1811 2944 
+C 1811 3200 1498 3264 1280 3501 
+C 1395 3520 1510 3526 1632 3526 
+C 1850 3526 2074 3571 2074 3763 
+C 2074 3827 2029 3955 1856 3955 
+C 1645 3955 1542 3750 1248 3622 
+C 1261 3814 1370 4070 1370 4243 
+C 1370 4397 1274 4467 1158 4467 
+C 1043 4467 966 4352 966 4218 
+C 966 4051 1088 3878 1114 3629 
+C 832 3744 717 3955 499 3955 
+C 346 3955 288 3853 288 3763 
+C 288 3571 493 3526 806 3526 
+C 902 3526 992 3520 1075 3501 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-47" d="M 1120 781 
+L 1120 2496 
+L 1715 2496 
+C 1773 2496 1862 2522 1862 2579 
+L 1862 2707 
+C 1862 2733 1843 2746 1811 2746 
+L 1120 2746 
+L 1120 3110 
+C 1120 4096 1414 4250 1626 4250 
+C 1818 4250 1920 4173 2010 3949 
+C 2061 3834 2131 3744 2266 3744 
+C 2374 3744 2528 3878 2528 4006 
+C 2528 4115 2458 4230 2323 4333 
+C 2157 4448 1990 4467 1747 4467 
+C 1210 4467 614 4000 614 3002 
+L 614 2746 
+L 288 2746 
+C 173 2746 141 2669 141 2618 
+L 141 2534 
+C 141 2502 147 2496 173 2496 
+L 614 2496 
+L 614 781 
+C 614 250 512 224 166 198 
+C 128 160 128 26 166 -13 
+C 390 -6 614 0 870 0 
+C 1126 0 1434 -6 1658 -13 
+C 1696 26 1696 160 1658 198 
+C 1158 224 1120 250 1120 781 
+z
+" transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#LibertinusSerif-Regular-2a"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(29.703125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(83.90625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(115.5 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(160.203125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-57" transform="translate(198.90625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(248.609375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(294.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(320.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1b" transform="translate(359.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(383.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-71" transform="translate(408.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(463.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(509.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1a" transform="translate(531.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-17" transform="translate(578.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(624.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-2f" transform="translate(649.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(719.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-58" transform="translate(763.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(837.625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-5a" transform="translate(881.625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-6d9" transform="translate(933.125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-38" transform="translate(983.015625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1070.109375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(1114.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(1153.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1185.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-9" transform="translate(1210.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-29" transform="translate(1240.203125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-22" transform="translate(1313.203125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-24" transform="translate(1379.296875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-a" transform="translate(1443.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1473.6875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(1498.6875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(1537.6875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(1569.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(1614.984375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(1669.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(1719.78125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1765.484375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(1801.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1852.484375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1877.484375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1922.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1959.390625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(1995.796875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(2046.203125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(2083.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(2122.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2144.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-29" transform="translate(2169.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(2242.40625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(2292.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(2319.21875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(2345.625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-58" transform="translate(2395.328125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2470.03125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(2495.03125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2574.03125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(2619.734375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4c" transform="translate(2656.9375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(2708.140625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(2752.84375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(2790.046875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2829.046875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2854.046875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(2899.75 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(2953.953125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3004.546875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-b" transform="translate(3029.546875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1b" transform="translate(3066.453125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3090.046875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-43" transform="translate(3115.046875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3165.34375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(3210.046875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(3236.453125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-58" transform="translate(3286.15625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3360.859375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(3385.859375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-49" transform="translate(3417.453125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3471.25 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3515.953125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(3540.953125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(3592.859375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3629.265625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-e" transform="translate(3673.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(3707.765625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3744.171875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-48" transform="translate(3788.875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(3838.875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(3865.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(3904.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3936.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(3981.265625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(4017.671875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(4063.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4113.671875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(4138.671875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(4217.671875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(4244.765625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(4298.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(4326.0625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-56" transform="translate(4405.0625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(4458.15625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4537.15625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(4562.15625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-47" transform="translate(4612.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4643.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(4668.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-11" transform="translate(4715.0625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4761.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(4786.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-57" transform="translate(4830.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(4879.46875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(4924.171875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(4978.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(5009.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(5048.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(5070.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(5095.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(5150.171875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1e" transform="translate(5175.171875 0)"/>
+   </g>
+   <!-- announcement events. FX for Singapore, Indonesia and Malaysia are USD crosses, signed so that + is domestic appreciation. -->
+   <g style="fill: #4f4f4f" transform="translate(2.16 284.6498) scale(0.068 -0.068)">
+    <defs>
+     <path id="LibertinusSerif-Regular-39" d="M 3443 653 
+L 2464 1997 
+C 2400 2080 2362 2144 2362 2208 
+C 2362 2266 2368 2323 2426 2400 
+L 3302 3533 
+C 3526 3821 3725 3904 4013 3930 
+C 4051 3968 4051 4102 4013 4141 
+C 3821 4134 3584 4128 3437 4128 
+C 3290 4128 3021 4134 2765 4141 
+C 2726 4102 2726 3968 2765 3930 
+C 3046 3910 3168 3872 3014 3661 
+L 2227 2541 
+C 2189 2490 2150 2464 2125 2464 
+C 2106 2464 2080 2490 2048 2534 
+L 1344 3584 
+C 1158 3840 1133 3910 1491 3930 
+C 1530 3968 1530 4102 1491 4141 
+C 1254 4134 1018 4128 762 4128 
+C 512 4128 301 4134 109 4141 
+C 70 4102 77 3968 115 3930 
+C 384 3910 506 3878 768 3501 
+L 1677 2202 
+C 1728 2125 1766 2074 1766 2010 
+C 1766 1971 1741 1914 1702 1862 
+L 755 595 
+C 538 301 333 224 45 198 
+C 6 160 6 26 45 -13 
+C 237 -6 474 0 621 0 
+C 768 0 1037 -6 1293 -13 
+C 1331 26 1331 160 1293 198 
+C 1011 218 890 250 1043 467 
+L 1888 1651 
+C 1926 1702 1965 1741 1984 1741 
+C 2010 1741 2035 1722 2074 1670 
+L 2867 544 
+C 3046 288 3072 218 2714 198 
+C 2675 160 2675 26 2714 -13 
+C 2950 -6 3187 0 3443 0 
+C 3693 0 3904 -6 4096 -13 
+C 4134 26 4128 160 4090 198 
+C 3821 218 3712 282 3443 653 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-d" d="M 666 608 
+C 467 608 326 474 326 294 
+C 326 96 493 32 608 13 
+C 730 0 838 -38 838 -186 
+C 838 -320 608 -614 275 -698 
+C 275 -762 288 -806 333 -851 
+C 717 -781 1088 -474 1088 -26 
+C 1088 358 922 608 666 608 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-36" d="M 1101 3347 
+C 1101 3878 1197 3910 1690 3930 
+C 1728 3968 1728 4102 1690 4141 
+C 1389 4134 1075 4128 826 4128 
+C 576 4128 314 4134 64 4141 
+C 26 4102 26 3968 64 3930 
+C 448 3910 557 3878 557 3347 
+L 557 1491 
+C 557 186 1402 -64 2054 -64 
+C 3366 -64 3680 749 3680 1888 
+L 3680 3347 
+C 3680 3859 3789 3885 4173 3930 
+C 4211 3968 4211 4102 4173 4141 
+C 3930 4134 3667 4128 3520 4128 
+C 3386 4128 3072 4134 2778 4141 
+C 2739 4102 2739 3968 2778 3930 
+C 3258 3885 3366 3866 3366 3347 
+L 3366 1773 
+C 3366 1056 3270 198 2189 198 
+C 1882 198 1619 314 1427 499 
+C 1114 800 1101 1286 1101 1702 
+L 1101 3347 
+z
+" transform="scale(0.015625)"/>
+     <path id="LibertinusSerif-Regular-25" d="M 947 4128 
+C 717 4128 378 4134 122 4141 
+C 83 4102 83 3968 122 3930 
+C 570 3910 678 3878 678 3347 
+L 678 781 
+C 678 250 570 218 122 198 
+C 83 160 83 26 122 -13 
+C 371 -6 710 0 954 0 
+C 1190 0 1459 -13 2118 -13 
+C 3021 -13 4211 397 4211 1971 
+C 4211 3162 3232 4141 2003 4141 
+C 1549 4141 1197 4128 947 4128 
+z
+M 1222 538 
+L 1222 3610 
+C 1222 3834 1446 3923 1760 3923 
+C 3142 3923 3597 2803 3597 1818 
+C 3597 525 2822 205 1920 205 
+C 1293 205 1222 333 1222 538 
+z
+" transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#LibertinusSerif-Regular-42"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(45.703125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(99.90625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(154.109375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-56" transform="translate(204.515625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(257.609375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(311.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(354.609375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(399.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(478.3125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(523.015625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(577.21875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(608.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(633.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-57" transform="translate(677.8125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(726.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(771.421875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(825.625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(857.21875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(896.21875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(918.21875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-27" transform="translate(943.21875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-39" transform="translate(991.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1057.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-47" transform="translate(1082.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(1113.71875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1164.125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1201.328125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-34" transform="translate(1226.328125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(1274.828125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(1301.921875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-48" transform="translate(1356.125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(1406.125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(1451.828125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(1504.4375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(1554.84375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1591.25 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-d" transform="translate(1634.953125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(1656.953125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-2a" transform="translate(1681.953125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(1711.65625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(1765.859375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(1816.453125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(1866.859375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(1921.0625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(1965.765625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(2004.765625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2031.859375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2077.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2102.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(2148.265625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(2202.46875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2253.0625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-2e" transform="translate(2278.0625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2361.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(2407.671875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2434.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-5a" transform="translate(2479.78125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(2531.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(2570.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2597.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2643.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(2668.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(2713.78125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(2750.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(2794.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-36" transform="translate(2819.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-34" transform="translate(2885.984375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-25" transform="translate(2934.484375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3004.578125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(3029.578125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(3072.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(3108.78125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(3159.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(3198.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3237.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(3281.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-d" transform="translate(3320.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3342.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(3367.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(3406.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-48" transform="translate(3433.984375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(3483.984375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(3538.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(3583.59375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3634.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(3659.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(3698.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3748.59375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(3773.59375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-49" transform="translate(3805.1875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(3858.984375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(3904.6875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(3936.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-c" transform="translate(3961.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4016.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(4041.28125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(4068.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4107.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(4132.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(4182.96875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4e" transform="translate(4233.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(4312.375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-54" transform="translate(4357.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(4396.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(4427.671875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(4454.765625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(4497.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(4522.5625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(4568.265625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-51" transform="translate(4620.171875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(4672.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(4708.484375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(4753.890625 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(4796.6875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(4823.78125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(4869.484375 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(4901.078125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(4928.171875 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(4978.578125 0)"/>
+    <use xlink:href="#LibertinusSerif-Regular-f" transform="translate(5032.78125 0)"/>
+   </g>
+  </g>
+  <g id="legend_1">
+   <g id="line2d_75">
+    <path d="M 110.520397 255.931 
+L 116.520397 255.931 
+L 122.520397 255.931 
+" style="fill: none; stroke: #2a78d6; stroke-width: 1.3; stroke-linecap: square"/>
+    <defs>
+     <path id="mb81502c76f" d="M 0 2.3 
+C 0.609967 2.3 1.195034 2.057657 1.626346 1.626346 
+C 2.057657 1.195034 2.3 0.609967 2.3 0 
+C 2.3 -0.609967 2.057657 -1.195034 1.626346 -1.626346 
+C 1.195034 -2.057657 0.609967 -2.3 0 -2.3 
+C -0.609967 -2.3 -1.195034 -2.057657 -1.626346 -1.626346 
+C -2.057657 -1.195034 -2.3 -0.609967 -2.3 0 
+C -2.3 0.609967 -2.057657 1.195034 -1.626346 1.626346 
+C -1.195034 2.057657 -0.609967 2.3 0 2.3 
+z
+" style="stroke: #2a78d6"/>
+    </defs>
+    <g>
+     <use xlink:href="#mb81502c76f" x="116.520397" y="255.931" style="fill: #2a78d6; stroke: #2a78d6"/>
+    </g>
+   </g>
+   <g id="text_42">
+    <!-- Dictionary (dict-v1) -->
+    <g style="fill: #4f4f4f" transform="translate(128.520397 258.556) scale(0.075 -0.075)">
+     <use xlink:href="#LibertinusSerif-Regular-25"/>
+     <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(70.09375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(97.1875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(139.984375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(171.578125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(198.671875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(249.078125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(303.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-53" transform="translate(348.984375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-5a" transform="translate(387.6875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(439.1875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-9" transform="translate(464.1875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-45" transform="translate(492.28125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4a" transform="translate(542.875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(569.96875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-55" transform="translate(612.765625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-e" transform="translate(644.359375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-57" transform="translate(678.15625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-12" transform="translate(727.859375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-a" transform="translate(774.359375 0)"/>
+    </g>
+   </g>
+   <g id="line2d_76">
+    <path d="M 202.332116 255.931 
+L 208.332116 255.931 
+L 214.332116 255.931 
+" style="fill: none; stroke: #eb6834; stroke-width: 1.3; stroke-linecap: square"/>
+    <defs>
+     <path id="md84f2a309e" d="M 0 2.3 
+C 0.609967 2.3 1.195034 2.057657 1.626346 1.626346 
+C 2.057657 1.195034 2.3 0.609967 2.3 0 
+C 2.3 -0.609967 2.057657 -1.195034 1.626346 -1.626346 
+C 1.195034 -2.057657 0.609967 -2.3 0 -2.3 
+C -0.609967 -2.3 -1.195034 -2.057657 -1.626346 -1.626346 
+C -2.057657 -1.195034 -2.3 -0.609967 -2.3 0 
+C -2.3 0.609967 -2.057657 1.195034 -1.626346 1.626346 
+C -1.195034 2.057657 -0.609967 2.3 0 2.3 
+z
+" style="stroke: #eb6834"/>
+    </defs>
+    <g>
+     <use xlink:href="#md84f2a309e" x="208.332116" y="255.931" style="fill: #eb6834; stroke: #eb6834"/>
+    </g>
+   </g>
+   <g id="text_43">
+    <!-- Local LLM (qwen3:4b) -->
+    <g style="fill: #4f4f4f" transform="translate(220.332116 258.556) scale(0.075 -0.075)">
+     <defs>
+      <path id="LibertinusSerif-Regular-2d" d="M 954 0 
+L 2317 0 
+C 2490 0 3078 -13 3078 -13 
+C 3142 307 3206 723 3245 1056 
+C 3181 1088 3110 1101 3034 1088 
+C 2906 627 2669 250 1990 250 
+L 1587 250 
+C 1338 250 1222 371 1222 698 
+L 1222 3347 
+C 1222 3878 1331 3910 1779 3930 
+C 1818 3968 1818 4102 1779 4141 
+C 1491 4134 1190 4128 947 4128 
+C 717 4128 416 4134 122 4141 
+C 83 4102 83 3968 122 3930 
+C 570 3910 678 3878 678 3347 
+L 678 781 
+C 678 250 570 218 122 198 
+C 83 160 83 26 122 -13 
+C 371 -6 736 0 954 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Regular-52" d="M 2214 -710 
+C 2214 -1242 2144 -1267 1754 -1286 
+C 1715 -1325 1715 -1459 1754 -1498 
+C 1978 -1491 2214 -1485 2470 -1485 
+C 2726 -1485 2970 -1491 3181 -1498 
+C 3219 -1459 3219 -1325 3181 -1286 
+C 2790 -1267 2720 -1242 2720 -710 
+L 2720 2669 
+C 2720 2758 2694 2829 2624 2829 
+C 2579 2829 2541 2778 2490 2707 
+C 2406 2592 2381 2573 2304 2624 
+C 2099 2752 1850 2810 1581 2810 
+C 800 2810 224 2170 224 1325 
+C 224 730 627 -64 1549 -64 
+C 1722 -64 1933 -26 2042 38 
+C 2189 122 2214 134 2214 0 
+L 2214 -710 
+z
+M 2061 2355 
+C 2189 2214 2214 2118 2214 1965 
+L 2214 493 
+C 2214 378 2208 346 2125 301 
+C 1978 224 1805 218 1702 218 
+C 1331 218 774 486 774 1453 
+C 774 2118 1043 2592 1555 2592 
+C 1747 2592 1920 2515 2061 2355 
+z
+" transform="scale(0.015625)"/>
+      <path id="LibertinusSerif-Regular-15" d="M 2752 1402 
+L 2221 1402 
+L 2221 3270 
+C 2221 3590 2221 3840 2234 3891 
+L 2221 3904 
+L 2016 3904 
+C 1971 3904 1939 3866 1914 3834 
+C 1510 3341 768 2285 179 1370 
+C 198 1274 237 1101 429 1101 
+L 1734 1101 
+L 1734 512 
+C 1734 218 1491 218 1216 198 
+C 1178 160 1178 26 1216 -13 
+C 1421 -6 1677 0 1971 0 
+C 2221 0 2464 -6 2669 -13 
+C 2707 26 2707 160 2669 198 
+C 2355 224 2221 211 2221 512 
+L 2221 1101 
+L 2662 1101 
+C 2752 1101 2848 1222 2848 1299 
+C 2848 1363 2822 1402 2752 1402 
+z
+M 1734 3245 
+L 1734 1402 
+L 512 1402 
+C 838 1926 1293 2643 1734 3245 
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#LibertinusSerif-Regular-2d"/>
+     <use xlink:href="#LibertinusSerif-Regular-50" transform="translate(52.796875 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-44" transform="translate(103.90625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-42" transform="translate(146.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4d" transform="translate(192.40625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(218.8125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-2d" transform="translate(243.8125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-2d" transform="translate(296.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-2e" transform="translate(349.40625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1" transform="translate(433.3125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-9" transform="translate(458.3125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-52" transform="translate(486.40625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-58" transform="translate(536.703125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-46" transform="translate(610.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-4f" transform="translate(655.3125 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-14" transform="translate(709.515625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-1b" transform="translate(756.015625 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-15" transform="translate(779.609375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-43" transform="translate(826.109375 0)"/>
+     <use xlink:href="#LibertinusSerif-Regular-a" transform="translate(875.40625 0)"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8eb3e2307e">
+   <rect x="22.94" y="15.759" width="158.957217" height="188.496"/>
+  </clipPath>
+  <clipPath id="p39aee44a03">
+   <rect x="252.205217" y="15.759" width="122.274783" height="188.496"/>
+  </clipPath>
+ </defs>
+</svg>

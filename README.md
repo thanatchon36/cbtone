@@ -106,6 +106,13 @@ Pre-registered at tag `prereg-v1`; local LLM `qwen3:4b` (Ollama); seven headline
 
 ![Gain in next-decision log-loss over persistence, by bank (RQ1)](results/figures/fig_rq1_dll.png)
 
+*Gain in next-decision log-loss over persistence by bank and scorer (RQ1). Positive values favour the
+text model; hollow markers are banks below the pre-registered power minimum.*
+
+The full paper is available as a [PDF](paper/paper.pdf) and [online](https://thanatchon36.github.io/cbtone/paper/),
+with numbered citations and every figure; all figures (SVG, PNG and a CSV table view each) are in
+[`results/figures/`](results/figures/).
+
 Anomalies (for example BI's AUROC of 1.000 on 20 cases) are explained in
 [`docs/ANOMALIES.md`](docs/ANOMALIES.md); deviations from the pre-registration in
 [`docs/DECISIONS.md`](docs/DECISIONS.md).

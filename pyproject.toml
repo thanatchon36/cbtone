@@ -106,6 +106,8 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+# Figure labels use typographic minus/dash and Greek letters on purpose (experiments/figures.py).
+allowed-confusables = ["−", "–", "ρ", "α"]
 
 [tool.mypy]
 python_version = "3.11"

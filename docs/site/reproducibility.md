@@ -27,8 +27,10 @@
   [ANOMALIES.md](https://github.com/thanatchon36/cbtone/blob/main/docs/ANOMALIES.md); the pre-registered questions in
   [RESEARCH_QUESTIONS.md](https://github.com/thanatchon36/cbtone/blob/main/docs/RESEARCH_QUESTIONS.md).
 
-All headline numbers are in [`results/summary.json`](https://github.com/thanatchon36/cbtone/blob/main/results/summary.json); figures and their CSV table
-views are in `results/figures/`. The sanity gate's report is `results/SANITY.md`.
+All headline numbers are in [`results/summary.json`](https://github.com/thanatchon36/cbtone/blob/main/results/summary.json); figures (SVG and PNG) and their CSV table
+views are in `results/figures/`. The sanity gate's report is `results/SANITY.md`. `make paper` injects the
+numbers into `paper/paper.md`, typesets the PDF (pandoc → typst, numeric citations) and regenerates the
+[online version of the paper](paper.md).
 
 **Fresh-clone check (2026-10-14):** `make reproduce` on a fresh clone of commit `fefdb16`, with the withheld text,
 raw market data and the score cache copied in, finished with exit 0 in 23 minutes on an Apple M4 (LLM backend: the

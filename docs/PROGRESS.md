@@ -92,21 +92,39 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] CITATION.cff date-released 2026-10-14; `cbtone doctor` honours CBTONE_SCORE_CACHE; hardware.json regenerated
 - [x] Pushed by the owner: main @ fefdb16 and tag prereg-v1 are on GitHub
 - [x] Tag v0.1.0 (local; push with `git push origin main --tags`)
-- [ ] PyPI: no token / trusted publisher configured. `release.yml` is ready (trusted publishing, environment `pypi`);
-      until the owner sets it up on pypi.org, the publish job fails on a `v*` tag push (harmless). Name `cbtone` is free.
+- [x] Pushed by the owner: main @ 895323c and tags prereg-v1, v0.1.0; CI green on main and the tag
+- [x] PyPI: trusted publisher configured by the owner; release run 38550417594 re-run → cbtone 0.1.0 (wheel + sdist)
+      on https://pypi.org/project/cbtone/
 - [ ] FOMC-RoBERTa: HF login done (user thanatchon36); access requested 2026-10-14, pending approval. When granted:
       score FOMC test + silver, rerun rq4/rq5, refresh paper → v0.1.1
 
+## Post-release polish (2026-10-14, after v0.1.0)
+
+- [x] PyPI: `cbtone 0.1.0` published through the trusted publisher; `pip install cbtone==0.1.0` verified in a
+      fresh venv (import and `cbtone --help` work).
+- [x] Paper rewritten in full (`paper/paper.md`): formal register, numbered sections, equations for the RQ1/RQ2
+      estimators, a sample table, a hypotheses table with verdicts, and a discussion section. Numeric
+      citations (IEEE CSL, `paper/csl/ieee.csl`) in the PDF and on the web; all 33 references are cited.
+      Every number is still a `{{...}}` placeholder resolved from `results/summary.json`.
+- [x] Figures redone (`experiments/figures.py`): paper font (Libertinus Serif, vendored in `paper/fonts/`,
+      OFL), SVG + 300-dpi PNG + CSV per figure, full-width layout, hollow markers for underpowered cells, a
+      two-panel RQ2 figure (FX and 2-year yield), a bubble cross-lingual plot and a new RQ4a stability figure.
+- [x] Web version of the paper: `paper/build.py` also writes `docs/site/paper.md` (numbered captions and
+      headings, citations resolved to `[n]` links, reference list) and copies the SVGs to
+      `docs/site/figures/`; added to the mkdocs nav.
+- [x] Pandoc 3.8's typst template deletes every link that is not a coloured label link (its `show link`
+      rule returns `none`), which silently removed citations, DOIs and URLs from the PDF. A patched copy is
+      vendored in `paper/templates/` and used by `make paper`.
+
 ## Waiting on owner
 - **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
-  `! git push origin main --tags`; last push: main @ fefdb16 + prereg-v1. Later commits and the tag v0.1.0 are local.
+  `! git push origin main --tags`.
 - **FOMC-RoBERTa is gated on Hugging Face:** logged in and access requested on 2026-10-14; waiting for the model
-  owner's approval. The token used was pasted in a chat session, so revoke it and create a new one. Until then RQ4b/RQ5 report it as "not run (gated)". The scorer is built,
+  owner's approval (the chat-pasted token was revoked and replaced on 2026-10-14). Until then RQ4b/RQ5 report it as "not run (gated)". The scorer is built,
   pinned to revision `aa3bc428…`, and checks its label map at load time.
 
 Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.
-- PyPI: configure a trusted publisher for `cbtone` (owner thanatchon36, repo cbtone, workflow release.yml,
-  environment `pypi`) and create the `pypi` environment on GitHub; then re-run the release workflow for v0.1.0.
-- Zenodo: enable the GitHub integration to archive v0.1.0 and add the DOI to CITATION.cff.
+- Zenodo: GitHub integration enabled 2026-10-14; a GitHub Release (not just a tag) is needed to mint the DOI,
+  then add the DOI to CITATION.cff and README.
 - The BoE ~100-char decision releases for 2000–2006 are complete, not truncated (A6).
