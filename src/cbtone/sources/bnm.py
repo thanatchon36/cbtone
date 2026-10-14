@@ -38,6 +38,10 @@ Release-time rule (``published_at_utc``; zone ``Asia/Kuala_Lumpur``, UTC+8, no D
     at 3 p.m. on the final day of each MPC meeting." If the header has no embargo time,
     ``published_at_utc`` is ``None``.
 
+Untranslated pages: for 2005-12-15 and 2013-07-11 the Malay page only says "Artikel ini cuma
+terdapat dalam Bahasa Inggeris buat masa sekarang." (English only); ``parse`` returns ``[]`` for
+such placeholders, so those meetings have an English document only.
+
 Cleaning: only paragraphs of the statement body are kept. The embargo header, signature block
 ("Bank Negara Malaysia <date>"), copyright line, schedule tables (and their captions) and
 everything from a "See also" / "Lihat Juga" paragraph on are dropped. The old (2004-2009)
@@ -55,6 +59,7 @@ see docs/sources/bnm.md. robots.txt does not restrict these paths (no Crawl-dela
 
 from __future__ import annotations
 
+import logging
 import re
 from collections.abc import Iterator
 from datetime import UTC, date, datetime
@@ -68,6 +73,7 @@ from bs4 import BeautifulSoup, Comment, Tag
 from cbtone.schema import Document, Language, Section
 from cbtone.sources.base import RawResponse, SourceAdapter
 
+log = logging.getLogger(__name__)
 BASE = "https://www.bnm.gov.my"
 INDEX_PATH = "/monetary-stability/opr-decisions"
 INDEX_PAGE_ID = 1515
@@ -84,6 +90,9 @@ _MONTHS = {
     "jul": 7, "aug": 8, "ogo": 8, "sep": 9, "oct": 10, "okt": 10, "nov": 11, "dec": 12,
     "dis": 12,
 }  # fmt: skip
+_PLACEHOLDER = re.compile(
+    r"cuma terdapat dalam Bahasa Inggeris|only available in (?:Bahasa Malaysia|Malay)", re.I
+)
 _SEE_ALSO = re.compile(r"^(see also|lihat juga)\b", re.I)
 _WS = re.compile(r"[ \t\r\f\v]+")
 
@@ -163,6 +172,9 @@ class BNMAdapter(SourceAdapter):
 
     @staticmethod
     def _is_table_caption(el: Tag) -> bool:
+        """Short paragraph directly before a table (a long one is statement text)."""
+        if len(el.get_text()) > 150:
+            return False
         nxt = el.find_next_sibling()
         return isinstance(nxt, Tag) and (nxt.name == "table" or nxt.find("table") is not None)
 
@@ -174,8 +186,14 @@ class BNMAdapter(SourceAdapter):
 
     def parse(self, raw: RawResponse, hints: dict[str, str]) -> list[Document]:
         soup = BeautifulSoup(raw.content, "lxml")
-        art = soup.select_one(".journal-content-article")
-        if not isinstance(art, Tag):
+        # Some pages (e.g. 2008-10-24) carry a "Press Releases" listing asset before the
+        # statement asset: pick the article that has the statement header.
+        art = next(
+            (a for a in soup.select(".journal-content-article") if a.select_one(".article-header")),
+            None,
+        )
+        if art is None:
+            log.warning("no statement article in %s", raw.url)
             return []
         for c in art.find_all(string=lambda t: isinstance(t, Comment)):
             c.extract()
@@ -214,6 +232,9 @@ class BNMAdapter(SourceAdapter):
             for text in self._paragraphs(el):
                 sections.append(Section(heading=None, text=text))
         if not sections:
+            return []
+        if len(sections) == 1 and _PLACEHOLDER.search(sections[0].text):
+            log.warning("untranslated placeholder page %s", raw.url)
             return []
         return [
             Document(

@@ -277,3 +277,36 @@ def test_live_smoke(tmp_path: Path) -> None:
     docs = [d for url, h in items for d in a.parse(fetcher.get("bnm", url), h)]
     assert [d.language for d in docs] == ["en", "ms"]
     assert all(len(d.sections) >= 3 for d in docs)
+
+
+def test_untranslated_placeholder_is_not_a_document(
+    tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    raw = _raw((FIX / "mps_2005_ms_placeholder.html").read_bytes())
+    assert _adapter(tmp_path).parse(raw, {"date": "2005-12-15", "language": "ms"}) == []
+    assert "placeholder" in caplog.text
+
+
+def test_statement_asset_after_listing_asset(tmp_path: Path) -> None:
+    # 2008-10-24: a "Press Releases" listing asset precedes the statement asset
+    doc = _parse(tmp_path, "mps_2008_en_listing_first.html", {"date": "2008-10-24"})
+    assert "Filter by year" not in doc.text and "Print" not in doc.text
+    assert "leave the Overnight Policy Rate (OPR) unchanged at 3.50 percent" in doc.text
+    assert doc.published_at_utc == datetime(2008, 10, 24, 3, 45, tzinfo=UTC)
+    assert len(doc.sections) >= 3
+
+
+def test_no_statement_article_returns_nothing(
+    tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    html = b'<div class="journal-content-article"><p>Press Releases</p></div>'
+    assert _adapter(tmp_path).parse(_raw(html), {"date": "2008-10-24"}) == []
+    assert "no statement article" in caplog.text
+
+
+def test_long_paragraph_before_table_is_kept(tmp_path: Path) -> None:
+    # 2007-11-26: the whole statement is one <p> directly followed by the meeting-schedule table
+    doc = _parse(tmp_path, "mps_2007_en_table_after_text.html", {"date": "2007-11-26"})
+    assert len(doc.sections) >= 4
+    assert "leave the Overnight Policy Rate (OPR) unchanged at 3.50 percent" in doc.text
+    assert "24 November 2008" not in doc.text

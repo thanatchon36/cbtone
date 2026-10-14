@@ -36,7 +36,8 @@ Adapter: `src/cbtone/sources/bnm.py` (`BNMAdapter`, bank `bnm`, English + Malay)
 - Also useful: `https://www.bnm.gov.my/monetary-stability/mpc`. Not used.
 
 ## Coverage (2004-05-26 -> 2026-09-03)
-141 statements x 2 languages = 282 documents (index count, identical in en and ms):
+141 statements. Documents: 141 `en` + 139 `ms` = 280 (the Malay pages of 2005-12-15 and
+2013-07-11 are placeholders, see Anomalies). Index count per year:
 2004: 3, 2005: 5, 2006-2009: 8 each, 2010-2025: 6 each, 2026: 5 (to 3 Sep).
 OPR decisions began in 2004; holds are included (the index lists every meeting).
 
@@ -66,3 +67,15 @@ Disclaimer: https://www.bnm.gov.my/disclaimer.
 
 Redistributable: no (written permission from BNM is needed to republish the text; keep the
 statements out of any published corpus and release derived features only).
+
+## Anomalies (found in the full run)
+- Untranslated Malay pages: 2005-12-15 and 2013-07-11 say only "Artikel ini cuma terdapat dalam
+  Bahasa Inggeris buat masa sekarang." `parse` returns `[]` (logged), so those meetings have no `ms`
+  document and are unpaired.
+- 2008-10-24 (en and ms): the page holds two `.journal-content-article` assets, a "Press Releases"
+  listing first and the statement second. The adapter takes the one containing `.article-header`;
+  if none has it, it logs a warning and returns `[]`.
+- 2007-11-26 (en, ms) and 2011-11-11 (en): the whole statement is one `<p>` directly before the
+  schedule table; an earlier table-caption rule dropped it. Captions are now only paragraphs of
+  at most 150 characters.
+- Short but genuine: 2006-01-20 en/ms (491 / 498 characters).
