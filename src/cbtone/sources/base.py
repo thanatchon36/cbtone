@@ -16,7 +16,7 @@ from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urlencode, urlsplit
 
 import httpx
 
@@ -95,6 +95,7 @@ class PoliteFetcher:
 
     # -- cache ---------------------------------------------------------------
     def _paths(self, bank: str, url: str) -> tuple[Path, Path]:
+        """``url`` is the cache identity: the URL for GET, URL + encoded form body for POST."""
         key = hashlib.sha256(url.encode()).hexdigest()[:16]
         d = self.raw_dir / bank
         return d / f"{key}.bin", d / f"{key}.json"
@@ -148,8 +149,24 @@ class PoliteFetcher:
 
     # -- public --------------------------------------------------------------
     def get(self, bank: str, url: str, *, refresh: bool = False) -> RawResponse:
+        return self._request(bank, url, None, refresh)
+
+    def post(
+        self, bank: str, url: str, data: dict[str, str], *, refresh: bool = False
+    ) -> RawResponse:
+        """Form POST (e.g. ASP.NET index paging) under the same robots/rate/cache rules.
+
+        Cached per (url, body); the body is encoded with sorted keys so field order is irrelevant.
+        """
+        return self._request(bank, url, data, refresh)
+
+    def _request(
+        self, bank: str, url: str, data: dict[str, str] | None, refresh: bool
+    ) -> RawResponse:
+        body_str = None if data is None else urlencode(sorted(data.items()))
+        key = url if body_str is None else f"{url}\nPOST {body_str}"
         if not refresh:
-            hit = self.cached(bank, url)
+            hit = self.cached(bank, key)
             if hit is not None:
                 return hit
         if self.offline:
@@ -157,7 +174,14 @@ class PoliteFetcher:
         if not self.allowed(url):
             raise BlockedError(f"robots.txt disallows {url}")
         self._wait(urlsplit(url).netloc)
-        r = self._client.get(url)
+        if body_str is None:
+            r = self._client.get(url)
+        else:
+            r = self._client.post(
+                url,
+                content=body_str,
+                headers={"content-type": "application/x-www-form-urlencoded"},
+            )
         if r.status_code in (401, 403, 429):
             raise BlockedError(f"HTTP {r.status_code} for {url}")
         r.raise_for_status()
@@ -172,19 +196,18 @@ class PoliteFetcher:
             fetched_at=datetime.now(UTC),
             from_cache=False,
         )
-        body, meta = self._paths(bank, url)
+        body, meta = self._paths(bank, key)
         body.parent.mkdir(parents=True, exist_ok=True)
         body.write_bytes(content)
-        meta.write_text(
-            json.dumps(
-                {
-                    "url": url,
-                    "content_type": resp.content_type,
-                    "sha256": resp.sha256,
-                    "fetched_at": resp.fetched_at.isoformat(),
-                }
-            )
-        )
+        sidecar = {
+            "url": url,
+            "content_type": resp.content_type,
+            "sha256": resp.sha256,
+            "fetched_at": resp.fetched_at.isoformat(),
+        }
+        if body_str is not None:
+            sidecar["post_data"] = body_str
+        meta.write_text(json.dumps(sidecar))
         return resp
 
 

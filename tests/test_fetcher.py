@@ -75,3 +75,26 @@ def test_crawl_delay_is_honoured(tmp_path: Path) -> None:
     f = PoliteFetcher(raw_dir=tmp_path, min_interval_s=0, client=client)
     assert f.allowed("https://example.org/a")
     assert f._host_interval["example.org"] == 5.0
+
+
+def test_post_is_polite_and_cached_per_body(tmp_path: Path) -> None:
+    seen: list[tuple[str, str, bytes]] = []
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        seen.append((req.method, req.url.path, req.content))
+        if req.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nDisallow: /private\n")
+        return httpx.Response(200, content=req.content, headers={"content-type": "text/html"})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    f = PoliteFetcher(raw_dir=tmp_path, min_interval_s=0, client=client)
+    url = "https://example.org/index.aspx"
+    p2 = f.post("bi", url, {"page": "2", "__VIEWSTATE": "abc"})
+    p3 = f.post("bi", url, {"page": "3", "__VIEWSTATE": "abc"})
+    again = f.post("bi", url, {"__VIEWSTATE": "abc", "page": "2"})  # same body, other order
+    assert p2.content != p3.content
+    assert again.from_cache and again.content == p2.content
+    assert [m for m, p, _ in seen if p != "/robots.txt"] == ["POST", "POST"]
+    assert f.cached("bi", url) is None  # a POST never answers a GET lookup
+    with pytest.raises(BlockedError):
+        f.post("bi", "https://example.org/private/x", {"a": "1"})
