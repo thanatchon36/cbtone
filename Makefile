@@ -36,3 +36,30 @@ docs:  ## build the documentation site (mkdocs-material; needs the [docs] extra)
 .PHONY: quick-ci
 quick-ci:  ## dictionary scorer end-to-end on the committed mini corpus (no network)
 	$(RUN) cbtone score --scorer dict fed rba --corpus tests/fixtures/corpus_mini --out /tmp/quick.parquet
+
+XRUN := $(UV) run --extra transformers   # scorers + experiments need torch/transformers
+
+.PHONY: score experiments quick reproduce paper figures
+score:  ## all pre-registered scoring jobs (LLM via local Ollama; cached, resumable)
+	$(CAFFEINATE) env RUN="$(XRUN) cbtone" experiments/score_documents.sh
+	$(CAFFEINATE) $(XRUN) python experiments/score_sentences.py fomc silver rq4a
+	$(CAFFEINATE) $(XRUN) python experiments/train_ft.py
+
+experiments:  ## RQ1-RQ5 tables, figures, results/summary.json (fails on unexplained sanity flags)
+	cd experiments && $(CAFFEINATE) $(XRUN) python rq1_policy.py
+	cd experiments && $(XRUN) python rq2_market.py
+	cd experiments && $(XRUN) python rq3_crosslingual.py
+	cd experiments && $(XRUN) python rq4_reliability.py
+	cd experiments && $(XRUN) python rq5_transfer.py
+	cd experiments && $(XRUN) python figures.py
+	cd experiments && $(XRUN) python summarize.py
+
+quick:  ## 60-document sample end-to-end: dictionary + LLM scores and event windows (<= 5 min)
+	$(XRUN) cbtone score --scorer dict --quick
+	$(XRUN) cbtone score --scorer llm --quick
+	$(XRUN) cbtone events --out results/events-quick.parquet
+
+paper:  ## paper/paper.pdf from paper/paper.md (numbers injected from results/summary.json)
+	$(XRUN) python paper/build.py
+
+reproduce: score experiments paper  ## everything from the committed corpus snapshot
