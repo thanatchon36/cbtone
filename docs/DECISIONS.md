@@ -199,3 +199,15 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   versus the 2 h budget. The pre-registered design is otherwise kept, including the RQ4a document set of 120 and the sentence aggregation.
   The actual wall time is logged in `results/timing.json` and reported in the paper as a budget deviation.
 - No scores were inspected for any of these choices. The quick-sample timing runs discarded their outputs.
+
+## D19 — Masking also covers policy-instrument and committee names (2026-10-14, before any masked scoring)
+- **What:** `mask_entities` now also masks:
+  - named policy instruments (federal funds rate, Bank Rate, cash rate, OPR, BI-Rate, deposit facility rate,
+    LPR, …) as `[POLICY_RATE]`;
+  - decision bodies (Governing Council, MPC, Reserve Bank Board, Rapat Dewan Gubernur, …) as `[COMMITTEE]`;
+  - US-style fractions ("5-1/4"), whose lower bound previously leaked.
+- **Why:** these names identify the bank as surely as its name does, so leaving them would weaken the contamination check
+  (RESEARCH_QUESTIONS.md RQ4c). Generic framework words that carry the policy meaning itself ("policy band", "slope",
+  "policy rate", "the Committee") are kept, because masking them would remove the information being scored.
+- **Timing:** reviewed and changed before the masked scoring job started. No masked score was produced with the old rules,
+  apart from the discarded timing runs.
