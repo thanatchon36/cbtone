@@ -103,6 +103,59 @@ def test_statement_lead_sentence_kept_in_old_press_releases(
     assert doc.sections[0].text in doc.text
 
 
+def test_statement_made_only_of_the_lead(tmp_path: Path) -> None:
+    """Sep 2008: the page body is empty; the decision sits in the lead (was dropped as a stub)."""
+    raw = _raw("statement_2008_09.html", url=f"{BASE}/news/2008/september/mpc-september-2008")
+    (doc,) = _adapter(tmp_path).parse(
+        raw, {"doc_type": "statement", "date": "2008-09-04", "published": "2008-09-04"}
+    )
+    assert doc.text.startswith("The Bank of England's Monetary Policy Committee today voted")
+    assert "5.0%" in doc.text and len(doc.sections) >= 1
+
+
+def test_summary_as_bare_text_with_br_breaks(tmp_path: Path) -> None:
+    """May 2021 (also Nov 2020, Sep 2018 ...): no <p>, paragraphs split by <br><br>."""
+    (doc,) = _parse(
+        tmp_path, "combined_2021_05.html", doc_type="statement", date="2021-05-06",
+        published="2021-05-06",
+    )  # fmt: skip
+    _check(doc, 600, min_sections=6)
+    assert "voted unanimously to maintain Bank Rate at 0.1%" in doc.text
+    assert doc.text.endswith("remained appropriate.")
+
+
+def test_article_spread_over_several_sections(tmp_path: Path) -> None:
+    """Dec 2023: the published-date section holds no text; content sits in later sections."""
+    docs = _parse(
+        tmp_path, "combined_2023_12.html", doc_type="combined", date="2023-12-14",
+        published="2023-12-14", meeting="2023-12-13",
+    )  # fmt: skip
+    assert {d.doc_type for d in docs} == {"statement", "minutes"}
+    assert all(len(d.text.split()) > 300 for d in docs)
+
+
+def test_emergency_release_with_odd_slug_is_emitted_without_time(tmp_path: Path) -> None:
+    url = f"{BASE}/news/2020/march/boe-measures-to-respond-to-the-economic-shock-from-covid-19"
+    entries = _seeded(tmp_path)._entries("news", url)
+    ((_, hints),) = entries
+    assert hints["special"] == "1" and hints["date"] == "2020-03-11"
+    (doc,) = _adapter(tmp_path).parse(_raw("statement_2020_03_11.html", url), hints)
+    assert doc.published_at_utc is None and doc.date == date(2020, 3, 11)
+    assert len(doc.text.split()) > 100
+
+
+def test_pdf_paragraph_numbers_with_a_period() -> None:
+    """2007 minutes number paragraphs "1." not "1"."""
+    got = BoEAdapter.pdf_sections(
+        "MINUTES OF THE MONETARY POLICY COMMITTEE MEETING HELD\nON 7-8 MARCH 2007\n"
+        "1. First para.\nFinancial markets\n2. Second para\ncontinues at 2.5 per cent.\n"
+    )
+    assert [(s.heading, s.text) for s in got] == [
+        (None, "First para."),
+        ("Financial markets", "Second para continues at 2.5 per cent."),
+    ]
+
+
 def test_minutes_stub_html_when_no_pdf(tmp_path: Path) -> None:
     (doc,) = _parse(
         tmp_path, "minutes_stub_1999_04.html", doc_type="minutes", date="1999-04-08",
@@ -274,6 +327,12 @@ PAGES = {
     f"{MPC}/2019/august-2019": "combined_2019_08.html",
     f"{MPC}/2020/13march-2020": "special_minutes_2020_03.html",
     f"{MPC}/2024/december-2024": "combined_2024_12.html",
+    f"{MPC}/2021/may-2021": "combined_2021_05.html",
+    f"{MPC}/2023/december-2023": "combined_2023_12.html",
+    f"{BASE}/news/2008/september/mpc-september-2008": "statement_2008_09.html",
+    f"{BASE}/news/2020/march/boe-measures-to-respond-to-the-economic-shock-from-covid-19": (
+        "statement_2020_03_11.html"
+    ),
     f"{MPC}/2026/december-2026": "placeholder_2026_12.html",
 }
 
@@ -288,6 +347,14 @@ def _seeded(tmp_path: Path) -> BoEAdapter:
 
 def test_parse_sitemap_keeps_only_mpc_pages() -> None:
     got = list(BoEAdapter.parse_sitemap((FIX / "sitemap.xml").read_text()))
+    assert {
+        f"{BASE}/news/2003/september/mpc-septmber-2003",  # typo in the real slug
+        f"{BASE}/news/2001/september/mpc-18-september-2001",  # day in the slug
+        f"{BASE}/news/2020/march/boe-measures-to-respond-to-the-economic-shock-from-covid-19",
+    } <= {u for k, u in got if k == "news"}
+    assert not any(
+        u.endswith(("mpc-dates-for-2004", "press-conference-11-march-2020")) for _, u in got
+    )
     kinds = {k for k, _ in got}
     assert kinds == {"news", "minutes", "combined"}
     urls = {u for _, u in got}
@@ -327,6 +394,10 @@ def test_list_urls_modern_years(tmp_path: Path) -> None:
         ("minutes", "2019-07-31"),  # no meeting date on the page -> day before publication
         ("minutes", "2020-03-10"),
         ("combined", "2024-12-19"),
+        ("statement", "2020-03-11"),  # emergency release with a non-standard slug
+        ("statement", "2021-05-06"),
+        ("minutes", "2021-05-05"),
+        ("combined", "2023-12-14"),
     }  # the 2026 placeholder page is skipped
     assert got[("minutes", "2019-07-31")][0].endswith("/2019/august-2019.pdf")
     assert got[("minutes", "2020-03-10")][1]["special"] == "1"

@@ -85,8 +85,15 @@ FIRST_YEAR = 1997
 COMBINED_START = date(2015, 8, 6)  # first summary-and-minutes publication
 
 _MONTHS = "january|february|march|april|may|june|july|august|september|october|november|december"
+# Emergency-meeting decision releases whose slug does not follow the ``mpc-<month>-YYYY`` pattern.
+EXTRA_STATEMENTS = frozenset(
+    {"/news/2020/march/boe-measures-to-respond-to-the-economic-shock-from-covid-19"}  # 11 Mar 2020
+)
 _LOC = re.compile(r"<loc>([^<]+)</loc>")
-_NEWS = re.compile(rf"^/news/(\d{{4}})/(?:{_MONTHS})/mpc-(?:{_MONTHS})-\d{{4}}$")
+# "septmber" is a typo in the real slug of the Sep 2003 release; "18-september" is the 2001 cut.
+_NEWS = re.compile(
+    rf"^/news/(\d{{4}})/(?:{_MONTHS})/mpc-(?:\d{{1,2}}-)?(?:{_MONTHS}|septmber)-\d{{4}}$"
+)
 _MINUTES = re.compile(
     rf"^/minutes/(\d{{4}})/(?:monetary-policy-committee|minutes)-(?:\d{{1,2}}-)?(?:{_MONTHS})-\d{{4}}$"
 )
@@ -98,7 +105,7 @@ _MINUTES_HEAD = re.compile(r"^minutes of the", re.I)
 _WS = re.compile(r"[ \t\r\f\v\xa0]+")
 _PAR_SPLIT = re.compile(r"\n\s*\n")
 _PDF_START = re.compile(r"^minutes of the monetary policy committee meeting", re.I)
-_PDF_NUMBERED = re.compile(r"^(\d{1,3})\s+(\S.*)$")
+_PDF_NUMBERED = re.compile(r"^(\d{1,3})\.?\s+(\S.*)$")
 _NOTICE = re.compile(
     r"^(the minutes of the meeting will be published\b|the committee.s latest inflation and "
     r"output projections will appear\b).{0,200}$",
@@ -147,9 +154,12 @@ class _Page:
         hero = self.soup.select_one("div.page-description")
         self.lead = _clean(hero.get_text(" ")) if hero else ""
 
-    @property
-    def placeholder(self) -> bool:
-        return "to be published" in self.title.lower() or not self.blocks
+    def placeholder(self, *, lead_is_content: bool = False) -> bool:
+        """Future-meeting stub. 2000-2012 press releases (``lead_is_content``) may consist of
+        the page lead alone."""
+        if "to be published" in self.title.lower():
+            return True
+        return not self.blocks and not (lead_is_content and self.lead)
 
     @property
     def is_minutes_page(self) -> bool:
@@ -167,23 +177,29 @@ class _Page:
 
     def _blocks(self) -> list[tuple[str, str]]:
         """``(tag, text)`` for the headings and paragraphs of the article, in order."""
-        pub = self.soup.select_one("div.published-date")
-        section = pub.find_parent("section") if pub else None
-        if not isinstance(section, Tag):
+        main = self.soup.find("main")
+        if not isinstance(main, Tag) or self.soup.select_one("div.published-date") is None:
             return []
-        for junk in section.select(
+        for junk in main.select(
             "form, img, script, style, div.hero-paragraph, div.container-latest, "
             "div.container-download, div.related-links-wrap, div.icon-title-list"
         ):
             junk.decompose()
-        for a in section.select('a[href*="/-/media/"]'):  # download links, not prose
+        for a in main.select('a[href*="/-/media/"]'):  # download links, not prose
             parent = a.find_parent(["p", "li"])
             if parent is not None and _clean(parent.get_text(" ")) == _clean(a.get_text(" ")):
                 parent.decompose()
             else:
                 a.decompose()
         out: list[tuple[str, str]] = []
-        for pc in section.select("div.content-block > div.page-content"):
+        # The article may be spread over several sections (e.g. Dec 2023), so scan the whole
+        # main element, minus the page banner (its lead is read separately as ``lead``).
+        for pc in main.select("div.content-block > div.page-content"):
+            if pc.find_parent("section", class_="page-banner") is not None:
+                continue
+            if pc.find(["p", "li"]) is None:
+                out.extend(self._loose_blocks(pc))
+                continue
             for el in pc.find_all(["h2", "h3", "h4", "p", "li"]):
                 if not isinstance(el, Tag):
                     continue
@@ -191,14 +207,35 @@ class _Page:
                     continue
                 if el.name == "li" and el.find(["li", "p"]):
                     continue
-                for br in el.find_all("br"):
-                    br.replace_with("\n")
-                raw = el.get_text("")
-                parts = _PAR_SPLIT.split(raw) if el.name == "p" else [raw]
-                for part in parts:
-                    text = _clean(re.sub(r"\s*\n\s*", " ", part))
-                    if text:
-                        out.append((el.name, text))
+                out.extend(self._split(el, el.name))
+        return out
+
+    @staticmethod
+    def _split(el: Tag, name: str) -> list[tuple[str, str]]:
+        for br in el.find_all("br"):
+            br.replace_with("\n")
+        parts = _PAR_SPLIT.split(el.get_text("")) if name == "p" else [el.get_text("")]
+        texts = (_clean(re.sub(r"\s*\n\s*", " ", part)) for part in parts)
+        return [(name, t) for t in texts if t]
+
+    @staticmethod
+    def _loose_blocks(pc: Tag) -> list[tuple[str, str]]:
+        """Content with bare text and ``<br><br>`` instead of ``<p>`` (e.g. May 2021)."""
+        out: list[tuple[str, str]] = []
+        loose = BeautifulSoup("<div></div>", "lxml").div
+        assert loose is not None
+
+        def flush() -> None:
+            out.extend(_Page._split(loose, "p"))
+            loose.clear()
+
+        for child in list(pc.children):
+            if isinstance(child, Tag) and child.name in ("h2", "h3", "h4"):
+                flush()
+                out.extend(_Page._split(child, child.name))
+            else:
+                loose.append(child.extract())
+        flush()
         return out
 
 
@@ -213,6 +250,9 @@ class BoEAdapter(SourceAdapter):
         """Yield ``(kind, url)`` for MPC pages; kind is ``news``, ``minutes`` or ``combined``."""
         for loc in _LOC.findall(xml):
             path = loc[len(BASE) :] if loc.startswith(BASE) else ""
+            if path in EXTRA_STATEMENTS:
+                yield "news", loc
+                continue
             for kind, pat in (("news", _NEWS), ("minutes", _MINUTES), ("combined", _COMBINED)):
                 if pat.match(path):
                     yield kind, loc
@@ -234,11 +274,15 @@ class BoEAdapter(SourceAdapter):
     def _entries(self, kind: str, url: str) -> list[tuple[str, dict[str, str]]]:
         raw = self.fetcher.get(self.bank, url)
         page = _Page(raw.content)
-        if page.placeholder or page.published is None:
+        if page.placeholder(lead_is_content=kind == "news") or page.published is None:
             return []
         pub = page.published.isoformat()
         base = {"language": "en", "title": page.title, "published": pub, "page": url}
-        special = "special" in url.lower() or "special" in page.title.lower()
+        special = (
+            "special" in url.lower()
+            or "special" in page.title.lower()
+            or urlsplit(url).path in EXTRA_STATEMENTS
+        )
         if special:
             base["special"] = "1"
         meeting = self._meeting_date(page).isoformat()
@@ -310,7 +354,7 @@ class BoEAdapter(SourceAdapter):
 
     def _parse_html(self, raw: RawResponse, hints: dict[str, str]) -> list[Document]:
         page = _Page(raw.content)
-        if page.placeholder:
+        if page.placeholder(lead_is_content="/news/" in raw.url):
             return []
         want = hints["doc_type"]
         kind = "minutes" if want == "minutes" else "statement"

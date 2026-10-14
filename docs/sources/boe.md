@@ -71,6 +71,21 @@ drops standalone publication notices ("The minutes of the meeting will be publis
 ...", "The Committee's latest inflation and output projections will appear ...") unless nothing
 else remains. Many 2000-2006 releases are therefore just ~100 characters (the decision sentence).
 
+## Coverage fixes (cross-check)
+Missing statements were caused by: (1) summaries stored as bare text with `<br><br>` instead of
+`<p>` (Sep 2018, Mar/Jun 2019, Nov 2020, May 2021) so no blocks were found and the page was
+treated as a placeholder; (2) Dec 2023, where the text sits in sections after the one holding
+"Published on" (the whole `main` is now scanned); (3) 2000-2012 releases made only of the page
+lead (Sep 2008) being treated as stubs; (4) slugs outside `mpc-<month>-YYYY`: `mpc-septmber-2003`
+(typo in the real slug), `mpc-18-september-2001` (emergency cut) and the 11 Mar 2020 emergency
+package `/news/2020/march/boe-measures-to-respond-to-the-economic-shock-from-covid-19`
+(`EXTRA_STATEMENTS`; emitted with `published_at_utc=None`, as are all special meetings);
+(5) 2007 minutes PDFs number paragraphs "1." (the parser now accepts an optional period).
+After the fix, the cached 2000-2026 run gives 12 statements and 12 minutes a year for 2000-2015
+(13 in 2001 for the 18 Sep 2001 meeting), 11 in 2016, 8 a year 2017-2025 (10 statements and 9
+minutes in 2020), 6 so far in 2026. 2020 minutes: the special 19 Mar 2020 meeting has no minutes
+page in the site map.
+
 ## Known limits
 - Some recent minutes PDFs (seen: 2019) are AES-256 encrypted. `pypdf` needs the `cryptography`
   package for them; it is not a project dependency, so `parse` logs a warning and returns `[]` for

@@ -1,0 +1,19 @@
+{
+  "source": "yfinance (Yahoo Finance)",
+  "tickers": [
+    "USDSGD=X",
+    "USDIDR=X",
+    "USDMYR=X",
+    "USDTHB=X",
+    "USDCNY=X",
+    "EURUSD=X",
+    "GBPUSD=X",
+    "AUDUSD=X",
+    "DX-Y.NYB"
+  ],
+  "start": "2024-06-01",
+  "end": "2024-06-14",
+  "retrieved_at": "2026-10-14T04:11:38.344972+00:00",
+  "sha256": "5d120740a289c505e1211113ea6c39fbecf4ed63b5964f0553f02999e027edf9",
+  "rows": 90
+}

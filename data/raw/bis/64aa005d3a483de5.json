@@ -1,0 +1,1 @@
+{"url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.US+XM+GB+AU+ID+MY+CN+TH?format=csv&startPeriod=2008-01-01", "content_type": "text/csv;charset=UTF-8", "sha256": "1fd274d435d91f08d366d1c696c2e549baee404460a9f890d29e482dffd63089", "fetched_at": "2026-10-14T04:07:42.565472+00:00"}
