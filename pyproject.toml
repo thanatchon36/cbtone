@@ -23,6 +23,8 @@ dependencies = [
   "lxml>=5.2",
   "pypdf>=4.3",
   "pyyaml>=6.0",
+  "yfinance>=1.7.0",
+  "pysbd>=0.3.4",
 ]
 
 [project.optional-dependencies]
@@ -31,6 +33,9 @@ transformers = ["transformers>=4.44", "torch>=2.4"]
 api = ["anthropic>=0.40"]
 finetune = ["transformers>=4.44", "torch>=2.4", "peft>=0.12"]
 docs = ["mkdocs-material>=9.5"]
+thai = [
+    "pythainlp>=5.4.0",
+]
 
 [project.scripts]
 cbtone = "cbtone.cli:app"

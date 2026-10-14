@@ -12,3 +12,4 @@ site/
 data/raw/**/*.bin
 data/cache/
 scratch/
+data/corpus/private/
