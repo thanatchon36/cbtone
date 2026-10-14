@@ -337,7 +337,7 @@ def test_score_llm_masked_options_and_variant(workdir: Path, fake_scorer: list) 
     assert (kw["model"], kw["prompt"], kw["temperature"], kw["masked"]) == ("m:1", "P2", 0.5, True)
     assert isinstance(kw["cache"], ScoreCache)
     df = pl.read_parquet("results/scores/llm-masked.parquet")
-    assert df["variant"].to_list() == ["masked|T=0.5|P2"]
+    assert df["variant"].to_list() == ["masked|T=0.5|P2|m:1"]
     assert any(r["stage"] == "score:llm:masked" for r in json_load(Path("results/timing.json")))
 
 

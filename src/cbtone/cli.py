@@ -247,13 +247,15 @@ def _fail(msg: str) -> typer.Exit:
     return typer.Exit(2)
 
 
-def score_variant(masked: bool, temperature: float, prompt: str) -> str:
-    """``"masked"`` or ``""``, plus ``|T=<temp>`` and ``|<prompt>`` when not the defaults."""
+def score_variant(masked: bool, temperature: float, prompt: str, model: str = "qwen3:4b") -> str:
+    """``"masked"`` or ``""``, plus ``|T=<temp>``, ``|<prompt>``, ``|<model>`` when not default."""
     variant = "masked" if masked else ""
     if temperature != 0:
         variant += f"|T={temperature:g}"
     if prompt != "P1":
         variant += f"|{prompt}"
+    if model != "qwen3:4b":
+        variant += f"|{model}"
     return variant
 
 
@@ -266,7 +268,8 @@ def score(
     prompt: Annotated[str, typer.Option(help="LLM prompt id.")] = "P1",
     model: Annotated[str, typer.Option(help="Ollama model tag (llm).")] = "qwen3:4b",
     temperature: Annotated[float, typer.Option(help="LLM temperature.")] = 0.0,
-    cap: Annotated[int, typer.Option(help="Policy-text character cap.")] = 6000,
+    cap: Annotated[int, typer.Option(help="Policy-text character cap (D18).")] = 3000,
+    evidence: Annotated[bool, typer.Option(help="LLM document mode: also ask for quotes.")] = False,
     quick: Annotated[bool, typer.Option(help="Score the deterministic quick sample.")] = False,
     model_dir: Annotated[Path | None, typer.Option(help="Fine-tuned model dir (ft).")] = None,
     corpus: Annotated[Path, typer.Option(help="Snapshot directory.")] = CORPUS,
@@ -310,6 +313,7 @@ def score(
                 "prompt": prompt,
                 "temperature": temperature,
                 "masked": masked,
+                "evidence": evidence,
                 "cache": cache,
             }
         elif scorer == "fomc-roberta":
@@ -322,7 +326,12 @@ def score(
             raise _fail(f"cannot build scorer {scorer!r}: {type(e).__name__}: {e}") from e
 
         is_llm = scorer == "llm"
-        variant = score_variant(masked, temperature if is_llm else 0.0, prompt if is_llm else "P1")
+        variant = score_variant(
+            masked,
+            temperature if is_llm else 0.0,
+            prompt if is_llm else "P1",
+            model if is_llm else "qwen3:4b",
+        )
         stage = f"score:{scorer}" + (":masked" if masked else "")
         with Timer().stage(stage, n_docs=len(docs), quick=quick):
             df = score_documents(docs, sc, variant=variant, cap=cap)
