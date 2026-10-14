@@ -143,3 +143,13 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   - The bank's own record is authoritative, and the extractor is not needed where that record exists.
 - **Consequence:** at most a handful of post-table MAS decisions rely on the extractor. They are
   flagged by `source` and reported separately. The extractor's limits go into the paper's Threats to Validity.
+
+## D15 — PBoC stays out of the headline set: archive coverage is 53 % (2026-10-14)
+- **Result of the D12 rule:** the Internet Archive yields 35 of 66 expected zh MPC communiqués
+  for 2010–2026Q3 (53 %, below the pre-set 80 %), plus 16 en (2021→). From May 2016 to about 2022 every
+  capture is an anti-bot JavaScript shell with no text. Selectors are now validated on real archived pages
+  (three zh layouts, en).
+- **Decision:** PBoC remains an optional zh extension, not in `config/paper.yaml`. Headline = 7 banks,
+  3 languages (D10). Any PBoC result is reported as exploratory, with the 2016–2022 gap stated.
+- Meeting dates for 2009–15 come from PBoC's own meeting-date table (archived): the pages say only
+  "日前" ("recently").
