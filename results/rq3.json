@@ -1,0 +1,74 @@
+{
+  "rows": [
+    {
+      "bank": "bi",
+      "consistent": false,
+      "flip_rate": 0.0234375,
+      "mean_abs_diff": 0.28171875,
+      "n_pairs": 128,
+      "powered": true,
+      "scorer": "llm",
+      "spearman": 0.6078095858079672,
+      "status": "ok"
+    },
+    {
+      "bank": "bi",
+      "n_pairs": 0,
+      "scorer": "ft",
+      "status": "not applicable"
+    },
+    {
+      "bank": "bi",
+      "n_pairs": 0,
+      "scorer": "dict",
+      "status": "not applicable"
+    },
+    {
+      "bank": "bnm",
+      "consistent": false,
+      "flip_rate": 0.02158273381294964,
+      "mean_abs_diff": 0.18244604316546761,
+      "n_pairs": 139,
+      "powered": true,
+      "scorer": "llm",
+      "spearman": 0.5334668979604787,
+      "status": "ok"
+    },
+    {
+      "bank": "bnm",
+      "n_pairs": 0,
+      "scorer": "ft",
+      "status": "not applicable"
+    },
+    {
+      "bank": "bnm",
+      "n_pairs": 0,
+      "scorer": "dict",
+      "status": "not applicable"
+    },
+    {
+      "bank": "pboc",
+      "consistent": false,
+      "flip_rate": 0.0,
+      "mean_abs_diff": 0.23333333333333334,
+      "n_pairs": 9,
+      "powered": false,
+      "scorer": "llm",
+      "spearman": 0.21650635094610965,
+      "status": "ok"
+    },
+    {
+      "bank": "pboc",
+      "n_pairs": 0,
+      "scorer": "ft",
+      "status": "not applicable"
+    },
+    {
+      "bank": "pboc",
+      "n_pairs": 0,
+      "scorer": "dict",
+      "status": "not applicable"
+    }
+  ],
+  "verdict": "refuted"
+}

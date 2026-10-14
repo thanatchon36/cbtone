@@ -63,3 +63,20 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
 - The decision table's newest capture ends at 14 Oct 2025, so 2026 MAS directions would come from the
   text extractor (development accuracy only, D14). These rows (`source="mas_text"`) are excluded from
   hypothesis tests (`RESEARCH_QUESTIONS.md` §0.3).
+
+## A9 — BI masked-LLM AUROC exactly 1.000 in RQ1 (2026-10-14)
+- RQ1 BI, scorer `llm_masked`: AUROC hike-vs-cut = 1.000, on only 20 out-of-sample hike/cut rows (11 hikes, 9 cuts).
+  Perfect ranking of 20 points is plausible at this size. The unmasked LLM gets 0.939 and the dictionary 0.960 on the same rows.
+- Checked: no leakage path. Predictions use only the training window (`rolling_origin` fits on rows < t). The masked text
+  carries no date or rate level, and the AUROC uses held-out next decisions only.
+- AUROC is a secondary metric. The primary log-loss gain for BI masked is +0.032 with CI [−0.049, 0.119], i.e. not
+  significant. The value is reported as is, with its small n.
+- SANITY-OK: rq1.bi.llm_masked.auroc
+
+## A10 — BI: the tone surprise moves USD/IDR with the "wrong" sign (2026-10-14)
+- RQ2, BI, LLM: β = −0.0039 (HAC p = 0.007, R² = 0.064; 120 day-level events). A more hawkish surprise coincides with
+  rupiah *depreciation* over the release window. The pre-registered test is one-sided (β > 0), so the cell does not count
+  as a success.
+- Reported descriptively, with no causal reading. A plausible mechanical explanation, which the design cannot separate,
+  is that hawkish statements and currency weakness occur in the same windows (two-day day-level windows; reverse timing).
+  The paper does not comment on any bank's policy choices.
