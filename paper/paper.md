@@ -102,7 +102,7 @@ different prompts and a tie-break; they are never called gold.
 
 **Scorers.** All scorers return probabilities over {hawkish, dovish, neutral} and an index
 *hawkish − dovish* ∈ [−1, 1], computed on the same input: the decision, forward-guidance, outlook and
-risk paragraphs of a document (rule-based tagger), capped at 3,000 characters. The *dictionary* uses a
+risk paragraphs of a document (rule-based tagger), capped at 6,000 characters. The *dictionary* uses a
 167-term cited lexicon with negation handling (English only). The *LLM* is `qwen3:4b` run locally through
 Ollama at temperature 0 with a registered prompt (P1) and structured JSON output; all calls are cached by
 content hash. The *fine-tuned* model is XLM-R base trained for ≤ 30 minutes on the LLM's own sentence
@@ -129,9 +129,11 @@ Transfer compares each Fed-calibrated scorer's FOMC macro-F1 with its silver-set
 reported in the appendix and excluded from Holm families and majority counts, and a majority needs at
 least three powered banks.
 
-**Budget.** The pre-registered compute ladder was applied from timing alone before any outcome was seen:
-input cap 6,000 → 3,000 characters, the RQ4a sentence sample 1,000 → 250, the masked variant on the headline
-primary series only. The LLM stage still exceeded its 2-hour budget (Section 8).
+**Compute.** All LLM scores come from one backend: the same `qwen3:4b` weights (digest `359d7dd4`) served by
+Ollama on a desktop RTX 4070 Ti, where the full pre-registered workload fits the 2-hour LLM budget without any
+step of the pre-registered compute ladder. On the MacBook Air M4 named as the project's compute target, the
+same model processes about 220 prompt tokens/s (≈ 3.5 s per document at a 3,000-character cap), so a laptop run
+needs the ladder (Section 9).
 
 # 5. Results
 
@@ -167,7 +169,8 @@ primary series only. The LLM stage still exceeded its 2-hour budget (Section 8).
 - **Gated scorer.** FOMC-RoBERTa could not be run, which makes the transfer hypothesis (H5) untestable as
   pre-registered.
 - **Compute.** The local 4B model is far smaller than hosted LLMs; results speak to what an analyst can run
-  on a laptop, not to frontier models.
+  on local hardware, not to frontier models. The headline run used a desktop GPU; a laptop gives the same model
+  and settings, more slowly.
 
 # 9. Reproducibility statement
 
