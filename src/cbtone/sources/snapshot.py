@@ -73,7 +73,7 @@ def _paragraphs(doc: Document) -> list[str]:
 def build_snapshot(
     documents: Iterable[Document],
     out_dir: Path | str,
-    redistributable: Mapping[str, bool] | None = None,
+    redistributable: Mapping[str | tuple[str, str], bool] | None = None,
     *,
     default_redistributable: bool = False,
     snapshot_date: date | None = None,
@@ -81,9 +81,10 @@ def build_snapshot(
 ) -> str:
     """Write the corpus snapshot to ``out_dir`` and return the VERSION string.
 
-    ``redistributable`` maps bank -> bool; banks not listed use
-    ``default_redistributable`` (False: fail closed). Rows are sorted by ``doc_id``
-    (duplicates raise ``ValueError``) so output is deterministic for a given input.
+    ``redistributable`` maps ``(bank, doc_type)`` or ``bank`` -> bool (the pair wins, D8);
+    documents matching neither use ``default_redistributable`` (False: fail closed). Rows are
+    sorted by ``doc_id`` (duplicates raise ``ValueError``) so output is deterministic for a
+    given input.
     """
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -100,7 +101,7 @@ def build_snapshot(
     sent_rows: list[dict[str, object]] = []
     man_rows: list[dict[str, object]] = []
     for d in docs:
-        redis = flags.get(d.bank, default_redistributable)
+        redis = flags.get((d.bank, d.doc_type), flags.get(d.bank, default_redistributable))
         n_sent = 0
         for p_idx, para in enumerate(_paragraphs(d)):
             for s_idx, sent in enumerate(split_sentences(para, d.language)):

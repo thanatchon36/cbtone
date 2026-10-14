@@ -106,3 +106,13 @@ def test_default_is_fail_closed(tmp_path: Path):
 def test_duplicate_doc_id_raises(tmp_path: Path):
     with pytest.raises(ValueError, match="duplicate"):
         build_snapshot([_doc("fed", 20), _doc("fed", 20)], tmp_path)
+
+
+def test_redistributable_per_doc_type_overrides_bank(tmp_path: Path):
+    stmt = _doc("ecb", 7)
+    conf = stmt.model_copy(update={"doc_type": "press_conference"})
+    flags = {"ecb": True, ("ecb", "press_conference"): False}
+    build_snapshot([stmt, conf], tmp_path, flags, snapshot_date=date(2026, 5, 1))
+    m = pl.read_parquet(tmp_path / "manifest.parquet").sort("doc_type")
+    assert m["doc_type"].to_list() == ["press_conference", "statement"]
+    assert m["redistributable"].to_list() == [False, True]
