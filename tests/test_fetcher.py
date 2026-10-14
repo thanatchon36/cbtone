@@ -48,3 +48,23 @@ def test_offline_miss(tmp_path: Path) -> None:
     f = PoliteFetcher(raw_dir=tmp_path, offline=True)
     with pytest.raises(FileNotFoundError):
         f.get("fed", "https://example.org/x")
+
+
+def test_block_page_with_200_is_blocked_and_not_cached(tmp_path: Path) -> None:
+    def handler(req: httpx.Request) -> httpx.Response:
+        if req.url.path == "/robots.txt":
+            return httpx.Response(404)
+        return httpx.Response(
+            200,
+            content=b"<html><head><title>Maintenance</title></head></html>",
+            headers={"content-type": "text/html"},
+        )
+
+    f = PoliteFetcher(
+        raw_dir=tmp_path,
+        min_interval_s=0,
+        client=httpx.Client(transport=httpx.MockTransport(handler)),
+    )
+    with pytest.raises(BlockedError):
+        f.get("mas", "https://example.org/mps")
+    assert f.cached("mas", "https://example.org/mps") is None

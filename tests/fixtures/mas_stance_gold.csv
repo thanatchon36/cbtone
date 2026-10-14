@@ -1,0 +1,5 @@
+# TODO: EMPTY ON PURPOSE. mas.gov.sg served a bot-wall "Maintenance" page to the polite fetcher
+# (HTTP 200, no content), so no statement text could be obtained lawfully. Do NOT invent rows.
+# Fill from the 20 URLs in docs/sources/NEEDED_mas_decisions.md: quote the decision paragraph verbatim,
+# label by reading that paragraph only. test_decisions_mas.py::test_gold_set skips while empty.
+url,date,decision_paragraph,label_direction,label_parameters,notes

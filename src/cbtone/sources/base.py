@@ -35,6 +35,30 @@ class BlockedError(RuntimeError):
     """Raised when robots.txt disallows a URL or the host refuses automated access."""
 
 
+# Interstitials some hosts serve with HTTP 200 to automated clients (bot protection,
+# "maintenance" pages). Matched against the <title> of HTML responses; never cached.
+BLOCK_PAGE_TITLES = (
+    "maintenance",
+    "access denied",
+    "just a moment",
+    "attention required",
+    "request rejected",
+    "are you a robot",
+    "captcha",
+)
+
+
+def looks_like_block_page(content: bytes, content_type: str) -> bool:
+    if "html" not in content_type.lower():
+        return False
+    head = content[:20000].decode("utf-8", errors="ignore").lower()
+    start = head.find("<title")
+    if start < 0:
+        return False
+    title = head[start : head.find("</title", start)]
+    return any(t in title for t in BLOCK_PAGE_TITLES)
+
+
 @dataclass(frozen=True)
 class RawResponse:
     url: str
@@ -132,6 +156,8 @@ class PoliteFetcher:
             raise BlockedError(f"HTTP {r.status_code} for {url}")
         r.raise_for_status()
         content = r.content
+        if looks_like_block_page(content, r.headers.get("content-type", "")):
+            raise BlockedError(f"block/interstitial page served for {url}")
         resp = RawResponse(
             url=url,
             content=content,
