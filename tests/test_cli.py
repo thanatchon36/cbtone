@@ -123,6 +123,7 @@ def test_snapshot_command_writes_corpus(fake_registry: None, tmp_path: Path):
     m = pl.read_parquet(out / "manifest.parquet")
     assert m.height == 2
     assert (out / "VERSION").exists()
+    assert "QA: fed has 2 documents under 200 chars" in res.output  # fake texts are tiny
 
 
 def test_version():

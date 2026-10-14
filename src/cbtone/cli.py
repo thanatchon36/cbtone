@@ -130,6 +130,25 @@ def snapshot(
     docs, _ = _run(names, s, e, PoliteFetcher(offline=True))
     ver = build_snapshot(docs, out, registry.REDISTRIBUTABLE)
     typer.echo(f"snapshot {ver}: {len(docs)} documents -> {out}")
+    _qa(out / "manifest.parquet")
+
+
+SHORT_DOC_CHARS = 200
+
+
+def _qa(manifest: Path) -> None:
+    """Flag banks with suspiciously short documents (truncated parses, placeholder pages)."""
+    import polars as pl
+
+    short = (
+        pl.read_parquet(manifest)
+        .filter(pl.col("n_chars") < SHORT_DOC_CHARS)
+        .group_by("bank")
+        .agg(pl.len().alias("n"), pl.col("doc_id").sort().first().alias("example"))
+        .sort("bank")
+    )
+    for bank, n, example in short.iter_rows():
+        typer.echo(f"QA: {bank} has {n} documents under {SHORT_DOC_CHARS} chars (e.g. {example})")
 
 
 @app.command()
