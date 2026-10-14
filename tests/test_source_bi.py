@@ -321,3 +321,45 @@ def test_live_smoke(tmp_path: Path) -> None:
         if len(docs) >= 2:
             break
     assert docs and docs[0].text
+
+
+@pytest.mark.parametrize(
+    ("name", "lang", "iso", "first", "last", "min_words"),
+    [
+        (
+            "stmt_2018_div_en",
+            "en",
+            "2018-05-17",
+            "The BI Board of Governors agreed",
+            "Jakarta,",
+            1000,
+        ),
+        (
+            "stmt_2020_div_en",
+            "en",
+            "2020-11-19",
+            "The BI Board of Governors agreed",
+            "Cash and",
+            1500,
+        ),
+        (
+            "stmt_2020_div_id",
+            "id",
+            "2020-11-19",
+            "Rapat Dewan Gubernur",
+            "Jakarta, 19 November",
+            1500,
+        ),
+    ],
+)
+def test_pages_with_div_paragraphs(
+    tmp_path: Path, name: str, lang: str, iso: str, first: str, last: str, min_words: int
+) -> None:
+    """Regression: 2018-2020 pages put paragraphs in <div>s (no <p>) and used to parse as []."""
+    doc = _parse(tmp_path, name, lang, iso)
+    assert doc.sections[0].text.startswith(first)
+    assert doc.sections[-1].text.startswith(last)
+    assert len(doc.sections) >= 8 and len(doc.text.split()) >= min_words
+    for bad in ("Head of Communication", "Kepala Departemen", "Information on Bank Indonesia"):
+        assert bad not in doc.text
+    assert not doc.sections[-1].text.upper().endswith("DEPARTMEN")

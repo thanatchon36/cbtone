@@ -88,7 +88,16 @@ _DATE = re.compile(r"(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})")
 _PAGE_DATE = re.compile(r"(\d{1,2})/(\d{1,2})/(\d{4})\s+\d{1,2}:\d{2}")
 _WS = re.compile(r"\s+")
 _NUMBER = re.compile(r"^No\.?:?\s*\d+\s*/\s*\d+\s*/\s*\w+", re.I)
-_DEPT = re.compile(r"\s*(communication departe?ment|departemen komunikasi)\s*$", re.I)
+_DEPT = re.compile(
+    r"\s+(communication departe?men\w*|departemen komunikasi|kepala departemen"
+    r"|head of communication).*$",
+    re.I,
+)
+_SIGNOFF = re.compile(
+    r"^(head of communication|kepala departemen|information on bank indonesia"
+    r"|informasi bank indonesia)",
+    re.I,
+)
 _RELEASE_PATH = re.compile(r"^/(en|id)(/publikasi/ruang-media/news-release/Pages/.+)$")
 
 
@@ -207,11 +216,13 @@ class BIAdapter(SourceAdapter):
     @staticmethod
     def _blocks(body: Tag) -> list[str]:
         out: list[str] = []
-        for el in body.find_all(["p", "li"]):
+        for el in body.find_all(["p", "li", "div"]):
             if not isinstance(el, Tag):
                 continue
-            if el.name == "p" and el.find_parent("li") is not None:
+            if el.name != "li" and el.find_parent("li") is not None:
                 continue
+            if el.name == "div" and el.find(["p", "li", "div", "ol", "ul", "table"]):
+                continue  # only leaf divs are paragraphs (2018-2020 pages use <div> not <p>)
             node = el
             if el.name == "li":
                 node = copy.copy(el)
@@ -229,7 +240,7 @@ class BIAdapter(SourceAdapter):
         sections: list[Section] = []
         after_dateline = False
         for text in self._blocks(body):
-            if not text or _NUMBER.match(text):
+            if not text or _NUMBER.match(text) or _SIGNOFF.match(text):
                 continue
             if after_dateline and not text.startswith("["):
                 continue  # signatories after the dateline

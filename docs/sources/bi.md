@@ -59,6 +59,14 @@ Sections have `heading=None` (the releases have no headings). The 2006 IRU archi
   Only a few 2006 English stubs exist as IRU archive pages (`/en/iru/email-archive/...`, one
   paragraph, e.g. 2006-09-05). A human could find older release links via the site search or
   the Statistics pages and drop them as saved table HTML in `data/raw/bi/manual/`.
+- Completeness audit (full cache, 128 listed decisions): after the fix all 128 x 2 = 256 pages
+  parse (per-year en = id: 2016 9, 2017 12, 2018 13, 2019-2025 12 each, 2026 10 to Sep). 2018 has
+  13 because of the extra meetings (17 May, 30 May, 29 Jun). Nothing is missing from the index
+  table and no language page was a 200-status "404". The earlier shortfall (2018: 17 May and
+  29 Jun, 2020: 14 Apr and 19 Nov en) was a parser cause: those pages put paragraphs in
+  `<div>`s instead of `<p>`; leaf `<div>`s are now sections. Sign-off lines ("Head of Communication
+  Department ...", "Information on Bank Indonesia Tel ...") are dropped too.
+  Genuinely unavailable: none found; the 2005-2016-03 gap above remains.
 - Releases for 2016-2017 were parsed fine (title, ten paragraphs, reference number
   "No. 18/ 31 /DKom" and the "Communication Departement" signature stripped).
 
