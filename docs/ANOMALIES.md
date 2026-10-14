@@ -56,3 +56,10 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
   Genuine moves (e.g. AUD/USD 27 Oct 2008, neighbours also down) are kept. 13 ticks were dropped. They are
   listed in `data/raw/markets/dropped_ticks.csv` (series, date, reason; no prices).
 - FX series start in Dec 2003 for most pairs, so MAS statements from 2001–2003 have no FX window.
+
+## A8 — MAS 2026 gaps (2026-10-14)
+- 27 Jul 2026: all four Internet Archive captures are the MAS "Maintenance" bot page. 14 Oct 2026:
+  not archived yet. The MAS series therefore ends at 14 Apr 2026.
+- The decision table's newest capture ends at 14 Oct 2025, so 2026 MAS directions would come from the
+  text extractor (development accuracy only, D14). These rows (`source="mas_text"`) are excluded from
+  hypothesis tests (`RESEARCH_QUESTIONS.md` §0.3).

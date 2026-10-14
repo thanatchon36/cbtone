@@ -42,15 +42,19 @@ Cut / known gaps:
 - BoE minutes of the special 19 Mar 2020 meeting (not in the sitemap)
 - FX before Dec 2003 for most pairs, so MAS 2001–2003 statements have no FX window (A7)
 
-## Phase 2 — next
+## Phase 2 — closed 2026-10-14
 
-- [ ] `docs/RESEARCH_QUESTIONS.md`: RQ1–RQ5 with thresholds from `docs/literature/REVIEW.md` §2 benchmark
-      table; tag `prereg-v1` **before any full-corpus scoring**
-- [ ] Events-engine spec. It must key documents with `published_at_utc=None` on the release date (A1),
-      and flag day-level timing (BI, MAS, PBoC, RBA before 2008, BoE specials)
-- [ ] Pre-register the analysis restrictions already decided: BoE tone uses minutes for 2000–2012 (A6);
-      BoE event-study robustness on 2013→ (A3); the RQ2 yield leg only for Fed/ECB/BoE/RBA (D9)
-- [ ] `cbtone doctor` + `results/hardware.json` before Phase 3
+- [x] `docs/RESEARCH_QUESTIONS.md` committed and tagged `prereg-v1` (D16): RQ1–RQ5, power rules,
+      release-date rule (§0.4), data-gap treatments, budget ladder
+
+## Phase 3 — in progress (library)
+- [ ] Specs in docs/specs/ for scorers, events, eval, text (paragraph tagger), cli, docs
+- [ ] `cbtone doctor` + `results/hardware.json`
+
+## Waiting on owner
+- **git push is blocked:** `~/.claude/settings.json` has `"deny": ["Bash(git push *)"]`, and a deny overrides
+  allow rules. All work is committed locally. To publish, remove that deny rule (or run `! git push origin main --tags`).
+  Commits since `0132cf6` and the tag `prereg-v1` are local only.
 
 Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.

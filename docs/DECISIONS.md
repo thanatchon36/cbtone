@@ -153,3 +153,20 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   3 languages (D10). Any PBoC result is reported as exploratory, with the 2016–2022 gap stated.
 - Meeting dates for 2009–15 come from PBoC's own meeting-date table (archived): the pages say only
   "日前" ("recently").
+
+## D16 — Pre-registration design choices (2026-10-14, frozen at `prereg-v1`)
+- **What:** `docs/RESEARCH_QUESTIONS.md` fixes these choices:
+  - **Primary document per bank:** BoE = minutes, because its 2000–2006 releases are one sentence (A6).
+    RBA starts Dec 2007, because earlier releases exist only for changes and would select on the outcome (A1).
+  - **Release-date rule:** a document with no time is timed at 00:00 local on its release date, so the
+    [t−1, t+1] window always contains the release.
+  - **Power:** a minimum sample per (bank, RQ). Underpowered cells go to an appendix and are excluded from
+    Holm families and majority counts. A majority needs ≥ 3 powered banks.
+  - **Model rule:** qwen3:4b, with qwen2.5:3b as the fallback, chosen on timing only.
+  - **Cutoff:** the documented training cutoff, or the model's public release date.
+  - **Budget ladder** for the 2 h LLM limit.
+- **Why:** each of these choices could otherwise be made after seeing results.
+- **Rejected:**
+  - BoE statements throughout (no tone signal before 2007);
+  - RBA from 2000 (outcome-selected);
+  - dropping day-level banks (would remove MAS and BI from RQ2).
