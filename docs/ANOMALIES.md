@@ -105,3 +105,12 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
   On retry 7 of the 21 failed sentence calls succeeded (prompts: 982 → 987 complete units; temperature: 998 → 1,000);
   α moved by < 0.001 (prompts 0.4155 → 0.4158). The committed numbers are those of the original run.
 - Consequence: "a re-run makes no new LLM calls" holds for every *successful* score; failed calls are retried.
+
+## A14 — Fine-tuned model: the validation split cannot be rebuilt exactly (2026-10-14)
+- `experiments/train_ft.py` draws a seeded, stratified 10 % validation split from the training frame at training time
+  and does not store it. Rebuilding the frame gives the same 3,788 sentences and labels but not the same row order
+  (`unique(..., keep="first")` without `maintain_order`), so the seeded split selects different sentences: scoring the
+  paper's checkpoint on a rebuilt split gives validation macro-F1 0.625, not the recorded 0.608.
+- Consequence: the recorded 0.608 cannot be recomputed and no other scorer can be evaluated on the same 379
+  sentences (the Hugging Face model card says so). No paper result uses the validation split; FOMC test results
+  (0.41) re-score identically from the published weights.
