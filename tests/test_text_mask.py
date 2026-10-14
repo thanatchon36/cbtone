@@ -48,7 +48,8 @@ def test_instruments_committees_and_hyphen_fractions_are_masked():
     from cbtone.text.mask import mask_entities as m
 
     out = m(
-        "The Committee decided to raise the target range for the federal funds rate to 5-1/4 to 5-1/2 percent."
+        "The Committee decided to raise the target range for the federal funds rate"
+        " to 5-1/4 to 5-1/2 percent."
     )
     assert (
         "federal funds" not in out

@@ -124,7 +124,10 @@ _MONTH = rf"(?:(?:{_MONTHS_NO_MAY})\b|May(?=\s+\d)|(?<=\d\s)May\b|(?<=\d)May\b)"
 _DAY = r"\d{1,2}(?:st|nd|rd|th)?"
 _YEAR = r"(?:19|20)\d{2}"
 
-_NUM = r"(?:\d+-\d\s?[/⁄]\s?\d|\d+(?:[.,]\d+)?(?:\s?[¼½¾⅛-⅞]|\s\d\s?[/⁄]\s?\d)?|[¼½¾⅛-⅞]|\d\s?[/⁄]\s?\d)"
+_NUM = (
+    r"(?:\d+-\d\s?[/⁄]\s?\d"  # US-style "5-1/4"
+    r"|\d+(?:[.,]\d+)?(?:\s?[¼½¾⅛-⅞]|\s\d\s?[/⁄]\s?\d)?|[¼½¾⅛-⅞]|\d\s?[/⁄]\s?\d)"
+)
 _NUM_RANGE = rf"{_NUM}(?:\s?(?:-|–|to|and|hingga|sampai|sehingga|至|到)\s?{_NUM})?"
 _PCT_UNIT = (
     r"(?:\s?%|\s?％|\s?(?:percentage\s+points?|per\s?cent|percent|persen|peratus)\b"
