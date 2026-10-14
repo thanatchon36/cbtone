@@ -82,3 +82,42 @@ def test_fetch_decision_table_skips_maintenance_capture() -> None:
 def test_fetch_decision_table_none_when_nothing_usable() -> None:
     cdx = json.dumps([["timestamp", "original"]]).encode()
     assert fetch_decision_table(_Fake({"cdx": cdx})) is None
+
+
+def test_build_from_corpus_uses_private_text_for_withheld_banks(tmp_path: Path) -> None:
+    import polars as pl
+
+    from cbtone.decisions.build import build_from_corpus
+
+    text = "MAS will therefore increase slightly the slope of the S$NEER policy band."
+    base = {"doc_id": ["mas:2026-04-14:mps:en"], "bank": ["mas"], "date": [date(2026, 4, 14)]}
+    base |= {"doc_type": ["mps"], "language": ["en"]}
+    pl.DataFrame({**base, "text": [None]}, schema_overrides={"text": pl.String}).write_parquet(
+        tmp_path / "documents.parquet"
+    )
+    (tmp_path / "private").mkdir()
+    pl.DataFrame({**base, "text": [text]}).write_parquet(tmp_path / "private/documents.parquet")
+    df = build_from_corpus(None, tmp_path / "documents.parquet", tmp_path / "d.parquet")
+    assert df.select("date", "direction", "source").rows() == [
+        (date(2026, 4, 14), "hike", "mas_text")
+    ]
+
+
+def test_build_from_corpus_skips_null_text_without_private_copy(tmp_path: Path) -> None:
+    import polars as pl
+
+    from cbtone.decisions.build import build_from_corpus
+
+    pl.DataFrame(
+        {
+            "doc_id": ["mas:x"],
+            "bank": ["mas"],
+            "date": [date(2026, 4, 14)],
+            "doc_type": ["mps"],
+            "language": ["en"],
+            "text": [None],
+        },
+        schema_overrides={"text": pl.String},
+    ).write_parquet(tmp_path / "documents.parquet")
+    df = build_from_corpus(None, tmp_path / "documents.parquet", tmp_path / "d.parquet")
+    assert df.height == 0

@@ -111,3 +111,18 @@ def test_mas_rows_and_parquet(tmp_path: Path) -> None:
     mas = back.filter(pl.col("bank") == "mas")
     assert mas["source"].to_list() == ["mas_text"] * 2
     assert mas["next_direction"].to_list() == ["hold", None]
+
+
+def test_unscheduled_only_inside_known_meeting_span() -> None:
+    from datetime import timedelta
+
+    days = [
+        date(2010, 1, 1) + timedelta(days=i)
+        for i in range((date(2018, 6, 1) - date(2010, 1, 1)).days)
+    ]
+    rate = [6.5 if d < date(2010, 5, 3) else 6.25 if d < date(2017, 6, 15) else 6.0 for d in days]
+    s = pl.DataFrame({"bank": ["bi"] * len(days), "date": days, "rate": rate})
+    meets = [("bi", date(2017, 1, 10)), ("bi", date(2017, 12, 10))]  # text coverage starts 2017
+    rows = {r.date: r for r in bis_decisions(s, meets)}
+    assert rows[date(2010, 5, 3)].unscheduled is False  # before the known calendar: unknown
+    assert rows[date(2017, 6, 15)].unscheduled is True  # inside it, with no meeting: off-cycle

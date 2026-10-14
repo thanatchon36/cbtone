@@ -49,9 +49,12 @@ def bis_decisions(
     """Hike/cut/hold rows from BIS rate changes and meeting dates.
 
     Rules: a meeting with no rate change in ``[date - 3, date + window]`` is a hold; a change
-    with no such meeting is ``unscheduled=True``. Banks with no meetings at all (calendar
-    unknown) get changes only, ``unscheduled=False``, and no holds. Meetings after the last
-    BIS observation (+window) are skipped, since a hold could not be verified.
+    with no such meeting is ``unscheduled=True`` once the calendar is known (on/after the
+    first known meeting; before it the calendar is unknown, so ``False``). Banks with no
+    meetings at all (calendar unknown) get changes only, ``unscheduled=False``, and no holds.
+    Meetings after the last BIS observation (+window) are skipped, since a hold could not be
+    verified. Emergency moves that came with a published statement match that "meeting", so
+    ``unscheduled`` means "no statement in the corpus", not "intermeeting move".
     """
     series = parse_bis_csv(bis_csv) if isinstance(bis_csv, bytes) else bis_csv
     windows = {**BANK_WINDOW_DAYS, **(window_days or {})}
@@ -91,7 +94,8 @@ def bis_decisions(
                         rate_after=ch[2],
                         source="bis",
                         policy_instrument=instrument(b, cd),
-                        unscheduled=bool(meets),
+                        # off-cycle only once the calendar is known (first known meeting on)
+                        unscheduled=bool(meets) and cd >= meets[0] - timedelta(days=PRE_DAYS),
                         effective_date=cd,
                     )
                 )
@@ -223,9 +227,30 @@ def mas_stances_from_documents(documents: pl.DataFrame) -> list[tuple[date, MasS
     from cbtone.decisions.mas import mas_stance
 
     sel = documents.filter(
-        pl.col("bank") == "mas", pl.col("doc_type") == "mps", pl.col("language") == "en"
+        pl.col("bank") == "mas",
+        pl.col("doc_type") == "mps",
+        pl.col("language") == "en",
+        pl.col("text").is_not_null(),
     ).select("date", "text")
     return [(d, mas_stance(t)) for d, t in sel.iter_rows()]
+
+
+def load_documents(documents_path: Path) -> pl.DataFrame:
+    """Snapshot documents with withheld text filled from ``private/`` when that copy exists.
+
+    Non-redistributable banks have null ``text`` in the committed parquet (D8); the local
+    full-text copy lives next to it in ``private/documents.parquet`` (git-ignored).
+    """
+    docs = pl.read_parquet(documents_path)
+    private = documents_path.parent / "private" / documents_path.name
+    if not private.exists():
+        return docs
+    full = pl.read_parquet(private).select("doc_id", pl.col("text").alias("_private_text"))
+    return (
+        docs.join(full, on="doc_id", how="left")
+        .with_columns(pl.coalesce("text", "_private_text").alias("text"))
+        .drop("_private_text")
+    )
 
 
 def build_from_corpus(
@@ -234,7 +259,7 @@ def build_from_corpus(
     out_path: Path = Path("data/corpus/decisions.parquet"),
     mas_table: Iterable[TableDecision] = (),
 ) -> pl.DataFrame:
-    docs = pl.read_parquet(documents_path)
+    docs = load_documents(documents_path)
     return build_decisions(
         bis_csv,
         meetings_from_documents(docs),
