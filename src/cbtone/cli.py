@@ -65,7 +65,15 @@ def collect(
         except Exception as e:  # report and move on to the next bank
             errors.append(f"{type(e).__name__}: {e}")
         return docs, errors
-    for url, hints in adapter.list_urls(start_year, end_year):
+    listing = iter(adapter.list_urls(start_year, end_year))
+    while True:
+        try:
+            url, hints = next(listing)
+        except StopIteration:
+            break
+        except Exception as e:  # an index page failed: keep what we have, report it
+            errors.append(f"listing aborted: {type(e).__name__}: {e}")
+            break
         try:
             docs.extend(adapter.parse(adapter.fetcher.get(adapter.bank, url), hints))
         except Exception as e:  # one bad page must not stop a long run

@@ -179,3 +179,15 @@ def test_decisions_command(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
         "out": tmp_path / "decisions.parquet",
         "n_table": 59,
     }
+
+
+class BrokenListing(FakeAdapter):
+    def list_urls(self, start_year: int, end_year: int) -> Iterable[tuple[str, dict[str, str]]]:
+        yield "https://example.org/2000", {"date": "2000-03-20"}
+        raise FileNotFoundError("index 404")
+
+
+def test_collect_keeps_documents_when_listing_fails():
+    docs, errors = cli.collect(BrokenListing(FakeFetcher()), 2000, 2001)
+    assert len(docs) == 1
+    assert errors == ["listing aborted: FileNotFoundError: index 404"]
