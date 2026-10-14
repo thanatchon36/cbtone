@@ -170,3 +170,14 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
   - BoE statements throughout (no tone signal before 2007);
   - RBA from 2000 (outcome-selected);
   - dropping day-level banks (would remove MAS and BI from RQ2).
+
+## D17 — Headline LLM settings, chosen on timing only (2026-10-14, after `prereg-v1`, before any scoring)
+- **What:** `qwen3:4b` (Ollama digest `359d7dd4bcda…`, GGUF) stays the headline model, with the 6,000-character
+  input cap and no budget-ladder step for documents.
+  - Calls use Ollama structured output: a JSON schema `{hawkish, dovish, neutral}`, `num_predict=64`,
+    `think=false`, temperature 0, `num_ctx=8192`.
+  - Throughput on 20 primary documents was 1.3 s/document. Plain `format: "json"` without a schema let the model
+    ramble (≈ 500 output tokens, 21.8 s/doc, and 3/20 requests aborted with "token repeat limit").
+- **Why:** pre-registered (§0.5, §0.8). The choice was made from timing alone; no scores were inspected
+  (outputs were discarded).
+- `qwen2.5:3b` was pulled as the second tag for RQ4a.

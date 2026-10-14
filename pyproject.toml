@@ -27,6 +27,9 @@ dependencies = [
   "pysbd>=0.3.4",
   "cryptography>=43",
   "fonttools>=4.50",
+  "statsmodels>=0.14",
+  "scipy>=1.13",
+  "scikit-learn>=1.5",
 ]
 
 [project.optional-dependencies]
