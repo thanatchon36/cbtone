@@ -25,9 +25,13 @@ cbtone events
 - **A pre-registered study** run with it. Its questions and thresholds are fixed in
   [RESEARCH_QUESTIONS.md](https://github.com/thanatchon36/cbtone/blob/main/docs/RESEARCH_QUESTIONS.md).
 
-<!-- RESULTS: filled in Phase 5. Headline chart and summary table go here. -->
+## Results in one line
 
-*No results are reported yet.*
+Every testable pre-registered hypothesis was refuted: local-LLM tone did not beat persistence at predicting the
+next decision (0 of 4 powered banks), explained the market move in 1 of 11 bank–market cells, agreed only
+moderately between Indonesian/Malay and English versions (ρ 0.61 / 0.53), and moved with the prompt wording.
+Details: [paper](https://github.com/thanatchon36/cbtone/blob/main/paper/paper.pdf), [one-page summary](https://github.com/thanatchon36/cbtone/blob/main/docs/EXEC_SUMMARY.md),
+[`results/summary.json`](https://github.com/thanatchon36/cbtone/blob/main/results/summary.json).
 
 ## Where to start
 

@@ -4,6 +4,12 @@ author: "Thanatchon Chongmankhong"
 date: "October 2026"
 bibliography: docs/literature/refs.bib
 link-citations: true
+mainfont: "Libertinus Serif"
+fontsize: 10pt
+papersize: a4
+margin:
+  x: 2.2cm
+  y: 2.4cm
 ---
 
 > **Disclaimer.** This is an independent open-source project. It uses only documents published on
@@ -15,7 +21,22 @@ link-citations: true
 
 # Abstract
 
-<!-- RESULTS:ABSTRACT -->
+We ask whether hawkish/dovish tone scores produced by a small local large language model (LLM), `qwen3:4b`
+run through Ollama, carry measurable policy signal in the published decision documents of seven central banks
+(Fed, ECB, Bank of England, RBA, MAS, Bank Indonesia, Bank Negara Malaysia) in English, Indonesian and Malay.
+The study was pre-registered before any scorer touched the full corpus; every LLM result is re-estimated on
+masked text and on a post-training-cutoff split. **Every testable hypothesis is refuted at the
+pre-registered thresholds.** LLM tone does not improve out-of-sample prediction of the next rate decision over a
+persistence baseline at any of {{rq1.verdict.n_powered}} adequately powered banks (closest: ECB, ΔLL
+{{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers|.3f}}, Holm *p* {{rq1.rows[bank=ecb,scorer=llm].p_vs_pers_holm|.2f}}). It explains the
+announcement-window market move in {{rq2.verdict.h2a.n_success}} of {{rq2.verdict.h2a.n_powered}} bank–market
+cells and beats a cited dictionary in none. Native-language and English versions of the same statement agree only
+moderately (Spearman ρ {{rq3.rows[bank=bi,scorer=llm].spearman|.2f}} for BI and {{rq3.rows[bank=bnm,scorer=llm].spearman|.2f}} for BNM, against a
+pre-registered 0.70), although they almost never point in opposite directions. Scores move with the prompt
+wording (Krippendorff's α {{rq4.rq4a.docs.prompts.alpha|.2f}} at document level), and on the human-labelled FOMC test
+split the LLM reaches a macro-F1 of {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}, above the dictionary ({{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}}) but below
+the pre-registered 0.50. The transfer hypothesis is untestable because a gated reference model could not be run. We
+release the corpus pipeline, scorers and evaluation harness as the Python package `cbtone`.
 
 # 1. Introduction
 
@@ -137,19 +158,133 @@ needs the ladder (Section 9).
 
 # 5. Results
 
-<!-- RESULTS:RQ1 -->
+## 5.1 RQ1: does tone predict the next decision?
 
-<!-- RESULTS:RQ2 -->
+**H1 is refuted.** {{rq1.verdict.n_powered}} banks meet the pre-registered power rule (≥ 40 out-of-sample predictions with
+≥ 8 hikes and ≥ 8 cuts): Fed, ECB, RBA and BI. The LLM succeeds at none of them (Table 1, Figure 1).
 
-<!-- RESULTS:RQ3 -->
+| Bank | OOS *n* | ΔLL vs persistence [95% CI] | Holm *p* | ΔLL vs dictionary | Beats placebos |
+|---|---|---|---|---|---|
+| Fed | {{rq1.rows[bank=fed,scorer=llm].n_oos|d}} | {{rq1.rows[bank=fed,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=fed,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=fed,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=fed,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=fed,scorer=llm].dll_vs_dict|.3f}} | {{rq1.rows[bank=fed,scorer=llm].passes_placebo|yn}} |
+| ECB | {{rq1.rows[bank=ecb,scorer=llm].n_oos|d}} | {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=ecb,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict|.3f}} | {{rq1.rows[bank=ecb,scorer=llm].passes_placebo|yn}} |
+| RBA | {{rq1.rows[bank=rba,scorer=llm].n_oos|d}} | {{rq1.rows[bank=rba,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=rba,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=rba,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=rba,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=rba,scorer=llm].dll_vs_dict|.3f}} | {{rq1.rows[bank=rba,scorer=llm].passes_placebo|yn}} |
+| BI | {{rq1.rows[bank=bi,scorer=llm].n_oos|d}} | {{rq1.rows[bank=bi,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=bi,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=bi,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=bi,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=bi,scorer=llm].dll_vs_dict|.3f}} | {{rq1.rows[bank=bi,scorer=llm].passes_placebo|yn}} |
+
+: Table 1. RQ1, LLM tone, adequately powered banks. ΔLL = LL(reference) − LL(model), multiclass log-loss per
+decision; positive is better. Holm correction across the four banks.
+
+The ECB is the only bank where the LLM's gain over persistence has a bootstrap interval above zero and exceeds both
+placebo distributions (95th percentiles {{rq1.rows[bank=ecb,scorer=llm].placebo_tone_p95|.3f}} for shuffled tone and
+{{rq1.rows[bank=ecb,scorer=llm].placebo_labels_p95|.3f}} for permuted labels); it does not survive the Holm correction. At the RBA the
+dictionary, not the LLM, has an interval above zero (ΔLL {{rq1.rows[bank=rba,scorer=dict].dll_vs_pers|.3f}} [{{rq1.rows[bank=rba,scorer=dict].dll_vs_pers_lo|.3f}},
+{{rq1.rows[bank=rba,scorer=dict].dll_vs_pers_hi|.3f}}]). BoE (only {{rq1.rows[bank=boe,scorer=llm].n_oos_hike|d}} out-of-sample hikes), MAS
+({{rq1.rows[bank=mas,scorer=llm].n_oos|d}} predictions) and BNM ({{rq1.rows[bank=bnm,scorer=llm].n_oos_hike|d}} hikes) are underpowered: they are marked in
+Figure 1 but excluded from the test. Ranking metrics are high for every scorer, including persistence (Fed persistence AUROC
+{{rq1.rows[bank=fed,scorer=persistence].auroc|.2f}}), because most of the information about the next move is already in the
+last one. The masked LLM gives nearly the same ECB estimate ({{rq1.rows[bank=ecb,scorer=llm_masked].dll_vs_pers|.3f}}); BI's masked AUROC of
+exactly 1.00 rests on 20 hike/cut cases and is discussed in `ANOMALIES.md` (A9).
+
+![Figure 1. RQ1: gain in next-decision log-loss over persistence, by bank and scorer. * = underpowered.](results/figures/fig_rq1_dll.png)
+
+## 5.2 RQ2: does the tone surprise explain the market reaction?
+
+**H2a and H2b are refuted.** Of {{rq2.verdict.h2a.n_powered}} adequately powered bank–market cells, the LLM tone surprise
+explains the release-window move beyond its placebo in {{rq2.verdict.h2a.n_success}} (Table 2), and its R² beats the
+dictionary's, after Holm correction, in {{rq2.verdict.h2b.n_success}}.
+
+| Bank | Series | *n* | β | R² | Placebo R² p95 | Holm *p* (β) | ΔR² vs dictionary |
+|---|---|---|---|---|---|---|---|
+| Fed | USD index | {{rq2.rows[bank=fed,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=fed,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=fed,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=fed,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=fed,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=fed,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| Fed | US 2Y | {{rq2.rows[bank=fed,kind=y2,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=fed,kind=y2,scorer=llm,subset=all].beta|.2f}} | {{rq2.rows[bank=fed,kind=y2,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=fed,kind=y2,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=fed,kind=y2,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=fed,kind=y2,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| ECB | EUR/USD | {{rq2.rows[bank=ecb,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=ecb,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=ecb,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=ecb,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=ecb,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=ecb,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| ECB | EA 2Y | {{rq2.rows[bank=ecb,kind=y2,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=ecb,kind=y2,scorer=llm,subset=all].beta|.2f}} | {{rq2.rows[bank=ecb,kind=y2,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=ecb,kind=y2,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=ecb,kind=y2,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=ecb,kind=y2,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| BoE | GBP/USD | {{rq2.rows[bank=boe,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=boe,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=boe,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=boe,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=boe,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=boe,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| BoE | UK 2Y | {{rq2.rows[bank=boe,kind=y2,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=boe,kind=y2,scorer=llm,subset=all].beta|.2f}} | {{rq2.rows[bank=boe,kind=y2,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=boe,kind=y2,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=boe,kind=y2,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=boe,kind=y2,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| RBA | AUD/USD | {{rq2.rows[bank=rba,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=rba,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=rba,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=rba,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=rba,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=rba,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| RBA | AU 2Y | {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].beta|.2f}} | {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| MAS | USD/SGD | {{rq2.rows[bank=mas,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=mas,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=mas,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=mas,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=mas,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=mas,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| BI | USD/IDR | {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+| BNM | USD/MYR | {{rq2.rows[bank=bnm,kind=fx,scorer=llm,subset=all].n_events|d}} | {{rq2.rows[bank=bnm,kind=fx,scorer=llm,subset=all].beta|.4f}} | {{rq2.rows[bank=bnm,kind=fx,scorer=llm,subset=all].r2|.3f}} | {{rq2.rows[bank=bnm,kind=fx,scorer=llm,subset=all].placebo_r2_p95|.3f}} | {{rq2.rows[bank=bnm,kind=fx,scorer=llm,subset=all].p_beta_holm|.2f}} | {{rq2.rows[bank=bnm,kind=fx,scorer=llm,subset=all].dr2_vs_dict|.3f}} |
+
+: Table 2. RQ2, LLM tone surprise, all powered cells. FX β is the signed two-day log move (positive = domestic
+appreciation) per unit surprise; yield β is in basis points per unit surprise. Newey–West standard errors.
+
+The single success is the RBA two-year yield: a one-unit hawkish surprise goes with a {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].beta|.1f}} bp
+rise (R² {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].r2|.2f}}, placebo p95 {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].placebo_r2_p95|.3f}}). Its R² gain over the
+dictionary has a bootstrap interval above zero ([{{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].dr2_lo|.3f}}, {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].dr2_hi|.3f}}]) but a
+Holm-adjusted *p* of {{rq2.rows[bank=rba,kind=y2,scorer=llm,subset=all].p_dr2_holm|.2f}}. For BI the LLM coefficient is significant with the opposite
+sign to the hypothesis (β {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].beta|.4f}}, unadjusted *p* {{rq2.rows[bank=bi,kind=fx,scorer=llm,subset=all].p_value|.3f}}): more
+hawkish surprises coincide with rupiah depreciation over the day-level window. The one-sided test does not count it,
+and the design cannot separate reverse timing from any other explanation (A10). Pooled across banks with bank fixed
+effects, the FX coefficient is {{rq2.rq4c.pooled_fx_beta.beta|.4f}} [{{rq2.rq4c.pooled_fx_beta.lo|.4f}},
+{{rq2.rq4c.pooled_fx_beta.hi|.4f}}] (*n* = {{rq2.rq4c.pooled_fx_beta.n}}).
+
+![Figure 2. RQ2: FX response to the tone surprise, by bank and scorer (HAC 95% CIs).](results/figures/fig_rq2_fx_beta.png)
+
+## 5.3 RQ3: do native-language and English versions agree?
+
+**H3 is refuted.** On parallel statements the LLM's native-language and English scores have Spearman
+ρ = {{rq3.rows[bank=bi,scorer=llm].spearman|.2f}} for BI (Indonesian, *n* = {{rq3.rows[bank=bi,scorer=llm].n_pairs|d}}) and {{rq3.rows[bank=bnm,scorer=llm].spearman|.2f}} for
+BNM (Malay, *n* = {{rq3.rows[bank=bnm,scorer=llm].n_pairs|d}}), below the pre-registered 0.70. Disagreement is about intensity, not
+direction: the stance flips in {{rq3.rows[bank=bi,scorer=llm].flip_rate|pct1}} and {{rq3.rows[bank=bnm,scorer=llm].flip_rate|pct1}} of pairs, well
+under the 10 % ceiling, while the mean absolute gap is {{rq3.rows[bank=bi,scorer=llm].mean_abs_diff|.2f}} and
+{{rq3.rows[bank=bnm,scorer=llm].mean_abs_diff|.2f}} on a [−1, 1] scale (Figure 3). The fine-tuned multilingual model is no more consistent
+(ρ {{rq3.rows[bank=bi,scorer=ft].spearman|.2f}} and {{rq3.rows[bank=bnm,scorer=ft].spearman|.2f}}). The dictionary is English-only and therefore not applicable;
+PBoC has {{rq3.rows[bank=pboc,scorer=llm].n_pairs|d}} parallel pairs and is exploratory.
+
+![Figure 3. RQ3: LLM tone of the native-language version against the English version of the same statement.](results/figures/fig_rq3_crosslingual.png)
 
 # 6. Contamination and reliability
 
-<!-- RESULTS:RQ4 -->
+## 6.1 Stability (H4a: refuted)
+
+Across the five registered prompt paraphrases, document scores reach Krippendorff's α {{rq4.rq4a.docs.prompts.alpha|.2f}}
+and ICC(2,1) {{rq4.rq4a.docs.prompts.icc_2_1|.2f}} on {{rq4.rq4a.docs.prompts.n_units}} documents, short of the pre-registered
+0.667 and 0.75; on {{rq4.rq4a.sentences.prompts.n_units}} sentences α is {{rq4.rq4a.sentences.prompts.alpha|.2f}}. Temperature
+matters much less (α {{rq4.rq4a.docs.temperature.alpha|.2f}} for documents, {{rq4.rq4a.sentences.temperature.alpha|.2f}} for
+sentences, at 0 vs 0.7). Swapping the model tag for `qwen2.5:3b` changes scores most: α {{rq4.rq4a.docs.model_tag.alpha|.2f}}
+for documents and {{rq4.rq4a.sentences.model_tag.alpha|.2f}} for sentences, i.e. no better than chance agreement at sentence
+level. Aggregating sentence scores into a document score gives indices that correlate with the direct document
+score at ρ {{rq4.rq4a.aggregation.spearman.agg_max_abs~document|.2f}}–{{rq4.rq4a.aggregation.spearman.agg_decision_weighted~document|.2f}},
+so not every pair of strategies clears 0.70. A tone index from a small local model is therefore partly a property of
+the prompt and the model version, which any user of such scores should report.
+
+## 6.2 Agreement with human labels (H4b: refuted)
+
+On the {{rq4.rq4b.n}}-sentence FOMC test split the LLM's three-class macro-F1 is {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}
+[{{rq4.rq4b.rows[scorer=llm].f1_lo|.2f}}, {{rq4.rq4b.rows[scorer=llm].f1_hi|.2f}}]. It exceeds the dictionary by {{rq4.rq4b.rows[scorer=llm].df1_vs_ref|.2f}} (CI
+[{{rq4.rq4b.rows[scorer=llm].df1_lo|.2f}}, {{rq4.rq4b.rows[scorer=llm].df1_hi|.2f}}]) but misses the pre-registered floor of 0.50, so H4b is refuted. The fine-tuned
+XLM-R, trained only on the LLM's labels for corpus sentences (no FOMC data), reaches {{rq4.rq4b.rows[scorer=ft].macro_f1|.2f}}. Our dictionary
+scores {{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}}, well below the ≈ 0.50 reported for a rule-based baseline by @shah2023trillion; the two
+rule sets differ, and ours returns neutral whenever hawkish and dovish matches balance or none appear, which is the
+case for almost every FOMC test sentence. The LLM also over-predicts the neutral class relative to the human labels.
+FOMC-RoBERTa, the in-distribution reference (≈ 0.72), could not be run (gated model).
+
+![Figure 4. RQ4b: macro-F1 on the FOMC test split, with published reference values (dotted).](results/figures/fig_rq4b_fomc_f1.png)
+
+## 6.3 Contamination (H4c)
+
+No RQ1 or RQ2 finding is robust. Pooled across powered banks, the LLM's log-loss gain over the dictionary is
+{{rq1.rq4c.pooled_dll_llm_vs_dict.dll|.3f}} [{{rq1.rq4c.pooled_dll_llm_vs_dict.lo|.3f}}, {{rq1.rq4c.pooled_dll_llm_vs_dict.hi|.3f}}]
+on original text and {{rq1.rq4c.masked_pooled_dll_vs_dict.dll|.3f}} [{{rq1.rq4c.masked_pooled_dll_vs_dict.lo|.3f}},
+{{rq1.rq4c.masked_pooled_dll_vs_dict.hi|.3f}}] on masked text: there is no effect to preserve, so the masked check
+cannot pass. The post-cutoff window (after {{rq1.rq4c.cutoff}}) holds {{rq1.rq4c.post_cutoff.n}} decisions and
+{{rq2.rq4c.post_cutoff_pooled_fx_beta.n}} FX events; its estimates overlap the full-sample intervals but are too wide
+to be informative. Masking leaves the ECB point estimate nearly unchanged, which is consistent with, but does not
+prove, the absence of outcome memorisation for that series.
 
 # 7. Transfer to Southeast Asia
 
-<!-- RESULTS:RQ5 -->
+**H5 is untestable as pre-registered.** It requires FOMC-RoBERTa, which could not be run, and the BI-en and BNM-en
+silver subsets have {{rq5.dict.bi_en_n}} sentences each, under the minimum of 50. Descriptively, on the 60 MAS silver
+sentences the dictionary's macro-F1 is {{rq5.rows[group=mas-en,scorer=dict].silver_macro_f1|.2f}} against {{rq5.rows[group=mas-en,scorer=dict].fomc_macro_f1|.2f}} on
+FOMC sentences, so it does not lose performance on MAS (drop {{rq5.rows[group=mas-en,scorer=dict].drop|.2f}}). The LLM and the fine-tuned model
+score higher on silver than on FOMC labels ({{rq5.rows[group=mas-en,scorer=llm].silver_macro_f1|.2f}} and {{rq5.rows[group=mas-en,scorer=ft].silver_macro_f1|.2f}} on
+MAS), but the silver labels come from the same model family, so these numbers measure self-agreement rather than
+accuracy and support no claim. The two silver passes agree on {{rq5.label_agreement.pass_a_eq_b|pct}} of sentences.
+In a multilingual sentence-embedding space, MAS sentences are the farthest from Fed sentences (mean cosine distance
+{{rq5.distance[group=mas-en].mean_cosine_distance_to_fed|.2f}} vs {{rq5.distance[group=ecb-en].mean_cosine_distance_to_fed|.2f}}
+for the ECB), consistent with MAS's exchange-rate framing.
 
 # 8. Threats to validity
 
@@ -177,11 +312,22 @@ needs the ladder (Section 9).
 All code is Apache-2.0 at <https://github.com/thanatchon36/cbtone>. `make reproduce` rebuilds every table
 and figure from the committed corpus snapshot (scores are cached by content hash, so a re-run makes no new
 LLM calls). The pre-registration is the git tag `prereg-v1`; every later deviation is listed in
-`docs/DECISIONS.md` (D17–D19) and every data anomaly in `docs/ANOMALIES.md`. Hardware: Apple M4, 16 GB,
-no CUDA (`results/hardware.json`); per-stage wall time is in `results/timing.json`.
+`docs/DECISIONS.md` (D17–D20) and every data anomaly in `docs/ANOMALIES.md`. LLM scores were computed on a desktop RTX 4070 Ti
+(D20); the fine-tuned model was trained on an Apple M4 laptop (16 GB, MPS) in 6 minutes (`results/hardware.json`,
+`results/ft_train_report.json`); per-stage wall time is in `results/timing.json`.
 
 # 10. Conclusion
 
-<!-- RESULTS:CONCLUSION -->
+A small LLM run on a consumer desktop GPU (or, more slowly, a laptop) produces tone indices that look plausible over time (Figure 5) and agree
+with human FOMC labels better than a simple dictionary, yet on every pre-registered test of *policy signal* (next-decision
+prediction, market reaction, cross-lingual consistency, prompt stability) the evidence is negative or underpowered.
+Three lessons follow for practitioners. First, persistence is a strong baseline for decision prediction, and gains from
+text are small and bank-specific. Second, LLM tone depends on the prompt and the model version, so a single-prompt
+index should not be treated as a measurement without a stability check. Third, for Southeast Asian banks the binding
+constraint is sample size: BI's text begins in 2016, BNM rarely moves, and MAS met only twice a year until 2024, so
+BNM and MAS are underpowered for decision prediction and the silver evaluation sets are small. The library, the masked and post-cutoff checks, and every number in this paper
+can be regenerated with `make reproduce`.
+
+![Figure 5. LLM tone index of each bank's primary decision document.](results/figures/fig_tone_timeseries.png)
 
 # References

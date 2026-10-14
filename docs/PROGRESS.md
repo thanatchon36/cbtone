@@ -77,6 +77,14 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - **H4c**: no RQ1/RQ2 finding is robust (masked check fails; post-cutoff N small).
 - **H5 untestable** (FOMC-RoBERTa gated; BI-en/BNM-en 35 sentences < 50).
 
+## Phase 5 — closed 2026-10-14 (write-up)
+- [x] `paper/paper.md` results, abstract and conclusion; every number injected from summary.json (`make paper` →
+      paper/paper.pdf via pandoc + typst). `build.py` gained compound selectors and `yn`/`pct1` formats
+- [x] Refuted hypotheses reported as refuted; MAS extractor accuracy described as development accuracy (D14)
+- [x] `docs/EXEC_SUMMARY.md` (one page, incl. GPU vs laptop cost)
+- [x] `docs/posts/`: launch + 9 single-finding drafts (706–1,030 chars each, ≤ 1,300)
+- [x] README results table + headline chart; docs site results/FAQ/reproducibility updated (`mkdocs build --strict` ok)
+
 ## Waiting on owner
 - **git push is blocked:** `~/.claude/settings.json` has `"deny": ["Bash(git push *)"]`, and a deny overrides
   allow rules. All work is committed locally. To publish, remove that deny rule (or run `! git push origin main --tags`).

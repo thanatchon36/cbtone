@@ -34,8 +34,9 @@ Every LLM result comes with a masked-text variant and a post-cutoff split, and p
 claims are made only where both survive. See [Scorers](scorers.md#contamination).
 
 **Where are the results?**
-Not yet available. The study is pre-registered; results will be reported against the
-pre-registered thresholds, including those that refute it.
+In the [paper](https://github.com/thanatchon36/cbtone/blob/main/paper/paper.pdf) and the [one-page summary](https://github.com/thanatchon36/cbtone/blob/main/docs/EXEC_SUMMARY.md). Every
+testable hypothesis (H1–H4) was refuted at its pre-registered threshold; H5 was untestable because a gated reference
+model could not be run.
 
 **What happens when a number looks too good?**
 A headline metric at exactly 0, 1 or 100 %, a correlation above 0.95, or a value more than 2x

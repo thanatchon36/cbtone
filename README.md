@@ -4,8 +4,9 @@ Hawkish/dovish tone signals from **public** central-bank communication, with the
 machinery to test whether those signals carry information about later policy decisions and market
 reactions.
 
-> **Status: pre-release (0.1.0 in preparation).** The library and the pre-registered study are
-> being built in the open; headline results do not exist yet (see [Results](#results)).
+> **Status: 0.1.0.** The pre-registered study is complete; every testable hypothesis was refuted
+> (see [Results](#results)). Paper: [`paper/paper.pdf`](paper/paper.pdf); one-page summary:
+> [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
 
 ## Why this exists
 
@@ -89,14 +90,25 @@ Known gaps are listed in `docs/PROGRESS.md` and `docs/ANOMALIES.md`.
 
 ## Results
 
-<!-- RESULTS: filled in Phase 5. Headline chart (figure path) and the summary table go here. -->
+Pre-registered at tag `prereg-v1`; local LLM `qwen3:4b` (Ollama); seven headline banks; numbers from
+`results/summary.json` (regenerate with `make reproduce`).
 
-*No results are reported yet.* The study is pre-registered and will be reported against its
-thresholds, including any result that contradicts the pre-registration. Every LLM result will
-carry a masked-text variant and a post-cutoff split. Headline numbers appear here only once
-`make reproduce` has produced them.
+| Hypothesis | Verdict | Key number |
+|---|---|---|
+| H1: tone improves next-decision prediction over persistence | **refuted** | 0 of 4 powered banks (ECB ΔLL +0.058, Holm *p* 0.13) |
+| H2a: tone surprise explains FX / 2Y moves beyond placebo | **refuted** | 1 of 11 cells (RBA 2Y, R² 0.10) |
+| H2b: LLM beats the dictionary on R² | **refuted** | 0 of 11 cells after Holm |
+| H3: native-language and English scores agree (ρ ≥ 0.70) | **refuted** | BI ρ 0.61, BNM ρ 0.53; stance flips ≈ 2 % |
+| H4a: stable across five prompt paraphrases (α ≥ 0.667) | **refuted** | α 0.65 (documents), 0.42 (sentences) |
+| H4b: FOMC macro-F1 ≥ 0.50 and above the dictionary | **refuted** | 0.48 vs 0.27 |
+| H4c: findings robust to masking and post-cutoff split | no robust finding | — |
+| H5: Fed-calibrated scorers transfer poorly to MAS | **untestable** | FOMC-RoBERTa gated; SEA subsets < 50 |
 
-<!-- RESULTS-CHART: ![Headline chart](results/figures/headline.png) -->
+![Gain in next-decision log-loss over persistence, by bank (RQ1)](results/figures/fig_rq1_dll.png)
+
+Anomalies (for example BI's AUROC of 1.000 on 20 cases) are explained in
+[`docs/ANOMALIES.md`](docs/ANOMALIES.md); deviations from the pre-registration in
+[`docs/DECISIONS.md`](docs/DECISIONS.md).
 
 ## Disclaimer
 

@@ -1,8 +1,9 @@
 """Build paper/paper.pdf: inject numbers from results/summary.json into paper/paper.md.
 
-Placeholders: ``{{dotted.path}}`` or ``{{dotted.path|fmt}}`` (``fmt`` = a Python format spec, e.g.
-``.2f``, or ``pct`` for a percentage). List elements are addressed by a ``key=value`` selector,
-e.g. ``{{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}``. A missing key fails the build; no number in
+Placeholders: ``{{dotted.path}}`` or ``{{dotted.path|fmt}}``. ``fmt`` is a Python format spec
+(e.g. ``.2f``), ``pct`` / ``pct1`` for a percentage, or ``yn`` for yes/no. List elements are
+addressed by one or more ``key=value`` selectors, e.g. ``{{rq4.rq4b.rows[scorer=llm].macro_f1}}``
+or ``{{rq1.rows[bank=ecb,scorer=llm].auroc}}``. A missing key fails the build; no number in
 the paper is typed by hand (MISSION §5).
 """
 
@@ -21,7 +22,7 @@ SRC = ROOT / "paper" / "paper.md"
 OUT_MD = ROOT / "paper" / "paper.filled.md"
 OUT_PDF = ROOT / "paper" / "paper.pdf"
 TOKEN = re.compile(r"\{\{\s*([^}|]+?)\s*(?:\|\s*([^}]+?)\s*)?\}\}")
-STEP = re.compile(r"([^.\[]+)(?:\[([^=\]]+)=([^\]]+)\])?")
+STEP = re.compile(r"([^.\[]+)(?:\[([^\]]+)\])?")
 
 
 def lookup(data: Any, path: str) -> Any:
@@ -30,12 +31,13 @@ def lookup(data: Any, path: str) -> Any:
         m = STEP.fullmatch(part)
         if m is None:
             raise KeyError(path)
-        key, sel_k, sel_v = m.groups()
+        key, sel = m.groups()
         cur = cur[key]
-        if sel_k is not None:
-            matches = [x for x in cur if str(x.get(sel_k)) == sel_v]
+        if sel is not None:
+            conds = [c.split("=", 1) for c in sel.split(",")]
+            matches = [x for x in cur if all(str(x.get(k)) == v for k, v in conds)]
             if len(matches) != 1:
-                raise KeyError(f"{path}: {len(matches)} rows match {sel_k}={sel_v}")
+                raise KeyError(f"{path}: {len(matches)} rows match [{sel}]")
             cur = matches[0]
     return cur
 
@@ -45,6 +47,10 @@ def fmt(value: Any, spec: str | None) -> str:
         return "n/a"
     if spec == "pct":
         return f"{100 * float(value):.0f}%"
+    if spec == "yn":
+        return "yes" if value else "no"
+    if spec == "pct1":
+        return f"{100 * float(value):.1f}%"
     if spec:
         return format(value, spec)
     return str(value)

@@ -27,5 +27,7 @@
   [ANOMALIES.md](https://github.com/thanatchon36/cbtone/blob/main/docs/ANOMALIES.md); the pre-registered questions in
   [RESEARCH_QUESTIONS.md](https://github.com/thanatchon36/cbtone/blob/main/docs/RESEARCH_QUESTIONS.md).
 
-<!-- RESULTS: filled in Phase 5. Link the committed results/summary.json and the final
-`make reproduce` run (date, commit, wall time) here. -->
+All headline numbers are in [`results/summary.json`](https://github.com/thanatchon36/cbtone/blob/main/results/summary.json); figures and their CSV table
+views are in `results/figures/`. The sanity gate's report is `results/SANITY.md`.
+
+<!-- REPRODUCE-RUN: date, commit and wall time of the fresh-clone `make reproduce` run (Phase 6). -->
