@@ -16,6 +16,7 @@ Outputs (identifiers and scores only; no licensed text) go to results/scores/.
 from __future__ import annotations
 
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
 import polars as pl
@@ -25,7 +26,7 @@ from cbtone.eval.anchors import load_fomc_anchor
 from cbtone.pipeline import Timer
 from cbtone.scorers.base import ScoreCache, ToneScore
 from cbtone.scorers.dictionary import DictionaryScorer
-from cbtone.scorers.llm import LLMScorer
+from cbtone.scorers.llm import LLMError, LLMScorer
 
 OUT = Path("results/scores")
 SEED = 20261014
@@ -157,36 +158,48 @@ def rq4a_sentence_sample(frame: pl.DataFrame, sents: pl.DataFrame) -> pl.DataFra
     )
 
 
+def _safe(unit: str, config: str, fn: Callable[[], ToneScore]) -> dict[str, object]:
+    """Score, or record the failure (LLMError) with a null index; never a silent default."""
+    try:
+        return {**_row(unit, config, fn()), "error": None}
+    except LLMError as e:
+        return {"unit": unit, "config": config, "index": None, "label": None, "error": str(e)[:200]}
+
+
 def rq4a(cache: ScoreCache, frame: pl.DataFrame, sents: pl.DataFrame) -> None:
     sample = rq4a_sentence_sample(frame, sents)
     sc = _scorers(cache, list(CONFIGS))
     rows = []
     for r in sample.iter_rows(named=True):
         for name, s in sc.items():
-            rows.append(
-                {
-                    **_row(r["unit"], name, s.score_text(r["text"], r["language"])),
-                    "bank": r["bank"],
-                    "language": r["language"],
-                    "doc_type": r["doc_type"],
-                }
-            )
-    pl.DataFrame(rows).write_parquet(OUT / "rq4a_sentences.parquet")
+            text, lang = r["text"], r["language"]
+            row = _safe(r["unit"], name, lambda s=s, t=text, g=lang: s.score_text(t, g))
+            rows.append({**row, "bank": r["bank"], "language": lang, "doc_type": r["doc_type"]})
+    pl.DataFrame(rows, infer_schema_length=None).write_parquet(OUT / "rq4a_sentences.parquet")
     prim = select(frame, HEADLINE)
-    per = N_RQ4A_DOCS // len(HEADLINE)
+    base, extra = divmod(N_RQ4A_DOCS, len(HEADLINE))
     docs_f = pl.concat(
-        [prim.filter(pl.col("bank") == b).sort("date").sample(per, seed=SEED) for b in HEADLINE]
+        [
+            prim.filter(pl.col("bank") == b).sort("date").sample(base + (i < extra), seed=SEED)
+            for i, b in enumerate(HEADLINE)
+        ]
     )
     docs = to_documents(docs_f)
     drows, arows = [], []
     for d in docs:
         for name, s in sc.items():
-            drows.append({**_row(d.doc_id, name, s.score_document(d, cap=CAP)), "bank": d.bank})
+            row = _safe(d.doc_id, name, lambda s=s, d=d: s.score_document(d, cap=CAP))
+            drows.append({**row, "bank": d.bank})
         for strategy in ("mean", "decision_weighted", "max_abs"):
-            agg = sc["P1"].score_document_by_sentences(d, strategy, cap=CAP)
-            arows.append({**_row(d.doc_id, f"agg_{strategy}", agg), "bank": d.bank})
-    pl.DataFrame(drows).write_parquet(OUT / "rq4a_docs.parquet")
-    pl.DataFrame(arows).write_parquet(OUT / "rq4a_aggregation.parquet")
+            p1 = sc["P1"]
+            row = _safe(
+                d.doc_id,
+                f"agg_{strategy}",
+                lambda d=d, st=strategy, p1=p1: p1.score_document_by_sentences(d, st, cap=CAP),
+            )
+            arows.append({**row, "bank": d.bank})
+    pl.DataFrame(drows, infer_schema_length=None).write_parquet(OUT / "rq4a_docs.parquet")
+    pl.DataFrame(arows, infer_schema_length=None).write_parquet(OUT / "rq4a_aggregation.parquet")
 
 
 def main(jobs: list[str]) -> None:
