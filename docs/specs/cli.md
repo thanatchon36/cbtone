@@ -5,7 +5,7 @@ commands and their style), `src/cbtone/corpus.py`, `src/cbtone/pipeline.py`, `sr
 `src/cbtone/events/engine.py` and `tests/test_cli.py` (test patterns: `CliRunner`, monkeypatched fakes, no network).
 
 ## Commands to add (`src/cbtone/cli.py`)
-- `cbtone score --scorer {dict,fomc-roberta,llm,ft} [BANKS...] [--native] [--masked] [--prompt P1] [--model qwen3:4b] [--temperature 0] [--cap 6000] [--quick] [--out results/scores/<scorer>[-masked].parquet]`
+- `cbtone score --scorer {dict,fomc-roberta,llm,ft} [BANKS...] [--native] [--masked] [--prompt P1] [--model qwen3:4b] [--temperature 0] [--cap 3000 (D18)] [--evidence] [--quick] [--out results/scores/<scorer>[-masked].parquet]`
   - Docs: `corpus.primary(banks, native=...)`; `--quick` uses `corpus.quick_sample`.
   - Scorer: `scorers.get_scorer(...)`, with a shared `ScoreCache()`.
   - Runs `pipeline.score_documents` inside `pipeline.Timer().stage("score:<scorer>[:masked]")`.

@@ -29,3 +29,10 @@ fetch:  ## fetch raw documents for configured banks (polite, cached)
 
 snapshot:  ## build data/corpus parquet snapshot
 	$(RUN) cbtone snapshot
+
+docs:  ## build the documentation site (mkdocs-material; needs the [docs] extra)
+	$(RUN) --extra docs mkdocs build --strict
+
+.PHONY: quick-ci
+quick-ci:  ## dictionary scorer end-to-end on the committed mini corpus (no network)
+	$(RUN) cbtone score --scorer dict fed rba --corpus tests/fixtures/corpus_mini --out /tmp/quick.parquet

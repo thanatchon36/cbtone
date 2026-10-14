@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.11"
+      - run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    # The environment name must match the one configured on PyPI.
+    environment:
+      name: pypi
+      url: https://pypi.org/project/cbtone/
+    permissions:
+      id-token: write # required for PyPI trusted publishing (OIDC); no API token is stored
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      # NOTE FOR THE OWNER: this job only works after a trusted publisher is configured on PyPI
+      # (pypi.org > project "cbtone" > Publishing, or "pending publisher" before the first
+      # upload) with: owner thanatchon36, repository cbtone, workflow release.yml, environment
+      # pypi. Create the `pypi` environment under GitHub repository Settings > Environments
+      # (add required reviewers if you want a manual approval gate). Nothing here can set that up.
+      - uses: pypa/gh-action-pypi-publish@release/v1

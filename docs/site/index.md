@@ -1,0 +1,45 @@
+# cbtone
+
+`cbtone` turns **public** central-bank communications (statements, minutes, press-conference
+text) into hawkish/dovish tone signals, and provides the evaluation tools to test whether those
+signals carry information about later policy decisions and market reactions.
+
+```bash
+pip install cbtone
+cbtone fetch fed ecb mas
+cbtone snapshot
+cbtone score --scorer llm
+cbtone events
+```
+
+(`snapshot` builds the corpus from the download cache; see the [CLI reference](cli.md).)
+
+## What is in the box
+
+- **Adapters** that fetch documents politely (robots.txt, at most one request per 2 s per host,
+  cached with SHA-256) into one schema: [Adapters](adapters.md).
+- **Four scorer families**: dictionary, finance-tuned transformer, local LLM, fine-tuned small
+  model, all returning the same `ToneScore`: [Scorers](scorers.md).
+- **Evaluation**: rolling-origin ordered-logit tests of policy signal, event studies around
+  releases, cross-lingual and contamination checks: [Concepts](concepts.md).
+- **A pre-registered study** run with it. Its questions and thresholds are fixed in
+  [RESEARCH_QUESTIONS.md](https://github.com/thanatchon36/cbtone/blob/main/docs/RESEARCH_QUESTIONS.md).
+
+<!-- RESULTS: filled in Phase 5. Headline chart and summary table go here. -->
+
+*No results are reported yet.*
+
+## Where to start
+
+| I want to... | Go to |
+|---|---|
+| score my own text | [Cookbook: score your own text](cookbook.md#score-your-own-text) |
+| add a central bank | [Cookbook: add a central bank in 30 lines](cookbook.md#add-a-central-bank-in-30-lines) |
+| run an event study | [Cookbook: run an event study](cookbook.md#run-an-event-study) |
+| rebuild the paper's numbers | [Reproducibility](reproducibility.md) |
+
+## Disclaimer
+
+Independent open-source project; public documents only; represents no institution's view; not
+investment advice. The author works at a central bank, and the project never comments on any
+bank's policy choices. Full text: [DISCLAIMER.md](https://github.com/thanatchon36/cbtone/blob/main/DISCLAIMER.md).

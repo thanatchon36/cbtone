@@ -7,7 +7,7 @@ __pycache__/
 .coverage
 htmlcov/
 dist/
-site/
+/site/
 .DS_Store
 data/raw/**/*.bin
 data/cache/

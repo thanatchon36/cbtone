@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use cbtone in your work, please cite it as below."
+title: "cbtone"
+abstract: >-
+  Hawkish/dovish tone signals from public central-bank communication
+  (dictionary, transformer, local-LLM and fine-tuned scorers), with
+  contamination-aware evaluation and event-study tools.
+type: software
+authors:
+  - family-names: Chongmankhong
+    given-names: Thanatchon
+version: 0.1.0
+# TODO: set date-released (YYYY-MM-DD) when v0.1.0 is tagged.
+# date-released: "TODO"
+# TODO: add the Zenodo DOI after the first archived release.
+# doi: "TODO"
+license: Apache-2.0
+repository-code: "https://github.com/thanatchon36/cbtone"
+url: "https://github.com/thanatchon36/cbtone"
+keywords:
+  - central banks
+  - monetary policy
+  - NLP
+  - LLM
+  - event study
+  - finance

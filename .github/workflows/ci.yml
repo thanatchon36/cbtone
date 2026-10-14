@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: lint + test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      # Core install only: no extras (no torch, no transformers, no Ollama).
+      - run: uv sync
+      - run: make lint
+      # pytest deselects tests marked `network` by default (pyproject addopts).
+      - run: make test
+
+  quick:
+    name: quick (dictionary scorer on the mini corpus)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      - run: uv sync
+      # No network: scores the committed Fed + RBA fixture corpus with the dictionary scorer.
+      - run: make quick-ci

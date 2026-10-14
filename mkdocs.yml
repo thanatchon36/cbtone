@@ -1,0 +1,37 @@
+site_name: cbtone
+site_description: Hawkish/dovish tone signals from public central-bank communication.
+site_url: https://thanatchon36.github.io/cbtone/
+repo_url: https://github.com/thanatchon36/cbtone
+repo_name: thanatchon36/cbtone
+docs_dir: docs/site
+site_dir: site
+strict: true
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Concepts: concepts.md
+  - Adapters: adapters.md
+  - Scorers: scorers.md
+  - CLI reference: cli.md
+  - Cookbook: cookbook.md
+  - Reproducibility: reproducibility.md
+  - FAQ: faq.md
