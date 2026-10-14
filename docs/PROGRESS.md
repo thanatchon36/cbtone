@@ -2,38 +2,56 @@
 
 Resume with: "Read MISSION.md, docs/PROGRESS.md, docs/DECISIONS.md and continue".
 
-## Phase 1 — in progress (last update 2026-10-14)
+## Phase 1 — closed 2026-10-14
 
-Shipped (committed):
-- [x] Scaffold, `Document` schema, `PoliteFetcher` (robots, 2 s/host + Crawl-delay, cache,
-      block-page detection, form POST cached per body)
-- [x] Text utils: clean, langdetect, split (en/id/ms/zh/th), mask; snapshot builder with
-      per-(bank, doc_type) redistribution (D8)
-- [x] Decisions: BIS rates + holds from meeting dates; MAS stance extractor (gold set pending MAS text)
-- [x] Markets: FX (Yahoo), yields US/EA/UK/AU (D9), event windows
-- [x] Literature: 33 sources, REVIEW.md, refs.bib, gap table
-- [x] Adapters, each with offline tests (≥ 96 % coverage) and `docs/sources/<bank>.md`:
-      Fed, ECB, BoE, RBA, BNM, BI (latest index page; history via POST paging in progress),
-      BoT (opt-in, 2021→), MAS (manual files, D7), PBoC (manual files, cut from headline, D10)
-- [x] `LICENSES.md` per-bank table; `registry.REDISTRIBUTABLE` mirrors it (fail closed)
-- [x] CLI: `fetch`, `snapshot` (cache only), `decisions`, `markets`
-- [x] FOMC anchor loader (pinned HF revision, CC-BY-NC, evaluation only)
-- [x] `docs/ANOMALIES.md` A1–A4
+Corpus snapshot `2026-10-14+ed5a49c2…` (`data/corpus/VERSION`): 2,935 documents.
 
-Headline set (D10): Fed, ECB, BoE, RBA, MAS, BI, BNM. Languages en/id/ms (+ th opt-in).
-MAS drops out if the manual files are not supplied before `prereg-v1`.
+| Bank | Docs | Text coverage | Redistributable |
+|---|---|---|---|
+| Fed | 535 | statements, minutes, press conferences 2000→ | yes |
+| ECB | 575 | statements 1999→, press conferences (Q&A) | statements yes; press conferences no (D8) |
+| BoE | 567 | statements 2000→, minutes 2000→ | no |
+| RBA | 452 | statements 2000→, minutes 2006→, press conferences 2024→ | yes (CC BY 4.0) |
+| MAS | 62 | MPS 2001–Apr 2026 via Internet Archive (D11) | no |
+| BI | 256 | statements Apr 2016→, en/id (A5) | no |
+| BNM | 280 | MPS 2004→, en/ms | no |
+| BoT (opt-in) | 143 | statements + minutes 2021→, th/en (A4) | no |
+| PBoC (exploratory) | 65 | MPC communiqués, 53 % of zh 2010→ (D15) | no |
 
-Remaining in Phase 1:
-- [ ] BI history via `PoliteFetcher.post` paging (subagent), then `cbtone fetch bi`
-- [ ] Full fetch for fed/ecb/boe/rba/bnm/bot (running), then `cbtone snapshot` → data/corpus + VERSION
-- [ ] `cbtone decisions`; cross-check meeting dates against bank calendars
-- [ ] `cbtone markets`
-- [ ] SEA silver-set sampling (200 sentences, BI/BNM/MAS; labels in Phase 3)
-- [ ] Full `make test lint`; push
+Headline set (D10, D15): Fed, ECB, BoE, RBA, MAS, BI, BNM. Languages en/id/ms (+ th opt-in, zh exploratory).
 
-Open issues / decisions not yet in DECISIONS.md:
-- MAS (D7) and PBoC (D10): the author either downloads the files in `docs/sources/NEEDED.md` by
-  hand or approves Internet Archive copies.
-- The events engine spec must key documents with `published_at_utc=None` on the release date (A1).
+Shipped:
+- [x] Adapters for all nine banks, each with offline tests and `docs/sources/<bank>.md`. Every adapter was
+      cross-checked against the bank's meeting schedule (statements/year); the gaps found were fixed or recorded.
+- [x] `PoliteFetcher` (robots, rate limits, Crawl-delay, cache, block-page rejection, form POST)
+- [x] CLI: `fetch`, `snapshot` (cache only, per-(bank, doc_type) redistribution, short-document QA),
+      `decisions`, `markets`, `sample-silver`
+- [x] `decisions.parquet`: 1,558 rows. BIS rate changes + holds from meeting dates. MAS rows come from MAS's own
+      decision table (D14), and the text extractor is used only after it (2 rows in 2026)
+- [x] Markets: 17 daily series; Yahoo FX bad ticks filtered (A7). `data/raw/markets/daily.parquet` is not committed
+- [x] FOMC anchor loader (CC-BY-NC, evaluation only, pinned revision)
+- [x] SEA silver sample: `data/labels/sea_silver_sample.csv`, 200 sentence ids (MAS 60, BI en/id 35+35,
+      BNM en/ms 35+35), seed 20261014. Labels come in Phase 3
+- [x] MAS stance gold set (labels from MAS's table, D13). Extractor accuracy is development accuracy only (D14)
+- [x] `make test lint`: 361 tests, 96 % coverage, ruff + mypy clean
+- [x] DECISIONS D1–D15, ANOMALIES A1–A7, LICENSES per-bank table
+
+Cut / known gaps:
+- BI before Apr 2016 (no index; A5). BoT before 2021 (A4). PBoC 2016–2022 (anti-bot shells; D15)
+- MAS 27 Jul 2026 (all captures are maintenance pages) and 14 Oct 2026 (not yet archived)
+- BoE minutes of the special 19 Mar 2020 meeting (not in the sitemap)
+- FX before Dec 2003 for most pairs, so MAS 2001–2003 statements have no FX window (A7)
+
+## Phase 2 — next
+
+- [ ] `docs/RESEARCH_QUESTIONS.md`: RQ1–RQ5 with thresholds from `docs/literature/REVIEW.md` §2 benchmark
+      table; tag `prereg-v1` **before any full-corpus scoring**
+- [ ] Events-engine spec. It must key documents with `published_at_utc=None` on the release date (A1),
+      and flag day-level timing (BI, MAS, PBoC, RBA before 2008, BoE specials)
+- [ ] Pre-register the analysis restrictions already decided: BoE tone uses minutes for 2000–2012 (A6);
+      BoE event-study robustness on 2013→ (A3); the RQ2 yield leg only for Fed/ECB/BoE/RBA (D9)
+- [ ] `cbtone doctor` + `results/hardware.json` before Phase 3
+
+Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.
-- data/raw/boe and data/raw/rba also hold yield files from the markets module (cache keys are URL hashes, so no collision).
+- The BoE ~100-char decision releases for 2000–2006 are complete, not truncated (A6).
