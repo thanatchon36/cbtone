@@ -1,0 +1,11 @@
+# Headline configuration for the paper. See docs/DECISIONS.md.
+seed: 20261014
+include_bot: false          # Bank of Thailand is opt-in; excluded from headline results
+banks: [fed, ecb, boe, rba, mas, bi, bnm, pboc]
+start_year: 2000
+end_year: 2026
+event_window: {pre: -1, post: 1}   # [t-1 close, t+1 close]
+llm:
+  backend: ollama
+  model: qwen3:4b
+  temperature: 0.0
