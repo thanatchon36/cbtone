@@ -132,9 +132,17 @@ def decisions(
     """Build decisions.parquet from BIS policy rates, meeting dates and MAS statements."""
     from cbtone.decisions.bis import fetch_bis_csv
     from cbtone.decisions.build import build_from_corpus
+    from cbtone.decisions.mas import parse_decision_table
+    from cbtone.sources.mas import fetch_decision_table
 
-    csv = fetch_bis_csv(PoliteFetcher(offline=offline))
-    df = build_from_corpus(csv, corpus / "documents.parquet", corpus / "decisions.parquet")
+    fetcher = PoliteFetcher(offline=offline)
+    csv = fetch_bis_csv(fetcher)
+    raw = fetch_decision_table(fetcher)
+    table = parse_decision_table(raw.content) if raw is not None else []
+    typer.echo(f"MAS decision table: {len(table)} rows ({raw.url if raw else 'unavailable'})")
+    df = build_from_corpus(
+        csv, corpus / "documents.parquet", corpus / "decisions.parquet", mas_table=table
+    )
     typer.echo(f"decisions: {df.height} rows -> {corpus / 'decisions.parquet'}")
 
 

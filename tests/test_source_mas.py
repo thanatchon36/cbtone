@@ -415,3 +415,21 @@ def test_archive_can_be_disabled(tmp_path: Path) -> None:
     a = MasAdapter(ff, manual_dir=tmp_path / "manual", use_archive=False)
     assert list(a.fetch(2001, 2026)) == []
     assert ff.requested == []
+
+
+def test_offline_cache_miss_is_skipped_not_fatal(tmp_path: Path) -> None:
+    pages = _sample_pages()
+    miss = FileNotFoundError("offline and not cached")
+    pages[f"{SNAP}/20251014002326id_/{U2025}"] = miss
+    adapter, _ = _archive(tmp_path, pages)
+    original_get = adapter.fetcher.get
+
+    def get(bank: str, url: str, *, refresh: bool = False) -> RawResponse:
+        if "matchType=exact" in url:  # alternatives lookup is not cached either
+            raise miss
+        return original_get(bank, url, refresh=refresh)
+
+    adapter.fetcher.get = get  # type: ignore[method-assign]
+    dates = {d.date.year for d in adapter.fetch(2001, 2026)}
+    assert 2025 not in dates and {2001, 2008} <= dates
+    assert any("not cached" in why for _, why in adapter.skipped)

@@ -156,11 +156,19 @@ def test_decisions_command(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
     seen: dict[str, object] = {}
     monkeypatch.setattr(bis, "fetch_bis_csv", lambda f: b"csv")
 
-    def fake_build(csv: bytes, docs: Path, out: Path) -> pl.DataFrame:
-        seen.update(csv=csv, docs=docs, out=out)
+    def fake_build(csv: bytes, docs: Path, out: Path, mas_table: list[object]) -> pl.DataFrame:
+        seen.update(csv=csv, docs=docs, out=out, n_table=len(mas_table))
         return pl.DataFrame({"x": [1, 2]})
 
     monkeypatch.setattr(build, "build_from_corpus", fake_build)
+    from cbtone.sources import mas as mas_src
+
+    table = (Path(__file__).parent / "fixtures/mas/decision-table-20251118.html").read_bytes()
+    monkeypatch.setattr(
+        mas_src,
+        "fetch_decision_table",
+        lambda f: RawResponse("https://web.archive.org/x", table, "text/html", "", FETCHED, True),
+    )
     monkeypatch.setattr(cli, "PoliteFetcher", FakeFetcher)
     res = runner.invoke(cli.app, ["decisions", "--corpus", str(tmp_path), "--offline"])
     assert res.exit_code == 0, res.output
@@ -169,4 +177,5 @@ def test_decisions_command(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
         "csv": b"csv",
         "docs": tmp_path / "documents.parquet",
         "out": tmp_path / "decisions.parquet",
+        "n_table": 59,
     }

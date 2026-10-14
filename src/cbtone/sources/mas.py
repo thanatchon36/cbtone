@@ -206,6 +206,31 @@ def _cdx_query(url: str, **extra: str) -> str:
     return f"{CDX_URL}?{urlencode(q, safe=':,/', quote_via=quote)}"
 
 
+TABLE_URL = f"{BASE}/monetary-policy/past-monetary-policy-decisions"
+
+
+def fetch_decision_table(fetcher: PoliteFetcher) -> RawResponse | None:
+    """Newest usable Internet Archive capture of MAS's decision table (D11, D13), or None.
+
+    Captures that are block/maintenance pages, uncached in an offline run, or lack a table are
+    skipped in favour of the next-older one. mas.gov.sg itself is never requested.
+    """
+    cdx = fetcher.get("mas", _cdx_query(TABLE_URL, matchType="exact", collapse="digest"))
+    stamps = sorted({r["timestamp"] for r in parse_cdx(cdx.content) if r.get("timestamp")})
+    for ts in reversed(stamps):
+        try:
+            raw = fetcher.get("mas", f"{WAYBACK}/web/{ts}id_/{TABLE_URL}")
+        except BlockedError as e:
+            if "interstitial" not in str(e):
+                raise
+            continue
+        except (FileNotFoundError, httpx.HTTPError):
+            continue
+        if b"<table" in raw.content:
+            return raw
+    return None
+
+
 class MasAdapter(SourceAdapter):
     """See the module docstring. Manual files first, then Internet Archive copies (D11)."""
 
@@ -254,9 +279,12 @@ class MasAdapter(SourceAdapter):
 
     def _alternatives(self, cap: Capture) -> list[Capture]:
         """Other captures of the same URL (distinct content), next-older first, then newer."""
-        raw = self.fetcher.get(
-            self.bank, _cdx_query(cap.original, matchType="exact", collapse="digest")
-        )
+        try:
+            raw = self.fetcher.get(
+                self.bank, _cdx_query(cap.original, matchType="exact", collapse="digest")
+            )
+        except FileNotFoundError:  # offline and the alternatives listing was never cached
+            return []
         ts = sorted(
             {r["timestamp"] for r in parse_cdx(raw.content) if r.get("timestamp")} - {cap.timestamp}
         )
@@ -319,6 +347,9 @@ class MasAdapter(SourceAdapter):
             return None
         except httpx.HTTPError as e:
             self.skipped.append((url, f"http error: {e}"))
+            return None
+        except FileNotFoundError:  # offline run (e.g. `cbtone snapshot`) and never cached
+            self.skipped.append((url, "offline: not cached"))
             return None
         hints = {
             "doc_type": "mps",

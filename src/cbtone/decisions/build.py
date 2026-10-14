@@ -12,7 +12,7 @@ from typing import cast
 import polars as pl
 
 from cbtone.decisions.bis import instrument, parse_bis_csv, rate_changes
-from cbtone.decisions.mas import MasStance, stance_to_direction
+from cbtone.decisions.mas import MasStance, TableDecision, stance_to_direction
 from cbtone.decisions.schema import Decision, Direction
 from cbtone.schema import Bank
 
@@ -155,6 +155,23 @@ def mas_decisions(
     ]
 
 
+def mas_table_decisions(rows: Iterable[TableDecision]) -> list[Decision]:
+    """MAS rows from the bank's own decision table (authoritative; D13)."""
+    return [
+        Decision(
+            bank="mas",
+            date=r.date,
+            direction=stance_to_direction(r.direction),
+            magnitude_bp=math.nan,
+            rate_after=None,
+            source="mas_table",
+            policy_instrument="S$NEER band",
+            unscheduled=r.unscheduled,
+        )
+        for r in rows
+    ]
+
+
 def _to_frame(decisions: Sequence[Decision]) -> pl.DataFrame:
     if not decisions:
         return pl.DataFrame(schema=SCHEMA)
@@ -171,13 +188,22 @@ def build_decisions(
     meetings: Iterable[tuple[str, date]] = (),
     mas_stances: Iterable[tuple[date, MasStance]] = (),
     out_path: Path | None = None,
+    *,
+    mas_table: Iterable[TableDecision] = (),
 ) -> pl.DataFrame:
-    """Decisions table; writes parquet to ``out_path`` (e.g. data/corpus/decisions.parquet)."""
+    """Decisions table; writes parquet to ``out_path`` (e.g. data/corpus/decisions.parquet).
+
+    MAS: the bank's own decision table wherever it reaches; the text extractor only for
+    statements dated after the table's last row.
+    """
     meetings = list(meetings)
+    table = list(mas_table)
+    last = max((r.date for r in table), default=None)
     rows: list[Decision] = []
     if bis_csv is not None:
         rows += bis_decisions(bis_csv, meetings)
-    rows += mas_decisions(mas_stances)
+    rows += mas_table_decisions(table)
+    rows += mas_decisions((d, s) for d, s in mas_stances if last is None or d > last)
     df = _to_frame(rows)
     if out_path is not None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -206,8 +232,13 @@ def build_from_corpus(
     bis_csv: bytes | pl.DataFrame | None,
     documents_path: Path = Path("data/corpus/documents.parquet"),
     out_path: Path = Path("data/corpus/decisions.parquet"),
+    mas_table: Iterable[TableDecision] = (),
 ) -> pl.DataFrame:
     docs = pl.read_parquet(documents_path)
     return build_decisions(
-        bis_csv, meetings_from_documents(docs), mas_stances_from_documents(docs), out_path
+        bis_csv,
+        meetings_from_documents(docs),
+        mas_stances_from_documents(docs),
+        out_path,
+        mas_table=mas_table,
     )

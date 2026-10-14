@@ -10,7 +10,7 @@ from pydantic import BaseModel, ConfigDict
 from cbtone.schema import Bank
 
 Direction = Literal["hike", "hold", "cut"]
-DecisionSource = Literal["bis", "bank", "mas_text"]
+DecisionSource = Literal["bis", "bank", "mas_table", "mas_text"]
 
 
 class Decision(BaseModel):

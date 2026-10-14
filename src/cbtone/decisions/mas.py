@@ -10,7 +10,10 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from datetime import date, datetime
 from typing import Literal
+
+from bs4 import BeautifulSoup
 
 Stance = Literal["tighten", "maintain", "ease"]
 Parameter = Literal["slope", "width", "centre"]
@@ -27,6 +30,14 @@ _RETRO = re.compile(
     r"|march) (?:19|20)\d\d|at (?:its|the) (?:previous|last))\b",
     re.I,
 )
+# Future/decision sentences announce today's decision, even when they cite the previous setting.
+_DECIDES = re.compile(r"\b(?:will|decided)\b", re.I)
+_MONTH_YEAR = re.compile(
+    r"\b(?:january|february|march|april|may|june|july|august|september|october|november"
+    r"|december)\s+(?:19|20)\d\d\b|\blast year\b",
+    re.I,
+)
+_FROM_ZERO = re.compile(r"\bfrom\b[^.;]{0,40}\bzero\b[^.;]*?\bto\b", re.I)
 _TOPIC = re.compile(r"neer|policy band|appreciation|slope|re-?cent", re.I)
 
 _TIGHTEN_SLOPE = re.compile(
@@ -36,14 +47,20 @@ _EASE_SLOPE = re.compile(
     rf"\b(?:reduce|lower|decrease|trim|flatten|cut|ease)[a-z]*\W+{_GAP}{_SLOPE_NOUN}", re.I
 )
 _ZERO = re.compile(
-    r"\bzero\s+(?:per\s?cent|%)|\bzero\s+appreciation|\bappreciation\s+to\s+zero", re.I
+    r"(?<!from )\bzero\s+(?:per\s?cent|%)|\bzero\s+appreciation|\bappreciation\s+to\s+zero",
+    re.I,
 )
+_PASSIVE = rf"{_SLOPE_NOUN}\W+{_GAP}(?:will\s+be|is\s+being|has\s+been|to\s+be)\s+"
+_TIGHTEN_PASSIVE = re.compile(rf"{_PASSIVE}(?:increased|raised|steepened)", re.I)
+_EASE_PASSIVE = re.compile(rf"{_PASSIVE}(?:reduced|lowered|decreased|flattened)", re.I)
 _MAINTAIN = re.compile(
     rf"\b(?:maintain|continue|keep|retain|leave)[a-z]*\W+{_GAP}"
     rf"(?:{_SLOPE_NOUN}|policy band|appreciation|S\$NEER|current policy|prevailing|zero)",
     re.I,
 )
-_MAINTAIN_ZERO = re.compile(r"\b(?:maintain|continue|keep)[a-z]*\W+(?:[\w$\-]+\W+){0,6}?zero", re.I)
+_MAINTAIN_ZERO = re.compile(
+    r"\b(?:maintain|continue|keep)[a-z]*\W+(?:[\w$\-]+\W+){0,12}?zero", re.I
+)
 _RECENTRE = re.compile(r"\bre-?cent(?:re|er)[a-z]*\b[^.;]*", re.I)
 _UP = re.compile(r"\b(?:up|upward|upwards|higher|raise)\b", re.I)
 _DOWN = re.compile(r"\b(?:down|downward|downwards|lower|below)\b", re.I)
@@ -73,19 +90,28 @@ def _sentences(text: str) -> list[str]:
     return [s for s in re.split(r"(?<=[.!?])\s+(?=[A-Z\"'])", text) if s]
 
 
+def _is_current(s: str) -> bool:
+    if _DECIDES.search(s):
+        return True
+    return not (_RETRO.search(s) or _MONTH_YEAR.search(s))
+
+
 def _analyse(sentence: str) -> tuple[set[str], set[Parameter], bool]:
     """Return (signals, changed parameters, maintain_flag) for one sentence."""
     s = _NEGATED.sub(" ", sentence)
     signals: set[str] = set()
     params: set[Parameter] = set()
     maintain = bool(_MAINTAIN.search(s))
-    if _TIGHTEN_SLOPE.search(s):
+    if _TIGHTEN_SLOPE.search(s) or _TIGHTEN_PASSIVE.search(s):
         signals.add("tighten")
         params.add("slope")
-    if _EASE_SLOPE.search(s):
+    if _EASE_SLOPE.search(s) or _EASE_PASSIVE.search(s):
         signals.add("ease")
         params.add("slope")
-    if _ZERO.search(s) and not _MAINTAIN_ZERO.search(s):
+    if _FROM_ZERO.search(s):  # moving off a zero-appreciation path
+        signals.add("tighten")
+        params.add("slope")
+    elif _ZERO.search(s) and not _MAINTAIN_ZERO.search(s):
         signals.add("ease")
         params.add("slope")
     for m in _RECENTRE.finditer(s):
@@ -97,7 +123,7 @@ def _analyse(sentence: str) -> tuple[set[str], set[Parameter], bool]:
             signals.add("ease")
     if _WIDTH.search(s):
         params.add("width")
-    if not signals and not params:
+    if not signals and not params and _DECIDES.search(s):
         if _TIGHTEN_GENERIC.search(s) and not re.search(r"\bnot\b|\bno need\b", s, re.I):
             signals.add("tighten")
         elif _EASE_GENERIC.search(s) and not re.search(r"\bnot\b|\bno need\b", s, re.I):
@@ -108,12 +134,14 @@ def _analyse(sentence: str) -> tuple[set[str], set[Parameter], bool]:
 def mas_stance(text: str) -> MasStance:
     """Classify the policy-band decision in an MPS (or its decision paragraph)."""
     sents = [s for s in _sentences(text) if _TOPIC.search(s)]
-    current = [s for s in sents if not _RETRO.search(s)] or sents
+    analysed = [(s, *_analyse(s)) for s in sents]
+    # Prefer the decision sentences; fall back to any non-retrospective sentence.
+    decided = [a for a in analysed if _DECIDES.search(a[0]) and (a[1] or a[2] or a[3])]
+    current = decided or [a for a in analysed if _is_current(a[0])] or analysed
     signals: set[str] = set()
     params: set[Parameter] = set()
     maintain = False
-    for s in current:
-        sg, pa, mt = _analyse(s)
+    for _, sg, pa, mt in current:
         signals |= sg
         params |= pa
         maintain = maintain or mt
@@ -128,3 +156,54 @@ def mas_stance(text: str) -> MasStance:
     if maintain or params:  # width/centre-only changes carry no tighten/ease signal
         return MasStance("maintain", frozenset(params), 0.9 if maintain else 0.6)
     return MasStance("maintain", frozenset(), 0.0)
+
+
+# -- MAS's own "Past Monetary Policy Decisions" table (DECISIONS D13) ----------------------
+
+
+@dataclass(frozen=True)
+class TableDecision:
+    date: date
+    direction: Stance
+    parameters: frozenset[Parameter]
+    unscheduled: bool  # "*" in the table marks an off-cycle decision
+
+
+_TABLE_DATE = re.compile(r"(\d{1,2} [A-Z][a-z]{2} \d{4})(\*?)")
+
+
+def _table_direction(slope: str, centre: str) -> Stance:
+    s, c = slope.lower(), centre.lower()
+    tighten = "increase" in s or "upward" in c
+    ease = "reduce" in s or "set at 0" in s or "downward" in c
+    if tighten and ease:
+        raise ValueError(f"conflicting table row: slope={slope!r} centre={centre!r}")
+    return "tighten" if tighten else "ease" if ease else "maintain"
+
+
+def parse_decision_table(html: bytes) -> list[TableDecision]:
+    """Rows of MAS's decision table: date | slope | width | centre ("-" = unchanged)."""
+    table = BeautifulSoup(html, "lxml").find("table")
+    if table is None:
+        return []
+    out: list[TableDecision] = []
+    for tr in table.find_all("tr"):
+        cells = [td.get_text(" ", strip=True) for td in tr.find_all("td")]
+        m = _TABLE_DATE.match(cells[0]) if len(cells) == 4 else None
+        if m is None:
+            continue
+        slope, width, centre = cells[1:]
+        params = frozenset(
+            p
+            for p, v in (("slope", slope), ("width", width), ("centre", centre))
+            if v.strip("-\u2013 ")
+        )
+        out.append(
+            TableDecision(
+                date=datetime.strptime(m.group(1), "%d %b %Y").date(),
+                direction=_table_direction(slope, centre),
+                parameters=params,  # type: ignore[arg-type]
+                unscheduled=bool(m.group(2)),
+            )
+        )
+    return sorted(out, key=lambda r: r.date)

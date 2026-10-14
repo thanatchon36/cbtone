@@ -127,3 +127,19 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Why:** no human labeller is available, and an LLM reading the paragraph would not be
   "hand labels". The bank's own record of each decision is authoritative and independent of the extractor.
 - **Rejected:** labels made by the session model (would be silver, not gold, and correlated with the extractor's design).
+
+## D14 — MAS decisions come from MAS's own table; the text extractor is a fallback (2026-10-14)
+- **What:** `decisions.parquet` takes MAS rows (`source="mas_table"`) from MAS's "Past Monetary
+  Policy Decisions" table, using the newest usable Internet Archive capture (currently 2025-11-18, 59 decisions
+  from 2001-02-22 to 2025-10-14; `*` = unscheduled). The rule-based extractor (`source="mas_text"`) is used only for
+  statements dated after the table's last row.
+- **Why:** validation showed the extractor is not reliable enough to be the primary source.
+  - Before any fix: 15/19 on gold decision paragraphs, and 21/40 (53 %) on the full text of the
+    other 40 table-covered statements.
+  - After four general grammar fixes (passive voice; "has therefore decided"; month-year
+    back-references; "from zero … to"): 20/20 gold, 31/40 (78 %) full text.
+  - Both sets were used to design those fixes, so **no untouched test set remains**. The figures are
+    development accuracy, not validation.
+  - The bank's own record is authoritative, and the extractor is not needed where that record exists.
+- **Consequence:** at most a handful of post-table MAS decisions rely on the extractor. They are
+  flagged by `source` and reported separately. The extractor's limits go into the paper's Threats to Validity.
