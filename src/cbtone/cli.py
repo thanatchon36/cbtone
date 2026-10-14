@@ -185,7 +185,7 @@ def markets(
     """Fetch daily FX and 2y/10y yields (DECISIONS D9); not committed (Yahoo terms)."""
     import polars as pl
 
-    from cbtone.markets.fx import fetch_fx
+    from cbtone.markets.fx import clean_fx, fetch_fx
     from cbtone.markets.registry import FX_TICKERS
     from cbtone.markets.yields import fetch_all_yields
 
@@ -193,9 +193,13 @@ def markets(
     first, last = date(s, 1, 1), min(date(e, 12, 31), date.today())
     fx = fetch_fx(list(FX_TICKERS), first, last)
     ylds = fetch_all_yields(first, last, PoliteFetcher())
-    df = pl.concat([fx, ylds]).sort("series", "date")
+    df, dropped = clean_fx(pl.concat([fx, ylds]).sort("series", "date"))
     out.parent.mkdir(parents=True, exist_ok=True)
     df.write_parquet(out)
+    dropped.write_csv(out.with_name("dropped_ticks.csv"))  # series, date, reason; no prices
+    typer.echo(
+        f"markets: dropped {dropped.height} bad FX ticks -> {out.with_name('dropped_ticks.csv')}"
+    )
     typer.echo(f"markets: {df.height} rows, {df['series'].n_unique()} series -> {out}")
 
 

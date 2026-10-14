@@ -149,6 +149,7 @@ def test_markets_command_concatenates_fx_and_yields(
     res = runner.invoke(cli.app, ["markets", "--start", "2020", "--end", "2020", "--out", str(out)])
     assert res.exit_code == 0, res.output
     assert sorted(pl.read_parquet(out)["series"]) == ["US2Y", "USDSGD=X"]
+    assert (tmp_path / "dropped_ticks.csv").exists()
 
 
 def test_decisions_command(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):

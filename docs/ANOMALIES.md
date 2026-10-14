@@ -47,3 +47,12 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
 - For tone scoring these documents carry almost no tone signal. BoE tone analysis uses the minutes
   for 2000–2012, and statements from 2013 (when they become ~1,000+ chars). Pre-registered as such.
 - `cbtone snapshot` prints a QA line for documents under 200 chars, and these are expected there.
+
+## A7 — Yahoo FX bad ticks (2026-10-14)
+- Yahoo daily FX contains decimal shifts (USD/IDR 888 on 2010-11-01), one-day spikes (EUR/USD 1.49
+  on 2008-12-08 vs ~1.29), and a recurring stale USD/IDR value of 9,612.45 (Nov–Dec 2013).
+- `markets.fx.clean_fx` drops a tick > 8 % off its centred 11-day median when it repeats an
+  adjacent value exactly, or sits in a run of ≤ 5 such ticks whose neighbours are within 3 % of the median.
+  Genuine moves (e.g. AUD/USD 27 Oct 2008, neighbours also down) are kept. 13 ticks were dropped. They are
+  listed in `data/raw/markets/dropped_ticks.csv` (series, date, reason; no prices).
+- FX series start in Dec 2003 for most pairs, so MAS statements from 2001–2003 have no FX window.

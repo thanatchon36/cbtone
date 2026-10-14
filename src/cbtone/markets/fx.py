@@ -99,3 +99,67 @@ def fetch_fx(
         )
     )
     return df
+
+
+# -- bad-tick filter (Yahoo FX has decimal shifts, one-day spikes and stale plateaus) ------
+
+SPIKE_DEV = 0.08  # |close / centred 11-day median - 1| above this is suspicious ...
+CALM_DEV = 0.03  # ... and bad if the points either side of the suspicious run are this calm
+MEDIAN_WINDOW = 11
+MAX_RUN = 5  # longest run of consecutive suspicious ticks treated as bad data
+
+
+def clean_fx(df: pl.DataFrame) -> tuple[pl.DataFrame, pl.DataFrame]:
+    """Drop bad FX ticks; return ``(clean, dropped[series, date, reason])``.
+
+    A tick is suspicious when it deviates > ``SPIKE_DEV`` from its centred rolling median. It is
+    dropped when it repeats an adjacent value exactly (``stale``), or when it sits in a run of at
+    most ``MAX_RUN`` suspicious ticks whose neighbours on both sides are calm (``spike`` for a
+    single tick, ``run`` otherwise). Genuine moves, where the surrounding days move too, are kept.
+    Non-FX series (yields) pass through unchanged.
+    """
+    from cbtone.markets.registry import REGISTRY
+
+    names = df["series"].unique().to_list()
+    fx = [s for s in names if (REGISTRY[s].kind == "fx" if s in REGISTRY else s.endswith("=X"))]
+    med = pl.col("close").rolling_median(MEDIAN_WINDOW, center=True, min_samples=5)
+    by = "series"
+    t = (
+        df.with_row_index("_i")
+        .sort(by, "date")
+        .with_columns(_dev=(pl.col("close") / med.over(by) - 1).abs())
+        .with_columns(_sus=pl.col(by).is_in(fx) & (pl.col("_dev") > SPIKE_DEV))
+        .with_columns(
+            _run=(pl.col("_sus") != pl.col("_sus").shift(1)).fill_null(True).cum_sum().over(by)
+        )
+        .with_columns(
+            _len=pl.len().over(by, "_run"),
+            _stale=(pl.col("close") == pl.col("close").shift(1).over(by))
+            | (pl.col("close") == pl.col("close").shift(-1).over(by)),
+        )
+    )
+    # deviation of the points just before and just after each run
+    edges = (
+        t.with_columns(
+            _before=pl.col("_dev").shift(1).over(by), _after=pl.col("_dev").shift(-1).over(by)
+        )
+        .group_by(by, "_run")
+        .agg(pl.col("_before").first(), pl.col("_after").last())
+    )
+    t = t.join(edges, on=[by, "_run"], how="left")
+    calm = (pl.col("_before").fill_null(0) <= CALM_DEV) & (
+        pl.col("_after").fill_null(0) <= CALM_DEV
+    )
+    isolated = pl.col("_sus") & (pl.col("_len") <= MAX_RUN) & calm
+    t = t.with_columns(
+        _reason=pl.when(pl.col("_sus") & pl.col("_stale"))
+        .then(pl.lit("stale"))
+        .when(isolated & (pl.col("_len") == 1))
+        .then(pl.lit("spike"))
+        .when(isolated)
+        .then(pl.lit("run"))
+        .otherwise(None)
+    )
+    dropped = t.filter(pl.col("_reason").is_not_null()).sort(by, "date")
+    clean = t.filter(pl.col("_reason").is_null()).sort("_i").select(df.columns)
+    return clean, dropped.select(by, "date", pl.col("_reason").alias("reason"))
