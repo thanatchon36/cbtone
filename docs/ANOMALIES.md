@@ -80,3 +80,17 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
 - Reported descriptively, with no causal reading. A plausible mechanical explanation, which the design cannot separate,
   is that hawkish statements and currency weakness occur in the same windows (two-day day-level windows; reverse timing).
   The paper does not comment on any bank's policy choices.
+
+## A11 — RQ4a: "mean" and "decision-weighted" aggregation correlate at ρ = 0.98 (2026-10-14)
+- The sanity gate flags any correlation above 0.95. Here it is expected by construction: both strategies average the
+  *same* P1 sentence scores of a document, and decision-weighted only doubles the weight of sentences in paragraphs
+  tagged `decision` (`DECISION_WEIGHT = 2`). Over the 120 RQ4a documents, |mean − decision-weighted| has mean 0.015,
+  median 0.005 and max 0.136; 22 documents are identical (no decision-tagged sentence, or all sentences decision-tagged).
+- No leakage or duplicated column: the max-|index| strategy (ρ 0.82 and 0.83 with the two) and the whole-document score
+  (ρ 0.62–0.72) differ as expected. Reported as is; the pre-registered ρ ≥ 0.70 check is unaffected by this pair.
+- SANITY-OK: rq4a.aggregation.agg_mean~agg_decision_weighted
+
+## A12 — FOMC test split: source `index` column is not unique (2026-10-14)
+- `test.csv` has 496 rows but only 424 distinct `index` values (and 494 distinct sentences), so `sentence_id`
+  collided and the RQ4b pivot failed. Fixed in code: `sentence_id = split:row:index`. Scores were unchanged (cached by
+  text); only the join key changed. No threshold or pre-registered rule was touched.

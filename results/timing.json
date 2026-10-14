@@ -1,0 +1,70 @@
+[
+  {
+    "stage": "score:dict",
+    "seconds": 0.05,
+    "finished_at": "2026-10-14T07:36:08+00:00",
+    "meta": {
+      "n_docs": 319,
+      "quick": false
+    }
+  },
+  {
+    "stage": "score:llm",
+    "seconds": 217.88,
+    "finished_at": "2026-10-14T07:51:25+00:00",
+    "meta": {
+      "n_docs": 319,
+      "quick": false
+    }
+  },
+  {
+    "stage": "score:llm:masked",
+    "seconds": 202.26,
+    "finished_at": "2026-10-14T08:05:52+00:00",
+    "meta": {
+      "n_docs": 319,
+      "quick": false
+    }
+  },
+  {
+    "stage": "llm:silver",
+    "seconds": 297.44,
+    "finished_at": "2026-10-14T08:14:26+00:00",
+    "meta": {}
+  },
+  {
+    "stage": "llm:rq4a",
+    "seconds": 4279.98,
+    "finished_at": "2026-10-14T09:34:30+00:00",
+    "meta": {}
+  },
+  {
+    "stage": "ft:train",
+    "seconds": 372.01,
+    "finished_at": "2026-10-14T09:40:43+00:00",
+    "meta": {
+      "n": 3788
+    }
+  },
+  {
+    "stage": "score:ft",
+    "seconds": 89.22,
+    "finished_at": "2026-10-14T09:47:26+00:00",
+    "meta": {
+      "n_docs": 319,
+      "quick": false
+    }
+  },
+  {
+    "stage": "ft:score",
+    "seconds": 416.0,
+    "finished_at": "2026-10-14T09:47:39+00:00",
+    "meta": {}
+  },
+  {
+    "stage": "llm:fomc",
+    "seconds": 0.13,
+    "finished_at": "2026-10-14T09:55:12+00:00",
+    "meta": {}
+  }
+]

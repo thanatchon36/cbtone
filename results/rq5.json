@@ -1,0 +1,186 @@
+{
+  "dict": {
+    "bi_en_n": 35,
+    "bnm_en_n": 35,
+    "mas_dict_drop": -0.08560077158209434,
+    "mas_dict_transfers_poorly": false
+  },
+  "distance": [
+    {
+      "group": "bi-en",
+      "mean_cosine_distance_to_fed": 0.5653302669525146,
+      "n": 300
+    },
+    {
+      "group": "bi-id",
+      "mean_cosine_distance_to_fed": 0.5356020331382751,
+      "n": 300
+    },
+    {
+      "group": "bnm-en",
+      "mean_cosine_distance_to_fed": 0.5230520367622375,
+      "n": 300
+    },
+    {
+      "group": "bnm-ms",
+      "mean_cosine_distance_to_fed": 0.5100902915000916,
+      "n": 300
+    },
+    {
+      "group": "boe-en",
+      "mean_cosine_distance_to_fed": 0.5396990776062012,
+      "n": 300
+    },
+    {
+      "group": "ecb-en",
+      "mean_cosine_distance_to_fed": 0.5391643047332764,
+      "n": 300
+    },
+    {
+      "group": "fed-en",
+      "mean_cosine_distance_to_fed": 0.43032383918762207,
+      "n": 300
+    },
+    {
+      "group": "mas-en",
+      "mean_cosine_distance_to_fed": 0.5756202340126038,
+      "n": 300
+    },
+    {
+      "group": "rba-en",
+      "mean_cosine_distance_to_fed": 0.5392206907272339,
+      "n": 300
+    }
+  ],
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "label_agreement": {
+    "label_counts": {
+      "dovish": 80,
+      "hawkish": 17,
+      "neutral": 103
+    },
+    "n": 200,
+    "pass_a_eq_b": 0.71
+  },
+  "reason": "FOMC-RoBERTa not run (gated model; owner action pending); H5 requires it",
+  "rows": [
+    {
+      "drop": -0.14837776665422708,
+      "fomc_macro_f1": 0.48125186297540257,
+      "group": "bi-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "llm",
+      "silver_macro_f1": 0.6296296296296297
+    },
+    {
+      "drop": 0.04579517271588118,
+      "fomc_macro_f1": 0.48125186297540257,
+      "group": "bi-id",
+      "n": 35,
+      "powered": false,
+      "scorer": "llm",
+      "silver_macro_f1": 0.4354566902595214
+    },
+    {
+      "drop": -0.20517764954106654,
+      "fomc_macro_f1": 0.48125186297540257,
+      "group": "bnm-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "llm",
+      "silver_macro_f1": 0.6864295125164691
+    },
+    {
+      "drop": -0.15027966855612906,
+      "fomc_macro_f1": 0.48125186297540257,
+      "group": "bnm-ms",
+      "n": 35,
+      "powered": false,
+      "scorer": "llm",
+      "silver_macro_f1": 0.6315315315315316
+    },
+    {
+      "drop": -0.1599632437569456,
+      "fomc_macro_f1": 0.48125186297540257,
+      "group": "mas-en",
+      "n": 60,
+      "powered": true,
+      "scorer": "llm",
+      "silver_macro_f1": 0.6412151067323482
+    },
+    {
+      "drop": -0.006972069242051793,
+      "fomc_macro_f1": 0.270805708535726,
+      "group": "bi-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "dict",
+      "silver_macro_f1": 0.2777777777777778
+    },
+    {
+      "drop": 0.06165538173834037,
+      "fomc_macro_f1": 0.270805708535726,
+      "group": "bnm-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "dict",
+      "silver_macro_f1": 0.20915032679738563
+    },
+    {
+      "drop": -0.08560077158209434,
+      "fomc_macro_f1": 0.270805708535726,
+      "group": "mas-en",
+      "n": 60,
+      "powered": true,
+      "scorer": "dict",
+      "silver_macro_f1": 0.35640648011782033
+    },
+    {
+      "drop": -0.0916547301795701,
+      "fomc_macro_f1": 0.4096021828420488,
+      "group": "bi-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "ft",
+      "silver_macro_f1": 0.5012569130216189
+    },
+    {
+      "drop": -0.05071527747541149,
+      "fomc_macro_f1": 0.4096021828420488,
+      "group": "bi-id",
+      "n": 35,
+      "powered": false,
+      "scorer": "ft",
+      "silver_macro_f1": 0.4603174603174603
+    },
+    {
+      "drop": 0.11915976474005624,
+      "fomc_macro_f1": 0.4096021828420488,
+      "group": "bnm-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "ft",
+      "silver_macro_f1": 0.29044241810199256
+    },
+    {
+      "drop": -0.0756677872149395,
+      "fomc_macro_f1": 0.4096021828420488,
+      "group": "bnm-ms",
+      "n": 35,
+      "powered": false,
+      "scorer": "ft",
+      "silver_macro_f1": 0.4852699700569883
+    },
+    {
+      "drop": -0.26500099176112574,
+      "fomc_macro_f1": 0.4096021828420488,
+      "group": "mas-en",
+      "n": 60,
+      "powered": true,
+      "scorer": "ft",
+      "silver_macro_f1": 0.6746031746031745
+    }
+  ],
+  "verdict": "untestable"
+}

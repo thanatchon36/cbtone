@@ -1,0 +1,13 @@
+=== rq4_reliability
+{'sentences': {'prompts': {'n_units': 1000, 'n_complete': 982, 'alpha': 0.41554147712158784, 'icc_2_1': 0.43264986312994896}, 'temperature': {'n_units': 1000, 'n_complete': 998, 'alpha': 0.8060317852259615, 'icc_2_1': 0.8068723555546387}, 'model_tag': {'n_units': 1000, 'n_complete': 1000, 'alpha': -0.026194320446244035, 'icc_2_1': 0.20683783845926046}, 'h4a_prompts_pass': False}, 'docs': {'prompts': {'n_units': 120, 'n_complete': 120, 'alpha': 0.649988636173697, 'icc_2_1': 0.6568265564334564}, 'temperature': {'n_units': 120, 'n_complete': 120, 'alpha': 0.9168331035062527, 'icc_2_1': 0.9173628613612397}, 'model_tag': {'n_units': 120, 'n_complete': 120, 'alpha': 0.45557565195483785, 'icc_2_1': 0.5194079161716627}, 'h4a_prompts_pass': False}, 'aggregation': {'n': 120, 'spearman': {'agg_mean~agg_decision_weighted': 0.9816193594583135, 'agg_mean~agg_max_abs': 0.8163935586566669, 'agg_mean~document': 0.6994591381795768, 'agg_decision_weighted~agg_max_abs': 0.8302717463968405, 'agg_decision_weighted~document': 0.7217981915203785, 'agg_max_abs~document': 0.616413317887494}, 'all_pass': False}}
+{'verdict': 'refuted', 'n': 496, 'fomc_roberta': 'not run (gated model)'}
+{'scorer': 'llm', 'n': 496, 'macro_f1': 0.48125186297540257, 'f1_lo': 0.43247449119901327, 'f1_hi': 0.5310182222789189, 'df1_vs_ref': 0.21044615443967657, 'df1_lo': 0.15913554255299972, 'df1_hi': 0.25896948719369334}
+{'scorer': 'dict', 'n': 496, 'macro_f1': 0.270805708535726, 'f1_lo': 0.23802063510743454, 'f1_hi': 0.3033714953442}
+{'scorer': 'ft', 'n': 496, 'macro_f1': 0.4096021828420488, 'f1_lo': 0.36377213756036025, 'f1_hi': 0.4545370024190389, 'df1_vs_ref': 0.1387964743063228, 'df1_lo': 0.08862178072891842, 'df1_hi': 0.18567966882750064}
+=== rq5_transfer
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+untestable FOMC-RoBERTa not run (gated model; owner action pending); H5 requires it {'mas_dict_drop': -0.08560077158209434, 'mas_dict_transfers_poorly': False, 'bi_en_n': 35, 'bnm_en_n': 35}
+=== figures
+figures: ['fig_rq1_dll.png', 'fig_rq2_fx_beta.png', 'fig_rq3_crosslingual.png', 'fig_rq4b_fomc_f1.png', 'fig_tone_timeseries.png']
+=== summarize
+1 sanity flags, 1 unexplained

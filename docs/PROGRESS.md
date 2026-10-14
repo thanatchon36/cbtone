@@ -55,13 +55,27 @@ Cut / known gaps:
 - [x] CLI: score / events / parse / doctor / schemas; JSON schemas; results/hardware.json
 - [x] Docs site (mkdocs), README, DISCLAIMER, CONTRIBUTING, CITATION, CI + release workflows, mini corpus
 
-## Phase 4 — running (experiments)
-- Budget ladder applied (D18): cap 3000, RQ4a 250 sentences, masked only headline primary, no evidence in bulk.
-- [ ] `experiments/score_documents.sh` (dict done; LLM primary + native + masked running; log results/logs/)
-- [ ] `experiments/score_sentences.py fomc silver rq4a` (chained after documents)
-- [ ] `experiments/train_ft.py` (after sentences)
-- [ ] `make experiments` → results/summary.json, figures, SANITY.md; record anomalies
-- Smoke-tested all drivers on synthetic LLM scores (outputs deleted, no real numbers seen).
+## Phase 4 — closed 2026-10-14 (experiments)
+Backend D20: qwen3:4b (digest `359d7dd4`) on the owner's RTX 4070 Ti; pre-registered defaults, no ladder step
+(cap 6000, RQ4a 1,000 sentences, masked for every LLM result, evidence off). Wall time: documents ≈ 35 min,
+silver 5 min, RQ4a 71 min, fine-tune 6 min (MPS, 642 steps, val macro-F1 0.61). Sanity gate: 3 flags, all explained.
+
+- [x] Document scores: llm / llm-native / llm-masked / llm-masked-native / dict / ft (+ native), 0 errors
+- [x] FOMC test (496), silver (200), RQ4a (7,000 sentence scores, 21 JSON failures recorded as missing; 840 doc
+      scores; 360 aggregations)
+- [x] `make experiments` → results/summary.json, results/figures/*.png (+ CSV table views), SANITY.md
+- [x] ANOMALIES A9–A12 (BI AUROC 1.000 at n=20; BI negative FX β; mean≈decision-weighted by construction;
+      FOMC source index not unique → id fixed, no threshold touched)
+
+Verdicts (pre-registered thresholds, Holm across powered banks):
+- **H1 refuted**: 0/4 powered banks (best: ECB ΔLL +0.058, Holm p 0.13). Not robust under masking.
+- **H2a refuted** (1/11 cells: RBA AU2Y), **H2b refuted** (0/11). Pooled FX β ≈ 0.
+- **H3 refuted**: BI ρ 0.61, BNM ρ 0.53 (< 0.70); flips ≈ 2 %.
+- **H4a refuted**: prompts α 0.42 (sentences), 0.65 (documents) < 0.667; temperature α 0.81 / 0.92; model tag
+  α −0.03 / 0.46; aggregation ρ 0.62–0.98 (not all ≥ 0.70).
+- **H4b refuted**: LLM macro-F1 0.48 [0.43, 0.53] < 0.50, though above the dictionary (0.27) with CI excluding 0.
+- **H4c**: no RQ1/RQ2 finding is robust (masked check fails; post-cutoff N small).
+- **H5 untestable** (FOMC-RoBERTa gated; BI-en/BNM-en 35 sentences < 50).
 
 ## Waiting on owner
 - **git push is blocked:** `~/.claude/settings.json` has `"deny": ["Bash(git push *)"]`, and a deny overrides

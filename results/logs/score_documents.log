@@ -1,0 +1,11 @@
+scored 1375 of 1424 documents, 0 errors -> results/scores/dict.parquet
+  bi: 128
+  bnm: 141
+  boe: 283
+  bot: 36
+  ecb: 299
+  fed: 226
+  mas: 62
+  rba: 200
+scored 16 of 319 documents, 0 errors -> results/scores/dict-native.parquet
+  pboc: 16

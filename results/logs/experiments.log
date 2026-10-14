@@ -1,0 +1,60 @@
+caffeinate -i uv run --extra transformers    python experiments/rq1_policy.py
+fed: done
+ecb: done
+boe: done
+rba: done
+mas: done
+bi: done
+bnm: done
+{'verdict': 'refuted', 'n_powered': 4, 'n_success': 0, 'success': {'fed': False, 'ecb': False, 'rba': False, 'bi': False}} False survives
+uv run --extra transformers    python experiments/rq2_market.py
+fed: 226 events
+ecb: 299 events
+boe: 283 events
+rba: 200 events
+mas: 62 events
+bi: 128 events
+bnm: 141 events
+{'h2a': {'verdict': 'refuted', 'n_powered': 11, 'n_success': 1}, 'h2b': {'verdict': 'refuted', 'n_powered': 11, 'n_success': 0}} {'pooled_fx_beta': {'n': 1179, 'beta': 0.0005185778873433559, 'lo': -0.000980348532750162, 'hi': 0.0020175043074368735, 'p': 0.49771224395495905}, 'masked_pooled_fx_beta': {'n': 1179, 'beta': 0.00021306697337006384, 'lo': -0.001193013526671113, 'hi': 0.0016191474734112406, 'p': 0.7664635992044322}, 'post_cutoff_pooled_fx_beta': {'n': 78, 'beta': 0.00027778505841833095, 'lo': -0.0036755263511558224, 'hi': 0.004231096467992484, 'p': 0.8904599795472103}, 'survives_masked': False, 'survives_post_cutoff': 'survives', 'robust': False}
+uv run --extra transformers    python experiments/rq3_crosslingual.py
+refuted
+{'bank': 'bi', 'scorer': 'llm', 'n_pairs': 128, 'status': 'ok', 'powered': True, 'spearman': 0.6078095858079672, 'mean_abs_diff': 0.28171875, 'flip_rate': 0.0234375, 'consistent': False}
+{'bank': 'bi', 'scorer': 'ft', 'n_pairs': 128, 'status': 'ok', 'powered': True, 'spearman': 0.4402810840505402, 'mean_abs_diff': 0.04102820080373777, 'flip_rate': 0.0, 'consistent': False}
+{'bank': 'bi', 'scorer': 'dict', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'bnm', 'scorer': 'llm', 'n_pairs': 139, 'status': 'ok', 'powered': True, 'spearman': 0.5334668979604787, 'mean_abs_diff': 0.18244604316546761, 'flip_rate': 0.02158273381294964, 'consistent': False}
+{'bank': 'bnm', 'scorer': 'ft', 'n_pairs': 139, 'status': 'ok', 'powered': True, 'spearman': 0.5432101523749944, 'mean_abs_diff': 0.0548905911753646, 'flip_rate': 0.0, 'consistent': False}
+{'bank': 'bnm', 'scorer': 'dict', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'pboc', 'scorer': 'llm', 'n_pairs': 9, 'status': 'ok', 'powered': False, 'spearman': 0.21650635094610965, 'mean_abs_diff': 0.23333333333333334, 'flip_rate': 0.0, 'consistent': False}
+{'bank': 'pboc', 'scorer': 'ft', 'n_pairs': 9, 'status': 'ok', 'powered': False, 'spearman': 0.3, 'mean_abs_diff': 0.020782605409726193, 'flip_rate': 0.0, 'consistent': False}
+{'bank': 'pboc', 'scorer': 'dict', 'n_pairs': 0, 'status': 'not applicable'}
+uv run --extra transformers    python experiments/rq4_reliability.py
+Traceback (most recent call last):
+  File "/Users/thanatchon36/github/cbtone/experiments/rq4_reliability.py", line 91, in <module>
+    main()
+    ~~~~^^
+  File "/Users/thanatchon36/github/cbtone/experiments/rq4_reliability.py", line 81, in main
+    b, rows = rq4b()
+              ~~~~^^
+  File "/Users/thanatchon36/github/cbtone/experiments/rq4_reliability.py", line 68, in rq4b
+    wide = df.pivot(on="config", index=["unit", "gold"], values="label")
+  File "/Users/thanatchon36/github/cbtone/.venv/lib/python3.13/site-packages/polars/_utils/deprecation.py", line 132, in wrapper
+    return function(*args, **kwargs)
+  File "/Users/thanatchon36/github/cbtone/.venv/lib/python3.13/site-packages/polars/dataframe/frame.py", line 9864, in pivot
+    ._collect_eager(optimizations=QueryOptFlags._eager())
+     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/thanatchon36/github/cbtone/.venv/lib/python3.13/site-packages/polars/lazyframe/frame.py", line 2240, in _collect_eager
+    return _eager_engine().collect(
+           ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, optimizations=optimizations, background=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/thanatchon36/github/cbtone/.venv/lib/python3.13/site-packages/polars/lazyframe/engine.py", line 443, in collect
+    return wrap_df(ldf.collect(self.name, callback))
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+polars.exceptions.ComputeError: aggregation 'item' expected no or a single value, got 2 values
+
+This error occurred in the following expression:
+	col("label").filter([(col("config")) ==v ("llm")]).item(allow_empty=true)
+
+make: *** [experiments] Error 1

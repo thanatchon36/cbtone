@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import polars as pl
@@ -72,8 +73,41 @@ def training_frame() -> pl.DataFrame:
     return df
 
 
+def score_fomc(ft: FineTunedScorer) -> None:
+    """Replace the ft rows of results/scores/fomc_test.parquet (FOMC data: evaluation only)."""
+    test = load_fomc_anchor(splits=("test",))
+    fomc = pl.read_parquet(SCORES / "fomc_test.parquet").filter(pl.col("config") != "ft")
+    add = []
+    texts = test["sentence"].to_list()
+    for (sid, gold), s in zip(
+        test.select("sentence_id", "label").iter_rows(),
+        ft.score_sentences(texts, "en"),
+        strict=True,
+    ):
+        add.append(
+            {
+                "unit": sid,
+                "config": "ft",
+                "hawkish_p": s.hawkish_p,
+                "dovish_p": s.dovish_p,
+                "neutral_p": s.neutral_p,
+                "index": s.index,
+                "label": s.label,
+                "prompt_id": None,
+                "model_digest": s.model_digest,
+                "gold": gold,
+            }
+        )
+    pl.concat([fomc, pl.DataFrame(add)], how="diagonal_relaxed").write_parquet(
+        SCORES / "fomc_test.parquet"
+    )
+
+
 def main() -> None:
     timer = Timer()
+    if "--score-fomc-only" in sys.argv:  # re-score the FOMC test split with the trained model
+        score_fomc(FineTunedScorer.load(MODEL_DIR))
+        return
     df = training_frame()
     print(df.group_by("label").len().sort("label"), df.height)
     with timer.stage("ft:train", n=df.height):
@@ -97,32 +131,7 @@ def main() -> None:
             [*run, *allb, "--native", "--out", str(SCORES / "ft-native.parquet")], check=True
         )
         ft = FineTunedScorer.load(MODEL_DIR)
-        test = load_fomc_anchor(splits=("test",))
-        fomc = pl.read_parquet(SCORES / "fomc_test.parquet").filter(pl.col("config") != "ft")
-        add = []
-        texts = test["sentence"].to_list()
-        for (sid, gold), s in zip(
-            test.select("sentence_id", "label").iter_rows(),
-            ft.score_sentences(texts, "en"),
-            strict=True,
-        ):
-            add.append(
-                {
-                    "unit": sid,
-                    "config": "ft",
-                    "hawkish_p": s.hawkish_p,
-                    "dovish_p": s.dovish_p,
-                    "neutral_p": s.neutral_p,
-                    "index": s.index,
-                    "label": s.label,
-                    "prompt_id": None,
-                    "model_digest": s.model_digest,
-                    "gold": gold,
-                }
-            )
-        pl.concat([fomc, pl.DataFrame(add)], how="diagonal_relaxed").write_parquet(
-            SCORES / "fomc_test.parquet"
-        )
+        score_fomc(ft)
         labels = pl.read_parquet(SCORES / "silver_labels.parquet")
         sents = (
             pl.concat(

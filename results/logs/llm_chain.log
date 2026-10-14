@@ -1,0 +1,62 @@
+scored 1375 of 1424 documents, 0 errors -> results/scores/dict.parquet
+  bi: 128
+  bnm: 141
+  boe: 283
+  bot: 36
+  ecb: 299
+  fed: 226
+  mas: 62
+  rba: 200
+scored 16 of 319 documents, 0 errors -> results/scores/dict-native.parquet
+  pboc: 16
+scored 1424 of 1424 documents, 0 errors -> results/scores/llm.parquet
+  bi: 128
+  bnm: 141
+  boe: 283
+  bot: 36
+  ecb: 299
+  fed: 226
+  mas: 62
+  pboc: 49
+  rba: 200
+scored 319 of 319 documents, 0 errors -> results/scores/llm-native.parquet
+  bi: 128
+  bnm: 139
+  bot: 36
+  pboc: 16
+scored 1424 of 1424 documents, 0 errors -> results/scores/llm-masked.parquet
+  bi: 128
+  bnm: 141
+  boe: 283
+  bot: 36
+  ecb: 299
+  fed: 226
+  mas: 62
+  pboc: 49
+  rba: 200
+scored 319 of 319 documents, 0 errors -> results/scores/llm-masked-native.parquet
+  bi: 128
+  bnm: 139
+  bot: 36
+  pboc: 16
+done: fomc
+done: silver
+Traceback (most recent call last):
+  File "/Users/thanatchon36/github/cbtone/experiments/score_sentences.py", line 214, in <module>
+    main(sys.argv[1:] or ["fomc", "silver", "rq4a"])
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/thanatchon36/github/cbtone/experiments/score_sentences.py", line 209, in main
+    rq4a(cache, frame, sents)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/thanatchon36/github/cbtone/experiments/score_sentences.py", line 168, in rq4a
+    **_row(r["unit"], name, s.score_text(r["text"], r["language"])),
+                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/thanatchon36/github/cbtone/src/cbtone/scorers/llm.py", line 272, in score_text
+    return self._score(text, lang, "sentence")
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/thanatchon36/github/cbtone/src/cbtone/scorers/llm.py", line 257, in _score
+    h, d, n, evidence = self._chat(system, f"Text:\n{text}", call_mode)
+                        ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/thanatchon36/github/cbtone/src/cbtone/scorers/llm.py", line 228, in _chat
+    raise LLMError(f"LLM call failed after {MAX_ATTEMPTS} attempts: {last}")
+cbtone.scorers.llm.LLMError: LLM call failed after 3 attempts: invalid JSON reply: Expecting ',' delimiter: line 4 column 19 (char 85)

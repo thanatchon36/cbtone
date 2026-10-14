@@ -1,0 +1,8 @@
+fed: done
+ecb: done
+boe: done
+rba: done
+mas: done
+bi: done
+bnm: done
+{'verdict': 'refuted', 'n_powered': 4, 'n_success': 0, 'success': {'fed': False, 'ecb': False, 'rba': False, 'bi': False}} False survives

@@ -31,8 +31,10 @@ def parse_fomc_csv(content: bytes, split: str) -> pl.DataFrame:
     bad = set(raw["label"].unique().to_list()) - set(LABELS)
     if bad:
         raise ValueError(f"unexpected label value(s) {sorted(bad)} in {split}.csv")
-    return raw.select(
-        (pl.lit(f"{split}:") + pl.col("index").cast(pl.String)).alias("sentence_id"),
+    # The source ``index`` column is not unique (test.csv: 496 rows, 424 distinct values), so the
+    # id is ``split:row:index`` - row position for uniqueness, source index for traceability.
+    return raw.with_row_index("_row").select(
+        pl.format("{}:{}:{}", pl.lit(split), pl.col("_row"), pl.col("index")).alias("sentence_id"),
         pl.col("sentence").cast(pl.String),
         pl.col("year").cast(pl.Int32),
         pl.col("label").replace_strict(LABELS, return_dtype=pl.String),

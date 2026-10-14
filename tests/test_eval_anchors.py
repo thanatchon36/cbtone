@@ -26,7 +26,7 @@ def test_parse_maps_labels_and_strips_bom():
     df = anchors.parse_fomc_csv(CSV, "test")
     assert df.columns == ["sentence_id", "sentence", "year", "label", "split"]
     assert df["label"].to_list() == ["neutral", "hawkish", "dovish"]
-    assert df["sentence_id"].to_list() == ["test:122", "test:7", "test:9"]
+    assert df["sentence_id"].to_list() == ["test:0:122", "test:1:7", "test:2:9"]
     assert df["sentence"][1] == "Inflation pressures, members said, warranted firming."
 
 

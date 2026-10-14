@@ -1,0 +1,8 @@
+fed: 226 events
+ecb: 299 events
+boe: 283 events
+rba: 200 events
+mas: 62 events
+bi: 128 events
+bnm: 141 events
+{'h2a': {'verdict': 'refuted', 'n_powered': 11, 'n_success': 1}, 'h2b': {'verdict': 'refuted', 'n_powered': 11, 'n_success': 0}} {'pooled_fx_beta': {'n': 1179, 'beta': 0.0005185778873433559, 'lo': -0.000980348532750162, 'hi': 0.0020175043074368735, 'p': 0.49771224395495905}, 'masked_pooled_fx_beta': {'n': 1179, 'beta': 0.00021306697337006384, 'lo': -0.001193013526671113, 'hi': 0.0016191474734112406, 'p': 0.7664635992044322}, 'post_cutoff_pooled_fx_beta': {'n': 78, 'beta': 0.00027778505841833095, 'lo': -0.0036755263511558224, 'hi': 0.004231096467992484, 'p': 0.8904599795472103}, 'survives_masked': False, 'survives_post_cutoff': 'survives', 'robust': False}

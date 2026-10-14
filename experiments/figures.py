@@ -61,6 +61,7 @@ def forest(
     title: str,
     xlabel: str,
     name: str,
+    ci_note: str = "95% block-bootstrap CIs",
 ) -> None:
     """Dot + CI per bank (rows) and scorer (fixed colour), zero reference line."""
     banks = [b for b in BANK_NAMES if any(r["bank"] == b for r in rows)]
@@ -117,7 +118,7 @@ def forest(
     fig.text(
         0.01,
         -0.02,
-        "* underpowered (pre-registered minimum not met); 95% block-bootstrap CIs",
+        f"* underpowered (pre-registered minimum not met); {ci_note}",
         fontsize=7,
         color=INK2,
     )
@@ -168,7 +169,7 @@ def fomc_f1(rq4: dict) -> None:
         "Zero-shot ChatGPT (Shah et al.)": 0.587,
         "Fine-tuned RoBERTa-large (Shah et al.)": 0.717,
     }
-    fig, ax = plt.subplots(figsize=(6.4, 2.6))
+    fig, ax = plt.subplots(figsize=(6.4, 3.0))
     _style(ax)
     order = [r for s in ("dict", "llm", "ft") for r in rows if r["scorer"] == s]
     for y, r in enumerate(order):
@@ -188,10 +189,19 @@ def fomc_f1(rq4: dict) -> None:
             markeredgecolor=SURFACE,
             markeredgewidth=1.5,
         )
-        ax.text(r["f1_hi"] + 0.01, y, f"{r['macro_f1']:.2f}", va="center", fontsize=8, color=INK2)
+        ax.text(
+            r["f1_lo"] - 0.01,
+            y,
+            f"{r['macro_f1']:.2f}",
+            va="center",
+            ha="right",
+            fontsize=8,
+            color=INK2,
+        )
+    trans = matplotlib.transforms.blended_transform_factory(ax.transData, ax.transAxes)
     for i, (k, v) in enumerate(lit.items()):
-        ax.axvline(v, color=GRID if i else INK2, linewidth=1, linestyle=(0, (2, 2)))
-        ax.text(v, len(order) - 0.4 + 0.25 * i, k, fontsize=6.5, color=INK2, ha="center")
+        ax.axvline(v, color=INK2, linewidth=0.8, linestyle=(0, (2, 2)))
+        ax.text(v, 1.02 + 0.09 * i, k, transform=trans, fontsize=6.5, color=INK2, ha="center")
     ax.set_yticks(range(len(order)), [NAMES[r["scorer"]] for r in order], color=INK)
     ax.invert_yaxis()
     ax.set_xlim(0, 1)
@@ -200,7 +210,13 @@ def fomc_f1(rq4: dict) -> None:
         color=INK2,
         fontsize=9,
     )
-    ax.set_title("Agreement with human labels (RQ4b)", color=INK, fontsize=11, loc="left")
+    ax.set_title(
+        "Agreement with human labels (RQ4b); dotted = published references",
+        color=INK,
+        fontsize=10,
+        loc="left",
+        pad=40,
+    )
     _save(
         fig, "fig_rq4b_fomc_f1", pl.DataFrame(order).select("scorer", "macro_f1", "f1_lo", "f1_hi")
     )
@@ -289,6 +305,7 @@ def main() -> None:
             "FX response to the tone surprise (RQ2)",
             "β: signed 2-day log FX move per unit tone surprise (HAC 95% CI)",
             "fig_rq2_fx_beta",
+            ci_note="Newey-West (HAC) 95% CIs",
         )
     tone_timeseries()
     fomc_f1(rq4)

@@ -13,9 +13,14 @@
     },
     {
       "bank": "bi",
-      "n_pairs": 0,
+      "consistent": false,
+      "flip_rate": 0.0,
+      "mean_abs_diff": 0.04102820080373777,
+      "n_pairs": 128,
+      "powered": true,
       "scorer": "ft",
-      "status": "not applicable"
+      "spearman": 0.4402810840505402,
+      "status": "ok"
     },
     {
       "bank": "bi",
@@ -36,9 +41,14 @@
     },
     {
       "bank": "bnm",
-      "n_pairs": 0,
+      "consistent": false,
+      "flip_rate": 0.0,
+      "mean_abs_diff": 0.0548905911753646,
+      "n_pairs": 139,
+      "powered": true,
       "scorer": "ft",
-      "status": "not applicable"
+      "spearman": 0.5432101523749944,
+      "status": "ok"
     },
     {
       "bank": "bnm",
@@ -59,9 +69,14 @@
     },
     {
       "bank": "pboc",
-      "n_pairs": 0,
+      "consistent": false,
+      "flip_rate": 0.0,
+      "mean_abs_diff": 0.020782605409726193,
+      "n_pairs": 9,
+      "powered": false,
       "scorer": "ft",
-      "status": "not applicable"
+      "spearman": 0.3,
+      "status": "ok"
     },
     {
       "bank": "pboc",
