@@ -11,6 +11,8 @@ Adapter: `src/cbtone/sources/ecb.py` (`EcbAdapter`, bank `ecb`, English only).
     - From about 2022 the press-conference include also lists the decision press release; the pr/date
       include lists the conference under an alias path (`/press/pressconf/YYYY/html/...`), which the
       adapter de-duplicates.
+  - From 2019 the 2025+ mopo include below is also read for these years: the 2024 pr/date include is
+    nearly empty and the pressconf one omitted the 7 Mar 2024 decision release (found via mopo).
   - 2025 onward (the old two return 404; discovered from `data-snippets` on
     `/press/govcdec/mopo/html/index.en.html` and
     `/press/press_conference/monetary-policy-statement/html/index.en.html`):

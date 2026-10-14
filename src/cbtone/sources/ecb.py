@@ -14,7 +14,9 @@ URL patterns (English only; ``language="en"``)
       with JavaScript from these includes; ``<dt isoDate="YYYY-MM-DD">`` + ``<dd>`` pairs):
       1999-2024: ``https://www.ecb.europa.eu/press/pressconf/YYYY/html/index_include.en.html``
       and ``https://www.ecb.europa.eu/press/pr/date/YYYY/html/index_include.en.html``
-      (these 404 from 2025). 2025 onward (the ``data-snippets`` of
+      (these 404 from 2025; the pr/date one can be nearly empty and the pressconf one omitted the
+      7 Mar 2024 decision release, so from 2019 the mopo include below is read as well).
+      2025 onward (the ``data-snippets`` of
       ``/press/govcdec/mopo/html/index.en.html`` and of
       ``/press/press_conference/monetary-policy-statement/html/index.en.html``):
       ``/press/press_conference/monetary-policy-statement/YYYY/html/index_include.en.html``
@@ -73,6 +75,7 @@ FRANKFURT = ZoneInfo("Europe/Berlin")  # IANA has no Europe/Frankfurt; same rule
 FIRST_YEAR = 1999
 CRAWL_DELAY_S = 5.0  # robots.txt: Crawl-delay: 5
 NEW_INDEX_YEAR = 2025  # per-year pressconf/ and pr/date/ includes 404 from this year
+MOPO_SUPPLEMENT_FROM = 2019  # also read the mopo include for legacy years from here
 TIME_CHANGE = date(2022, 7, 21)  # first decision published at 14:15 / conference 14:45
 
 log = logging.getLogger(__name__)
@@ -127,18 +130,22 @@ class EcbAdapter(SourceAdapter):
             yield iso, href.split("?")[0], _clean(a.get_text(" "))
 
     @staticmethod
-    def index_urls(year: int) -> tuple[str, str]:
-        """The two per-year index fragments (press conferences, decisions) for ``year``."""
+    def index_urls(year: int) -> tuple[str, ...]:
+        """Per-year index fragments (press conferences, decisions[, mopo supplement])."""
         if year >= NEW_INDEX_YEAR:
             return (
                 f"{BASE}/press/press_conference/monetary-policy-statement/{year}/html/"
                 "index_include.en.html",
                 f"{BASE}/press/govcdec/mopo/{year}/html/index_include.en.html",
             )
-        return (
+        urls: tuple[str, ...] = (
             f"{BASE}/press/pressconf/{year}/html/index_include.en.html",
             f"{BASE}/press/pr/date/{year}/html/index_include.en.html",
         )
+        if year >= MOPO_SUPPLEMENT_FROM:
+            # the legacy includes can omit a decision release (7 Mar 2024); mopo lists it
+            urls += (f"{BASE}/press/govcdec/mopo/{year}/html/index_include.en.html",)
+        return urls
 
     def list_urls(self, start_year: int, end_year: int) -> Iterator[tuple[str, dict[str, str]]]:
         for year in range(max(start_year, FIRST_YEAR), end_year + 1):

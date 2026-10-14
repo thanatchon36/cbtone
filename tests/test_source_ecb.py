@@ -152,6 +152,7 @@ def test_list_urls_offline(tmp_path: Path) -> None:
             f"pressconf_index_{year}.html",
         )
         _seed(f, f"{BASE}/press/pr/date/{year}/html/index_include.en.html", f"pr_index_{year}.html")
+    _seed(f, EcbAdapter.index_urls(2023)[2], "mopo_include_empty.html")
     a = EcbAdapter(f)
     items = list(a.list_urls(1990, 1999)) + list(a.list_urls(2023, 2023))  # 1990 clamps to 1999
     by_year: dict[str, list[tuple[str, dict[str, str]]]] = {"1999": [], "2023": []}
@@ -205,6 +206,21 @@ def test_list_urls_2025_onward(tmp_path: Path) -> None:
             assert f"/monetary-policy-statement/{h['date'][:4]}/html/ecb.is" in u
         else:
             assert f"/press/pr/date/{h['date'][:4]}/html/ecb.mp" in u
+
+
+def test_list_urls_2024_march_statement_from_mopo(tmp_path: Path) -> None:
+    """Regression: 2024-03-07 decision release is absent from the legacy 2024 indexes."""
+    f = PoliteFetcher(raw_dir=tmp_path, offline=True)
+    pc_idx, pr_idx, mopo_idx = EcbAdapter.index_urls(2024)
+    _seed(f, pc_idx, "pressconf_index_2024.html")
+    _seed(f, pr_idx, "pr_index_2024.html")
+    _seed(f, mopo_idx, "mopo_include_2024.html")
+    items = list(EcbAdapter(f).list_urls(2024, 2024))
+    got = {(h["date"], h["doc_type"]) for _, h in items}
+    assert ("2024-03-07", "statement") in got and ("2024-03-07", "press_conference") in got
+    assert ("2024-01-25", "statement") in got and ("2024-01-25", "press_conference") in got
+    urls = [u for u, _ in items]
+    assert len(set(urls)) == len(urls) == 4
 
 
 def _failing_get(f: PoliteFetcher, bad: str, status: int) -> None:
