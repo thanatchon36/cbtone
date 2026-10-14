@@ -181,3 +181,21 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Why:** pre-registered (§0.5, §0.8). The choice was made from timing alone; no scores were inspected
   (outputs were discarded).
 - `qwen2.5:3b` was pulled as the second tag for RQ4a.
+
+## D18 — Budget ladder applied; LLM budget overrun recorded (2026-10-14, timing only, before any scoring analysis)
+- **Measured on the 60-document quick sample:** Ollama `qwen3:4b` on the M4 processes prompts at about 220 tokens/s and
+  generates at about 30 tokens/s.
+  - With the 6,000-character cap and evidence quotes, a document took about 7–10 s. The D17 figure of 1.3 s/doc was
+    flattered by prompt caching in that 20-document test.
+  - The pre-registered workload would take about 6 h at that rate.
+- **Ladder (§0.8), applied in order, because each step alone still exceeded 2 h:**
+  1. RQ4a sentence sample shrunk to **250** sentences.
+  2. Document input cap lowered from 6,000 to **3,000** characters, for every scorer.
+  3. Masked variant run only on the **headline primary series**.
+- **Also from timing:** document-mode evidence quotes are turned off for the bulk runs (`LLMScorer(evidence=False)`),
+  because quote generation alone cost about 5 s/document. Evidence is an output feature, not part of any pre-registered
+  analysis. It stays available in the library and is used for the illustrative examples in the docs.
+- **Remaining overrun:** measured at about 2.5 s/document, the full LLM workload is projected at about 4.3 h,
+  versus the 2 h budget. The pre-registered design is otherwise kept, including the RQ4a document set of 120 and the sentence aggregation.
+  The actual wall time is logged in `results/timing.json` and reported in the paper as a budget deviation.
+- No scores were inspected for any of these choices. The quick-sample timing runs discarded their outputs.

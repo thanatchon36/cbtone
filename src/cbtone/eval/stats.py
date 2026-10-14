@@ -59,7 +59,7 @@ def block_bootstrap_ci(
 
 
 def mean_diff_ci(
-    diff: Sequence[float], block: int = 4, reps: int = 2000, seed: int = SEED
+    diff: Sequence[float] | np.ndarray, block: int = 4, reps: int = 2000, seed: int = SEED
 ) -> tuple[float, float, float]:
     """Block-bootstrap CI of the mean of a per-observation difference (e.g. log-loss gain)."""
     return block_bootstrap_ci(lambda d: float(np.mean(d)), diff, block=block, reps=reps, seed=seed)
@@ -173,3 +173,19 @@ def macro_f1_ci(
     draws = np.array([stat(rng.integers(0, n, size=n)) for _ in range(reps)])
     lo, hi = np.quantile(draws, [0.025, 0.975])
     return float(point), float(lo), float(hi)
+
+
+def mean_diff_test(
+    diff: Sequence[float] | np.ndarray, block: int = 4, reps: int = 2000, seed: int = SEED
+) -> tuple[float, float, float, float]:
+    """(mean, lo, hi, p) for a per-observation difference: block-bootstrap percentile CI and the
+    two-sided bootstrap p-value 2 * min(P*(mean* <= 0), P*(mean* >= 0)), capped at 1."""
+    d = np.asarray(diff, dtype=float)
+    n = len(d)
+    if n == 0:
+        raise ValueError("empty difference")
+    rng = np.random.default_rng(seed)
+    draws = np.array([d[_block_indices(n, block, rng)].mean() for _ in range(reps)])
+    lo, hi = np.quantile(draws, [0.025, 0.975])
+    p = min(1.0, 2 * min(float(np.mean(draws <= 0)), float(np.mean(draws >= 0))))
+    return float(d.mean()), float(lo), float(hi), p
