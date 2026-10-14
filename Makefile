@@ -46,13 +46,13 @@ score:  ## all pre-registered scoring jobs (LLM via local Ollama; cached, resuma
 	$(CAFFEINATE) $(XRUN) python experiments/train_ft.py
 
 experiments:  ## RQ1-RQ5 tables, figures, results/summary.json (fails on unexplained sanity flags)
-	cd experiments && $(CAFFEINATE) $(XRUN) python rq1_policy.py
-	cd experiments && $(XRUN) python rq2_market.py
-	cd experiments && $(XRUN) python rq3_crosslingual.py
-	cd experiments && $(XRUN) python rq4_reliability.py
-	cd experiments && $(XRUN) python rq5_transfer.py
-	cd experiments && $(XRUN) python figures.py
-	cd experiments && $(XRUN) python summarize.py
+	$(CAFFEINATE) $(XRUN) python experiments/rq1_policy.py
+	$(XRUN) python experiments/rq2_market.py
+	$(XRUN) python experiments/rq3_crosslingual.py
+	$(XRUN) python experiments/rq4_reliability.py
+	$(XRUN) python experiments/rq5_transfer.py
+	$(XRUN) python experiments/figures.py
+	$(XRUN) python experiments/summarize.py
 
 quick:  ## 60-document sample end-to-end: dictionary + LLM scores and event windows (<= 5 min)
 	$(XRUN) cbtone score --scorer dict --quick

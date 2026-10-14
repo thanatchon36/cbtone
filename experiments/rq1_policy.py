@@ -48,6 +48,8 @@ def main() -> None:
             rows += [x for x in rm if x["scorer"] == "llm_masked"]
             preds.append(pm.filter(pl.col("scorer") == "llm_masked"))
         print(f"{bank}: done", flush=True)
+    if not preds:
+        raise SystemExit("no bank has both dictionary and LLM scores")
     headline_rows = [r for r in rows if r["bank"] in HEADLINE]
     v = rq1.verdict(headline_rows, llm="llm")
     pred_long = pl.concat(preds) if preds else pl.DataFrame()

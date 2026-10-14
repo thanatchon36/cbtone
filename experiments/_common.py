@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -13,8 +14,9 @@ import yaml
 
 from cbtone.corpus import HEADLINE
 
+os.chdir(Path(__file__).resolve().parent.parent)  # all paths below are repo-relative
 RESULTS = Path("results")
-SCORES = RESULTS / "scores"
+SCORES = Path(os.environ.get("CBTONE_SCORES", RESULTS / "scores"))
 CONFIG = Path("config/paper.yaml")
 CUTOFF = {"qwen3:4b": date(2025, 4, 29), "qwen2.5:3b": date(2024, 9, 19)}  # §0.5 release dates
 HEADLINE_LLM = "qwen3:4b"
@@ -45,7 +47,11 @@ def load_scores(native: bool = False) -> pl.DataFrame:
     """All document score files (primary, or native twins) concatenated."""
     pat = "*-native.parquet" if native else "*.parquet"
     files = [p for p in SCORES.glob(pat) if native or not p.stem.endswith("-native")]
-    files = [p for p in files if p.stem.split("-")[0] in {"dict", "llm", "ft", "fomc"}]
+    files = [
+        p
+        for p in files
+        if p.stem.split("-")[0] in {"dict", "llm", "ft", "fomc"} and "quick" not in p.stem
+    ]
     frames = [pl.read_parquet(p) for p in sorted(files)]
     return pl.concat(frames, how="diagonal_relaxed") if frames else pl.DataFrame()
 

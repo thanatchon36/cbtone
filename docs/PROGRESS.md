@@ -47,9 +47,21 @@ Cut / known gaps:
 - [x] `docs/RESEARCH_QUESTIONS.md` committed and tagged `prereg-v1` (D16): RQ1–RQ5, power rules,
       release-date rule (§0.4), data-gap treatments, budget ladder
 
-## Phase 3 — in progress (library)
-- [ ] Specs in docs/specs/ for scorers, events, eval, text (paragraph tagger), cli, docs
-- [ ] `cbtone doctor` + `results/hardware.json`
+## Phase 3 — library: built (2026-10-14)
+- [x] Scorers: dictionary (dict-v1, 167-term cited lexicon), FOMC-RoBERTa (built, gated: waiting on owner),
+      Ollama LLM (P1–P5, structured output, cache, masked variant, aggregation), fine-tuned XLM-R trainer
+- [x] text.paragraphs (tagger + pre-registered policy_text), text.mask reviewed and extended (D19)
+- [x] events engine, eval (stats, fast ordered logit, rolling origin, rules), analysis RQ1–RQ5
+- [x] CLI: score / events / parse / doctor / schemas; JSON schemas; results/hardware.json
+- [x] Docs site (mkdocs), README, DISCLAIMER, CONTRIBUTING, CITATION, CI + release workflows, mini corpus
+
+## Phase 4 — running (experiments)
+- Budget ladder applied (D18): cap 3000, RQ4a 250 sentences, masked only headline primary, no evidence in bulk.
+- [ ] `experiments/score_documents.sh` (dict done; LLM primary + native + masked running; log results/logs/)
+- [ ] `experiments/score_sentences.py fomc silver rq4a` (chained after documents)
+- [ ] `experiments/train_ft.py` (after sentences)
+- [ ] `make experiments` → results/summary.json, figures, SANITY.md; record anomalies
+- Smoke-tested all drivers on synthetic LLM scores (outputs deleted, no real numbers seen).
 
 ## Waiting on owner
 - **git push is blocked:** `~/.claude/settings.json` has `"deny": ["Bash(git push *)"]`, and a deny overrides
