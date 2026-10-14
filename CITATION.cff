@@ -9,9 +9,9 @@ type: software
 authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
-version: 0.1.0
+version: 0.1.1
 date-released: "2026-10-14"
-# DOI: add once the owner enables the Zenodo GitHub integration and v0.1.0 is archived.
+# DOI: add once the owner enables the Zenodo GitHub integration and a release is archived.
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/cbtone"
 url: "https://github.com/thanatchon36/cbtone"

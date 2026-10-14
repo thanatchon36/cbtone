@@ -1,6 +1,6 @@
 [project]
 name = "cbtone"
-version = "0.1.0"
+version = "0.1.1"
 description = "Hawkish/dovish tone signals from public central-bank communication, with contamination-aware evaluation and event-study tools."
 readme = "README.md"
 license = "Apache-2.0"

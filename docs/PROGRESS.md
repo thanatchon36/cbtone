@@ -119,6 +119,9 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] GitHub Pages enabled 2026-10-14 (source: GitHub Actions); `.github/workflows/docs.yml` deploys the site on
       every push to main. Paper online at https://thanatchon36.github.io/cbtone/paper/
 
+- [x] v0.1.1 (2026-10-14): rewritten paper, publication figures, online paper; no change to any result or
+      verdict. Tagged locally; the release workflow publishes to PyPI when the tag is pushed.
+
 ## Waiting on owner
 - **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
   `! git push origin main --tags`.

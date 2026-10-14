@@ -4,7 +4,7 @@ Hawkish/dovish tone signals from **public** central-bank communication, with the
 machinery to test whether those signals carry information about later policy decisions and market
 reactions.
 
-> **Status: 0.1.0.** The pre-registered study is complete; every testable hypothesis was refuted
+> **Status: 0.1.1.** The pre-registered study is complete; every testable hypothesis was refuted
 > (see [Results](#results)). Paper: [`paper/paper.pdf`](paper/paper.pdf); one-page summary:
 > [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
 
@@ -140,7 +140,7 @@ recorded in [`docs/DECISIONS.md`](docs/DECISIONS.md), data anomalies in
   author  = {Chongmankhong, Thanatchon},
   title   = {cbtone: hawkish/dovish tone signals from public central-bank communication},
   year    = {TODO},
-  version = {0.1.0},
+  version = {0.1.1},
   url     = {https://github.com/thanatchon36/cbtone},
   note    = {Zenodo DOI: TODO}
 }
