@@ -23,3 +23,12 @@ Data quirks found while building the pipeline, and how each is handled. Newest l
   March 2020 meetings have `published_at_utc=None`.
 - Minutes with no meeting date on the page fall back to publication date − 1 (e.g. 2019-07-31).
 - Robustness: re-run the BoE event study on 2013→ only.
+
+## A4 — BoT: coverage starts 2021; one Thai minutes URL serves the wrong meeting (2026-10-14)
+- The static MPC schedule pages start at 2021, so BoT text covers 2021→ only (about 36 meetings).
+  BoT is opt-in and outside the headline set either way.
+- The Thai minutes link for meeting 1/2021 (`MPC_Minutes_2564_1.pdf`) serves the 1/2567 (Feb 2024)
+  minutes. `parse` drops a PDF whose title year disagrees with the decision year.
+- Minutes paragraphs are inferred from line lengths, and PDF extraction leaves spaces inside Thai
+  words. The text module's cleaning must handle this before any Thai sentence scoring.
+- 14:00 Bangkok release is documented for current practice only and is applied to 2021→.

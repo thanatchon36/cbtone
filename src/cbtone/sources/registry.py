@@ -20,6 +20,7 @@ REDISTRIBUTABLE: dict[str | tuple[str, str], bool] = {
     "rba": True,  # CC BY 4.0 (rba.gov.au/copyright)
     "bi": False,  # no reuse licence stated; all rights reserved
     "bnm": False,  # bnm.gov.my/terms-of-use
+    "bot": False,  # bot.or.th terms: own use only
     "mas": False,  # D7; terms require prior written permission
     "pboc": False,  # D10; terms unverified
 }
