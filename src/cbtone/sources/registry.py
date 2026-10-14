@@ -17,6 +17,7 @@ REDISTRIBUTABLE: dict[str | tuple[str, str], bool] = {
     "ecb": True,
     ("ecb", "press_conference"): False,  # D8: authored documents need prior authorisation
     "rba": True,  # CC BY 4.0 (rba.gov.au/copyright)
+    "bi": False,  # no reuse licence stated; all rights reserved
     "bnm": False,  # bnm.gov.my/terms-of-use
     "mas": False,  # D7; terms require prior written permission
     "pboc": False,  # D10; terms unverified
