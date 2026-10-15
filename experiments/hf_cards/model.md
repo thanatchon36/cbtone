@@ -98,7 +98,7 @@ Apple MPS is not bit-for-bit deterministic (validation macro-F1 0.599 on a fresh
 | Benchmark | Metric | This model | Local LLM (`qwen3:4b`) | Dictionary | FOMC-RoBERTa (replication) |
 |---|---|---|---|---|---|
 | FOMC test split, 496 human-labelled sentences | 3-class macro-F1 [95 % CI] | **0.41** [0.36, 0.45] | 0.48 [0.43, 0.53] | 0.27 [0.24, 0.30] | 0.71 [0.67, 0.75] ᵃ |
-| Held-out validation, 379 sentences (LLM labels) | macro-F1 | 0.61 | 1.00 by construction ᵇ | n/a ᶜ | n/a ᵈ |
+| Held-out validation, 379 sentences (LLM labels) | macro-F1 | 0.61 | 1.00 by construction ᵇ | n/a ᶜ | n/a ᶜ |
 | Indonesian vs English versions of the same BI statement (128 pairs) | Spearman ρ of document index | 0.44 | 0.61 | n/a (English only) | n/a (English only) |
 | Malay vs English versions of the same BNM statement (139 pairs) | Spearman ρ of document index | 0.54 | 0.53 | n/a (English only) | n/a (English only) |
 
@@ -109,10 +109,8 @@ training data).
 information.
 ᶜ The validation split is drawn at training time and is not stored, and rebuilding the training frame does not
 reproduce the same row order, so the exact 379 sentences cannot be recovered for other scorers. For reference, the
-dictionary's agreement with the LLM labels over all 3,658 English training sentences is macro-F1 0.33 (it reads
-English only).
-ᵈ The validation split holds LLM labels for corpus sentences in five languages; it was not scored with the
-English-only replication.
+agreement with the LLM labels over all 3,658 English training sentences is macro-F1 0.33 for the dictionary and 0.50
+for the FOMC-RoBERTa replication (both read English only; neither was trained on these labels).
 
 Scores on the Southeast Asian silver sets (0.46–0.67 macro-F1) are against labels from the same LLM family and
 measure self-agreement, not accuracy, so they are not reported as results. In the pre-registered tests of policy
