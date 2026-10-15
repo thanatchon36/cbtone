@@ -8,7 +8,7 @@ On the public FOMC hawkish/dovish test set (496 human-labelled sentences, Shah e
 
 I had pre-registered 0.50 for the LLM, so the hypothesis is refuted, even though it clearly beats the dictionary (difference 0.21, CI excluding zero).
 
-For context, the published fine-tuned RoBERTa reaches about 0.72 on this set. I couldn't run it: it's a gated model and access was pending.
+For context, the published fine-tuned RoBERTa reaches about 0.72 on this set. It's a gated model and access never came, so I retrained it from the paper's recipe: my replication scores 0.71 (see post 10).
 
 Both the dictionary and the LLM call too many sentences neutral.
 
