@@ -39,8 +39,9 @@ tok = AutoTokenizer.from_pretrained(name)
 model = AutoModelForSequenceClassification.from_pretrained(name).eval()
 
 text = "The Committee decided to raise the target range for the federal funds rate."
+enc = tok(text, return_tensors="pt", truncation=True, max_length=256)
 with torch.inference_mode():
-    probs = model(**tok(text, return_tensors="pt", truncation=True, max_length=256)).logits.softmax(-1)
+    probs = model(**enc).logits.softmax(-1)
 print({model.config.id2label[i]: round(p.item(), 3) for i, p in enumerate(probs[0])})
 ```
 
