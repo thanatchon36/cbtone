@@ -29,6 +29,12 @@
       "status": "not applicable"
     },
     {
+      "bank": "bi",
+      "n_pairs": 0,
+      "scorer": "fomc_roberta",
+      "status": "not applicable"
+    },
+    {
       "bank": "bnm",
       "consistent": false,
       "flip_rate": 0.02158273381294964,
@@ -57,6 +63,12 @@
       "status": "not applicable"
     },
     {
+      "bank": "bnm",
+      "n_pairs": 0,
+      "scorer": "fomc_roberta",
+      "status": "not applicable"
+    },
+    {
       "bank": "pboc",
       "consistent": false,
       "flip_rate": 0.0,
@@ -82,6 +94,12 @@
       "bank": "pboc",
       "n_pairs": 0,
       "scorer": "dict",
+      "status": "not applicable"
+    },
+    {
+      "bank": "pboc",
+      "n_pairs": 0,
+      "scorer": "fomc_roberta",
       "status": "not applicable"
     }
   ],

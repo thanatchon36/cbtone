@@ -370,6 +370,10 @@ def test_score_ft_passes_model_dir(workdir: Path, fake_scorer: list) -> None:
     )
     assert res.exit_code == 0, res.output
     assert fake_scorer[0] == ("ft", {"model_dir": Path("mdir")})
+    # the timing stage is keyed by the loaded model's id, not just "ft"
+    stages = [r["stage"] for r in json_load(Path("results/timing.json"))]
+    assert any(s.startswith("score:ft:") and s != "score:ft:" for s in stages), stages
+    assert "score:ft" not in stages
 
 
 def test_score_roberta_gets_shared_cache(workdir: Path, fake_scorer: list) -> None:

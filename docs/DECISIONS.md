@@ -257,7 +257,13 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Licence:** this is the local-only comparison variant that `docs/sources/LICENSES.md` allows. Weights stay in
   `data/models/fomc-roberta-repl/` (git-ignored) and are never published. `cbtone.scorers.finetuned.train`
   still refuses FOMC rows, so released weights cannot be trained on them.
-- **Scope:** RQ4b (FOMC test) and RQ5 (English silver sentences) only, which are the two places the
-  pre-registration uses the reference model. RQ1–RQ3 are not re-run with it.
+- **Scope:** every place the pre-registration names the transformer scorer. RQ4b (FOMC test) and RQ5 (English
+  silver sentences) came first (0.1.3). RQ1 ("transformer and fine-tuned scorers are reported with the same
+  comparisons, as descriptive results") and RQ2 (H2: "the LLM explains more than the dictionary and transformer
+  scorers"; "the same comparison against the transformer is reported") were added in 0.1.4, after 0.1.3 had
+  wrongly limited the scope to RQ4b/RQ5. The replication scores the English primary documents of every bank
+  (`results/scores/fomc-roberta-repl.parquet`). RQ3 reports it as not applicable, as pre-registered for
+  English-only scorers. The H1/H2 Holm families contain only the LLM's cells, so adding the scorer cannot change
+  any verdict. The LLM vs transformer ΔR² is descriptive, with no Holm correction, as pre-registered.
 - **Effect on verdicts:** H4b concerns the LLM and the dictionary, so it is unchanged. H5 still needs ≥ 50 English
   silver sentences for BI and BNM (35 each), so it stays untestable whatever the replication scores.

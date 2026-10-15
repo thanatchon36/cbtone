@@ -47,7 +47,7 @@
     }
   },
   {
-    "stage": "score:ft",
+    "stage": "score:ft:ft-xlmr",
     "seconds": 89.22,
     "finished_at": "2026-10-14T09:47:26+00:00",
     "meta": {
@@ -66,5 +66,15 @@
     "seconds": 0.13,
     "finished_at": "2026-10-14T09:55:12+00:00",
     "meta": {}
+  },
+  {
+    "stage": "score:ft:fomc-roberta-repl",
+    "seconds": 629.59,
+    "finished_at": "2026-10-15T07:14:33+00:00",
+    "meta": {
+      "n_docs": 1424,
+      "n_scored": 1375,
+      "quick": false
+    }
   }
 ]

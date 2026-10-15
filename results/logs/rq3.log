@@ -1,10 +1,13 @@
 refuted
 {'bank': 'bi', 'scorer': 'llm', 'n_pairs': 128, 'status': 'ok', 'powered': True, 'spearman': 0.6078095858079672, 'mean_abs_diff': 0.28171875, 'flip_rate': 0.0234375, 'consistent': False}
-{'bank': 'bi', 'scorer': 'ft', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'bi', 'scorer': 'ft', 'n_pairs': 128, 'status': 'ok', 'powered': True, 'spearman': 0.4402810840505402, 'mean_abs_diff': 0.04102820080373777, 'flip_rate': 0.0, 'consistent': False}
 {'bank': 'bi', 'scorer': 'dict', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'bi', 'scorer': 'fomc_roberta', 'n_pairs': 0, 'status': 'not applicable'}
 {'bank': 'bnm', 'scorer': 'llm', 'n_pairs': 139, 'status': 'ok', 'powered': True, 'spearman': 0.5334668979604787, 'mean_abs_diff': 0.18244604316546761, 'flip_rate': 0.02158273381294964, 'consistent': False}
-{'bank': 'bnm', 'scorer': 'ft', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'bnm', 'scorer': 'ft', 'n_pairs': 139, 'status': 'ok', 'powered': True, 'spearman': 0.5432101523749944, 'mean_abs_diff': 0.0548905911753646, 'flip_rate': 0.0, 'consistent': False}
 {'bank': 'bnm', 'scorer': 'dict', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'bnm', 'scorer': 'fomc_roberta', 'n_pairs': 0, 'status': 'not applicable'}
 {'bank': 'pboc', 'scorer': 'llm', 'n_pairs': 9, 'status': 'ok', 'powered': False, 'spearman': 0.21650635094610965, 'mean_abs_diff': 0.23333333333333334, 'flip_rate': 0.0, 'consistent': False}
-{'bank': 'pboc', 'scorer': 'ft', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'pboc', 'scorer': 'ft', 'n_pairs': 9, 'status': 'ok', 'powered': False, 'spearman': 0.3, 'mean_abs_diff': 0.020782605409726193, 'flip_rate': 0.0, 'consistent': False}
 {'bank': 'pboc', 'scorer': 'dict', 'n_pairs': 0, 'status': 'not applicable'}
+{'bank': 'pboc', 'scorer': 'fomc_roberta', 'n_pairs': 0, 'status': 'not applicable'}

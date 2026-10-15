@@ -333,7 +333,9 @@ def score(
             prompt if is_llm else "P1",
             model if is_llm else "qwen3:4b",
         )
-        stage = f"score:{scorer}" + (":masked" if masked else "")
+        # ft stages carry the model's id, so two fine-tuned checkpoints do not share one entry
+        stage = f"score:{scorer}" + (f":{sc.scorer_id}" if scorer == "ft" else "")
+        stage += ":masked" if masked else ""
         with Timer().stage(stage, n_docs=len(docs), quick=quick):
             df = score_documents(docs, sc, variant=variant, cap=cap)
     finally:

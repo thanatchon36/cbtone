@@ -10,6 +10,8 @@ On the 496-sentence FOMC test set (macro-F1):
 
 So a 355M-parameter model trained on ~1,600 labelled Fed sentences still beats a zero-shot 4B LLM by a wide margin on Fed text.
 
+Does the better reader find the policy signal the LLM missed? No. It predicts the next rate decision no better than "same as last time" at any of the four banks with enough data, the Fed included, and it explains the market's reaction to statements no better than the LLM does. The limit isn't the model reading the text; it's how little a single hawkish/dovish number carries.
+
 Outside the Fed it slips: on Singapore (MAS) sentences it drops 0.25. Those labels come from the LLM, though, so part of that drop is label noise. The dictionary doesn't drop at all. My pre-registered transfer hypothesis needed both to drop, so it could not have been supported. The verdict stays "untestable" because two comparison groups are below the sample size I set in advance.
 
 I'm not publishing the weights: the training data is licensed for non-commercial use only. The script to rebuild them is in the repo (about two hours on a MacBook Air M4).

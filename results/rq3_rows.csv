@@ -2,9 +2,12 @@ bank,scorer,n_pairs,status,powered,spearman,mean_abs_diff,flip_rate,consistent
 bi,llm,128,ok,true,0.6078095858079672,0.28171875,0.0234375,false
 bi,ft,128,ok,true,0.4402810840505402,0.04102820080373777,0.0,false
 bi,dict,0,not applicable,,,,,
+bi,fomc_roberta,0,not applicable,,,,,
 bnm,llm,139,ok,true,0.5334668979604787,0.18244604316546761,0.02158273381294964,false
 bnm,ft,139,ok,true,0.5432101523749944,0.0548905911753646,0.0,false
 bnm,dict,0,not applicable,,,,,
+bnm,fomc_roberta,0,not applicable,,,,,
 pboc,llm,9,ok,false,0.21650635094610965,0.23333333333333334,0.0,false
 pboc,ft,9,ok,false,0.3,0.020782605409726193,0.0,false
 pboc,dict,0,not applicable,,,,,
+pboc,fomc_roberta,0,not applicable,,,,,

@@ -14,7 +14,7 @@ from cbtone.analysis.rq345 import rq3_rows, rq3_verdict
 def main() -> None:
     scores = pl.concat([load_scores(), load_scores(native=True)], how="diagonal_relaxed")
     banks = ["bi", "bnm", "pboc"] + (["bot"] if config().get("include_bot") else [])
-    labels = {k: LABELS_ALL[k] for k in ("llm", "ft", "dict")}
+    labels = {k: LABELS_ALL[k] for k in ("llm", "ft", "dict", "fomc_roberta")}
     rows = rq3_rows(scores, banks, labels)
     v = rq3_verdict(rows, llm="llm", required=("bi", "bnm"))
     write_rows("rq3_rows", rows)

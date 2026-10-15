@@ -45,8 +45,10 @@ score:  ## all pre-registered scoring jobs (LLM via local Ollama; cached, resuma
 	$(CAFFEINATE) $(XRUN) python experiments/score_sentences.py fomc silver rq4a
 	$(CAFFEINATE) $(XRUN) python experiments/train_ft.py
 
-fomc-roberta:  ## local FOMC-RoBERTa replication (D21; ~2 h on an M4; weights never published)
+fomc-roberta:  ## local FOMC-RoBERTa replication (D21; ~2 h + 10 min scoring on an M4; weights never published)
 	$(CAFFEINATE) $(XRUN) python experiments/train_fomc_roberta.py
+	$(CAFFEINATE) $(XRUN) cbtone score --scorer ft --model-dir data/models/fomc-roberta-repl \
+	    fed ecb boe rba mas bi bnm bot pboc --out results/scores/fomc-roberta-repl.parquet
 
 experiments:  ## RQ1-RQ5 tables, figures, results/summary.json (fails on unexplained sanity flags)
 	$(CAFFEINATE) $(XRUN) python experiments/rq1_policy.py

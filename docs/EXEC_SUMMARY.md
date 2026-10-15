@@ -17,7 +17,7 @@ scoring anything and tested seven banks: Fed, ECB, BoE, RBA, MAS, Bank Indonesia
 | Predict the next rate decision (vs "same as last time") | **No** | 0 of 4 testable banks. ECB came closest (log-loss gain +0.058, CI above zero) but failed the multiple-testing correction. |
 | Explain the FX / 2-year-yield move on release | **No, with one exception** | 1 of 11 bank–market pairs: RBA 2Y, +9 bp per unit of tone surprise, R² 0.10. Pooled FX effect ≈ 0. |
 | Beat a simple word-list dictionary | **Rarely** | Better on human-labelled Fed sentences (macro-F1 0.48 vs 0.27); no better on any market or decision test after correction. |
-| Match a model trained on Fed labels | **No** | A RoBERTa-large we retrained on the human Fed labels scores 0.71 on the same sentences, well above the LLM's 0.48. On MAS text it falls by 0.25 (against labels made by the LLM). |
+| Match a model trained on Fed labels | **No** | A RoBERTa-large we retrained on the human Fed labels scores 0.71 on the same sentences, well above the LLM's 0.48. On MAS text it falls by 0.25 (against labels made by the LLM), and it predicts the next decision and the market move no better than the LLM. |
 | Same score for the Indonesian/Malay and English versions | **Partly** | Direction agrees (stance flips in about 2 % of pairs), strength does not (ρ 0.61 BI, 0.53 BNM, against a 0.70 bar). |
 | Stable when you reword the prompt | **No** | Agreement across five equivalent prompts α 0.65 (documents), 0.42 (sentences), against a 0.667 bar. Changing the model version moves scores even more. |
 | Robust to training-data contamination | **Nothing to protect** | No finding survived; masking names and dates did not change the (null) picture. |

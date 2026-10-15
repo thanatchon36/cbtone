@@ -79,7 +79,23 @@ def main() -> None:
     }
     rq4c["robust"] = rq4c["survives_masked"] and rq4c["survives_post_cutoff"] == "survives"
     write_rows("rq1_rows", rows)
-    write_json("rq1", {"verdict": v, "rq4c": rq4c, "perms": PERMS, "rows": rows})
+    # D21: the transformer scorer with the same comparisons, as pre-registered descriptive results
+    tr = [
+        r
+        for r in headline_rows
+        if r["scorer"] == "fomc_roberta" and "dll_vs_pers" in r and r.get("powered")
+    ]
+    transformer = {
+        "scorer": "fomc_roberta",
+        "n_powered": len(tr),
+        "n_ci_above_zero_vs_pers": sum(r["dll_vs_pers_lo"] > 0 for r in tr),
+        "n_ci_above_zero_vs_dict": sum(r.get("dll_vs_dict_lo", 0.0) > 0 for r in tr),
+        "min_p_vs_pers": min((r["p_vs_pers"] for r in tr), default=None),
+    }
+    write_json(
+        "rq1",
+        {"verdict": v, "rq4c": rq4c, "perms": PERMS, "transformer": transformer, "rows": rows},
+    )
     print(v, rq4c["survives_masked"], rq4c["survives_post_cutoff"])
 
 

@@ -51,6 +51,21 @@ def pooled_beta(ev: pl.DataFrame, label: str, after=None) -> dict[str, float]:
     }
 
 
+SERIES_LABEL = {  # display names, as in the paper's Table 4
+    "DX-Y.NYB": "USD index",
+    "DGS2": "US 2Y",
+    "EURUSD=X": "EUR/USD",
+    "EA2Y": "EA 2Y",
+    "GBPUSD=X": "GBP/USD",
+    "GB2Y": "UK 2Y",
+    "AUDUSD=X": "AUD/USD",
+    "AU2Y": "AU 2Y",
+    "USDSGD=X": "USD/SGD",
+    "USDIDR=X": "USD/IDR",
+    "USDMYR=X": "USD/MYR",
+}
+
+
 def main() -> None:
     market = pl.read_parquet(MARKETS)
     decisions = pl.read_parquet("data/corpus/decisions.parquet")
@@ -118,7 +133,46 @@ def main() -> None:
     }
     rq4c["robust"] = sm and post_verdict == "survives"
     write_rows("rq2_rows", rows)
-    write_json("rq2", {"verdict": v, "rq4c": rq4c, "rows": rows})
+    # D21: pre-registered descriptive comparison of the LLM against the transformer scorer (ΔR²)
+    cells = [
+        r
+        for r in hl_rows
+        if r["scorer"] == "llm"
+        and r["subset"] == "all"
+        and r.get("powered")
+        and "dr2_vs_transformer" in r
+    ]
+    tr_cells = [
+        r
+        for r in hl_rows
+        if r["scorer"] == "fomc_roberta" and r["subset"] == "all" and r.get("powered") and "r2" in r
+    ]
+    transformer: dict[str, object] = {}
+    if cells:
+
+        def cell(r: dict[str, object]) -> dict[str, object]:
+            return {
+                "bank": r["bank"],
+                "series": r["series"],
+                "label": f"{SERIES_LABEL.get(str(r['series']), r['series'])}, "
+                f"{str(r['bank']).upper()}",
+                "dr2": r["dr2_vs_transformer"],
+                "lo": r["dr2_tr_lo"],
+                "hi": r["dr2_tr_hi"],
+            }
+
+        transformer = {
+            "n_cells": len(cells),
+            "n_ci_excluding_zero": sum(r["dr2_tr_lo"] > 0 or r["dr2_tr_hi"] < 0 for r in cells),
+            "n_llm_higher": sum(r["dr2_vs_transformer"] > 0 for r in cells),
+            "min": cell(min(cells, key=lambda r: r["dr2_vs_transformer"])),
+            "max": cell(max(cells, key=lambda r: r["dr2_vs_transformer"])),
+            "n_transformer_cells": len(tr_cells),
+            "n_transformer_above_placebo": sum(
+                r["r2"] > r.get("placebo_r2_p95", float("inf")) for r in tr_cells
+            ),
+        }
+    write_json("rq2", {"verdict": v, "rq4c": rq4c, "transformer": transformer, "rows": rows})
     print(v, rq4c)
 
 

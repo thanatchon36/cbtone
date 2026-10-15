@@ -36,7 +36,10 @@ abstract: |
   version. On the human-labelled FOMC test split the LLM reaches a macro-F1 of
   {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}, above the dictionary ({{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}})
   but below the pre-registered floor of 0.50, while our replication of the supervised FOMC-RoBERTa reaches
-  {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}}. We release the corpus pipeline, the scorers and the evaluation
+  {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}}. That better-calibrated instrument fares no better on the
+  policy-signal tests: it improves on persistence at none of the {{rq1.transformer.n_powered|d}} powered
+  banks, and its announcement-window R² is indistinguishable from the LLM's in every powered cell, which
+  places the negative result in the signal rather than in the instrument. We release the corpus pipeline, the scorers and the evaluation
   harness as the open-source Python package `cbtone`, together with every number in this paper.
 header-includes:
   - |
@@ -122,7 +125,9 @@ bank–market cell and never beats the dictionary after correction; native-langu
 the same statement correlate only moderately; and five paraphrases of the same prompt produce indices
 whose agreement falls short of the pre-registered reliability floor. The negative findings are sharpened
 rather than weakened by the contamination protocol, because masking leaves the point estimates almost
-unchanged: there is no memorised signal to remove. What the local LLM does do is read individual FOMC
+unchanged: there is no memorised signal to remove. Nor is the failure one of the instrument: a supervised
+encoder replicated from the FOMC literature, which reads human-labelled Fed sentences far more accurately
+than the LLM, does no better on the same tests. What the local LLM does do is read individual FOMC
 sentences better than a dictionary, which is consistent with the published literature and is precisely the
 kind of claim that does not generalise to policy signal without the tests reported here.
 
@@ -273,8 +278,9 @@ RoBERTa-large on the train split of their data with their recipe: a 20 % validat
 10⁻⁵ and early stopping on validation macro-F1. Three seeds were trained and the seed with the best
 validation score was kept, so the test split played no part in model selection. The weights are not
 released, because the training data are licensed for non-commercial use only. It reads English only and
-is used where the pre-registration uses the reference model: the FOMC test split (H4b) and the Southeast
-Asian silver sets (H5).
+enters every analysis in which the pre-registration names the transformer scorer: the FOMC test split
+(H4b), the Southeast Asian silver sets (H5) and, as a descriptive comparison outside the Holm families,
+the next-decision and announcement-window analyses (RQ1, RQ2).
 
 ## Pre-registration and hypotheses
 
@@ -398,16 +404,22 @@ and the sections that follow ask whether anything more is true.
 **H1 is refuted.** {{rq1.verdict.n_powered}} banks meet the pre-registered power rule (Fed, ECB, RBA and BI).
 The LLM succeeds at none of them (Table 3, Figure 2).
 
-| Bank | OOS *n* | ΔLL vs persistence [95 % CI] | Holm *p* | ΔLL vs dictionary [95 % CI] | Beats both placebos |
-|:----|----:|------------:|-----:|------------:|:------:|
-| Fed | {{rq1.rows[bank=fed,scorer=llm].n_oos|d}} | {{rq1.rows[bank=fed,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=fed,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=fed,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=fed,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=fed,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=fed,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=fed,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=fed,scorer=llm].passes_placebo|yn}} |
-| ECB | {{rq1.rows[bank=ecb,scorer=llm].n_oos|d}} | {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=ecb,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=ecb,scorer=llm].passes_placebo|yn}} |
-| RBA | {{rq1.rows[bank=rba,scorer=llm].n_oos|d}} | {{rq1.rows[bank=rba,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=rba,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=rba,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=rba,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=rba,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=rba,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=rba,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=rba,scorer=llm].passes_placebo|yn}} |
-| BI | {{rq1.rows[bank=bi,scorer=llm].n_oos|d}} | {{rq1.rows[bank=bi,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=bi,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=bi,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=bi,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=bi,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=bi,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=bi,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=bi,scorer=llm].passes_placebo|yn}} |
+| Bank | Scorer | OOS *n* | ΔLL vs persistence [95 % CI] | *p* | ΔLL vs dictionary [95 % CI] | Beats both placebos |
+|:----|:-----|----:|------------:|-----:|------------:|:------:|
+| Fed | LLM | {{rq1.rows[bank=fed,scorer=llm].n_oos|d}} | {{rq1.rows[bank=fed,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=fed,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=fed,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=fed,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=fed,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=fed,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=fed,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=fed,scorer=llm].passes_placebo|yn}} |
+| ECB | LLM | {{rq1.rows[bank=ecb,scorer=llm].n_oos|d}} | {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=ecb,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=ecb,scorer=llm].passes_placebo|yn}} |
+| RBA | LLM | {{rq1.rows[bank=rba,scorer=llm].n_oos|d}} | {{rq1.rows[bank=rba,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=rba,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=rba,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=rba,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=rba,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=rba,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=rba,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=rba,scorer=llm].passes_placebo|yn}} |
+| BI | LLM | {{rq1.rows[bank=bi,scorer=llm].n_oos|d}} | {{rq1.rows[bank=bi,scorer=llm].dll_vs_pers|.3f}} [{{rq1.rows[bank=bi,scorer=llm].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=bi,scorer=llm].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=bi,scorer=llm].p_vs_pers_holm|.2f}} | {{rq1.rows[bank=bi,scorer=llm].dll_vs_dict|.3f}} [{{rq1.rows[bank=bi,scorer=llm].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=bi,scorer=llm].dll_vs_dict_hi|.3f}}] | {{rq1.rows[bank=bi,scorer=llm].passes_placebo|yn}} |
+| Fed | FOMC-RoBERTa | {{rq1.rows[bank=fed,scorer=fomc_roberta].n_oos|d}} | {{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_pers|.3f}} [{{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=fed,scorer=fomc_roberta].p_vs_pers|.2f}} | {{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_dict|.3f}} [{{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_dict_hi|.3f}}] | — |
+| ECB | FOMC-RoBERTa | {{rq1.rows[bank=ecb,scorer=fomc_roberta].n_oos|d}} | {{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_pers|.3f}} [{{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=ecb,scorer=fomc_roberta].p_vs_pers|.2f}} | {{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_dict|.3f}} [{{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_dict_hi|.3f}}] | — |
+| RBA | FOMC-RoBERTa | {{rq1.rows[bank=rba,scorer=fomc_roberta].n_oos|d}} | {{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_pers|.3f}} [{{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=rba,scorer=fomc_roberta].p_vs_pers|.2f}} | {{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_dict|.3f}} [{{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_dict_hi|.3f}}] | — |
+| BI | FOMC-RoBERTa | {{rq1.rows[bank=bi,scorer=fomc_roberta].n_oos|d}} | {{rq1.rows[bank=bi,scorer=fomc_roberta].dll_vs_pers|.3f}} [{{rq1.rows[bank=bi,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=bi,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}] | {{rq1.rows[bank=bi,scorer=fomc_roberta].p_vs_pers|.2f}} | {{rq1.rows[bank=bi,scorer=fomc_roberta].dll_vs_dict|.3f}} [{{rq1.rows[bank=bi,scorer=fomc_roberta].dll_vs_dict_lo|.3f}}, {{rq1.rows[bank=bi,scorer=fomc_roberta].dll_vs_dict_hi|.3f}}] | — |
 
-: Next-decision prediction with LLM tone at the adequately powered banks. ΔLL = LL(reference) − LL(model)
-in multiclass log-loss per decision; positive favours the LLM. Intervals from a moving-block bootstrap;
-Holm correction across the four banks.
+: Next-decision prediction at the adequately powered banks. ΔLL = LL(reference) − LL(model) in
+multiclass log-loss per decision; positive favours the scorer. Intervals from a moving-block bootstrap. LLM
+rows: *p* is Holm-adjusted across the four banks and the last column reports the pre-registered refuting
+experiment. FOMC-RoBERTa (replication) rows are the pre-registered descriptive comparison: *p* is unadjusted
+and the placebos were not run.
 
 The ECB is the only bank at which the LLM's gain over persistence has a bootstrap interval that excludes
 zero and exceeds both placebo distributions (95th percentiles
@@ -436,6 +448,24 @@ ranks the next correctly most of the time. The LLM raises the ECB AUROC to
 masked-text AUROC of exactly {{rq1.rows[bank=bi,scorer=llm_masked].auroc|.2f}} rests on
 {{rq1.rows[bank=bi,scorer=llm].n_oos_hike|d}} hikes and {{rq1.rows[bank=bi,scorer=llm].n_oos_cut|d}} cuts and is a
 small-sample artefact discussed in `ANOMALIES.md` (A9), not evidence of perfect ranking.
+
+The pre-registration also asks that the transformer scorer be reported with the same comparisons, as a
+descriptive result. The FOMC-RoBERTa replication reads human-labelled Fed sentences with a macro-F1 of
+{{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}} against the LLM's {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}} (Section 6.2), and does not translate that advantage
+into prediction (Table 3, Figure 2). At the powered banks its gain over persistence has a bootstrap interval
+that excludes zero at {{rq1.transformer.n_ci_above_zero_vs_pers|d}} of {{rq1.transformer.n_powered|d}}. The
+closest are the RBA ({{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_pers|.3f}}
+[{{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=rba,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}],
+unadjusted *p* {{rq1.rows[bank=rba,scorer=fomc_roberta].p_vs_pers|.2f}}) and the ECB
+({{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_pers|.3f}}
+[{{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=ecb,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}],
+*p* {{rq1.rows[bank=ecb,scorer=fomc_roberta].p_vs_pers|.2f}}); at the Fed, whose statements supplied its
+training sentences, the gain is {{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_pers|.3f}}
+[{{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_pers_lo|.3f}}, {{rq1.rows[bank=fed,scorer=fomc_roberta].dll_vs_pers_hi|.3f}}].
+Its gain over the dictionary excludes zero at {{rq1.transformer.n_ci_above_zero_vs_dict|d}} of the four. A
+scorer that is far better calibrated to human judgements of individual sentences is therefore no better at
+the task the index is meant to serve, which locates the negative result in the information content of a
+scalar tone measure rather than in the LLM's reading of it; Section 8 returns to this.
 
 ![Gain in next-decision log-loss over persistence by bank and scorer. Positive values favour the text model. Hollow markers: banks below the pre-registered power minimum, reported but outside the Holm family.](results/figures/fig_rq1_dll.svg){width=100%}
 
@@ -483,7 +513,21 @@ banks with bank fixed effects, the FX coefficient is {{rq2.rq4c.pooled_fx_beta.b
 [{{rq2.rq4c.pooled_fx_beta.lo|.4f}}, {{rq2.rq4c.pooled_fx_beta.hi|.4f}}] (*n* =
 {{rq2.rq4c.pooled_fx_beta.n|,}}), indistinguishable from zero.
 
-![Response of the exchange rate (a) and the two-year government yield (b) to the tone surprise, by bank and scorer, with Newey–West 95 % intervals. The Australian two-year yield is the only cell in which the LLM's R² exceeds its non-announcement placebo.](results/figures/fig_rq2_beta.svg){width=100%}
+The pre-registered comparison of the LLM against the transformer scorer finds no difference. Across the
+{{rq2.transformer.n_cells|d}} powered cells, the LLM's R² gain over the FOMC-RoBERTa replication ranges from
+{{rq2.transformer.min.dr2|.3f}} ({{rq2.transformer.min.label}}) to {{rq2.transformer.max.dr2|.3f}}
+({{rq2.transformer.max.label}}), and its bootstrap interval excludes zero in
+{{rq2.transformer.n_ci_excluding_zero|d}} of them. The replication's own announcement-window results mirror
+the LLM's: its R² exceeds the non-announcement placebo in {{rq2.transformer.n_transformer_above_placebo|d}} of
+{{rq2.transformer.n_transformer_cells|d}} cells, both at the RBA, where the two-year yield responds by
+{{rq2.rows[bank=rba,kind=y2,scorer=fomc_roberta,subset=all].beta|.1f}} basis points per unit surprise (R²
+{{rq2.rows[bank=rba,kind=y2,scorer=fomc_roberta,subset=all].r2|.2f}}, placebo 95th percentile
+{{rq2.rows[bank=rba,kind=y2,scorer=fomc_roberta,subset=all].placebo_r2_p95|.3f}}) and the AUD/USD R² of
+{{rq2.rows[bank=rba,kind=fx,scorer=fomc_roberta,subset=all].r2|.3f}} clears its placebo of
+{{rq2.rows[bank=rba,kind=fx,scorer=fomc_roberta,subset=all].placebo_r2_p95|.3f}} by a hair. The better-calibrated
+instrument finds the same single market, and no more (Figure 3).
+
+![Response of the exchange rate (a) and the two-year government yield (b) to the tone surprise, by bank and scorer, with Newey–West 95 % intervals. The Australian two-year yield (ringed marker) is the only cell in which the LLM's R² exceeds its non-announcement placebo.](results/figures/fig_rq2_beta.svg){width=100%}
 
 ## Do native-language and English versions agree? (RQ3)
 
@@ -497,7 +541,7 @@ pairs, well within the 10 % ceiling, whereas the mean absolute gap between the t
 {{rq3.rows[bank=bi,scorer=llm].mean_abs_diff|.2f}} and {{rq3.rows[bank=bnm,scorer=llm].mean_abs_diff|.2f}} on
 a [−1, 1] scale (Figure 4). The fine-tuned multilingual encoder is no more consistent (ρ
 {{rq3.rows[bank=bi,scorer=ft].spearman|.2f}} and {{rq3.rows[bank=bnm,scorer=ft].spearman|.2f}}), which
-suggests that the inconsistency is not peculiar to generative decoding. The dictionary is English-only and
+suggests that the inconsistency is not peculiar to generative decoding. The dictionary and the FOMC-RoBERTa replication are English-only and
 therefore not applicable, and PBoC, with {{rq3.rows[bank=pboc,scorer=llm].n_pairs|d}} parallel pairs, is
 exploratory. Figure 4 makes the structure of the disagreement visible: both languages place most statements
 in a mildly dovish band, but the Indonesian versions are read as more dovish than the English ones in the
@@ -684,7 +728,7 @@ adequate size is what would turn these descriptive drops into a test.
 
 # Discussion
 
-Four findings deserve interpretation beyond the verdicts.
+Five findings deserve interpretation beyond the verdicts.
 
 *Persistence is the baseline to beat, and it is a strong one.* Most of what can be predicted about the next
 decision is in the last decision, because policy rates move in runs. The ordered-logit model with tone,
@@ -722,6 +766,17 @@ a design choice that is rarely reported. The implication for practice is direct:
 measurement only when the prompt and the model digest are frozen and logged, and a change in either is a
 change of instrument.
 
+*The binding constraint is the signal, not the instrument.* A natural reading of the negative results is
+that a four-billion-parameter model reads tone too noisily and that a better reader would find the signal.
+The FOMC-RoBERTa replication tests that reading. It agrees with human labels on Fed sentences at a macro-F1
+of {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}}, against the LLM's {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}, yet it improves on persistence at none of the
+powered banks, the Fed included, and its announcement-window R² is indistinguishable from the LLM's in every
+powered cell (Sections 5.2 and 5.3). Two instruments that differ greatly in how well they read individual
+sentences agree closely on how little a scalar tone index adds to a persistence forecast or to a two-day
+market move. The limiting factor is what a single hawkish–dovish number can carry about a decision that is
+mostly determined by the last one, not the model that produces the number. This does not rule out richer
+text measures, such as sentence-level or topic-specific tone, which this design does not test.
+
 What, then, is a local LLM good for? It reads individual sentences better than a dictionary, with a
 macro-F1 that is close to the pre-registered floor and above the rule-based figure in the published
 literature; it produces series that track the broad policy cycle; and it does so in seconds per document,
@@ -752,7 +807,9 @@ because the model has been prevented from cheating.
 - **Replicated reference model.** The authors' FOMC-RoBERTa is gated and access was not granted, so the
   reference scorer is our replication of their recipe (D21). It reaches the published level on the FOMC test
   split, but it is not the same set of weights, and it was trained without the authors' grid over learning
-  rate and batch size.
+  rate and batch size. Its RQ1 and RQ2 results are descriptive and outside the Holm families, as
+  pre-registered. It was trained on Fed sentences only, so a weaker showing at other banks would be expected;
+  that it does not beat persistence at the Fed either is the informative part.
 - **Compute and model scale.** The four-billion-parameter model is far smaller than hosted frontier models.
   The results speak to what an analyst can run on local hardware, not to the capabilities of the largest
   models; a frontier model might pass tests this one fails, and might also be more contaminated.
@@ -766,8 +823,9 @@ fine-tuned encoder is retrained, which on Apple MPS is not bit-for-bit determini
 The pre-registration is the git tag `prereg-v1`; every later deviation is listed in `docs/DECISIONS.md`
 (D17–D21) and every data anomaly in `docs/ANOMALIES.md`. LLM scores were computed on a desktop RTX 4070 Ti
 (D20); the fine-tuned encoder and the FOMC-RoBERTa replication were trained on an Apple M4 laptop (16 GB,
-MPS). The replication takes about two hours for three seeds and is not part of `make reproduce`; it is
-rebuilt with `make fomc-roberta`, and its weights stay local (D21). Per-stage wall time is in
+MPS). The replication takes about two hours for three seeds, plus ten minutes to score the English corpus,
+and is not part of `make reproduce`; `make fomc-roberta` rebuilds both, and its weights stay local (D21).
+Per-stage wall time is in
 `results/timing.json` and the hardware and software manifest in `results/hardware.json`. Every number in
 this paper, including those in the abstract, is injected from `results/summary.json` at build time
 (`paper/build.py`); none is typed by hand. A fresh-clone reproduction on 14 October 2026 completed in 23
@@ -780,8 +838,10 @@ indices for seven central banks in three languages that look plausible over time
 FOMC labels better than a dictionary, though far below a supervised encoder trained on those labels. On every pre-registered test of *policy signal*, next-decision
 prediction, announcement-window reaction, cross-lingual consistency and prompt stability, the evidence is
 negative or underpowered, and the entity-masking and post-cutoff checks show that the negative result is
-not an artefact of contamination. Three lessons follow for practitioners. First, persistence is a strong
-baseline for decision prediction, and gains from text are small and bank-specific. Second, LLM tone
+not an artefact of contamination, while a supervised encoder that reads Fed sentences far more accurately
+fails the same tests, so it is not an artefact of a weak instrument either. Three lessons follow for
+practitioners. First, persistence is a strong baseline for decision prediction, and gains from text are
+small, bank-specific and no larger for a better-calibrated scorer. Second, LLM tone
 depends on the prompt and on the model version, so a single-prompt index should not be treated as a
 measurement without a stability check, and the prompt and model digest should be reported as part of the
 measurement. Third, for Southeast Asian banks the binding constraint is sample size, which no improvement

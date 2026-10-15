@@ -246,12 +246,18 @@ def rq1_dll(rq1: dict[str, Any]) -> None:
         return
     fig, ax = plt.subplots(figsize=(WIDTH, 3.4))
     table = _forest(
-        ax, rows, "dll_vs_pers", "dll_vs_pers_lo", "dll_vs_pers_hi", ["dict", "llm"], n_key="n_oos"
+        ax,
+        rows,
+        "dll_vs_pers",
+        "dll_vs_pers_lo",
+        "dll_vs_pers_hi",
+        ["dict", "llm", "fomc_roberta"],
+        n_key="n_oos",
     )
     ax.set_xlabel("ΔLL = LL(persistence) − LL(model), per decision;  > 0 favours the model")
     _finish(
         fig,
-        ["dict", "llm"],
+        ["dict", "llm", "fomc_roberta"],
         "Intervals: 95% moving-block bootstrap (block length 4). Hollow markers and *: bank below "
         "the pre-registered minimum (≥ 40 out-of-sample decisions with ≥ 8 hikes and ≥ 8 cuts), "
         "reported but outside the Holm family. n = out-of-sample decisions.",
@@ -265,7 +271,7 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
         for r in rq2.get("rows", [])
         if r["bank"] in BANK_NAMES
         and r["subset"] == "all"
-        and r["scorer"] in ("dict", "llm")
+        and r["scorer"] in ("dict", "llm", "fomc_roberta")
         and r.get("beta") is not None
     ]
     if not rows:
@@ -280,16 +286,9 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
     )
 
     def flag(ax: plt.Axes, r: dict[str, Any], yy: float) -> None:
-        if r.get("h2a_success"):
-            ax.text(
-                r["beta"],
-                yy + 0.2,
-                "exceeds placebo R²",
-                va="top",
-                ha="center",
-                fontsize=6.6,
-                color=INK2,
-                style="italic",
+        if r.get("h2a_success"):  # ring: no free slot for text between three series per row
+            ax.plot(
+                r["beta"], yy, "o", ms=9.5, mfc="none", mec=SLOT[r["scorer"]], mew=0.8, zorder=4
             )
 
     t_a = _forest(
@@ -298,7 +297,7 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
         "beta",
         "beta_lo",
         "beta_hi",
-        ["dict", "llm"],
+        ["dict", "llm", "fomc_roberta"],
         banks=banks,
         n_key="n_events",
         annotate=flag,
@@ -309,7 +308,7 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
         "beta",
         "beta_lo",
         "beta_hi",
-        ["dict", "llm"],
+        ["dict", "llm", "fomc_roberta"],
         banks=banks,
         n_key="n_events",
         annotate=flag,
@@ -321,10 +320,11 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
     ax_b.set_xlabel("β: basis points per unit surprise")
     _finish(
         fig,
-        ["dict", "llm"],
+        ["dict", "llm", "fomc_roberta"],
         "Intervals: ±1.96 Newey–West (HAC) standard errors. Hollow markers and *: below the "
-        "pre-registered minimum of 30 events. n = announcement events. FX for Singapore, Indonesia "
-        "and Malaysia are USD crosses, signed so that + is domestic appreciation.",
+        "pre-registered minimum of 30 events. Ringed marker: R² above the non-announcement "
+        "placebo's 95th percentile. n = announcement events. FX for Singapore, Indonesia and "
+        "Malaysia are USD crosses, signed so that + is domestic appreciation.",
     )
     _save(
         fig,

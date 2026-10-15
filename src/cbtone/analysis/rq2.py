@@ -105,6 +105,7 @@ def bank_rows(
     *,
     llm: str = "llm",
     dictionary: str = "dict",
+    transformer: str = "fomc_roberta",
     placebo_draws: int = 1000,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
@@ -160,6 +161,17 @@ def bank_rows(
                             both[f"surprise_{dictionary}"].to_numpy(),
                         )
                         row["dr2_vs_dict"], row["dr2_lo"], row["dr2_hi"], row["p_dr2"] = d
+                if label == llm and transformer in labels and n >= 3:
+                    # pre-registered descriptive comparison (RQ2): LLM vs the transformer scorer
+                    both = frame.drop_nulls([cols[0], f"surprise_{llm}", f"surprise_{transformer}"])
+                    if both.height >= 3:
+                        d = delta_r2_test(
+                            both[cols[0]].to_numpy(),
+                            both[f"surprise_{llm}"].to_numpy(),
+                            both[f"surprise_{transformer}"].to_numpy(),
+                        )
+                        row["dr2_vs_transformer"], row["dr2_tr_lo"], row["dr2_tr_hi"] = d[:3]
+                        row["p_dr2_transformer"], row["n_vs_transformer"] = d[3], both.height
                 rows.append(row)
     return rows
 

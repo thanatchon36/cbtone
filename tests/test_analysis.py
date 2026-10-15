@@ -127,7 +127,11 @@ def test_rq2_pipeline_on_synthetic_events():
     )
     rows_sc = []
     for d, s in zip(dates, sur, strict=True):
-        for sid, val in (("llm", s), ("dict-v1", rng.normal())):
+        for sid, val in (
+            ("llm", s),
+            ("dict-v1", rng.normal()),
+            ("fomc-roberta-repl", rng.normal()),
+        ):
             rows_sc.append(
                 {
                     "doc_id": f"fed:{d}:statement:en",
@@ -154,6 +158,19 @@ def test_rq2_pipeline_on_synthetic_events():
         r for r in rows if r["scorer"] == "llm" and r["subset"] == "all" and r["kind"] == "fx"
     )
     assert llm_all["n_events"] >= 40 and llm_all["beta"] > 0 and llm_all["dr2_vs_dict"] > 0
+    assert "dr2_vs_transformer" not in llm_all  # no transformer scores in LABELS
+    with_tr = LABELS | {"fomc_roberta": ("fomc-roberta-repl", "")}
+    ev_tr = rq2.bank_events(docs, sc, market, "fed", with_tr)
+    rows_tr = rq2.bank_rows(ev_tr, market, "fed", with_tr, dates, placebo_draws=50)
+    llm_tr = next(
+        r for r in rows_tr if r["scorer"] == "llm" and r["subset"] == "all" and r["kind"] == "fx"
+    )
+    assert llm_tr["dr2_vs_transformer"] > 0 and llm_tr["dr2_tr_lo"] > 0
+    assert llm_tr["n_vs_transformer"] == llm_tr["n_events"]
+    assert llm_tr["dr2_vs_dict"] == pytest.approx(
+        llm_all["dr2_vs_dict"]
+    )  # unchanged by the extra scorer
+    assert all("dr2_vs_transformer" not in r for r in rows_tr if r["scorer"] != "llm")
     v = rq2.verdict(rows)
     assert v["h2a"]["verdict"] == "untestable"  # one cell only
 
