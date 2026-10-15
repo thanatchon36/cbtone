@@ -1,7 +1,7 @@
 {
   "corpus_version": "2026-10-14+ed5a49c28f7b41acaf4f21bda0d43570bd23049b363717c08d5efb3b9177bb8b",
   "hardware": {
-    "generated_at": "2026-10-14T06:33:39+00:00",
+    "generated_at": "2026-10-14T10:04:36+00:00",
     "ollama": {
       "models": [
         {
@@ -11,23 +11,15 @@
         {
           "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
           "name": "qwen3:4b"
-        },
-        {
-          "digest": "f1e6f0684a22457e8eb5b09d26041e8171c248c6b252c267a0b35ac5afc24ed6",
-          "name": "qwen3.5:0.8b"
-        },
-        {
-          "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
-          "name": "qwen3.5:9b"
         }
       ],
       "ok": true,
-      "url": "http://localhost:11434"
+      "url": "http://192.168.1.174:11434"
     },
     "software": {
       "cbtone": {
         "ok": true,
-        "version": "0.0.1"
+        "version": "0.1.0"
       },
       "mps": {
         "available": true,
@@ -58,9 +50,9 @@
       "disk_free_gb": 43.7,
       "score_cache": {
         "ok": true,
-        "path": "data/cache/scores.sqlite",
-        "rows": 84,
-        "size_mb": 0.06
+        "path": "data/cache/scores-4070ti.sqlite",
+        "rows": 14711,
+        "size_mb": 5.34
       }
     },
     "system": {
@@ -2921,7 +2913,26 @@
       }
     },
     "rq4b": {
-      "fomc_roberta": "not run (gated model)",
+      "dedup": {
+        "dict": 0.27375449409347713,
+        "fomc_roberta": 0.7076441762900383,
+        "ft": 0.4092425897603962,
+        "llm": 0.48853090393773274,
+        "n": 479,
+        "n_in_train": 17
+      },
+      "fomc_roberta_train": {
+        "base_model": "FacebookAI/roberta-large",
+        "batch_size": 16,
+        "best_epoch": 7,
+        "lr": 1e-05,
+        "n_seeds": 3,
+        "selected_seed": 20261014,
+        "skipped_steps": 0,
+        "test_macro_f1_seed_mean": 0.6977146698931768,
+        "test_macro_f1_seed_sd": 0.021318504957407086,
+        "val_macro_f1": 0.7342569684201704
+      },
       "n": 496,
       "rows": [
         {
@@ -2950,6 +2961,16 @@
           "macro_f1": 0.4096021828420488,
           "n": 496,
           "scorer": "ft"
+        },
+        {
+          "df1_hi": 0.49014963394039096,
+          "df1_lo": 0.3913627750758753,
+          "df1_vs_ref": 0.4415069098435955,
+          "f1_hi": 0.7505435549428789,
+          "f1_lo": 0.6687156476669962,
+          "macro_f1": 0.7123126183793215,
+          "n": 496,
+          "scorer": "fomc_roberta"
         }
       ],
       "verdict": "refuted"
@@ -3010,6 +3031,13 @@
       }
     ],
     "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "fomc_roberta": {
+      "bi_drop": 0.021284692057277455,
+      "bnm_drop": 0.2723126183793215,
+      "mas_drop": 0.2460695934508505,
+      "mas_drop_largest": false,
+      "mas_transfers_poorly": true
+    },
     "label_agreement": {
       "label_counts": {
         "dovish": 80,
@@ -3019,7 +3047,7 @@
       "n": 200,
       "pass_a_eq_b": 0.71
     },
-    "reason": "FOMC-RoBERTa not run (gated model; owner action pending); H5 requires it",
+    "reason": "comparison cells underpowered (< 50 English silver sentences)",
     "rows": [
       {
         "drop": -0.14837776665422708,
@@ -3137,6 +3165,33 @@
         "powered": true,
         "scorer": "ft",
         "silver_macro_f1": 0.6746031746031745
+      },
+      {
+        "drop": 0.021284692057277455,
+        "fomc_macro_f1": 0.7123126183793215,
+        "group": "bi-en",
+        "n": 35,
+        "powered": false,
+        "scorer": "fomc_roberta",
+        "silver_macro_f1": 0.691027926322044
+      },
+      {
+        "drop": 0.2723126183793215,
+        "fomc_macro_f1": 0.7123126183793215,
+        "group": "bnm-en",
+        "n": 35,
+        "powered": false,
+        "scorer": "fomc_roberta",
+        "silver_macro_f1": 0.43999999999999995
+      },
+      {
+        "drop": 0.2460695934508505,
+        "fomc_macro_f1": 0.7123126183793215,
+        "group": "mas-en",
+        "n": 60,
+        "powered": true,
+        "scorer": "fomc_roberta",
+        "silver_macro_f1": 0.466243024928471
       }
     ],
     "verdict": "untestable"

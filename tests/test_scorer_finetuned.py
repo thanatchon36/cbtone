@@ -143,6 +143,22 @@ def test_load_score_text_and_digest(trained: tuple[Path, TrainReport]) -> None:
     assert batch[0].index == pytest.approx(sc.score_text("the committee will cut").index, abs=1e-5)
 
 
+def test_meta_sets_scorer_id_and_languages(
+    trained: tuple[Path, TrainReport], tmp_path: Path
+) -> None:
+    import shutil
+
+    out = shutil.copytree(trained[0], tmp_path / "repl")
+    meta = json.loads((out / "ft_meta.json").read_text())
+    meta |= {"scorer_id": "fomc-roberta-repl", "languages": ["en"]}
+    (out / "ft_meta.json").write_text(json.dumps(meta))
+    sc = FineTunedScorer.load(out, device="cpu")
+    assert sc.scorer_id == "fomc-roberta-repl"
+    assert sc.supports("en") and not sc.supports("th")
+    assert sc.score_text("the committee will cut").scorer_id == "fomc-roberta-repl"
+    assert FineTunedScorer.scorer_id == "ft-xlmr"  # the class default is untouched
+
+
 def test_training_is_deterministic(tiny_base: str, tmp_path: Path) -> None:
     a = train(synth(), tmp_path / "a", seed=3, epochs=2, **kw(tiny_base))
     b = train(synth(), tmp_path / "b", seed=3, epochs=2, **kw(tiny_base))

@@ -42,6 +42,7 @@ def headline_numbers(s: dict[str, Any]) -> list[tuple[str, float, str]]:
             "dict": "fomc_f1_dictionary",
             "llm": "fomc_f1_llm_zero_shot",
             "ft": "fomc_f1_finetuned",
+            "fomc_roberta": "fomc_f1_fomc_roberta",
         }.get(r["scorer"], f"rq4b.{r['scorer']}.macro_f1")
         out.append((name, r["macro_f1"], "metric"))
     agg = s.get("rq4", {}).get("rq4a", {}).get("aggregation", {}).get("spearman", {})

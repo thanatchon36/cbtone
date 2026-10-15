@@ -228,3 +228,36 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
 - **Compute target:** MISSION §0 names a MacBook Air M4. The M4 timings (D17/D18: ~3.5 s/document at cap 3,000) are kept
   as the "cost to run on a laptop" reference in the README and executive summary. The paper states that the headline run
   used a desktop GPU, and that the laptop path gives the same model and settings, only slower.
+
+## D21 — FOMC-RoBERTa replaced by a local replication of the same recipe (2026-10-15, after the main results)
+- **What:** the pre-registered reference scorer `gtfintechlab/FOMC-RoBERTa` is gated. Access was requested on
+  2026-10-14 and never granted. The owner decided to retrain the model instead of waiting.
+  `experiments/train_fomc_roberta.py` fine-tunes RoBERTa-large (`FacebookAI/roberta-large`, revision pinned in
+  `results/fomc_roberta_train_report.json`) on the **train split** of `gtfintechlab/fomc_communication` (the
+  revision already pinned in `cbtone.eval.anchors`). The scorer id is `fomc-roberta-repl`; tables keep the
+  pre-registered `fomc_roberta` slot and label it "FOMC-RoBERTa (replication)".
+- **Recipe, fixed before training:** follows Shah, Paturi & Chava (2023): a stratified 20 % validation split of
+  train, learning rate 1e-5, early stopping on validation macro-F1 (patience 3, at most 10 epochs; the authors
+  allow 100). Batch size is 16 and max length is 256 tokens, which covers every sentence. Three seeds are trained.
+  On the M4 (16 GB unified memory) a full batch of 16 overflowed GPU memory (`kIOGPUCommandBufferCallbackError
+  OutOfMemory`), which surfaced as NaN losses in the first attempts; micro-batches of 8 still overflowed once in
+  epoch 3. Every run that hit a GPU out-of-memory error was discarded before any test-set evaluation. The final run
+  processes each batch as four micro-batches of 4 with gradient accumulation (the same effective batch of 16) and
+  gradient checkpointing; it is killed on the first out-of-memory message, so no reported model saw one. A guard skips any update whose loss or gradient norm is non-finite, records the count
+  (`skipped_steps` in the report) and aborts a seed beyond 1 % of its steps. The learning rate was not changed.
+  The scorer is the seed with the best **validation** macro-F1, so the test split plays no part in selection.
+  The three-seed test mean ± sd is reported beside the selected seed.
+- **Not tuned:** no grid over learning rate or batch size (the authors searched one), to keep the M4 budget.
+  The replication may therefore land below the published 0.717 weighted F1. It is reported as it comes out.
+- **Caveats:**
+  - Like the original, the replication is in-distribution on the FOMC test split, so its H4b number is a
+    reference and not a competitor (RESEARCH_QUESTIONS H4b already says this).
+  - 17 of the 496 test sentences also occur verbatim in train. This is a property of the dataset and the original
+    model saw them too. A deduplicated test F1 (479 sentences) is reported as a sensitivity check.
+- **Licence:** this is the local-only comparison variant that `docs/sources/LICENSES.md` allows. Weights stay in
+  `data/models/fomc-roberta-repl/` (git-ignored) and are never published. `cbtone.scorers.finetuned.train`
+  still refuses FOMC rows, so released weights cannot be trained on them.
+- **Scope:** RQ4b (FOMC test) and RQ5 (English silver sentences) only, which are the two places the
+  pre-registration uses the reference model. RQ1–RQ3 are not re-run with it.
+- **Effect on verdicts:** H4b concerns the LLM and the dictionary, so it is unchanged. H5 still needs ≥ 50 English
+  silver sentences for BI and BNM (35 each), so it stays untestable whatever the replication scores.

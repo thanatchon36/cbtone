@@ -9,8 +9,8 @@ type: software
 authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
-version: 0.1.2
-date-released: "2026-10-14"
+version: 0.1.3
+date-released: "2026-10-15"
 doi: "10.5281/zenodo.23371641"  # concept DOI (all versions); v0.1.1 is 10.5281/zenodo.23371642, v0.1.2 is 10.5281/zenodo.23373854
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/cbtone"

@@ -27,7 +27,7 @@ LABELS_ALL: dict[str, tuple[str, str]] = {
     "llm": ("llm", ""),
     "llm_masked": ("llm", "masked"),
     "ft": ("ft-xlmr", ""),
-    "fomc_roberta": ("fomc-roberta", ""),
+    "fomc_roberta": ("fomc-roberta-repl", ""),  # local replication (DECISIONS D21)
 }
 
 

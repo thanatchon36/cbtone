@@ -98,22 +98,25 @@ def main() -> None:
         how="left",
         suffix="_p",
     )["label_p"].to_list()
-    ft_path = SCORES / "silver_ft.parquet"
-    if ft_path.exists():
-        ft = pl.read_parquet(ft_path)
-        preds["ft"] = labels.join(
-            ft.select(pl.col("unit").alias("sample_id"), "label"),
-            on="sample_id",
-            how="left",
-            suffix="_p",
-        )["label_p"].to_list()
+    for name in ("ft", "fomc_roberta"):  # fomc_roberta: English sentences only (null elsewhere)
+        path = SCORES / f"silver_{name}.parquet"
+        if path.exists():
+            p = pl.read_parquet(path)
+            preds[name] = labels.join(
+                p.select(pl.col("unit").alias("sample_id"), "label"),
+                on="sample_id",
+                how="left",
+                suffix="_p",
+            )["label_p"].to_list()
     rows = rq5_rows(fomc_f1, labels, preds)
     by = {(r["scorer"], r["group"]): r for r in rows}
     mas = by.get(("dict", "mas-en"))
     others = [by.get(("dict", g)) for g in ("bi-en", "bnm-en")]
     if not any(r["scorer"] == "fomc_roberta" for r in rows):
         verdict = "untestable"
-        reason = "FOMC-RoBERTa not run (gated model; owner action pending); H5 requires it"
+        reason = (
+            "FOMC-RoBERTa scores missing (run experiments/train_fomc_roberta.py); H5 requires it"
+        )
     elif mas is None or not mas["powered"] or any(o is None or not o["powered"] for o in others):
         verdict, reason = (
             "untestable",
@@ -127,6 +130,15 @@ def main() -> None:
         "bi_en_n": others[0]["n"] if others[0] else 0,
         "bnm_en_n": others[1]["n"] if others[1] else 0,
     }
+    ref = {g: by.get(("fomc_roberta", g)) for g in ("mas-en", "bi-en", "bnm-en")}
+    ref_note = {f"{g.split('-')[0]}_drop": r["drop"] if r else None for g, r in ref.items()} | {
+        "mas_transfers_poorly": bool(ref["mas-en"] and ref["mas-en"]["drop"] >= rules.RQ5_DROP),
+        # the comparison H5 would make if BI-en / BNM-en were powered (descriptive here)
+        "mas_drop_largest": bool(
+            all(ref.values())
+            and ref["mas-en"]["drop"] > max(ref["bi-en"]["drop"], ref["bnm-en"]["drop"])
+        ),
+    }
     try:
         dist = embedding_distances()
     except Exception as e:  # model download or torch missing: descriptive part only
@@ -139,6 +151,7 @@ def main() -> None:
             "verdict": verdict,
             "reason": reason,
             "dict": dict_note,
+            "fomc_roberta": ref_note,
             "rows": rows,
             "distance": dist,
             "embedding_model": EMBED_MODEL,

@@ -15,7 +15,7 @@ whether those signals carry information about later policy decisions and market 
 🤗 **[Model](https://huggingface.co/thanatchon36/cbtone-ft-xlmr)** ·
 🤗 **[Dataset](https://huggingface.co/datasets/thanatchon36/cbtone-silver-sentences)**
 
-> **Status: 0.1.2.** The pre-registered study is complete; every testable hypothesis was refuted
+> **Status: 0.1.3.** The pre-registered study is complete; every testable hypothesis was refuted
 > (see [Results](#results)). One-page summary: [`docs/EXEC_SUMMARY.md`](docs/EXEC_SUMMARY.md).
 
 ## Why this exists
@@ -110,9 +110,9 @@ Pre-registered at tag `prereg-v1`; local LLM `qwen3:4b` (Ollama); seven headline
 | H2b: LLM beats the dictionary on R² | **refuted** | 0 of 11 cells after Holm |
 | H3: native-language and English scores agree (ρ ≥ 0.70) | **refuted** | BI ρ 0.61, BNM ρ 0.53; stance flips ≈ 2 % |
 | H4a: stable across five prompt paraphrases (α ≥ 0.667) | **refuted** | α 0.65 (documents), 0.42 (sentences) |
-| H4b: FOMC macro-F1 ≥ 0.50 and above the dictionary | **refuted** | 0.48 vs 0.27 |
+| H4b: FOMC macro-F1 ≥ 0.50 and above the dictionary | **refuted** | 0.48 vs 0.27 (FOMC-RoBERTa replication: 0.71) |
 | H4c: findings robust to masking and post-cutoff split | no robust finding | — |
-| H5: Fed-calibrated scorers transfer poorly to MAS | **untestable** | FOMC-RoBERTa gated; SEA subsets < 50 |
+| H5: Fed-calibrated scorers transfer poorly to MAS | **untestable** | BI/BNM English subsets < 50; FOMC-RoBERTa drops 0.25 on MAS, the dictionary does not |
 
 ![Gain in next-decision log-loss over persistence, by bank (RQ1)](results/figures/fig_rq1_dll.png)
 
@@ -162,7 +162,7 @@ Please cite the paper; if you use the `cbtone` library, also cite the software.
   author  = {Chongmankhong, Thanatchon},
   title   = {cbtone},
   year    = {2026},
-  version = {0.1.2},
+  version = {0.1.3},
   url     = {https://github.com/thanatchon36/cbtone},
   doi     = {10.5281/zenodo.23371641}
 }

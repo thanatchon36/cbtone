@@ -1,0 +1,230 @@
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 11872.46it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: FacebookAI/roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+  step 20 loss 1.0815
+  step 40 loss 1.0488
+  step 60 loss 1.0235
+  step 80 loss 1.0640
+  step 100 loss 1.0693
+seed 20261014 epoch 1: loss 1.0574 val F1 0.2200
+  step 20 loss 1.0304
+  step 40 loss 0.9714
+  step 60 loss 0.9119
+  step 80 loss 0.8862
+  step 100 loss 0.8650
+seed 20261014 epoch 2: loss 0.9330 val F1 0.6016
+  step 20 loss 0.7215
+  step 40 loss 0.6953
+  step 60 loss 0.6423
+  step 80 loss 0.7425
+  step 100 loss 0.6336
+seed 20261014 epoch 3: loss 0.6870 val F1 0.6759
+  step 20 loss 0.5285
+  step 40 loss 0.5509
+  step 60 loss 0.4491
+  step 80 loss 0.4758
+  step 100 loss 0.4708
+seed 20261014 epoch 4: loss 0.4950 val F1 0.7157
+  step 20 loss 0.3106
+  step 40 loss 0.3912
+  step 60 loss 0.3603
+  step 80 loss 0.4250
+  step 100 loss 0.3295
+seed 20261014 epoch 5: loss 0.3633 val F1 0.6968
+  step 20 loss 0.2585
+  step 40 loss 0.3082
+  step 60 loss 0.3195
+  step 80 loss 0.2713
+  step 100 loss 0.2432
+seed 20261014 epoch 6: loss 0.2802 val F1 0.7102
+  step 20 loss 0.1975
+  step 40 loss 0.1746
+  step 60 loss 0.1902
+  step 80 loss 0.1622
+  step 100 loss 0.2036
+seed 20261014 epoch 7: loss 0.1856 val F1 0.7343
+  step 20 loss 0.1498
+  step 40 loss 0.1506
+  step 60 loss 0.0944
+  step 80 loss 0.1769
+  step 100 loss 0.1712
+seed 20261014 epoch 8: loss 0.1486 val F1 0.7071
+  step 20 loss 0.1722
+  step 40 loss 0.1173
+  step 60 loss 0.0550
+  step 80 loss 0.1406
+  step 100 loss 0.0973
+seed 20261014 epoch 9: loss 0.1165 val F1 0.7041
+  step 20 loss 0.1455
+  step 40 loss 0.0695
+  step 60 loss 0.0792
+  step 80 loss 0.0627
+  step 100 loss 0.1108
+seed 20261014 epoch 10: loss 0.0935 val F1 0.6926
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 11148.13it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: FacebookAI/roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  step 20 loss 1.0601
+  step 40 loss 1.0681
+  step 60 loss 1.0522
+  step 80 loss 1.0651
+  step 100 loss 1.0497
+seed 20261015 epoch 1: loss 1.0590 val F1 0.2200
+  step 20 loss 1.0244
+  step 40 loss 1.0224
+  step 60 loss 0.9087
+  step 80 loss 0.8314
+  step 100 loss 0.8587
+seed 20261015 epoch 2: loss 0.9291 val F1 0.6015
+  step 20 loss 0.8072
+  step 40 loss 0.8118
+  step 60 loss 0.7522
+  step 80 loss 0.6893
+  step 100 loss 0.7354
+seed 20261015 epoch 3: loss 0.7592 val F1 0.6796
+  step 20 loss 0.6266
+  step 40 loss 0.6070
+  step 60 loss 0.6653
+  step 80 loss 0.6208
+  step 100 loss 0.6219
+seed 20261015 epoch 4: loss 0.6283 val F1 0.7228
+  step 20 loss 0.4483
+  step 40 loss 0.4901
+  step 60 loss 0.5114
+  step 80 loss 0.5750
+  step 100 loss 0.5000
+seed 20261015 epoch 5: loss 0.5050 val F1 0.7067
+  step 20 loss 0.4272
+  step 40 loss 0.4061
+  step 60 loss 0.3699
+  step 80 loss 0.4244
+  step 100 loss 0.3338
+seed 20261015 epoch 6: loss 0.3923 val F1 0.6988
+  step 20 loss 0.3267
+  step 40 loss 0.3337
+  step 60 loss 0.2997
+  step 80 loss 0.2825
+  step 100 loss 0.2738
+seed 20261015 epoch 7: loss 0.3033 val F1 0.7189
+Loading weights:   0%|          | 0/389 [00:00<?, ?it/s]Loading weights: 100%|██████████| 389/389 [00:00<00:00, 11206.47it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: FacebookAI/roberta-large
+Key                        | Status     | 
+---------------------------+------------+-
+lm_head.layer_norm.weight  | UNEXPECTED | 
+lm_head.dense.bias         | UNEXPECTED | 
+lm_head.layer_norm.bias    | UNEXPECTED | 
+lm_head.bias               | UNEXPECTED | 
+lm_head.dense.weight       | UNEXPECTED | 
+classifier.out_proj.bias   | MISSING    | 
+classifier.dense.weight    | MISSING    | 
+classifier.dense.bias      | MISSING    | 
+classifier.out_proj.weight | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  step 20 loss 1.0907
+  step 40 loss 1.0385
+  step 60 loss 1.0602
+  step 80 loss 1.0563
+  step 100 loss 1.0910
+seed 20261016 epoch 1: loss 1.0673 val F1 0.2987
+  step 20 loss 1.0556
+  step 40 loss 1.0753
+  step 60 loss 1.0455
+  step 80 loss 0.9796
+  step 100 loss 0.9673
+seed 20261016 epoch 2: loss 1.0247 val F1 0.2200
+  step 20 loss 0.9302
+  step 40 loss 0.8524
+  step 60 loss 0.8073
+  step 80 loss 0.7503
+  step 100 loss 0.8003
+seed 20261016 epoch 3: loss 0.8281 val F1 0.6600
+  step 20 loss 0.7176
+  step 40 loss 0.6602
+  step 60 loss 0.7279
+  step 80 loss 0.6506
+  step 100 loss 0.6073
+seed 20261016 epoch 4: loss 0.6727 val F1 0.6955
+  step 20 loss 0.4587
+  step 40 loss 0.4386
+  step 60 loss 0.4400
+  step 80 loss 0.5712
+  step 100 loss 0.5335
+seed 20261016 epoch 5: loss 0.4884 val F1 0.7038
+  step 20 loss 0.3387
+  step 40 loss 0.4259
+  step 60 loss 0.4185
+  step 80 loss 0.3940
+  step 100 loss 0.4044
+seed 20261016 epoch 6: loss 0.3963 val F1 0.7172
+  step 20 loss 0.2612
+  step 40 loss 0.3403
+  step 60 loss 0.2970
+  step 80 loss 0.2975
+  step 100 loss 0.2366
+seed 20261016 epoch 7: loss 0.2865 val F1 0.6883
+  step 20 loss 0.2731
+  step 40 loss 0.2611
+  step 60 loss 0.1744
+  step 80 loss 0.1900
+  step 100 loss 0.2060
+seed 20261016 epoch 8: loss 0.2209 val F1 0.7117
+  step 20 loss 0.1466
+  step 40 loss 0.2547
+  step 60 loss 0.1562
+  step 80 loss 0.1816
+  step 100 loss 0.1183
+seed 20261016 epoch 9: loss 0.1715 val F1 0.6959
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.13s/it]Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.13s/it]
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 30758.75it/s]
+{
+  "scorer_id": "fomc-roberta-repl",
+  "base_model": "FacebookAI/roberta-large",
+  "base_revision": "722cf37b1afa9454edce342e7895e588b6ff1d59",
+  "training_data": "gtfintechlab/fomc_communication@6b0283f55f0005a6d38d49f271d795c21fccc1a3 train split",
+  "lr": 1e-05,
+  "batch_size": 16,
+  "micro_batch": 4,
+  "gradient_checkpointing": true,
+  "max_length": 256,
+  "max_epochs": 10,
+  "patience": 3,
+  "warmup_frac": 0.06,
+  "val_frac": 0.2,
+  "selected_seed": 20261014,
+  "model_digest": "286a9fee2f4856e58b22330a3f778241ec666cb335f29079b0946b8b150dcb64",
+  "test_macro_f1_seed_mean": 0.6977146698931768,
+  "test_macro_f1_seed_sd": 0.021318504957407086
+}
+seed test F1: [0.7123, 0.6733, 0.7076]

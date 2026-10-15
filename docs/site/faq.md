@@ -22,8 +22,9 @@ statements may be reproduced with acknowledgement. For the other banks the repos
 and hashes only. Details: [LICENSES.md](https://github.com/thanatchon36/cbtone/blob/main/docs/sources/LICENSES.md).
 
 **Can I use FOMC-RoBERTa commercially?**
-No: it is CC-BY-NC-4.0 and gated on Hugging Face. It is used as a run-time scorer and for
-evaluation only, and is never redistributed here.
+No: it is CC-BY-NC-4.0 and gated on Hugging Face. Access was never granted for this study, so the paper
+uses a local replication trained on the same CC-BY-NC data (`experiments/train_fomc_roberta.py`, decision
+D21). Its weights are not published.
 
 **Do I need a GPU?**
 No. The target machine is a laptop without CUDA. The LLM scorer runs a small model (4B
@@ -35,8 +36,9 @@ claims are made only where both survive. See [Scorers](scorers.md#contamination)
 
 **Where are the results?**
 In the [paper](https://github.com/thanatchon36/cbtone/blob/main/paper/paper.pdf) and the [one-page summary](https://github.com/thanatchon36/cbtone/blob/main/docs/EXEC_SUMMARY.md). Every
-testable hypothesis (H1–H4) was refuted at its pre-registered threshold; H5 was untestable because a gated reference
-model could not be run.
+testable hypothesis (H1–H4) was refuted at its pre-registered threshold. H5 was untestable because the BI and BNM
+English silver subsets are below 50 sentences, and on MAS the dictionary does not lose accuracy, so it could not have
+been supported.
 
 **What happens when a number looks too good?**
 A headline metric at exactly 0, 1 or 100 %, a correlation above 0.95, or a value more than 2x

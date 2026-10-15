@@ -1,9 +1,10 @@
 """Publication figures for the paper: results/figures/<name>.{svg,png,csv}.
 
 Design rules (dataviz reference, validated palette): colour follows the scorer, never its rank
-(dict = blue, llm = orange, ft = green; grey ink for anything that is not a scorer); thin marks;
-recessive grid; a legend wherever two series share an axis; selective direct labels; no in-figure
-titles (the caption carries them, panels get "(a)"/"(b)"); one CSV table view per figure.
+(dict = blue, llm = orange, ft = green, fomc_roberta = purple; grey ink for anything that is not
+a scorer); thin marks; recessive grid; a legend wherever two series share an axis; selective
+direct labels; no in-figure titles (the caption carries them, panels get "(a)"/"(b)"); one CSV
+table view per figure.
 Typography matches the typeset paper: Libertinus Serif from paper/fonts, so figure text and body
 text are set in the same face. SVG text is written as outlines, so the files render identically
 everywhere; PNG at 300 dpi is kept for the README and the docs site.
@@ -32,8 +33,13 @@ FONT_DIR = Path("paper/fonts")
 WIDTH = 6.3  # inches; the paper's text width is 16.6 cm
 SURFACE = "#ffffff"
 INK, INK2, INK3, GRID, BAND = "#141414", "#4f4f4f", "#8c8c8c", "#dcdcdc", "#f4f4f2"
-SLOT = {"dict": "#2a78d6", "llm": "#eb6834", "ft": "#1baf7a"}
-NAMES = {"dict": "Dictionary (dict-v1)", "llm": "Local LLM (qwen3:4b)", "ft": "Fine-tuned XLM-R"}
+SLOT = {"dict": "#2a78d6", "llm": "#eb6834", "ft": "#1baf7a", "fomc_roberta": "#8a5cc2"}
+NAMES = {
+    "dict": "Dictionary (dict-v1)",
+    "llm": "Local LLM (qwen3:4b)",
+    "ft": "Fine-tuned XLM-R",
+    "fomc_roberta": "FOMC-RoBERTa (replication)",
+}
 BANK_NAMES = {
     "fed": "Fed",
     "ecb": "ECB",
@@ -406,8 +412,8 @@ def rq4b_fomc_f1(rq4: dict[str, Any]) -> None:
     rows = rq4.get("rq4b", {}).get("rows", [])
     if not rows:
         return
-    order = [r for s in ("dict", "llm", "ft") for r in rows if r["scorer"] == s]
-    fig, ax = plt.subplots(figsize=(WIDTH, 2.3))
+    order = [r for s in ("dict", "llm", "ft", "fomc_roberta") for r in rows if r["scorer"] == s]
+    fig, ax = plt.subplots(figsize=(WIDTH, 0.6 + 0.45 * len(order)))
     _axis(ax)
     ax.axvspan(0, F1_MIN, color=BAND, lw=0, zorder=0)
     ax.text(

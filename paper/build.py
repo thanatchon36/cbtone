@@ -195,7 +195,7 @@ def results(d: dict[str, Any]) -> list[tuple[str, str, str, str]]:
             "H5",
             kind(d["rq5"]["verdict"]),
             "Fed-calibrated scorers transfer poorly to MAS.",
-            "FOMC-RoBERTa gated; Southeast Asian English subsets below 50 sentences",
+            "BI/BNM English subsets below 50 sentences; the dictionary does not drop on MAS",
         ),
     ]
 

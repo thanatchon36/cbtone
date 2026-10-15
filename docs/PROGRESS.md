@@ -95,8 +95,8 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] Pushed by the owner: main @ 895323c and tags prereg-v1, v0.1.0; CI green on main and the tag
 - [x] PyPI: trusted publisher configured by the owner; release run 38550417594 re-run → cbtone 0.1.0 (wheel + sdist)
       on https://pypi.org/project/cbtone/
-- [ ] FOMC-RoBERTa: HF login done (user thanatchon36); access requested 2026-10-14, pending approval. When granted:
-      score FOMC test + silver, rerun rq4/rq5, refresh paper → v0.1.1
+- [x] FOMC-RoBERTa: access requested 2026-10-14 and never granted; replaced by a local replication on
+      2026-10-15 (D21), see v0.1.3 below
 
 ## Post-release polish (2026-10-14, after v0.1.0)
 
@@ -140,13 +140,19 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
       homepage set to the web paper. No change to any result, verdict or library behaviour.
 - [x] v0.1.2 pushed; PyPI 0.1.2 published (description carries both BibTeX entries); GitHub Release v0.1.2;
       Zenodo v0.1.2 DOI 10.5281/zenodo.23373854, metadata from `.zenodo.json` incl. the paper link.
+- [x] v0.1.3 (2026-10-15): FOMC-RoBERTa replication (D21). RoBERTa-large on the FOMC train split, Shah et al.
+      recipe, 3 seeds, selection on validation (`make fomc-roberta`, ~2 h on the M4; weights local only). FOMC
+      test macro-F1 0.71 [0.67, 0.75] (seed mean 0.70 ± 0.02; dedup 0.71). RQ5: drop 0.25 on MAS (powered),
+      0.27 BNM-en / 0.02 BI-en (underpowered). Verdicts unchanged (H4b refuted, H5 untestable; on MAS the
+      dictionary does not drop, so H5 could not have been supported). Paper H5 threshold corrected to the
+      pre-registered 0.10 (it said 0.15). `score_sentences.py` no longer drops other scorers' FOMC rows.
+      M4 GPU out-of-memory at batch 16 fixed with micro-batches of 4 + gradient checkpointing.
 
 ## Waiting on owner
-- **git push is blocked for the agent** (deny rule in `~/.claude/settings.json`). The owner pushes with
-  `! git push origin main --tags`.
-- **FOMC-RoBERTa is gated on Hugging Face:** logged in and access requested on 2026-10-14; waiting for the model
-  owner's approval (the chat-pasted token was revoked and replaced on 2026-10-14). Until then RQ4b/RQ5 report it as "not run (gated)". The scorer is built,
-  pinned to revision `aa3bc428…`, and checks its label map at load time.
+- **git push:** the deny rule was removed by the owner; the agent pushes normal commits and pushes release tags
+  when the owner asks.
+- **FOMC-RoBERTa (original) is gated on Hugging Face** and access was never granted. Resolved without it:
+  the paper uses the local replication (D21). The `fomc-roberta` scorer for the original stays in the library.
 
 Open items for the author:
 - BoE: academic re-use permission could be requested to make BoE text redistributable.

@@ -39,11 +39,14 @@ quick-ci:  ## dictionary scorer end-to-end on the committed mini corpus (no netw
 
 XRUN := $(UV) run --extra transformers   # scorers + experiments need torch/transformers
 
-.PHONY: score experiments quick reproduce paper figures
+.PHONY: score fomc-roberta experiments quick reproduce paper figures
 score:  ## all pre-registered scoring jobs (LLM via local Ollama; cached, resumable)
 	$(CAFFEINATE) env RUN="$(XRUN) cbtone" experiments/score_documents.sh
 	$(CAFFEINATE) $(XRUN) python experiments/score_sentences.py fomc silver rq4a
 	$(CAFFEINATE) $(XRUN) python experiments/train_ft.py
+
+fomc-roberta:  ## local FOMC-RoBERTa replication (D21; ~2 h on an M4; weights never published)
+	$(CAFFEINATE) $(XRUN) python experiments/train_fomc_roberta.py
 
 experiments:  ## RQ1-RQ5 tables, figures, results/summary.json (fails on unexplained sanity flags)
 	$(CAFFEINATE) $(XRUN) python experiments/rq1_policy.py

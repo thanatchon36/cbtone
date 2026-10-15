@@ -61,7 +61,7 @@ Please cite the paper; if you use the `cbtone` library, also cite the software.
   author  = {Chongmankhong, Thanatchon},
   title   = {cbtone},
   year    = {2026},
-  version = {0.1.2},
+  version = {0.1.3},
   url     = {https://github.com/thanatchon36/cbtone},
   doi     = {10.5281/zenodo.23371641}
 }

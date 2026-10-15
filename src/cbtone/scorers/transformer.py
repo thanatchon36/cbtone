@@ -26,6 +26,9 @@ Words" FOMC sentences; CC-BY-NC-4.0; Shah, Paturi & Chava 2023, ACL):
 * ``model_digest`` is pinned to the Hugging Face commit sha
   ``aa3bc4281fb1fe73c8872e09ad5c64b898f90d83`` (``HfApi().model_info(repo).sha``, last modified
   2023-09-12). ``from_pretrained`` is called with ``revision=<sha>``.
+* Access was never granted during the study. The paper uses a local replication of the same recipe
+  (``experiments/train_fomc_roberta.py``, DECISIONS D21), saved in ``FineTunedScorer`` format with
+  scorer id ``fomc-roberta-repl``. This class remains for users who have access to the original.
 
 ``cb-roberta`` = ``Moritz-Pfeifer/CentralBankRoBERTa-sentiment-classifier`` is **not registered**.
 Its ``config.json`` has ``id2label = {0: "negative", 1: "positive"}`` (a binary head, no neutral

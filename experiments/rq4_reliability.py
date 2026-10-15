@@ -5,9 +5,11 @@ Writes results/rq4.json and results/rq4b_rows.csv.
 
 from __future__ import annotations
 
+import json
+
 import numpy as np
 import polars as pl
-from _common import SCORES, write_json, write_rows
+from _common import RESULTS, SCORES, write_json, write_rows
 
 from cbtone.analysis.rq345 import classification_rows, stability
 from cbtone.eval import rules
@@ -73,7 +75,47 @@ def rq4b() -> tuple[dict[str, object], list[dict[str, object]]]:
     if llm is not None:
         ok = llm["macro_f1"] >= rules.RQ4B_MIN_F1 and llm.get("df1_lo", -1) > 0
         verdict = "supported" if ok else "refuted"
-    return {"verdict": verdict, "n": wide.height, "fomc_roberta": "not run (gated model)"}, rows
+    out = {"verdict": verdict, "n": wide.height, "dedup": dedup_f1(wide, preds)}
+    report = RESULTS / "fomc_roberta_train_report.json"
+    if report.exists():  # D21: local replication of FOMC-RoBERTa
+        r = json.loads(report.read_text())
+        out["fomc_roberta_train"] = {
+            k: r[k]
+            for k in (
+                "base_model",
+                "selected_seed",
+                "test_macro_f1_seed_mean",
+                "test_macro_f1_seed_sd",
+                "lr",
+                "batch_size",
+            )
+        } | {
+            "n_seeds": len(r["runs"]),
+            "best_epoch": next(
+                x["best_epoch"] for x in r["runs"] if x["seed"] == r["selected_seed"]
+            ),
+            "val_macro_f1": max(x["val_macro_f1"] for x in r["runs"]),
+            "skipped_steps": sum(x.get("skipped_steps", 0) for x in r["runs"]),
+        }
+    return out, rows
+
+
+def dedup_f1(wide: pl.DataFrame, preds: dict[str, list[str]]) -> dict[str, object]:
+    """Macro-F1 on test sentences that do not also occur verbatim in train (D21 sensitivity)."""
+    from cbtone.eval.anchors import load_fomc_anchor
+    from cbtone.eval.stats import macro_f1
+
+    fomc = load_fomc_anchor(splits=("train", "test"))
+    train = set(fomc.filter(pl.col("split") == "train")["sentence"].to_list())
+    text = dict(
+        fomc.filter(pl.col("split") == "test").select("sentence_id", "sentence").iter_rows()
+    )
+    keep = [text[u] not in train for u in wide["unit"].to_list()]
+    gold = [g for g, k in zip(wide["gold"].to_list(), keep, strict=True) if k]
+    out: dict[str, object] = {"n": len(gold), "n_in_train": len(keep) - len(gold)}
+    for name, p in preds.items():
+        out[name] = macro_f1(gold, [x for x, k in zip(p, keep, strict=True) if k])
+    return out
 
 
 def main() -> None:

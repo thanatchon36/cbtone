@@ -27,6 +27,7 @@ LITERATURE_RANGES: dict[str, tuple[float, float]] = {
     "fomc_f1_dictionary": (0.50 / 2, min(1.0, 0.50 * 2)),
     "fomc_f1_llm_zero_shot": (0.587 / 2, min(1.0, 0.587 * 2)),
     "fomc_f1_finetuned": (0.717 / 2, min(1.0, 0.717 * 2)),
+    "fomc_f1_fomc_roberta": (0.717 / 2, min(1.0, 0.717 * 2)),  # D21: sanity range, not a test
     "tone_policy_pseudo_r2": (0.0, 0.12 * 2),
     "llm_lexicon_corr": (0.49 / 2, min(0.98, 0.49 * 2)),
 }

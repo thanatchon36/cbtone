@@ -321,17 +321,31 @@ class FineTunedScorer(Scorer):
     languages = _LANGS
 
     def __init__(
-        self, model: Any, tokenizer: Any, digest: str, max_length: int, device: str
+        self,
+        model: Any,
+        tokenizer: Any,
+        digest: str,
+        max_length: int,
+        device: str,
+        *,
+        scorer_id: str = SCORER_ID,
+        languages: frozenset[str] = _LANGS,
     ) -> None:
         self._model = model
         self._tok = tokenizer
         self.model_digest = digest
         self.max_length = max_length
         self.device = device
+        self.scorer_id = scorer_id
+        self.languages = languages
 
     @classmethod
     def load(cls, out_dir: Path | str, device: str | None = None) -> FineTunedScorer:
-        """Load a model saved by :func:`train`; ``model_digest`` = sha256 of its weights file."""
+        """Load a model saved by :func:`train`; ``model_digest`` = sha256 of its weights file.
+
+        ``ft_meta.json`` may set ``scorer_id`` and ``languages`` (e.g. the local FOMC-RoBERTa
+        replication, ``experiments/train_fomc_roberta.py``); the defaults are ``ft-xlmr``'s.
+        """
         from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
         out = Path(out_dir)
@@ -342,7 +356,15 @@ class FineTunedScorer(Scorer):
         dev = _pick_device(device)
         model = AutoModelForSequenceClassification.from_pretrained(out).to(dev)
         tok = AutoTokenizer.from_pretrained(out)
-        return cls(model, tok, file_sha256(weights), int(meta["max_length"]), dev)
+        return cls(
+            model,
+            tok,
+            file_sha256(weights),
+            int(meta["max_length"]),
+            dev,
+            scorer_id=str(meta.get("scorer_id", SCORER_ID)),
+            languages=frozenset(meta.get("languages", _LANGS)),
+        )
 
     def _scores(self, texts: Sequence[str]) -> list[ToneScore]:
         probs = _predict_probs(self._model, self._tok, texts, self.max_length, self.device)

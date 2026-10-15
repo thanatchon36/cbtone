@@ -35,7 +35,8 @@ abstract: |
   {{rq4.rq4a.docs.prompts.alpha|.2f}} across five paraphrases at document level) and still more with the model
   version. On the human-labelled FOMC test split the LLM reaches a macro-F1 of
   {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}, above the dictionary ({{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}})
-  but below the pre-registered floor of 0.50. We release the corpus pipeline, the scorers and the evaluation
+  but below the pre-registered floor of 0.50, while our replication of the supervised FOMC-RoBERTa reaches
+  {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}}. We release the corpus pipeline, the scorers and the evaluation
   harness as the open-source Python package `cbtone`, together with every number in this paper.
 header-includes:
   - |
@@ -266,15 +267,22 @@ locally through Ollama at temperature 0 with a registered prompt (P1) and schema
 every call is cached by content hash, so a re-run repeats no inference. The *fine-tuned* scorer is XLM-R
 base trained for at most 30 minutes on the LLM's own sentence labels for corpus sentences, never on the
 FOMC data, so that it measures how much of the LLM's reading a small multilingual encoder can absorb.
-FOMC-RoBERTa, the in-distribution reference, is implemented but is a gated model whose access was pending
-at the time of the run; it is reported as not run wherever it appears.
+*FOMC-RoBERTa*, the in-distribution reference, is our replication of the model of Shah, Paturi and Chava
+[@shah2023trillion]. The authors' checkpoint is gated and access was not granted. We therefore fine-tuned
+RoBERTa-large on the train split of their data with their recipe: a 20 % validation split, learning rate
+10⁻⁵ and early stopping on validation macro-F1. Three seeds were trained and the seed with the best
+validation score was kept, so the test split played no part in model selection. The weights are not
+released, because the training data are licensed for non-commercial use only. It reads English only and
+is used where the pre-registration uses the reference model: the FOMC test split (H4b) and the Southeast
+Asian silver sets (H5).
 
 ## Pre-registration and hypotheses
 
 The pre-registration (`docs/RESEARCH_QUESTIONS.md` at tag `prereg-v1`) fixed the five research questions,
 the hypotheses in Table 2, the sample minimum for each (bank, question) cell, the Holm families and the
 placebo designs. Deviations made after the tag are logged with their rationale in `docs/DECISIONS.md`
-(D17–D20) and concern compute allocation and document selection, not thresholds or tests.
+(D17–D21) and concern compute allocation, document selection and the replacement of the gated reference
+model by a replication (D21), not thresholds or tests.
 
 | Hypothesis | Statement | Threshold | Verdict |
 |:------|:----------------------|:----------------|:--------|
@@ -285,7 +293,7 @@ placebo designs. Deviations made after the tag are logged with their rationale i
 | H4a | Scores are stable across prompt paraphrases, temperatures, model tags and aggregation | α ≥ 0.667, ICC(2,1) ≥ 0.75, all aggregation ρ ≥ 0.70 | prompts pass: {{rq4.rq4a.docs.h4a_prompts_pass|yn}} |
 | H4b | The LLM agrees with human FOMC labels better than the dictionary | macro-F1 ≥ 0.50 and above the dictionary | {{rq4.rq4b.verdict}} |
 | H4c | Any H1/H2 finding survives entity masking and a post-cutoff split | both re-estimates keep sign and significance | robust finding: {{rq1.rq4c.robust|yn}} |
-| H5 | Fed-calibrated scorers transfer poorly to MAS | silver macro-F1 drop ≥ 0.15 vs FOMC, with FOMC-RoBERTa as the reference | {{rq5.verdict}} |
+| H5 | Fed-calibrated scorers transfer poorly to MAS | silver macro-F1 drop ≥ 0.10 vs FOMC, with FOMC-RoBERTa as the reference | {{rq5.verdict}} |
 
 : Pre-registered hypotheses, their thresholds and the verdicts reported in Sections 5–7. Every verdict is
 read from `results/summary.json`.
@@ -351,7 +359,7 @@ a signal that survives both is unlikely to be recall.
 ## Transfer to Southeast Asia (RQ5)
 
 Each Fed-calibrated scorer's macro-F1 on the FOMC test split is compared with its macro-F1 on the silver
-sets per bank and language; H5 predicts a drop of at least 0.15 for MAS, whose exchange-rate framing is
+sets per bank and language; H5 predicts a drop of at least 0.10 for MAS, whose exchange-rate framing is
 furthest from the Fed's. The test was pre-registered with FOMC-RoBERTa as the reference scorer and a minimum
 of 50 sentences per cell. As a descriptive complement, we report the mean cosine distance between each
 bank's sentences and Fed sentences in a multilingual sentence-embedding space
@@ -558,10 +566,11 @@ the LLM's reading at a fraction of the inference cost.
 | Dictionary (`dict-v1`) | {{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}} [{{rq4.rq4b.rows[scorer=dict].f1_lo|.2f}}, {{rq4.rq4b.rows[scorer=dict].f1_hi|.2f}}] | — |
 | Local LLM (`qwen3:4b`) | {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}} [{{rq4.rq4b.rows[scorer=llm].f1_lo|.2f}}, {{rq4.rq4b.rows[scorer=llm].f1_hi|.2f}}] | {{rq4.rq4b.rows[scorer=llm].df1_vs_ref|.2f}} [{{rq4.rq4b.rows[scorer=llm].df1_lo|.2f}}, {{rq4.rq4b.rows[scorer=llm].df1_hi|.2f}}] |
 | Fine-tuned XLM-R | {{rq4.rq4b.rows[scorer=ft].macro_f1|.2f}} [{{rq4.rq4b.rows[scorer=ft].f1_lo|.2f}}, {{rq4.rq4b.rows[scorer=ft].f1_hi|.2f}}] | {{rq4.rq4b.rows[scorer=ft].df1_vs_ref|.2f}} [{{rq4.rq4b.rows[scorer=ft].df1_lo|.2f}}, {{rq4.rq4b.rows[scorer=ft].df1_hi|.2f}}] |
-| FOMC-RoBERTa | not run (gated model) | — |
+| FOMC-RoBERTa (replication) ᵃ | {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}} [{{rq4.rq4b.rows[scorer=fomc_roberta].f1_lo|.2f}}, {{rq4.rq4b.rows[scorer=fomc_roberta].f1_hi|.2f}}] | {{rq4.rq4b.rows[scorer=fomc_roberta].df1_vs_ref|.2f}} [{{rq4.rq4b.rows[scorer=fomc_roberta].df1_lo|.2f}}, {{rq4.rq4b.rows[scorer=fomc_roberta].df1_hi|.2f}}] |
 
 : Three-class macro-F1 on the FOMC test split ({{rq4.rq4b.n}} sentences), with bootstrap intervals over
-sentences. Pre-registered floor 0.50.
+sentences. Pre-registered floor 0.50. ᵃ Trained on the train split of the same data, so in-distribution
+(Section 4.1).
 
 Our dictionary scores {{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}}, well below the roughly 0.50 reported for a
 rule-based baseline by Shah, Paturi and Chava [@shah2023trillion]. The two rule sets differ, and ours
@@ -569,7 +578,18 @@ returns neutral whenever hawkish and dovish matches balance or neither appears, 
 every FOMC test sentence; the dictionary is therefore a floor rather than a competitive baseline on
 sentence-level data, even though it is competitive on document-level prediction (Section 5.2). The LLM also
 over-predicts the neutral class relative to the human labels, which depresses its macro-F1 relative to its
-accuracy. FOMC-RoBERTa, the in-distribution reference at about 0.72, could not be run.
+accuracy.
+
+Our FOMC-RoBERTa replication reaches {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}} [{{rq4.rq4b.rows[scorer=fomc_roberta].f1_lo|.2f}}, {{rq4.rq4b.rows[scorer=fomc_roberta].f1_hi|.2f}}], against the
+0.72 weighted F1 the authors report [@shah2023trillion]. Across the {{rq4.rq4b.fomc_roberta_train.n_seeds}} training seeds its
+test macro-F1 is {{rq4.rq4b.fomc_roberta_train.test_macro_f1_seed_mean|.2f}} ± {{rq4.rq4b.fomc_roberta_train.test_macro_f1_seed_sd|.2f}}, so the selected
+seed is typical and not a lucky draw. Removing the {{rq4.rq4b.dedup.n_in_train}} test sentences that also
+occur in the train split changes its score only to {{rq4.rq4b.dedup.fomc_roberta|.2f}}. The model is
+trained on the same distribution as the test split, so it is a ceiling for this split and not a
+competitor. What it shows is the size of the gap: a supervised encoder of 355 million parameters, trained
+on about 1,600 labelled sentences, beats the zero-shot four-billion-parameter LLM on Fed
+text by a wide margin ({{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}} against {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}). Section 7 asks
+how much of that advantage survives outside the Fed.
 
 ![Agreement with human labels on the FOMC test split: three-class macro-F1 with 95 % bootstrap intervals. Shaded region: below the pre-registered floor. Dotted lines: weighted F1 values published for the same split, shown for orientation.](results/figures/fig_rq4b_fomc_f1.svg){width=100%}
 
@@ -606,9 +626,20 @@ the negative results above are not an artefact of contamination either.
 
 # Transfer to Southeast Asia
 
-**H5 is untestable as pre-registered.** The hypothesis requires FOMC-RoBERTa, which could not be run, and
-the BI-English and BNM-English silver subsets have {{rq5.dict.bi_en_n}} sentences each, below the
-pre-registered minimum of 50. Table 8 reports the descriptive comparison for completeness. On the 60 MAS
+**H5 is untestable as pre-registered, and could not have been supported.** The BI-English and BNM-English
+silver subsets have {{rq5.dict.bi_en_n}} sentences each, below the pre-registered minimum of 50, so the
+comparison of MAS with BI and BNM cannot be made. The other clause can be checked on the adequately powered MAS
+cell, and it fails: H5 needs both Fed-calibrated scorers to transfer poorly to MAS, and the dictionary does not.
+
+The FOMC-RoBERTa replication does lose accuracy outside the Fed. On the 60 MAS silver sentences its macro-F1
+is {{rq5.rows[group=mas-en,scorer=fomc_roberta].silver_macro_f1|.2f}} against {{rq5.rows[group=mas-en,scorer=fomc_roberta].fomc_macro_f1|.2f}} on the FOMC test split, a drop of {{rq5.rows[group=mas-en,scorer=fomc_roberta].drop|.2f}}, beyond the pre-registered 0.10. The two underpowered
+English cells point in different directions: the drop is {{rq5.rows[group=bnm-en,scorer=fomc_roberta].drop|.2f}} for BNM and {{rq5.rows[group=bi-en,scorer=fomc_roberta].drop|.2f}} for BI. So the MAS drop is not the
+largest, contrary to H5's prediction. Part of each drop is error in the silver labels rather than loss of
+transfer. Those labels come from the LLM, which itself reaches only {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}
+on human FOMC labels, so a scorer can be penalised for disagreeing with a wrong silver label. The numbers are
+evidence that the supervised Fed model is less accurate on MAS text. They do not measure how much less.
+
+Table 8 reports the full descriptive comparison. On the 60 MAS
 silver sentences the dictionary's macro-F1 is {{rq5.rows[group=mas-en,scorer=dict].silver_macro_f1|.2f}}
 against {{rq5.rows[group=mas-en,scorer=dict].fomc_macro_f1|.2f}} on FOMC sentences, so it does not lose
 performance on MAS (drop {{rq5.rows[group=mas-en,scorer=dict].drop|.2f}}). The LLM and the fine-tuned
@@ -634,19 +665,22 @@ silver distribution is skewed towards dovish and neutral ({{rq5.label_agreement.
 | Fine-tuned XLM-R | MAS, English | {{rq5.rows[group=mas-en,scorer=ft].n|d}} | {{rq5.rows[group=mas-en,scorer=ft].silver_macro_f1|.2f}} | {{rq5.rows[group=mas-en,scorer=ft].fomc_macro_f1|.2f}} | {{rq5.rows[group=mas-en,scorer=ft].drop|.2f}} | {{rq5.rows[group=mas-en,scorer=ft].powered|yn}} |
 | Fine-tuned XLM-R | BI, Indonesian | {{rq5.rows[group=bi-id,scorer=ft].n|d}} | {{rq5.rows[group=bi-id,scorer=ft].silver_macro_f1|.2f}} | {{rq5.rows[group=bi-id,scorer=ft].fomc_macro_f1|.2f}} | {{rq5.rows[group=bi-id,scorer=ft].drop|.2f}} | {{rq5.rows[group=bi-id,scorer=ft].powered|yn}} |
 | Fine-tuned XLM-R | BNM, Malay | {{rq5.rows[group=bnm-ms,scorer=ft].n|d}} | {{rq5.rows[group=bnm-ms,scorer=ft].silver_macro_f1|.2f}} | {{rq5.rows[group=bnm-ms,scorer=ft].fomc_macro_f1|.2f}} | {{rq5.rows[group=bnm-ms,scorer=ft].drop|.2f}} | {{rq5.rows[group=bnm-ms,scorer=ft].powered|yn}} |
-| FOMC-RoBERTa | — | — | not run (gated model) | — | — | — |
+| FOMC-RoBERTa (replication) | MAS, English | {{rq5.rows[group=mas-en,scorer=fomc_roberta].n|d}} | {{rq5.rows[group=mas-en,scorer=fomc_roberta].silver_macro_f1|.2f}} | {{rq5.rows[group=mas-en,scorer=fomc_roberta].fomc_macro_f1|.2f}} | {{rq5.rows[group=mas-en,scorer=fomc_roberta].drop|.2f}} | {{rq5.rows[group=mas-en,scorer=fomc_roberta].powered|yn}} |
+| FOMC-RoBERTa (replication) | BI, English | {{rq5.rows[group=bi-en,scorer=fomc_roberta].n|d}} | {{rq5.rows[group=bi-en,scorer=fomc_roberta].silver_macro_f1|.2f}} | {{rq5.rows[group=bi-en,scorer=fomc_roberta].fomc_macro_f1|.2f}} | {{rq5.rows[group=bi-en,scorer=fomc_roberta].drop|.2f}} | {{rq5.rows[group=bi-en,scorer=fomc_roberta].powered|yn}} |
+| FOMC-RoBERTa (replication) | BNM, English | {{rq5.rows[group=bnm-en,scorer=fomc_roberta].n|d}} | {{rq5.rows[group=bnm-en,scorer=fomc_roberta].silver_macro_f1|.2f}} | {{rq5.rows[group=bnm-en,scorer=fomc_roberta].fomc_macro_f1|.2f}} | {{rq5.rows[group=bnm-en,scorer=fomc_roberta].drop|.2f}} | {{rq5.rows[group=bnm-en,scorer=fomc_roberta].powered|yn}} |
 
 : Descriptive transfer comparison. Silver macro-F1 is against LLM-produced silver labels and, for the LLM
-and the fine-tuned encoder, measures self-agreement rather than accuracy. Drop = FOMC macro-F1 − silver
-macro-F1; the pre-registered hypothesis predicts a drop of at least 0.15 for MAS.
+and the fine-tuned encoder, measures self-agreement rather than accuracy. FOMC-RoBERTa reads English only.
+Drop = FOMC macro-F1 − silver
+macro-F1; the pre-registered hypothesis predicts a drop of at least 0.10 for MAS.
 
 In the multilingual sentence-embedding space, MAS sentences are the farthest from Fed sentences (mean
 cosine distance {{rq5.distance[group=mas-en].mean_cosine_distance_to_fed|.2f}}, against
 {{rq5.distance[group=ecb-en].mean_cosine_distance_to_fed|.2f}} for the ECB and
 {{rq5.distance[group=fed-en].mean_cosine_distance_to_fed|.2f}} within the Fed's own sentences), consistent with
-the distinct vocabulary of an exchange-rate-centred regime [@parrado2004singapore]. Whether that distance
-translates into a loss of accuracy for a Fed-calibrated scorer remains, on this evidence, an open question
-that the pending reference model and a larger human-labelled set would settle.
+the distinct vocabulary of an exchange-rate-centred regime [@parrado2004singapore]. The supervised Fed
+model loses accuracy on that text, and the dictionary does not. A human-labelled Southeast Asian set of
+adequate size is what would turn these descriptive drops into a test.
 
 # Discussion
 
@@ -715,8 +749,10 @@ because the model has been prevented from cheating.
   cannot separate the market's reaction to the statement from the statement's reaction to the market.
 - **MAS decisions.** Taken from the Authority's own table; the rule-based extractor's accuracy is
   development accuracy only and affects two 2026 statements that are excluded from every test.
-- **Gated reference model.** FOMC-RoBERTa could not be run, which makes H5 untestable as pre-registered and
-  leaves the in-distribution reference for H4b to the published literature.
+- **Replicated reference model.** The authors' FOMC-RoBERTa is gated and access was not granted, so the
+  reference scorer is our replication of their recipe (D21). It reaches the published level on the FOMC test
+  split, but it is not the same set of weights, and it was trained without the authors' grid over learning
+  rate and batch size.
 - **Compute and model scale.** The four-billion-parameter model is far smaller than hosted frontier models.
   The results speak to what an analyst can run on local hardware, not to the capabilities of the largest
   models; a frontier model might pass tests this one fails, and might also be more contaminated.
@@ -728,8 +764,10 @@ as `cbtone`. `make reproduce` rebuilds every table and figure from the committed
 are cached by content hash, so a re-run repeats only the few calls that failed the first time, while the
 fine-tuned encoder is retrained, which on Apple MPS is not bit-for-bit deterministic (`ANOMALIES.md`, A13).
 The pre-registration is the git tag `prereg-v1`; every later deviation is listed in `docs/DECISIONS.md`
-(D17–D20) and every data anomaly in `docs/ANOMALIES.md`. LLM scores were computed on a desktop RTX 4070 Ti
-(D20); the fine-tuned encoder was trained on an Apple M4 laptop (16 GB, MPS). Per-stage wall time is in
+(D17–D21) and every data anomaly in `docs/ANOMALIES.md`. LLM scores were computed on a desktop RTX 4070 Ti
+(D20); the fine-tuned encoder and the FOMC-RoBERTa replication were trained on an Apple M4 laptop (16 GB,
+MPS). The replication takes about two hours for three seeds and is not part of `make reproduce`; it is
+rebuilt with `make fomc-roberta`, and its weights stay local (D21). Per-stage wall time is in
 `results/timing.json` and the hardware and software manifest in `results/hardware.json`. Every number in
 this paper, including those in the abstract, is injected from `results/summary.json` at build time
 (`paper/build.py`); none is typed by hand. A fresh-clone reproduction on 14 October 2026 completed in 23
@@ -739,7 +777,7 @@ minutes with no change to any verdict.
 
 A small open-weight language model running on a consumer graphics card produces hawkish/dovish tone
 indices for seven central banks in three languages that look plausible over time and agree with human
-FOMC labels better than a dictionary. On every pre-registered test of *policy signal*, next-decision
+FOMC labels better than a dictionary, though far below a supervised encoder trained on those labels. On every pre-registered test of *policy signal*, next-decision
 prediction, announcement-window reaction, cross-lingual consistency and prompt stability, the evidence is
 negative or underpowered, and the entity-masking and post-cutoff checks show that the negative result is
 not an artefact of contamination. Three lessons follow for practitioners. First, persistence is a strong

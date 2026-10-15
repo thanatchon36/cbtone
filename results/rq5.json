@@ -53,6 +53,13 @@
     }
   ],
   "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "fomc_roberta": {
+    "bi_drop": 0.021284692057277455,
+    "bnm_drop": 0.2723126183793215,
+    "mas_drop": 0.2460695934508505,
+    "mas_drop_largest": false,
+    "mas_transfers_poorly": true
+  },
   "label_agreement": {
     "label_counts": {
       "dovish": 80,
@@ -62,7 +69,7 @@
     "n": 200,
     "pass_a_eq_b": 0.71
   },
-  "reason": "FOMC-RoBERTa not run (gated model; owner action pending); H5 requires it",
+  "reason": "comparison cells underpowered (< 50 English silver sentences)",
   "rows": [
     {
       "drop": -0.14837776665422708,
@@ -180,6 +187,33 @@
       "powered": true,
       "scorer": "ft",
       "silver_macro_f1": 0.6746031746031745
+    },
+    {
+      "drop": 0.021284692057277455,
+      "fomc_macro_f1": 0.7123126183793215,
+      "group": "bi-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "fomc_roberta",
+      "silver_macro_f1": 0.691027926322044
+    },
+    {
+      "drop": 0.2723126183793215,
+      "fomc_macro_f1": 0.7123126183793215,
+      "group": "bnm-en",
+      "n": 35,
+      "powered": false,
+      "scorer": "fomc_roberta",
+      "silver_macro_f1": 0.43999999999999995
+    },
+    {
+      "drop": 0.2460695934508505,
+      "fomc_macro_f1": 0.7123126183793215,
+      "group": "mas-en",
+      "n": 60,
+      "powered": true,
+      "scorer": "fomc_roberta",
+      "silver_macro_f1": 0.466243024928471
     }
   ],
   "verdict": "untestable"

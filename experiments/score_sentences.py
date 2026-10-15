@@ -71,7 +71,12 @@ def fomc(cache: ScoreCache) -> None:
         for name, sc in (("llm", llm), ("dict", dic)):
             r = _row(sid, name, sc.score_text(text, "en"))
             rows.append({**r, "gold": gold})
-    pl.DataFrame(rows).write_parquet(OUT / "fomc_test.parquet")
+    out = pl.DataFrame(rows)
+    path = OUT / "fomc_test.parquet"
+    if path.exists():  # keep rows written by other scripts (ft, fomc_roberta)
+        keep = pl.read_parquet(path).filter(~pl.col("config").is_in(["llm", "dict"]))
+        out = pl.concat([out, keep], how="diagonal_relaxed")
+    out.write_parquet(path)
 
 
 def silver(cache: ScoreCache, sents: pl.DataFrame) -> None:
