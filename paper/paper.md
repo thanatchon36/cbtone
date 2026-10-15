@@ -276,9 +276,10 @@ FOMC data, so that it measures how much of the LLM's reading a small multilingua
 [@shah2023trillion]. The authors' checkpoint is gated and access was not granted. We therefore fine-tuned
 RoBERTa-large on the train split of their data with their recipe: a 20 % validation split, learning rate
 10⁻⁵ and early stopping on validation macro-F1. Three seeds were trained and the seed with the best
-validation score was kept, so the test split played no part in model selection. The weights are not
-released, because the training data are licensed for non-commercial use only. It reads English only and
-enters every analysis in which the pre-registration names the transformer scorer: the FOMC test split
+validation score was kept, so the test split played no part in model selection. The weights are released
+at <https://huggingface.co/thanatchon36/cbtone-fomc-roberta-repl> under CC-BY-NC-4.0, the licence of the
+training data, as a replication that carries none of the authors' weights; readers with access to the
+original should prefer it. The replication reads English only and enters every analysis in which the pre-registration names the transformer scorer: the FOMC test split
 (H4b), the Southeast Asian silver sets (H5) and, as a descriptive comparison outside the Holm families,
 the next-decision and announcement-window analyses (RQ1, RQ2).
 
@@ -807,7 +808,8 @@ because the model has been prevented from cheating.
 - **Replicated reference model.** The authors' FOMC-RoBERTa is gated and access was not granted, so the
   reference scorer is our replication of their recipe (D21). It reaches the published level on the FOMC test
   split, but it is not the same set of weights, and it was trained without the authors' grid over learning
-  rate and batch size. Its RQ1 and RQ2 results are descriptive and outside the Holm families, as
+  rate and batch size. Readers can check it directly: the weights are released under the data's own
+  non-commercial licence. Its RQ1 and RQ2 results are descriptive and outside the Holm families, as
   pre-registered. It was trained on Fed sentences only, so a weaker showing at other banks would be expected;
   that it does not beat persistence at the Fed either is the informative part.
 - **Compute and model scale.** The four-billion-parameter model is far smaller than hosted frontier models.
@@ -824,7 +826,8 @@ The pre-registration is the git tag `prereg-v1`; every later deviation is listed
 (D17–D21) and every data anomaly in `docs/ANOMALIES.md`. LLM scores were computed on a desktop RTX 4070 Ti
 (D20); the fine-tuned encoder and the FOMC-RoBERTa replication were trained on an Apple M4 laptop (16 GB,
 MPS). The replication takes about two hours for three seeds, plus ten minutes to score the English corpus,
-and is not part of `make reproduce`; `make fomc-roberta` rebuilds both, and its weights stay local (D21).
+and is not part of `make reproduce`; `make fomc-roberta` rebuilds both, and the weights are published
+separately (D21).
 Per-stage wall time is in
 `results/timing.json` and the hardware and software manifest in `results/hardware.json`. Every number in
 this paper, including those in the abstract, is injected from `results/summary.json` at build time

@@ -14,7 +14,7 @@ Does the better reader find the policy signal the LLM missed? No. It predicts th
 
 Outside the Fed it slips: on Singapore (MAS) sentences it drops 0.25. Those labels come from the LLM, though, so part of that drop is label noise. The dictionary doesn't drop at all. My pre-registered transfer hypothesis needed both to drop, so it could not have been supported. The verdict stays "untestable" because two comparison groups are below the sample size I set in advance.
 
-I'm not publishing the weights: the training data is licensed for non-commercial use only. The script to rebuild them is in the repo (about two hours on a MacBook Air M4).
+The weights are up at huggingface.co/thanatchon36/cbtone-fomc-roberta-repl, under the same non-commercial licence as the training data and credited to the original authors. It's a replication, not their checkpoint: use theirs if you have access. The training script is in the repo too (about two hours on a MacBook Air M4).
 
 Paper (updated): https://thanatchon36.github.io/cbtone/paper/
 Chart: results/figures/fig_rq4b_fomc_f1.png

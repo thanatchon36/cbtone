@@ -141,7 +141,7 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] v0.1.2 pushed; PyPI 0.1.2 published (description carries both BibTeX entries); GitHub Release v0.1.2;
       Zenodo v0.1.2 DOI 10.5281/zenodo.23373854, metadata from `.zenodo.json` incl. the paper link.
 - [x] v0.1.3 (2026-10-15): FOMC-RoBERTa replication (D21). RoBERTa-large on the FOMC train split, Shah et al.
-      recipe, 3 seeds, selection on validation (`make fomc-roberta`, ~2 h on the M4; weights local only). FOMC
+      recipe, 3 seeds, selection on validation (`make fomc-roberta`, ~2 h on the M4). FOMC
       test macro-F1 0.71 [0.67, 0.75] (seed mean 0.70 ± 0.02; dedup 0.71). RQ5: drop 0.25 on MAS (powered),
       0.27 BNM-en / 0.02 BI-en (underpowered). Verdicts unchanged (H4b refuted, H5 untestable; on MAS the
       dictionary does not drop, so H5 could not have been supported). Paper H5 threshold corrected to the
@@ -156,6 +156,10 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
       +0.007); LLM vs transformer ΔR² CI covers 0 in all 11 powered cells; RQ3 reports it as not applicable.
       No verdict changes. Paper: Table 3 gains the replication rows, Figures 2–3 a third series, RQ2,
       Discussion (fifth finding: signal, not instrument) and Conclusion updated. Existing numbers unchanged.
+- [x] Replication weights published at `thanatchon36/cbtone-fomc-roberta-repl` (CC-BY-NC-4.0, attribution to
+      Shah et al., card marks it a replication). D21 and LICENSES.md updated: the licence permits
+      non-commercial derivatives, so 0.1.3's "never published" rule was the owner's choice, now reversed.
+      The dataset itself is still never redistributed; `ft-xlmr` is still Apache-2.0 and FOMC-free.
 
 ## Waiting on owner
 - **git push:** the deny rule was removed by the owner; the agent pushes normal commits and pushes release tags

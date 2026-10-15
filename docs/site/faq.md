@@ -23,8 +23,9 @@ and hashes only. Details: [LICENSES.md](https://github.com/thanatchon36/cbtone/b
 
 **Can I use FOMC-RoBERTa commercially?**
 No: it is CC-BY-NC-4.0 and gated on Hugging Face. Access was never granted for this study, so the paper
-uses a local replication trained on the same CC-BY-NC data (`experiments/train_fomc_roberta.py`, decision
-D21). Its weights are not published.
+uses a replication trained on the same CC-BY-NC data (`experiments/train_fomc_roberta.py`, decision D21),
+published at [`thanatchon36/cbtone-fomc-roberta-repl`](https://huggingface.co/thanatchon36/cbtone-fomc-roberta-repl) under the same non-commercial licence. Neither
+model may be used commercially.
 
 **Do I need a GPU?**
 No. The target machine is a laptop without CUDA. The LLM scorer runs a small model (4B

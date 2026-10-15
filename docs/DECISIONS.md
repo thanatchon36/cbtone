@@ -254,9 +254,14 @@ Each entry: **what**, **why**, **alternatives rejected**. Newest at the bottom.
     reference and not a competitor (RESEARCH_QUESTIONS H4b already says this).
   - 17 of the 496 test sentences also occur verbatim in train. This is a property of the dataset and the original
     model saw them too. A deduplicated test F1 (479 sentences) is reported as a sensitivity check.
-- **Licence:** this is the local-only comparison variant that `docs/sources/LICENSES.md` allows. Weights stay in
-  `data/models/fomc-roberta-repl/` (git-ignored) and are never published. `cbtone.scorers.finetuned.train`
-  still refuses FOMC rows, so released weights cannot be trained on them.
+- **Licence:** the FOMC data are CC-BY-NC-4.0, which permits non-commercial derivative works with attribution.
+  Training on the train split is therefore allowed, and so is publishing the result under the same terms.
+  0.1.3 chose to keep the weights local; the owner decided on 2026-10-15 to publish them, so that readers
+  without access to the gated original can reproduce the paper. They are at
+  [`thanatchon36/cbtone-fomc-roberta-repl`](https://huggingface.co/thanatchon36/cbtone-fomc-roberta-repl), CC-BY-NC-4.0, credited to Shah, Paturi & Chava (2023) and
+  labelled a replication that carries none of the authors' weights. The dataset itself is still never
+  redistributed, and `cbtone.scorers.finetuned.train` still refuses FOMC rows, so the Apache-2.0 `ft-xlmr`
+  weights cannot be trained on them.
 - **Scope:** every place the pre-registration names the transformer scorer. RQ4b (FOMC test) and RQ5 (English
   silver sentences) came first (0.1.3). RQ1 ("transformer and fine-tuned scorers are reported with the same
   comparisons, as descriptive results") and RQ2 (H2: "the LLM explains more than the dictionary and transformer

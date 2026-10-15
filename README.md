@@ -177,4 +177,5 @@ GitHub also reads [`CITATION.cff`](CITATION.cff).
   [`docs/sources/LICENSES.md`](docs/sources/LICENSES.md).
 - **Third-party models and data:** some evaluation anchors and models (for example FOMC-RoBERTa
   and the FOMC communication dataset) are CC-BY-NC-4.0 and are used for evaluation only; they are
-  not redistributed. Check the same file before commercial use.
+  not redistributed. Our replication of FOMC-RoBERTa is published separately under the same
+  non-commercial licence ([model card](https://huggingface.co/thanatchon36/cbtone-fomc-roberta-repl)). Check the same file before commercial use.

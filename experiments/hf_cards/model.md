@@ -103,8 +103,8 @@ Apple MPS is not bit-for-bit deterministic (validation macro-F1 0.599 on a fresh
 | Malay vs English versions of the same BNM statement (139 pairs) | Spearman ρ of document index | 0.54 | 0.53 | n/a (English only) | n/a (English only) |
 
 ᵃ Our replication of Shah, Paturi & Chava (2023): RoBERTa-large fine-tuned on the train split of the same data, so
-in-distribution (three-seed mean 0.70 ± 0.02; the authors report 0.72 weighted F1). Weights not published (CC-BY-NC
-training data).
+in-distribution (three-seed mean 0.70 ± 0.02; the authors report 0.72 weighted F1). Published separately at
+[`cbtone-fomc-roberta-repl`](https://huggingface.co/thanatchon36/cbtone-fomc-roberta-repl) under CC-BY-NC-4.0.
 ᵇ The validation labels *are* the LLM's answers, so the LLM agrees with them perfectly; the number carries no
 information.
 ᶜ The validation split is drawn at training time and is not stored, and rebuilding the training frame does not
