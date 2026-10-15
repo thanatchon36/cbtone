@@ -8,10 +8,12 @@ macro-F1 (Shah et al. §4: grid over learning rate and batch size, up to 100 epo
 three seeds). Three seeds are trained. The scorer is the seed with the best *validation*
 macro-F1; the test split is scored only after selection, and the three-seed mean is reported.
 
-Licence (docs/sources/LICENSES.md): the FOMC data are CC-BY-NC-4.0. This is the local-only
-comparison variant the licence table allows: weights go to ``data/models/fomc-roberta-repl/``
-(git-ignored) and are never published. ``cbtone.scorers.finetuned.train`` still refuses FOMC
-rows, so the released ``ft-xlmr`` weights cannot be trained on them.
+Licence (docs/sources/LICENSES.md): the FOMC data are CC-BY-NC-4.0, which permits non-commercial
+derivatives with attribution. Weights go to ``data/models/fomc-roberta-repl/`` (git-ignored) and are
+published under the same terms at ``thanatchon36/cbtone-fomc-roberta-repl``, credited to the authors
+and labelled a replication (D21). The data themselves are never redistributed, and
+``cbtone.scorers.finetuned.train`` still refuses FOMC rows, so the Apache-2.0 ``ft-xlmr`` weights
+cannot be trained on them.
 
 Writes results/fomc_roberta_train_report.json, replaces the ``fomc_roberta`` rows of
 results/scores/fomc_test.parquet and writes results/scores/silver_fomc_roberta.parquet
