@@ -150,7 +150,7 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
 - [x] v0.1.3 pushed (CI green on main and tag); PyPI 0.1.3 published; GitHub Release v0.1.3; Zenodo v0.1.3
       DOI 10.5281/zenodo.23386653. Hugging Face model and dataset cards re-uploaded (README only; replication weights not published). LinkedIn
       draft `docs/posts/10-fomc-roberta-replication.md`.
-- [ ] v0.1.4 (2026-10-15, not yet tagged): FOMC-RoBERTa replication in RQ1/RQ2 as pre-registered (descriptive,
+- [x] v0.1.4 (2026-10-15): FOMC-RoBERTa replication in RQ1/RQ2 as pre-registered (descriptive,
       outside the Holm families); scores on all English primary documents (`make fomc-roberta` now also scores).
       Beats persistence at 0 of 4 powered banks (RBA +0.041 [−0.003, 0.087], ECB +0.038 [−0.005, 0.098], Fed
       +0.007); LLM vs transformer ΔR² CI covers 0 in all 11 powered cells; RQ3 reports it as not applicable.
@@ -160,6 +160,8 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
       Shah et al., card marks it a replication). D21 and LICENSES.md updated: the licence permits
       non-commercial derivatives, so 0.1.3's "never published" rule was the owner's choice, now reversed.
       The dataset itself is still never redistributed; `ft-xlmr` is still Apache-2.0 and FOMC-free.
+- [x] v0.1.4 pushed (CI green on main and tag); PyPI 0.1.4; GitHub Release v0.1.4; Zenodo DOI
+      10.5281/zenodo.23391443; HF cards for `cbtone-ft-xlmr` and the new `cbtone-fomc-roberta-repl` live.
 
 ## Waiting on owner
 - **git push:** the deny rule was removed by the owner; the agent pushes normal commits and pushes release tags
