@@ -148,7 +148,8 @@ Verdicts (pre-registered thresholds, Holm across powered banks):
       pre-registered 0.10 (it said 0.15). `score_sentences.py` no longer drops other scorers' FOMC rows.
       M4 GPU out-of-memory at batch 16 fixed with micro-batches of 4 + gradient checkpointing.
 - [x] v0.1.3 pushed (CI green on main and tag); PyPI 0.1.3 published; GitHub Release v0.1.3; Zenodo v0.1.3
-      DOI 10.5281/zenodo.23386653. Hugging Face model card (FOMC-RoBERTa column) not re-uploaded yet.
+      DOI 10.5281/zenodo.23386653. Hugging Face model and dataset cards re-uploaded (README only; replication weights not published). LinkedIn
+      draft `docs/posts/10-fomc-roberta-replication.md`.
 
 ## Waiting on owner
 - **git push:** the deny rule was removed by the owner; the agent pushes normal commits and pushes release tags
