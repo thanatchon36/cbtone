@@ -116,7 +116,12 @@ def _axis(ax: plt.Axes, grid: str | None = "x", *, left: bool = False) -> None:
     ax.set_axisbelow(True)
 
 
-def _finish(fig: plt.Figure, scorers: list[str] | None = None, note: str | None = None) -> None:
+def _finish(
+    fig: plt.Figure,
+    scorers: list[str] | None = None,
+    note: str | None = None,
+    extra: list[Line2D] | None = None,
+) -> None:
     """Legend (centred) and footnote (left-aligned) under everything already drawn."""
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
@@ -127,7 +132,7 @@ def _finish(fig: plt.Figure, scorers: list[str] | None = None, note: str | None 
         handles = [
             Line2D([], [], color=SLOT[s], marker="o", lw=1.3, ms=4.6, mec=SLOT[s], label=NAMES[s])
             for s in scorers
-        ]
+        ] + (extra or [])
         leg = fig.legend(
             handles=handles,
             loc="upper center",
@@ -287,9 +292,7 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
 
     def flag(ax: plt.Axes, r: dict[str, Any], yy: float) -> None:
         if r.get("h2a_success"):  # ring: no free slot for text between three series per row
-            ax.plot(
-                r["beta"], yy, "o", ms=9.5, mfc="none", mec=SLOT[r["scorer"]], mew=0.8, zorder=4
-            )
+            ax.plot(r["beta"], yy, "o", ms=9.5, mfc="none", mec=INK, mew=0.8, zorder=4)
 
     t_a = _forest(
         ax_a,
@@ -318,6 +321,17 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
     ax_b.set_title("(b) Two-year government yield", loc="left", color=INK)
     ax_a.set_xlabel("β: two-day log move per unit surprise\n(+ = domestic appreciation)")
     ax_b.set_xlabel("β: basis points per unit surprise")
+    ring = Line2D(
+        [],
+        [],
+        ls="none",
+        marker="o",
+        ms=9.5,
+        mfc="none",
+        mec=INK,
+        mew=0.8,
+        label="R² above placebo",
+    )
     _finish(
         fig,
         ["dict", "llm", "fomc_roberta"],
@@ -325,6 +339,7 @@ def rq2_beta(rq2: dict[str, Any]) -> None:
         "pre-registered minimum of 30 events. Ringed marker: R² above the non-announcement "
         "placebo's 95th percentile. n = announcement events. FX for Singapore, Indonesia and "
         "Malaysia are USD crosses, signed so that + is domestic appreciation.",
+        extra=[ring],
     )
     _save(
         fig,
@@ -427,7 +442,7 @@ def rq4b_fomc_f1(rq4: dict[str, Any]) -> None:
         style="italic",
     )
     for y, r in enumerate(order):
-        c = SLOT[r["scorer"]]
+        c = INK  # rows are named on the axis; colour would be a second, unkeyed encoding
         ax.plot(
             [r["f1_lo"], r["f1_hi"]],
             [y, y],
