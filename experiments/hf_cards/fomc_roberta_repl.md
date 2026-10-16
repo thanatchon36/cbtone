@@ -118,7 +118,7 @@ only, attribution required. The base model is MIT. The cbtone code is Apache-2.0
 
 @misc{chongmankhong2026reading,
   author = {Chongmankhong, Thanatchon},
-  title  = {Reading the Room: Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
+  title  = {Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
   year   = {2026},
   note   = {Preprint},
   url    = {https://thanatchon36.github.io/cbtone/paper/}

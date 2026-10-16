@@ -30,7 +30,7 @@ configs:
 The 3,755 central-bank sentences used to train
 [`thanatchon36/cbtone-ft-xlmr`](https://huggingface.co/thanatchon36/cbtone-ft-xlmr), each with a
 hawkish / dovish / neutral label assigned by a local LLM (`qwen3:4b`, registered prompt `P1@8bfb4852`,
-temperature 0). Companion to the paper *Reading the Room: Do Local-LLM Tone Scores of Central-Bank
+temperature 0). Companion to the paper *Do Local-LLM Tone Scores of Central-Bank
 Communication Carry Policy Signal?* (Chongmankhong, 2026).
 
 📄 [Paper (web)](https://thanatchon36.github.io/cbtone/paper/) · 💻 [Code: `cbtone`](https://github.com/thanatchon36/cbtone) ·
@@ -115,7 +115,7 @@ Please cite the paper; if you use the `cbtone` library, also cite the software.
 ```bibtex
 @misc{chongmankhong2026reading,
   author = {Chongmankhong, Thanatchon},
-  title  = {Reading the Room: Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
+  title  = {Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
   year   = {2026},
   note   = {Preprint},
   url    = {https://thanatchon36.github.io/cbtone/paper/}

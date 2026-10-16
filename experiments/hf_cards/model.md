@@ -37,7 +37,7 @@ model-index:
 
 A small multilingual classifier that labels a central-bank sentence as **hawkish**, **dovish** or **neutral**.
 It is XLM-R base fine-tuned on sentence labels produced by a local LLM (`qwen3:4b`), and is the
-"fine-tuned XLM-R" scorer reported in the paper *Reading the Room: Do Local-LLM Tone Scores of Central-Bank
+"fine-tuned XLM-R" scorer reported in the paper *Do Local-LLM Tone Scores of Central-Bank
 Communication Carry Policy Signal?* (Chongmankhong, 2026).
 
 📄 [Paper (web)](https://thanatchon36.github.io/cbtone/paper/) · ⬇️ [PDF](https://github.com/thanatchon36/cbtone/raw/main/paper/paper.pdf) ·
@@ -136,7 +136,7 @@ Please cite the paper; if you use the `cbtone` library, also cite the software.
 ```bibtex
 @misc{chongmankhong2026reading,
   author = {Chongmankhong, Thanatchon},
-  title  = {Reading the Room: Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
+  title  = {Do Local-{LLM} Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages},
   year   = {2026},
   note   = {Preprint},
   url    = {https://thanatchon36.github.io/cbtone/paper/}
