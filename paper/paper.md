@@ -1,5 +1,5 @@
 ---
-title: "Reading the Room: Do Local-LLM Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages"
+title: "Do Local-LLM Tone Scores of Central-Bank Communication Carry Policy Signal? Pre-registered Evidence from Seven Central Banks in Three Languages"
 author: "Thanatchon Chongmankhong"
 date: "October 2026"
 bibliography: docs/literature/refs.bib
@@ -14,33 +14,34 @@ margin:
   x: 2.2cm
   y: 2.4cm
 abstract: |
-  Hawkish/dovish tone indices distilled from central-bank text are now routinely produced with large language
-  models (LLMs), yet it is rarely asked whether such indices carry information that a trivial forecast does not,
-  whether they survive a change of prompt, or whether the model has already seen the outcomes it is asked to
-  anticipate. We address these questions with a pre-registered study of seven central banks (the Federal Reserve,
-  the European Central Bank, the Bank of England, the Reserve Bank of Australia, the Monetary Authority of
-  Singapore, Bank Indonesia and Bank Negara Malaysia) in English, Indonesian and Malay, scored by a four-billion-parameter
-  model (`qwen3:4b`) running on consumer hardware. Hypotheses, thresholds, samples and multiple-testing
-  families were frozen in a public pre-registration before any scorer read the full corpus, and every LLM result
-  is re-estimated on entity-masked text and on a post-training-cutoff window. **Every testable hypothesis is
-  refuted at its pre-registered threshold.** Relative to a persistence forecast, LLM tone improves the
-  out-of-sample log-loss of the next policy decision at none of the {{rq1.verdict.n_powered}} adequately powered
-  banks (the nearest miss is the ECB: ΔLL {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers|.3f}}, Holm-adjusted
-  *p* = {{rq1.rows[bank=ecb,scorer=llm].p_vs_pers_holm|.2f}}). The tone surprise explains the announcement-window
-  market move beyond a non-announcement placebo in {{rq2.verdict.h2a.n_success}} of {{rq2.verdict.h2a.n_powered}}
-  bank–market cells and never beats a cited dictionary after correction. Native-language and English versions of
-  the same statement agree only moderately in intensity (Spearman ρ = {{rq3.rows[bank=bi,scorer=llm].spearman|.2f}}
-  for Indonesian, {{rq3.rows[bank=bnm,scorer=llm].spearman|.2f}} for Malay, against a pre-registered 0.70), while
-  rarely disagreeing in direction. Scores move materially with the prompt wording (Krippendorff's α =
-  {{rq4.rq4a.docs.prompts.alpha|.2f}} across five paraphrases at document level) and still more with the model
-  version. On the human-labelled FOMC test split the LLM reaches a macro-F1 of
-  {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}, above the dictionary ({{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}})
-  but below the pre-registered floor of 0.50, while our replication of the supervised FOMC-RoBERTa reaches
-  {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}}. That better-calibrated instrument fares no better on the
-  policy-signal tests: it improves on persistence at none of the {{rq1.transformer.n_powered|d}} powered
-  banks, and its announcement-window R² is indistinguishable from the LLM's in every powered cell, which
-  places the negative result in the signal rather than in the instrument. We release the corpus pipeline, the scorers and the evaluation
-  harness as the open-source Python package `cbtone`, together with every number in this paper.
+  Hawkish/dovish tone indices for central-bank text are now routinely produced with large
+  language models (LLMs), yet it is rarely asked whether they beat a trivial forecast, survive a
+  change of prompt, or merely recall outcomes the model has already seen. We address these
+  questions in a pre-registered study of seven central banks (Fed, ECB, BoE, RBA, MAS, Bank
+  Indonesia and Bank Negara Malaysia) in English, Indonesian and Malay, scored by a 4B-parameter
+  open-weight model (`qwen3:4b`) on consumer hardware. Hypotheses, thresholds, samples and
+  multiple-testing families were frozen publicly before any scorer read the full corpus, and
+  every LLM result is re-estimated on entity-masked text and on a post-cutoff window. **Every
+  testable hypothesis is refuted at its pre-registered threshold.** LLM tone improves
+  out-of-sample log-loss for the next policy decision over a persistence forecast at none of the
+  {{rq1.verdict.n_powered}} adequately powered banks (nearest miss: ECB, ΔLL =
+  {{rq1.rows[bank=ecb,scorer=llm].dll_vs_pers|.3f}}, Holm-adjusted *p* =
+  {{rq1.rows[bank=ecb,scorer=llm].p_vs_pers_holm|.2f}}). Tone surprises explain the
+  announcement-window market move beyond a placebo in {{rq2.verdict.h2a.n_success}} of
+  {{rq2.verdict.h2a.n_powered}} bank–market cells and never beat a dictionary after correction.
+  Native-language and English versions of the same statement agree only moderately in intensity
+  (Spearman ρ = {{rq3.rows[bank=bi,scorer=llm].spearman|.2f}} Indonesian,
+  {{rq3.rows[bank=bnm,scorer=llm].spearman|.2f}} Malay, against a pre-registered 0.70) while
+  rarely disagreeing in direction. Scores move materially with prompt wording (Krippendorff's α
+  = {{rq4.rq4a.docs.prompts.alpha|.2f}} over five paraphrases) and more with the model version.
+  On human-labelled FOMC sentences the LLM reaches macro-F1
+  {{rq4.rq4b.rows[scorer=llm].macro_f1|.2f}}, above a dictionary
+  ({{rq4.rq4b.rows[scorer=dict].macro_f1|.2f}}) but below the pre-registered 0.50 floor; our
+  replication of the supervised FOMC-RoBERTa reaches
+  {{rq4.rq4b.rows[scorer=fomc_roberta].macro_f1|.2f}} yet fares no better on the policy-signal
+  tests, placing the negative result in the signal, not the instrument. The pipeline, scorers
+  and evaluation harness are released as the open-source Python package `cbtone`, with every
+  number in the paper.
 header-includes:
   - |
     ```{=typst}
