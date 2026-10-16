@@ -30,7 +30,7 @@ from matplotlib.transforms import blended_transform_factory as blend
 
 FIG = RESULTS / "figures"
 FONT_DIR = Path("paper/fonts")
-WIDTH = 6.3  # inches; the paper's text width is 16.6 cm
+WIDTH = 16.6 / 2.54  # inches: the paper's text width (A4 minus 2.2 cm side margins), so 1:1
 SURFACE = "#ffffff"
 INK, INK2, INK3, GRID, BAND = "#141414", "#4f4f4f", "#8c8c8c", "#dcdcdc", "#f4f4f2"
 SLOT = {"dict": "#2a78d6", "llm": "#eb6834", "ft": "#1baf7a", "fomc_roberta": "#8a5cc2"}
@@ -67,9 +67,9 @@ DOC_TYPES = {
 ALPHA_MIN, RHO_MIN, F1_MIN = 0.667, 0.70, 0.50
 # Published FOMC references, weighted F1 on the same test split (Shah, Paturi & Chava 2023).
 SHAH = {
-    "Rule-based baseline, Shah et al. (2023)": 0.50,
-    "Zero-shot ChatGPT-3.5, Shah et al. (2023)": 0.587,
-    "Fine-tuned RoBERTa-large, Shah et al. (2023)": 0.717,
+    "rule-based baseline": 0.50,
+    "zero-shot ChatGPT-3.5": 0.587,
+    "fine-tuned RoBERTa-large": 0.717,
 }
 
 
@@ -446,9 +446,15 @@ def rq4b_fomc_f1(rq4: dict[str, Any]) -> None:
             fontsize=7.5,
             color=INK2,
         )
-    for i, (k, v) in enumerate(SHAH.items()):
+    # Reference lines, labelled above the axes. The lowest value is labelled to its left and the
+    # highest to its right on the first row; the others take a row each above, so no label is
+    # struck through by another line's extension.
+    refs = sorted(SHAH.items(), key=lambda kv: kv[1])
+    for i, (k, v) in enumerate(refs):
         ax.axvline(v, color=INK3, linewidth=0.7, linestyle=(0, (2, 2)), zorder=1)
-        top = 1.03 + 0.14 * i
+        row = 0 if i in (0, len(refs) - 1) else i
+        right = i > 0
+        top = 1.03 + 0.14 * row
         ax.plot(
             [v, v],
             [1.0, top],
@@ -459,11 +465,11 @@ def rq4b_fomc_f1(rq4: dict[str, Any]) -> None:
             clip_on=False,
         )
         ax.text(
-            v + 0.006,
+            v + (0.006 if right else -0.006),
             top,
-            f"{k}: {v:.2f}",
+            f"{k} {v:.2f}",
             transform=blend(ax.transData, ax.transAxes),
-            ha="left",
+            ha="left" if right else "right",
             va="center",
             fontsize=6.8,
             color=INK2,
@@ -478,8 +484,9 @@ def rq4b_fomc_f1(rq4: dict[str, Any]) -> None:
         fig,
         None,
         "Intervals: 95% bootstrap over sentences. Dotted lines: weighted F1 reported on the same "
-        "split by Shah, Paturi and Chava (2023); their metric is not identical to macro-F1 and is "
-        "shown for orientation only.",
+        "split by Shah, Paturi and Chava (2023) for their rule-based baseline, zero-shot "
+        "ChatGPT-3.5 and fine-tuned RoBERTa-large; their metric is not identical to macro-F1 and "
+        "is shown for orientation only.",
     )
     _save(
         fig, "fig_rq4b_fomc_f1", pl.DataFrame(order).select("scorer", "macro_f1", "f1_lo", "f1_hi")
@@ -496,7 +503,7 @@ def rq4a_stability(rq4: dict[str, Any]) -> None:
         ("model_tag", "Model tag: qwen3:4b vs qwen2.5:3b"),
     ]
     fig, (ax_a, ax_b) = plt.subplots(
-        1, 2, figsize=(WIDTH, 2.5), gridspec_kw={"width_ratios": [1.15, 1], "wspace": 0.75}
+        1, 2, figsize=(WIDTH, 2.5), gridspec_kw={"width_ratios": [1.15, 1], "wspace": 0.85}
     )
     _axis(ax_a)
     table = []
@@ -505,8 +512,27 @@ def rq4a_stability(rq4: dict[str, Any]) -> None:
         ax_a.plot([s["alpha"], d["alpha"]], [y, y], color=GRID, linewidth=1.2, zorder=1)
         ax_a.plot(d["alpha"], y, "o", ms=5, color=INK, zorder=3)
         ax_a.plot(s["alpha"], y, "o", ms=5, mfc=SURFACE, mec=INK, mew=1.1, zorder=3)
-        for v, dy in ((d["alpha"], -0.3), (s["alpha"], 0.33)):
-            ax_a.text(v, y + dy, f"{v:.2f}", ha="center", va="center", fontsize=6.8, color=INK2)
+        # Values sit outside the dumbbell, the larger to the right; the first row names the
+        # level beside each marker, so the panel needs no legend.
+        doc_right = d["alpha"] >= s["alpha"]
+        for v, level, right in (
+            (d["alpha"], "documents", doc_right),
+            (s["alpha"], "sentences", not doc_right),
+        ):
+            text = f"{v:.2f}"
+            if y == 0:
+                text = f"{text} {level}" if right else f"{level} {text}"
+            ax_a.text(
+                v + (0.03 if right else -0.03),
+                y,
+                text,
+                ha="left" if right else "right",
+                va="center",
+                fontsize=6.8,
+                color=INK2,
+                bbox={"facecolor": SURFACE, "edgecolor": "none", "pad": 1.2},
+                zorder=4,
+            )
         table += [
             {
                 "panel": "a",
@@ -529,47 +555,24 @@ def rq4a_stability(rq4: dict[str, Any]) -> None:
         ]
     ax_a.axvline(ALPHA_MIN, color=INK3, linewidth=0.8, linestyle=(0, (3, 2)), zorder=1)
     ax_a.text(
-        ALPHA_MIN + 0.02,
-        len(perts) - 0.55,
+        ALPHA_MIN,
+        -0.75,
         f"pre-registered α ≥ {ALPHA_MIN}",
-        ha="left",
-        va="center",
+        ha="center",
+        va="bottom",
         fontsize=6.8,
         color=INK2,
+        bbox={"facecolor": SURFACE, "edgecolor": "none", "pad": 1.2},
     )
     ax_a.set_yticks(range(len(perts)), [p[1] for p in perts], color=INK, fontsize=8)
     ax_a.set_ylim(len(perts) - 0.5, -0.95)
-    ax_a.set_xlim(-0.15, 1.0)
+    ax_a.set_xlim(-0.3, 1.15)
     ax_a.set_xticks([0, 0.25, 0.5, 0.75, 1.0])
     ax_a.set_xlabel("Krippendorff's α (interval)")
     ax_a.set_title("(a) Agreement across perturbations", loc="left", color=INK)
     n_docs, n_sent = (
         a["docs"]["prompts"].get("n_units", ""),
         a["sentences"]["prompts"].get("n_units", 0),
-    )
-    handles = [
-        Line2D([], [], color=INK, marker="o", lw=0, ms=5, label=f"documents (n = {n_docs})"),
-        Line2D(
-            [],
-            [],
-            color=INK,
-            marker="o",
-            lw=0,
-            ms=5,
-            mfc=SURFACE,
-            mew=1.1,
-            label=f"sentences (n = {n_sent:,})",
-        ),
-    ]
-    ax_a.legend(
-        handles=handles,
-        loc="upper left",
-        bbox_to_anchor=(0.0, 1.0),
-        frameon=False,
-        fontsize=7,
-        labelcolor=INK2,
-        handletextpad=0.4,
-        borderaxespad=0.1,
     )
 
     agg = a.get("aggregation", {}).get("spearman", {})
@@ -605,6 +608,7 @@ def rq4a_stability(rq4: dict[str, Any]) -> None:
         va="bottom",
         fontsize=6.8,
         color=INK2,
+        bbox={"facecolor": SURFACE, "edgecolor": "none", "pad": 1.2},
     )
     ax_b.set_yticks(
         range(len(pairs)),
@@ -625,9 +629,9 @@ def rq4a_stability(rq4: dict[str, Any]) -> None:
         fig,
         None,
         "Panel (a): agreement between scores of the same text under each perturbation, at document "
-        "and sentence level (ICC(2,1) in the CSV). Panel (b): rank correlation between three "
-        "sentence-aggregation strategies and the direct document score, the four of which must all "
-        "exceed ρ = 0.70 for H4a to hold.",
+        f"level (filled, n = {n_docs}) and sentence level (hollow, n = {n_sent:,}); ICC(2,1) in "
+        "the CSV. Panel (b): rank correlation between three sentence-aggregation strategies and "
+        "the direct document score, the four of which must all exceed ρ = 0.70 for H4a to hold.",
     )
     _save(fig, "fig_rq4a_stability", pl.DataFrame(table))
 
